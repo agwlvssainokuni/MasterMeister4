@@ -28,7 +28,7 @@ RDBMSに格納されたマスタデータをメンテナンスするためのWeb
 | Node.js | 24（最新LTS。次期LTS登場時に移行） |
 | バックエンド | Spring Boot 4.1 |
 | フロントエンド | React 19 |
-| ビルドツール（バックエンド） | Gradle 9.6（最新版）。Gradleマルチモジュール構成で`frontend`をサブプロジェクトとして取り込み、リリースビルド時はGradle Node Pluginでフロントエンドをビルドし単一JARに内包する（詳細は§4） |
+| ビルドツール（バックエンド） | Gradle 9.6（最新版）。Gradleマルチモジュール構成で`frontend`をサブプロジェクトとして取り込み、リリースビルド時はGradle Node Pluginでフロントエンドをビルドし単一WARに内包する（NFR-2.2/2.6準拠。詳細は§4） |
 | ビルドツール（フロントエンド） | Vite（`frontend/`配下で直接`npm run dev`する開発体験は維持） |
 | DBアクセス（内部DB） | JPA |
 | DBアクセス（対象RDBMS） | NamedParameterJdbcTemplate |
@@ -54,7 +54,7 @@ MySQL / MariaDB / PostgreSQL / H2 Database
 
 ## 4. プロジェクト構成
 
-Gradleマルチモジュール構成とし、`frontend`を`backend`のサブプロジェクトとして取り込む。リリースビルド時はGradle Node Pluginによりフロントエンドをビルドし、`backend`の静的リソースとして内包した単一JARを生成する（Spring BootがSPAを配信する構成）。
+Gradleマルチモジュール構成とし、`frontend`を`backend`のサブプロジェクトとして取り込む。リリースビルド時はGradle Node Pluginによりフロントエンドをビルドし、`backend`の静的リソースとして内包した単一WARを生成する（Spring BootがSPAを配信する構成。NFR-2.2「自己完結型の実行可能WARファイルを生成する」／NFR-2.6「Tomcatへの WARデプロイにも対応する（将来対応）」に準拠。`bootWar`タスクを使用し、アプリケーションクラスに`SpringBootServletInitializer`を継承させることで、`java -jar app.war`による自己完結実行と外部Tomcatへの WARデプロイの両方に対応する）。
 
 ```
 MasterMeister/
@@ -67,7 +67,7 @@ MasterMeister/
 ### ビルド方針
 - **バックエンド単体ビルド**: `./gradlew :backend:build`（frontendモジュールのタスクは実行されない。日常のバックエンド開発サイクルはfrontendの影響を受けない）
 - **フロントエンド単体開発**: `frontend/`配下で直接`npm run dev`（HMR等、Viteの通常の開発体験をそのまま維持。Gradleを経由しない）
-- **リリースビルド（単一JAR生成）**: ルートの統合タスク（例: `./gradlew bootJar`）でのみ、frontendのビルド成果物をbackendの静的リソースへコピーする処理を実行する。通常のバックエンド開発・テストではこの処理は走らない
+- **リリースビルド（単一WAR生成）**: ルートの統合タスク（例: `./gradlew bootWar`）でのみ、frontendのビルド成果物をbackendの静的リソースへコピーする処理を実行する。通常のバックエンド開発・テストではこの処理は走らない
 
 ### 開発環境（devenv/配下のDocker Compose）
 - メールサーバ: MailPit（開発時のメール送受信確認用）

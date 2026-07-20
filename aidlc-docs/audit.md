@@ -463,3 +463,19 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Requirements、決定反映
 
 ---
+
+## プロジェクト構成の再検討 - WAR/JAR不整合の指摘
+**Timestamp**: 2026-07-20T14:37:00Z
+**User Input**: "他に確認すべき事項は？"
+**AI Response**: "requirements.md §7.2 NFR-2.2（自己完結型の実行可能WARファイルを生成する）・NFR-2.6（Tomcatへの WARデプロイにも対応する、将来対応）という既承認の要件に対し、直近のプロジェクト構成の再検討（案C採用）で追記した内容がrequirements.md §2/§4・unit-of-work.mdともに『単一JAR』『bootJar』という誤った用語になっていたことを発見。単純な用語・技術選択の誤りであり判断が分かれる点ではないため、WARへの修正を提案。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements、レビュー観点の追加提起（プロジェクト構成の不整合）
+
+---
+
+## プロジェクト構成の再検討 - WAR/JAR不整合の修正
+**Timestamp**: 2026-07-20T14:38:00Z
+**User Input**: "WARに修正。"
+**AI Response**: "requirements.md §2（ビルドツール欄）・§4（プロジェクト構成、ビルド方針の『単一JAR』『bootJar』）、unit-of-work.mdの『プロジェクト構造』を、単一WAR／`bootWar`タスク／`SpringBootServletInitializer`継承（NFR-2.2/2.6準拠）に修正。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements、決定反映（プロジェクト構成の不整合修正）
+
+---
