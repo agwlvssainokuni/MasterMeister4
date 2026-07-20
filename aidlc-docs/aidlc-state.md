@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Design（質問回答待ち）
-- **Next Stage**: UNIT-01のNFR Design質問への回答収集
+- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Design（成果物生成済み、承認待ち）
+- **Next Stage**: UNIT-01のNFR Design承認 → Code Generation
 - **Status**: 実施中
 
 ## Current Unit Progress
@@ -60,7 +60,7 @@
 ### UNIT-01 デザインシステム基盤 - 内訳
 - [x] Functional Design — SKIP
 - [x] NFR Requirements — COMPLETED（承認済み 2026-07-20T12:24:00Z）
-- [ ] NFR Design — EXECUTE（計画作成中）
+- [ ] NFR Design — EXECUTE（成果物生成済み、承認待ち）
 - [ ] Infrastructure Design — SKIP
 - [ ] Code Generation — 未着手
 

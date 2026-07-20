@@ -303,3 +303,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Design (Steps 1-4)
 
 ---
+
+## UNIT-01 NFR Design - Answers Collected and Artifacts Generated
+**Timestamp**: 2026-07-20T12:32:00Z
+**User Input**: "Q1=A, Q2=A, Q3=A, Q4=A, Q5=B, Q6=A"
+**AI Response**: "Filled unit-01-nfr-design-plan.md answers (Q1=A トップレベルErrorBoundary1つのみ, Q2=A console.error等の開発者向け出力のみ, Q3=A バレルエクスポート+Tree-shaking, Q4=A フロントエンドアプリ内ディレクトリ配置（独立パッケージ化しない）, Q5=B テーマ切替可能なトークン構造（将来のダークモード等に備える）, Q6=A dangerouslySetInnerHTML不使用の徹底)。矛盾・曖昧な回答なし。Generated aidlc-docs/construction/unit-01/nfr-design/nfr-design-patterns.md（Resilience/Performance/Security各パターン、Scalability=N/A）と logical-components.md（frontend/src/design-system/配置、テーマ切替対応トークン構造、主要論理コンポーネント一覧）。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Design (Steps 5-6)
+
+---
