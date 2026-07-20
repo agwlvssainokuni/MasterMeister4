@@ -313,9 +313,11 @@ PBT拡張（`.aidlc-rule-details/extensions/testing/property-based/property-base
 - **NFR-9.1**: バックエンドはJUnit5 + Mockito、フロントエンドはVitest + React Testing Libraryを標準の組み合わせとする
 - **NFR-9.2**: PBT対象範囲は§7.5参照
 
-### 7.11 CI/CD（Q12=B）
+### 7.11 CI/CD（Q12=B、追加指示あり）
 
-- **NFR-10.1**: 今回のスコープにCI/CDパイプラインの構築は含めない。ローカルでのビルド・テスト手順の整備までとし、CI/CDは将来対応とする（Build and Testステージでローカル実行手順を整備する）
+- **NFR-10.1**: 今回のスコープにCI/CDパイプラインの構築は含めない。ローカルでのビルド・テスト手順の整備までとし、CI/CDは開発の最終段階で対応する（Build and Testステージでローカル実行手順を整備する）
+- **NFR-10.2**: CI/CDはGitHub Actionsで構成する。開発が一通り進んだ最終段階のユニットとして実施する
+- **NFR-10.3**: リリース手順として、タグpushをトリガーにGitHub Releasesを作成する仕組みを構築する
 
 ### 7.12 API仕様書（Q8=A）
 
@@ -355,7 +357,8 @@ PBT拡張（`.aidlc-rule-details/extensions/testing/property-based/property-base
 - セキュリティ拡張ルール（SECURITY-01〜15）全面適用— MFA（管理者）、HTTPセキュリティヘッダー、入力バリデーション、依存関係脆弱性スキャン、認証失敗アラート等を追加要件として明記
 - プロパティベーステスト拡張（PBT-01〜10）全面適用 — 権限判定ロジック・YAML入出力・SQL生成ロジックを重点対象として識別
 - レジリエンシーベースラインは適用しない（規模・開発体制を考慮）
-- デスクトップ中心・軽量レスポンシブ対応、CI/CDは将来対応、API仕様書（OpenAPI）は今回スコープに含める
+- デスクトップ中心・軽量レスポンシブ対応、API仕様書（OpenAPI）は今回スコープに含める
+- CI/CDは開発の最終段階でGitHub Actionsにより構成し、タグpushをトリガーにGitHub Releasesを作成する
 
 ---
 
