@@ -143,3 +143,11 @@
 **Context**: INCEPTION - Workflow Planning (Steps 1-9)
 
 ---
+
+## Workflow Planning - Request Changes: Query Unit Split (3-way) and Reordering
+**Timestamp**: 2026-07-20T11:05:00Z
+**User Input**: "クエリビルダ、保存・実行、履歴 の3ついに分けることは現実的でしょうか？" → (analysis presented, recommended order: 保存・実行 → クエリビルダー → 履歴) → "OK"
+**AI Response**: "Analyzed dependencies among Epic5 (Query Builder), Epic6 (Query Save), Epic7 (Query Execution), Epic8 (Query History): Builder depends on Save+Execute (FR-5.6 hand-off) and on Save/History as reverse-engineering entry points (FR-5.7); History depends on Execute (FR-8.1 records) and on Execute/Save/Builder as navigation targets (FR-8.4). Recommended splitting the single bundled unit into 3, ordered 保存・実行(Epic6+7) → クエリビルダー(Epic5) → 履歴(Epic8) so dependency-receiving units are built after what they depend on, avoiding stubbed integration points. User approved. Updated execution-plan.md provisional unit outlook from 8 to 10 units with rationale note."
+**Context**: INCEPTION - Workflow Planning (Request Changes)
+
+---
