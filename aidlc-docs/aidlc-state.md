@@ -34,7 +34,7 @@
 - [x] User Stories — COMPLETED (approved 2026-07-20T10:57:00Z)
 - [x] Workflow Planning — COMPLETED (approved 2026-07-20T11:10:00Z)
 - [x] Application Design — COMPLETED (approved 2026-07-20T11:45:00Z)
-- [x] Units Generation — generated (2026-07-20T11:58:00Z), pending user approval (10 units, base package cherry.mastermeister)
+- [x] Units Generation — COMPLETED (approved 2026-07-20T12:02:00Z, 10 units, base package cherry.mastermeister)
 
 ### 🟢 CONSTRUCTION PHASE
 **注記**: 以下4ステージの「EXECUTE（ユニットごと）」はプロジェクト全体の見通しであり確約ではない。各ユニット着手時にそのユニット単独でEXECUTE/SKIPを判定し、他ユニットの判定は引き継がない（詳細は execution-plan.md 参照）。
@@ -49,7 +49,19 @@
 - [ ] Operations — PLACEHOLDER
 
 ## Current Status
-- **Lifecycle Phase**: INCEPTION
-- **Current Stage**: Units Generation
-- **Next Stage**: CONSTRUCTION PHASE（ユニット1: デザインシステム基盤より開始）
+- **Lifecycle Phase**: CONSTRUCTION
+- **Current Stage**: UNIT-01 デザインシステム基盤（Per-Unit Loop開始）
+- **Next Stage**: UNIT-01のFunctional Design要否判定
 - **Status**: 実施中
+
+## Current Unit Progress
+- [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS
+- [ ] UNIT-02 ユーザ登録・認証
+- [ ] UNIT-03 RDBMSセットアップ
+- [ ] UNIT-04 アクセス制御
+- [ ] UNIT-05 マスタメンテナンス
+- [ ] UNIT-06 クエリ保存・実行
+- [ ] UNIT-07 クエリビルダー
+- [ ] UNIT-08 クエリ履歴
+- [ ] UNIT-09 監査ログ閲覧
+- [ ] UNIT-10 CI/CD
