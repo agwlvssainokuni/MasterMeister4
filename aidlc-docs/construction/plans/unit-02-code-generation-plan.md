@@ -129,8 +129,8 @@
 
 ### 14. Frontend Components Unit Testing
 
-- [ ] Step 14.1: 各ページコンポーネントのテストを作成する（Vitest + RTL、状態遷移・バリデーション・API呼び出しモック）
-- [ ] Step 14.2: 認証状態管理・トークン保管ユーティリティのテストを作成する
+- [x] Step 14.1: 各ページコンポーネントのテストを作成する（Vitest + RTL、状態遷移・バリデーション・API呼び出しモック）
+- [x] Step 14.2: 認証状態管理・トークン保管ユーティリティのテストを作成する
 
 ### 15. Frontend Components Summary
 

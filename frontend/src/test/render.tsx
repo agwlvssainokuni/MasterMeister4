@@ -18,6 +18,7 @@ import type { ReactElement } from 'react'
 import { render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from '../design-system/theme/ThemeProvider'
+import { AuthProvider } from '../auth/AuthContext'
 
 // モック画面はPublicLayout/AppShell経由でThemeToggle（要ThemeProvider）と
 // ナビゲーション（要Router）に依存するため、テスト用に共通ラップを提供する。
@@ -25,6 +26,18 @@ export function renderMock(ui: ReactElement) {
   return render(
     <ThemeProvider>
       <MemoryRouter>{ui}</MemoryRouter>
+    </ThemeProvider>,
+  )
+}
+
+// UNIT-02の画面はAuthContext（useAuth）にも依存するため、AuthProviderを含めた
+// ラップを提供する。initialEntriesでRegisterStep2Pageの`?token=`等を指定できる。
+export function renderPage(ui: ReactElement, options?: { initialEntries?: string[] }) {
+  return render(
+    <ThemeProvider>
+      <MemoryRouter initialEntries={options?.initialEntries}>
+        <AuthProvider>{ui}</AuthProvider>
+      </MemoryRouter>
     </ThemeProvider>,
   )
 }

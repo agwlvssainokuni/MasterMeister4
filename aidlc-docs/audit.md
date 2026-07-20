@@ -983,3 +983,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 13完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 14完了（Frontend Components Unit Testing）
+**Timestamp**: 2026-07-21T01:30:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "tokenStorage、jwt（decodeJwtEmail、不正トークン・payload欠落・JSON不正の異常系含む）、http.ts（apiFetch正常系/204/エラー、auth:trueでのBearer付与、401時のリフレッシュ再試行成功/失敗、UNAUTHORIZED_EVENT発行、globalのfetchをvi.stubGlobalでモック）、AuthContext（Provider外呼び出し、起動時初期化、login/logout、UNAUTHORIZED_EVENT購読）、ProtectedRoute（未認証時リダイレクト/認証済み時表示）、AuthenticatedLayout（JWTのemailクレーム表示、ログアウト導線）、LoginPage、RegisterStep1Page、RegisterStep2Page（token欠落・パスワード不一致・成功・エラー）、UserManagementPage（初期PENDINGフィルタ・フィルタ変更・キーワード絞り込み・承認/却下の確認ダイアログフロー・一覧取得エラー）、HomePage（8カード表示・準備中バッジ・実装済みカードのクリック遷移）のテストを作成。テスト用共通ヘルパーとしてtest/render.tsxにrenderPage（ThemeProvider+MemoryRouter+AuthProvider、initialEntries対応）を追加。実装中、UserManagementPage.test.tsxで承認確認テストの検証中に`adminUsersApi.listUsers`の呼び出し回数がテスト間で意図せず累積する不具合を発見。原因調査の結果、`vi.restoreAllMocks()`は`vi.spyOn`で作成したスパイのみを対象とし、`vi.mock()`によるモジュール自動モックの呼び出し履歴はクリアしない仕様であったため（前のテストの呼び出し回数が次のテストへ持ち越されていた）、全テストファイルの`afterEach`を`vi.resetAllMocks()`に修正して解消。また、HomePage.test.tsxでAppShellのSideNavとFeatureCardの両方に同名の項目ラベル（例:「ユーザ管理」）が存在し`getByText`が複数要素にマッチしていた点を、`within(featureCardElement).getByText(...)`によるスコープ限定と`getAllByText`への変更で解消。`npx tsc --noEmit`、`npm run lint`（oxlint）、`npm test`（105件全て成功、新規40件）、`npm run build`で全て成功を確認。計画チェックリストSection 14（Step 14.1〜14.2）を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 14完了
+
+---
