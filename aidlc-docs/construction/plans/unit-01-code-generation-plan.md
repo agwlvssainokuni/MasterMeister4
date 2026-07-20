@@ -120,19 +120,19 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 
 ### 8. Mock Screens Generation（`/mock/*`、devビルド限定）
 
-- [ ] Step 8.1: React Routerを導入し、`/mock/*`をdevビルド限定（`import.meta.env.DEV`等）で`React.lazy` + `Suspense`により遅延読み込みする構成にする
-- [ ] Step 8.2: `/mock/login`（ログイン画面モック）を作成する
-- [ ] Step 8.3: `/mock/register`（ユーザ登録画面モック、メール送信・PW設定の2ステップ）を作成する
-- [ ] Step 8.4: `/mock/dashboard`（管理者ダッシュボードモック）を作成する
-- [ ] Step 8.5: `/mock/master-data`（マスタメンテナンス画面モック）を作成する
-- [ ] Step 8.6: `/mock/permissions`（権限設定画面モック）を作成する
-- [ ] Step 8.7: `/mock/catalog`（コンポーネントカタログ）を作成する。UNIT-01の全共通コンポーネントを一覧表示する
+- [x] Step 8.1: React Routerを導入し、`/mock/*`をdevビルド限定（`import.meta.env.DEV`等）で`React.lazy` + `Suspense`により遅延読み込みする構成にする（`lazy()`呼び出し自体を`import.meta.env.DEV`の三項演算子内に置く方式を採用。JSX側だけ条件分岐する方式では`lazy()`呼び出しの副作用によりバンドラーがコード分割チャンクを除去できないことが判明したため）
+- [x] Step 8.2: `/mock/login`（ログイン画面モック）を作成する
+- [x] Step 8.3: `/mock/register`（ユーザ登録画面モック、メール送信・PW設定の2ステップ）を作成する
+- [x] Step 8.4: `/mock/dashboard`（管理者ダッシュボードモック）を作成する
+- [x] Step 8.5: `/mock/master-data`（マスタメンテナンス画面モック）を作成する
+- [x] Step 8.6: `/mock/permissions`（権限設定画面モック）を作成する
+- [x] Step 8.7: `/mock/catalog`（コンポーネントカタログ）を作成する。UNIT-01の全共通コンポーネントを一覧表示する
 
 ### 9. Mock Screens Unit Testing
 
-- [ ] Step 9.1: 5つの代表画面モック（login/register/dashboard/master-data/permissions）の画面状態（通常/空/エラー）が正しく切り替わることを検証するテストを作成する
-- [ ] Step 9.2: `/mock/*`ルートが本番ビルドのバンドルに含まれないこと（コード分割）を検証する
-- [ ] Step 9.3: **検証チェックポイント**: `npm test`、`npm run build`が通ることを確認する
+- [x] Step 9.1: 5つの代表画面モック（login/register/dashboard/master-data/permissions）の画面状態（通常/空/エラー）が正しく切り替わることを検証するテストを作成する（14テスト）
+- [x] Step 9.2: `/mock/*`ルートが本番ビルドのバンドルに含まれないこと（コード分割）を検証する — `npm run build`の出力（モック関連チャンクが生成されない）と`dist/assets/*.js`へのgrep（モック関連文字列を含まない）で確認した
+- [x] Step 9.3: **検証チェックポイント**: `npm test`（24ファイル・65テスト全て成功）、`npm run build`、`npm run lint`、`npm run format`がすべて通ることを確認した
 
 ### 10. Documentation Generation
 

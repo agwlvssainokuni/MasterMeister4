@@ -14,8 +14,34 @@
  * limitations under the License.
  */
 
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+// devビルド限定ルート（/mock/*）。lazy()呼び出し自体をimport.meta.env.DEVの
+// 三項演算子内に置くことで、本番ビルド時（DEV=falseへ静的に置換される）に
+// 到達不能なブランチとしてバンドラーに削除させ、import()のコード分割チャンクごと
+// 本番バンドルから排除する（SECURITY-09対応）。JSX側だけを条件分岐させる方式では
+// lazy()呼び出し自体は副作用ありとみなされ除去されないため、この方式にしている。
+const MockRoutes = import.meta.env.DEV ? lazy(() => import('./mocks/MockRoutes')) : null
+
 function App() {
-  return <div>MasterMeister</div>
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<div>MasterMeister</div>} />
+        {MockRoutes ? (
+          <Route
+            path="/mock/*"
+            element={
+              <Suspense fallback={null}>
+                <MockRoutes />
+              </Suspense>
+            }
+          />
+        ) : null}
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App

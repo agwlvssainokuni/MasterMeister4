@@ -29,5 +29,75 @@
   },
   "footer": {
     "version": "Version {{version}}"
+  },
+  "mock": {
+    "catalog": {
+      "title": "Component Catalog",
+      "subtitle": "Common components and representative screen mocks built in UNIT-01 (dev build only)",
+      "tokens": "Design Tokens",
+      "components": "Components",
+      "screens": "Representative Screen Mocks"
+    },
+    "login": {
+      "title": "Log In",
+      "email": "Email address",
+      "password": "Password",
+      "emailFormat": "Please enter a valid email address",
+      "failed": "Incorrect email address or password",
+      "register": "Don't have an account?"
+    },
+    "register": {
+      "step1Title": "User Registration",
+      "email": "Email address",
+      "sent": "A confirmation email has been sent. Please set your password from the link in the email.",
+      "step2Title": "Set Password",
+      "password": "Password",
+      "passwordConfirm": "Confirm password",
+      "passwordMismatch": "Passwords do not match",
+      "tokenError": "This link has expired or is invalid",
+      "complete": "Registration complete. Please wait for administrator approval."
+    },
+    "dashboard": {
+      "title": "Pending User Approvals",
+      "email": "Email address",
+      "displayName": "Display name",
+      "status": "Status",
+      "registeredAt": "Registered at",
+      "actions": "Actions",
+      "statusAll": "All",
+      "statusPending": "Pending",
+      "statusActive": "Active",
+      "statusDisabled": "Disabled",
+      "searchPlaceholder": "Search by email or display name",
+      "approveTitle": "Confirm User Approval",
+      "approveMessage": "Approve this user?",
+      "approved": "approved",
+      "rejectTitle": "Confirm User Rejection",
+      "rejectMessage": "Reject this user?",
+      "rejected": "rejected"
+    },
+    "masterData": {
+      "title": "Master Data Maintenance",
+      "connection": "Connection",
+      "schema": "Schema",
+      "table": "Table",
+      "permission": "Permission",
+      "addRow": "Add row",
+      "changes": "{{added}} added / {{updated}} updated / {{removed}} removed",
+      "applyTitle": "Confirm Apply Changes",
+      "applyMessage": "Apply all pending changes together?",
+      "applied": "Changes applied",
+      "cellError": "Only numeric values are allowed"
+    },
+    "permissions": {
+      "title": "Permission Settings",
+      "principal": "User / Group",
+      "resource": "Resource",
+      "primary": "Primary permission",
+      "auxiliary": "Auxiliary permission",
+      "edit": "Edit",
+      "editTitle": "Edit Permission",
+      "saved": "Permission settings saved"
+    }
   }
 }

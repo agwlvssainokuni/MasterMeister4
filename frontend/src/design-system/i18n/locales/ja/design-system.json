@@ -29,5 +29,75 @@
   },
   "footer": {
     "version": "バージョン {{version}}"
+  },
+  "mock": {
+    "catalog": {
+      "title": "コンポーネントカタログ",
+      "subtitle": "UNIT-01で構築した共通コンポーネント・代表画面モックの一覧です（開発ビルド限定）",
+      "tokens": "デザイントークン",
+      "components": "コンポーネント",
+      "screens": "代表画面モック"
+    },
+    "login": {
+      "title": "ログイン",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "emailFormat": "メールアドレスの形式が正しくありません",
+      "failed": "メールアドレスまたはパスワードが正しくありません",
+      "register": "アカウントをお持ちでない方はこちら"
+    },
+    "register": {
+      "step1Title": "ユーザ登録",
+      "email": "メールアドレス",
+      "sent": "確認メールを送信しました。メール内のリンクからパスワードを設定してください。",
+      "step2Title": "パスワード設定",
+      "password": "パスワード",
+      "passwordConfirm": "パスワード（確認）",
+      "passwordMismatch": "パスワードが一致しません",
+      "tokenError": "リンクの有効期限が切れているか、無効なリンクです",
+      "complete": "登録が完了しました。管理者の承認をお待ちください。"
+    },
+    "dashboard": {
+      "title": "承認待ちユーザ一覧",
+      "email": "メールアドレス",
+      "displayName": "表示名",
+      "status": "状態",
+      "registeredAt": "登録日時",
+      "actions": "操作",
+      "statusAll": "すべて",
+      "statusPending": "承認待ち",
+      "statusActive": "有効",
+      "statusDisabled": "無効化",
+      "searchPlaceholder": "メールアドレス・表示名で検索",
+      "approveTitle": "ユーザ承認の確認",
+      "approveMessage": "を承認します。よろしいですか？",
+      "approved": "を承認しました",
+      "rejectTitle": "ユーザ却下の確認",
+      "rejectMessage": "を却下します。よろしいですか？",
+      "rejected": "を却下しました"
+    },
+    "masterData": {
+      "title": "マスタメンテナンス",
+      "connection": "接続",
+      "schema": "スキーマ",
+      "table": "テーブル",
+      "permission": "権限",
+      "addRow": "行を追加",
+      "changes": "追加 {{added}}件 / 更新 {{updated}}件 / 削除 {{removed}}件",
+      "applyTitle": "変更の反映確認",
+      "applyMessage": "変更内容をまとめて反映します。よろしいですか？",
+      "applied": "変更を反映しました",
+      "cellError": "数値のみ入力できます"
+    },
+    "permissions": {
+      "title": "権限設定",
+      "principal": "ユーザ／グループ",
+      "resource": "対象リソース",
+      "primary": "主権限",
+      "auxiliary": "補助権限",
+      "edit": "編集",
+      "editTitle": "権限の編集",
+      "saved": "権限設定を保存しました"
+    }
   }
 }

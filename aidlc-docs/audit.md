@@ -639,3 +639,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション6-7完了
 
 ---
+
+## UNIT-01 Code Generation Part 2 - セクション8-9完了（モック画面生成・テスト）
+**Timestamp**: 2026-07-20T19:12:00Z
+**User Input**: （継続実行）
+**AI Response**: "reference/mocks/を基に、frontend/src/mocks/配下に代表5画面（LoginMock, RegisterMock［2ステップ、デモ導線で通常/送信完了/エラー状態を切替可能］, DashboardMock, MasterDataMock, PermissionsMock［Q8=Aに基づく汎用レイアウト、新規実装］）とCatalogPage（トークン・全コンポーネント showcase、代表画面へのリンク）、MockRoutes.tsx（/mock/*ルーティング）、data/sample.tsを作成。App.tsxにReact Router導入。当初`{import.meta.env.DEV ? <Route .../> : null}`でJSX側のみ条件分岐する実装では、`lazy()`呼び出し自体がバンドラーに副作用ありとみなされ本番ビルドにMockRoutesの別チャンクが生成されてしまう不具合を発見。`const MockRoutes = import.meta.env.DEV ? lazy(...) : null`とlazy呼び出し自体を三項演算子内に置く方式に修正し、本番ビルドの成果物からモック関連コードが完全に排除されること（モジュール数117→66、dist/assets/*.jsへのgrepで確認）を実機検証。5画面モックのテスト14件を追加。npm test（24ファイル・65テスト）/build/lint/formatすべて成功。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション8-9完了
+
+---

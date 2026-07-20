@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation Part 2（セクション6-7完了）
-- **Next Stage**: セクション8-9（モック画面生成・テスト）へ
+- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation Part 2（セクション8-9完了）
+- **Next Stage**: セクション10-12（ドキュメント・最終ビルド検証）へ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-01)
