@@ -4,13 +4,13 @@
 
 ## 実行チェックリスト
 
-- [ ] Step A: personas.md を作成する（一般ユーザ／管理者の2ペルソナ。回答に応じて細分化）
-- [ ] Step B: stories.md の構成（エピック分割）を決定する（requirements.md §5.0〜§5.8に対応するエピック単位）
-- [ ] Step C: 各エピックについて、INVEST基準を満たすストーリーを作成する（Independent, Negotiable, Valuable, Estimable, Small, Testable）
-- [ ] Step D: 各ストーリーに受け入れ基準を付与する（回答のフォーマットに従う）
-- [ ] Step E: 各ストーリーにペルソナを紐付ける
-- [ ] Step F: ストーリー一覧に実装優先順位（requirements.mdの優先順位に準拠）を反映する
-- [ ] Step G: PBT対象として識別済みのプロパティ（権限判定ロジック・YAML入出力・SQL生成）を、該当ストーリーの受け入れ基準または備考に反映する（回答に応じる）
+- [x] Step A: personas.md を作成する（一般ユーザ／管理者の2ペルソナ。回答に応じて細分化）
+- [x] Step B: stories.md の構成（エピック分割）を決定する（requirements.md §5.0〜§5.8に対応するエピック単位＋監査ログ閲覧のEpic9を追加）
+- [x] Step C: 各エピックについて、INVEST基準を満たすストーリーを作成する（Independent, Negotiable, Valuable, Estimable, Small, Testable）
+- [x] Step D: 各ストーリーに受け入れ基準を付与する（Given-When-Then形式）
+- [x] Step E: 各ストーリーにペルソナを紐付ける
+- [x] Step F: ストーリー一覧に実装優先順位（requirements.mdの優先順位に準拠、P0〜P5）を反映する
+- [x] Step G: PBT対象として識別済みのプロパティ（権限判定ロジック・YAML入出力・SQL生成）を、該当ストーリーの受け入れ基準または備考に反映する
 
 ---
 
