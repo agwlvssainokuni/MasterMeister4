@@ -383,3 +383,27 @@
 **Context**: CONSTRUCTION - UNIT-01 Functional Design、成果物生成
 
 ---
+
+## UNIT-01 Functional Design - 完了メッセージ提示・確認事項提起
+**Timestamp**: 2026-07-20T14:12:00Z
+**User Input**: "確認すべき事項は？"
+**AI Response**: "3点の判断事項を提起: (1) モック画面の閲覧経路（本番ビルドに含めるか、devビルド限定ルートにするか）、(2) DataTable等の実装レベル（静的モック用の簡易版か、後続ユニットの実データ対応まで見据えるか）、(3) アイコンの扱い（サードパーティ不使用方針を受けアイコンも自作するか）。それぞれ推奨案（dev限定ルート／簡易版／自作SVG）を提示。"
+**Context**: CONSTRUCTION - UNIT-01 Functional Design、レビュー観点の提起
+
+---
+
+## UNIT-01 Functional Design - 確認事項の決定、フォントの扱いを質問
+**Timestamp**: 2026-07-20T14:15:00Z
+**User Input**: "1=devビルド限定ルート、2=簡易版、3=自作。あと、フォントについて決めておいた方が良いか？"
+**AI Response**: "frontend-components.mdに3点の決定（devビルド限定ルート、DataTable等は簡易版として実装し後続ユニットで拡張、アイコンは自作SVG）を反映。Iconコンポーネントを新設コンポーネント一覧に追加。フォントについては配色・タイポグラフィと同じくNFR（技術選定）の範疇であり、次のNFR Requirementsステージで扱うことを提案。"
+**Context**: CONSTRUCTION - UNIT-01 Functional Design、レビュー反映
+
+---
+
+## UNIT-01 Functional Design - 承認、NFR Requirementsへ
+**Timestamp**: 2026-07-20T14:20:00Z
+**User Input**: "はい、NFR Requirementsへ進めてください"
+**AI Response**: "Functional Designを承認として記録。unit-01-functional-design-plan.mdのStep Dを完了に更新。aidlc-state.mdのCurrent Unit - Stage Progressを更新（Functional Design完了、NFR Requirements着手）。NFR Requirementsに着手。"
+**Context**: CONSTRUCTION - UNIT-01 Functional Design 完了、NFR Requirements開始
+
+---
