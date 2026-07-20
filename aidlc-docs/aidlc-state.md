@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - Functional Design（計画への回答待ち）
-- **Next Stage**: unit-01-functional-design-plan.mdの回答を受け、frontend-components.mdを作成
+- **Current Stage**: UNIT-01 デザインシステム基盤 - Functional Design（成果物提示、承認待ち）
+- **Next Stage**: 承認後、NFR Requirementsへ
 - **Status**: 実施中
 
 ## Current Unit - Stage Judgment (UNIT-01)

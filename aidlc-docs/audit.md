@@ -367,3 +367,19 @@
 **Context**: CONSTRUCTION - UNIT-01 Functional Design、計画提示
 
 ---
+
+## UNIT-01 Functional Design - 中間コミット依頼
+**Timestamp**: 2026-07-20T14:06:00Z
+**User Input**: "ここまででコミット。"
+**AI Response**: "stories.md/unit-of-work-story-map.mdのトレーサビリティ修正、aidlc-state.md/audit.mdの更新、unit-01-functional-design-plan.mdの新規作成をコミット（88e98f4）。"
+**Context**: CONSTRUCTION - UNIT-01 Functional Design、中間コミット
+
+---
+
+## UNIT-01 Functional Design - 回答受領・成果物生成
+**Timestamp**: 2026-07-20T14:10:00Z
+**User Input**: "Q1=A, Q2=A, Q3=A, Q4=B, Q5=A, Q6=A, Q7=A, Q8=A"
+**AI Response**: "unit-01-functional-design-plan.mdの[Answer]:タグに回答を記入。曖昧な回答なし、追加質問不要と判断。回答（PublicLayout/AppShellの2レイアウト、全10ユニット見込みのナビ項目仮決め、日本語ダミーデータ、通常/空/エラーの3状態、デスクトップ優先、静的モック、design-system/とmocks/の配置分離、権限設定画面は汎用レイアウト）に基づき、aidlc-docs/construction/unit-01/functional-design/frontend-components.mdを作成。グランドデザイン（PublicLayout/AppShell構成、ナビゲーション9項目、レスポンシブ方針）と代表5画面（ログイン、ユーザ登録2ステップ、管理者ダッシュボード、マスタメンテナンス、権限設定）のコンポーネント構造・画面状態を定義し、UNIT-01で新設する共通コンポーネント一覧（PublicLayout/AppShell/Header/SideNav/Footer/AuthCard/PageHeader/DataTable/EmptyState/ErrorAlert/SuccessAlert/ConfirmDialog/FilterBar）を導出。計画チェックリストStep A〜Cを完了、Step D（承認待ち）へ。"
+**Context**: CONSTRUCTION - UNIT-01 Functional Design、成果物生成
+
+---
