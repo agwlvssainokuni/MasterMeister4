@@ -375,3 +375,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation (Step 15, Request Changes cycle)
 
 ---
+
+## UNIT-01 Code Generation - Request Changes (TextArea Component Added)
+**Timestamp**: 2026-07-20T13:27:00Z
+**User Input**: "TextAreaも欲しい。"
+**AI Response**: "Added TextArea component (frontend/src/design-system/components/TextArea/) mirroring TextField's structure: bare <textarea>, testId prop, works with FormField's render-props pattern, plus a `monospace` prop that switches to the Noto Sans Mono font token (targeted at raw SQL entry per STORY-7.1). Added tests (multi-line input, testId, aria-invalid via FormField, monospace style). Added to design-system barrel export and to CatalogPage (new section + test assertion). Updated unit-01-code-generation-plan.md (Step 4, Step 5) and aidlc-docs/construction/unit-01/code/summary.md accordingly. Verification: tsc --noEmit clean, vitest run 9 files/31 tests passed, oxlint clean, prettier --check clean, npm run build succeeded."
+**Context**: CONSTRUCTION - UNIT-01 Code Generation (Step 15, Request Changes cycle)
+
+---

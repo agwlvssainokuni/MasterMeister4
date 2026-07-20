@@ -47,6 +47,7 @@
 ### Step 4: 共通UIコンポーネント生成
 - [x] 4-1. Button（`frontend/src/design-system/components/Button/`）
 - [x] 4-2. TextField（テキスト入力、`frontend/src/design-system/components/TextField/`）
+- [x] 4-2b. TextArea（複数行入力、`frontend/src/design-system/components/TextArea/`。`monospace`プロップでNoto Sans Mono表示に切替可能。Code Generation完了後のレビュー指摘で追加）
 - [x] 4-3. Select（選択、`frontend/src/design-system/components/Select/`。ドロップダウン表示用に最小限のChevronDownアイコンを1つ自作SVGコンポーネントとして追加）
 - [x] 4-4. Checkbox（`frontend/src/design-system/components/Checkbox/`）
 - [x] 4-5. RadioButton（`frontend/src/design-system/components/RadioButton/`）
@@ -56,7 +57,7 @@
 - [x] 4-9. バレルファイル（`frontend/src/design-system/index.ts`）で全コンポーネントを名前付きエクスポートする
 
 ### Step 5: 共通UIコンポーネントのユニットテスト
-- [x] 5-1. Button, TextField, Select, Checkbox, RadioButton, FormField, ErrorBoundaryの各コンポーネントについて、レンダリング・基本的なユーザ操作・キーボード操作・ARIA属性をVitest + React Testing Libraryで検証するテストを作成する（7ファイル・25テスト、全てパス）
+- [x] 5-1. Button, TextField, TextArea, Select, Checkbox, RadioButton, FormField, ErrorBoundaryの各コンポーネントについて、レンダリング・基本的なユーザ操作・キーボード操作・ARIA属性をVitest + React Testing Libraryで検証するテストを作成する（9ファイル・31テスト、全てパス）
 
 ### Step 6: ドキュメント生成
 - [x] 6-1. `frontend/README.md`を作成する（セットアップ手順、開発サーバ起動、テスト実行、ビルド、`npm audit`実行手順）

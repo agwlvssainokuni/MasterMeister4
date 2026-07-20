@@ -22,6 +22,7 @@ import { ErrorBoundary } from '../components/ErrorBoundary'
 import { FormField } from '../components/FormField'
 import { RadioButton } from '../components/RadioButton'
 import { Select } from '../components/Select'
+import { TextArea } from '../components/TextArea'
 import { TextField } from '../components/TextField'
 import styles from './CatalogPage.module.css'
 
@@ -66,6 +67,15 @@ export function CatalogPage() {
           error="有効なメールアドレスを入力してください"
         >
           {(fieldProps) => <TextField {...fieldProps} type="email" />}
+        </FormField>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>TextArea</h2>
+        <FormField label="SQL" helperText="monospaceを指定するとNoto Sans Monoで表示されます">
+          {(fieldProps) => (
+            <TextArea {...fieldProps} monospace defaultValue={'SELECT id, name\nFROM 顧客'} />
+          )}
         </FormField>
       </section>
 

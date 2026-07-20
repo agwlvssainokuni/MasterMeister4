@@ -37,6 +37,7 @@ describe('CatalogPage', () => {
     for (const heading of [
       'Button',
       'TextField / FormField',
+      'TextArea',
       'Select',
       'Checkbox',
       'RadioButton',

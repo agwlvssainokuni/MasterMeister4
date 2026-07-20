@@ -24,6 +24,9 @@ export type { ButtonProps, ButtonVariant } from './components/Button'
 export { TextField } from './components/TextField'
 export type { TextFieldProps } from './components/TextField'
 
+export { TextArea } from './components/TextArea'
+export type { TextAreaProps } from './components/TextArea'
+
 export { Select } from './components/Select'
 export type { SelectProps, SelectOption } from './components/Select'
 
