@@ -6,25 +6,39 @@ services:
       - "1025:1025" # SMTP
 
   mysql:
-    image: mysql:8
+    image: mysql:8.4
     environment:
       MYSQL_ROOT_PASSWORD: mastermeister
       MYSQL_DATABASE: mastermeister
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init/mysql:/docker-entrypoint-initdb.d:ro
 
   mariadb:
-    image: mariadb:11
+    image: mariadb:11.8
     environment:
       MARIADB_ROOT_PASSWORD: mastermeister
       MARIADB_DATABASE: mastermeister
     ports:
       - "3307:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./init/mariadb:/docker-entrypoint-initdb.d:ro
 
   postgres:
-    image: postgres:17
+    image: postgres:18
     environment:
       POSTGRES_PASSWORD: mastermeister
       POSTGRES_DB: mastermeister
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./init/postgres:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  mysql_data:
+  mariadb_data:
+  postgres_data:

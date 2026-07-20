@@ -1095,3 +1095,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Complete、レビュー対応（Request Changes扱い）
 
 ---
+
+## devenv - volume永続化・イメージLTS更新・動作確認用DB初期構築
+**Timestamp**: 2026-07-20T22:54:00Z
+**User Input**: "devenvについて。volumeを追加してデータを永続化して。DBの初期構築して。" ／ "最新のLTSで。" ／ "PostgreSQLは/var/lib/postgresql にマウント。dataはいらなくなった。" ／ "あと、MasterMeister動作確認用のDBを作って、サンプルのデータを投入して欲しい。" ／ "一応、mariadbはmariadb用のを作って。" ／ "OK"
+**AI Response**: "`devenv/docker-compose.yml`のmysql/mariadb/postgresサービスに名前付きvolumeを追加して永続化。WebSearchで確認の上、イメージを最新LTS/安定版に更新（mysql:8.4 LTS、mariadb:11.8 LTS、postgres:18）。postgresのマウント先はユーザ指示により`/var/lib/postgresql`（`/data`を付けない）に設定。マスタメンテナンス対象らしいサンプルとして`categories`・`products`の2テーブル（カテゴリ3件・商品6件）を用意し、`devenv/init/{mysql,mariadb,postgres}/01-sample-data.sql`として作成（mariadbは共用ではなく専用ファイルとした）、各サービスに`/docker-entrypoint-initdb.d`としてマウント。`docker compose up -d`で起動したところ、postgres/mysql/mariadbいずれのvolumeにも本プロジェクトと無関係な既存データ（2025-09-13付、同名`devenv_*`volumeの残存）が既に存在しており、postgres:18は仕様上これを検知して起動失敗、mysql/mariadbはrootパスワード不一致でAccess Deniedとなった。AskUserQuestionで削除可否を確認の上、3つのvolumeを削除して`docker compose up -d`をやり直し、初期化スクリプトの実行・サンプルデータ投入・コンテナ再起動後のデータ永続化をいずれも確認した。"
+**Context**: 開発環境（devenv）整備、UNIT-03着手前の準備
+
+---
