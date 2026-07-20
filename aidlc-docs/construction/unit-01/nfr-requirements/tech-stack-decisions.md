@@ -14,11 +14,17 @@
 - 実装方針: テーマコンテキスト（React Context）で管理し、選択状態を`localStorage`に保存。システム追従時は`matchMedia('(prefers-color-scheme: dark)')`を使用
 - CSS実装: `<html data-theme="light|dark">`をトリガーに、CSS変数（デザイントークン）を切り替える方式とする（詳細トークン設計はNFR Designで行う）
 
-## 多言語対応・i18n（Q4=B）
+## 多言語対応・i18n（Q4=B、requirements.md §7.8 NFR-7.1〜7.3）
 
+### フロントエンド
 - ライブラリ: react-i18next
 - デフォルト言語: 日本語。ブラウザの`navigator.language`を初期検出に用い、`localStorage`に選択言語を保存する
 - 対応言語: 日本語・英語（英語の翻訳リソースは本ユニットで骨組みを用意し、文言の充実は各ユニット実装時に追加していく）
+
+### バックエンド（NFR-7.3対応、UNIT-01のリポジトリ骨格構築で合わせて用意）
+- Spring Bootの`MessageSource`（`ResourceBundleMessageSource`等）を設定する
+- メッセージバンドルの雛形（`messages_ja.properties` / `messages_en.properties`）を用意する。UNIT-01時点では実際のメッセージ内容は空、または最小限のプレースホルダーのみとし、各ユニットの実装時に必要なメッセージキーを追加していく
+- リクエストのロケール解決方式（`Accept-Language`ヘッダー等）はUNIT-02（最初の実業務ロジックユニット）で確定する
 
 ## アクセシビリティ（Q5=A）
 

@@ -431,3 +431,19 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Requirements、成果物生成
 
 ---
+
+## UNIT-01 NFR Requirements - バックエンドi18n基盤の抜け漏れを指摘
+**Timestamp**: 2026-07-20T14:31:00Z
+**User Input**: "確認すべき事項は？"
+**AI Response**: "nfr-requirements.mdの再確認により、requirements.md §7.8 NFR-7.3（バックエンド・フロントエンドともにi18n基盤を最初の実装ユニットから導入する）に対し、フロントエンドのi18n（react-i18next）のみ記載されておりbackend側のi18n基盤（MessageSource設定等）がUNIT-01のスコープから漏れていたことを発見。対応方針として、(A) UNIT-01のbackend最小スケルトンにSpring側i18n基盤も合わせて用意する、(B) backend i18n導入はUNIT-02まで待つ、の2案を提示し、Aを推奨。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements、レビュー観点の提起
+
+---
+
+## UNIT-01 NFR Requirements - バックエンドi18n基盤の追加決定
+**Timestamp**: 2026-07-20T14:32:00Z
+**User Input**: "A"
+**AI Response**: "nfr-requirements.mdにNFR-01-10（backendのMessageSource設定、messages_ja/en.propertiesの空の雛形をUNIT-01のリポジトリ骨格構築で用意）を追加。tech-stack-decisions.mdの多言語対応セクションにバックエンド側の技術選定を追記。unit-of-work.mdのUNIT-01「リポジトリ骨格構築」にもbackendのi18n基盤を含める旨を追記。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements、要件追加、決定確定
+
+---

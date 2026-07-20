@@ -30,7 +30,8 @@ N/A — 本ユニットは可用性SLAを持つ稼働システムではない。
 - **NFR-01-06**: アクセシビリティはWCAG 2.1 Level AA相当を目標とする（キーボード操作、スクリーンリーダー対応、コントラスト比等）（Q5=A）
 - **NFR-01-07**: ブラウザサポートはモダンブラウザの最新2バージョン（Chrome/Edge/Firefox/Safari）とし、レガシーブラウザは対象外とする（Q6=A）
 - **NFR-01-08**: ダークモード（ライト／ダーク／システム追従の3モード）に対応する。選択状態はlocalStorageに保存する（Q3=A）
-- **NFR-01-09**: 多言語対応（日本語をデフォルトとし、英語にも対応できる構造）とする（Q4=B、requirements.md冒頭の複雑度要因「多言語対応」に対応）
+- **NFR-01-09**: フロントエンドの多言語対応（日本語デフォルト、英語対応、react-i18next）とする（Q4=B、requirements.md §7.8 NFR-7.1/7.2に対応）
+- **NFR-01-10**: NFR-7.3（「バックエンド・フロントエンドともにi18n基盤は最初の実装ユニットから導入する」）に基づき、UNIT-01で構築するbackendの最小起動スケルトンにも、Spring側のi18n基盤（`MessageSource`設定、`messages_ja.properties`/`messages_en.properties`の空の雛形）を合わせて用意する。実際のメッセージ内容は各ユニットの実装時に追加する（INCEPTION継続審議で決定）
 
 ## PBT (Property-Based Testing) 拡張の適用性
 N/A（フル適用）— UNIT-01は静的UIのみでアルゴリズム的処理を持たないため、PBT-01〜09は対象外。functional-design/frontend-components.mdの「Testable Properties」セクションに記録済み。
