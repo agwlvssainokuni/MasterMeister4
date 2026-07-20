@@ -783,3 +783,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design 完了、NFR Requirements開始
 
 ---
+
+## UNIT-02 NFR Requirements - 計画作成
+**Timestamp**: 2026-07-20T21:15:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Security Baseline拡張（.aidlc-rule-details/extensions/security/baseline/security-baseline.md）とProperty-Based Testing拡張（.aidlc-rule-details/extensions/testing/property-based/property-based-testing.md）のルールを確認。requirements.md §7.1〜7.12を横断的に再確認し、Scalability/AvailabilityはN/A、Performance/Security Baseline（多数）/Reliability/Maintainability（一部NFR-9.1で確定済み）/PBT拡張（PBT-09のみ、PBT-01はFunctional Designで対応済み）が該当と評価。SECURITY-06/07はクラウドIAM・ネットワーク構成を伴わない自己ホスト構成のためN/Aと判定。NFR-4.7（リフレッシュトークンのクライアント配信方式）はrequirements.mdの記載どおりNFR Design段階に据え置き、今回の質問には含めないと判断。unit-02-nfr-requirements-plan.mdを作成し、認証基盤フレームワーク（Spring Security OAuth2 Resource Server vs 独自Filter）、JWT署名方式・鍵管理、パスワードハッシュアルゴリズム（BCrypt vs Argon2）、登録エンドポイントの濫用防止、バックエンドPBTフレームワーク（NFR-5.2の最終確定）、ログ出力形式、機微設定情報の取り扱いの7問を出題。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Requirements、計画提示
+
+---
