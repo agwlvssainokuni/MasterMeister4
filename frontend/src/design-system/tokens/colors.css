@@ -1,0 +1,44 @@
+:root,
+[data-theme='light'] {
+  /* Neutral scale */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f7f8f9;
+  --color-neutral-100: #eceef1;
+  --color-neutral-200: #d8dce1;
+  --color-neutral-300: #b9c0c9;
+  --color-neutral-400: #8b95a1;
+  --color-neutral-500: #667085;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #364152;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+
+  /* Primary (brand) */
+  --color-primary-50: #eef4ff;
+  --color-primary-100: #d9e6ff;
+  --color-primary-300: #85aaff;
+  --color-primary-500: #2f6fed;
+  --color-primary-600: #1d5bd6;
+  --color-primary-700: #1747a8;
+
+  /* Semantic */
+  --color-success-500: #12b76a;
+  --color-warning-500: #f79009;
+  --color-error-500: #f04438;
+  --color-info-500: #2f6fed;
+
+  /* Surface / text / border roles (compose from the scales above) */
+  --color-bg-body: var(--color-neutral-0);
+  --color-bg-surface: var(--color-neutral-50);
+  --color-bg-disabled: var(--color-neutral-100);
+
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-disabled: var(--color-neutral-400);
+  --color-text-inverse: var(--color-neutral-0);
+  --color-text-error: var(--color-error-500);
+
+  --color-border-default: var(--color-neutral-200);
+  --color-border-focus: var(--color-primary-500);
+  --color-border-error: var(--color-error-500);
+}

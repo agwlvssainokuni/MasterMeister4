@@ -1,0 +1,9 @@
+{
+  "errorBoundary": {
+    "title": "問題が発生しました",
+    "message": "予期しないエラーが発生しました。画面を再読み込みしてください。"
+  },
+  "formField": {
+    "requiredIndicator": "必須"
+  }
+}

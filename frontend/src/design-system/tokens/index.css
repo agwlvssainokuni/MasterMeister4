@@ -1,0 +1,12 @@
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-body);
+}

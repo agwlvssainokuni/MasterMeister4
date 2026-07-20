@@ -359,3 +359,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2 Generation (Step 1)
 
 ---
+
+## UNIT-01 Code Generation Part 2 - Steps 2-6 Executed
+**Timestamp**: 2026-07-20T13:08:00Z
+**User Input**: (N/A - AI-initiated execution of the approved plan)
+**AI Response**: "Executed Steps 2-6 of unit-01-code-generation-plan.md. Step 2: installed @fontsource/noto-sans-jp and @fontsource/noto-sans-mono (verified OFL-1.1 license), created frontend/src/design-system/tokens/{colors,typography,spacing,breakpoints.ts,index.css} with theme-ready [data-theme='light'] structure. Step 3: initialized react-i18next (frontend/src/design-system/i18n/), ja/en common.json namespaces (errorBoundary, formField strings), default language ja. Step 4: generated Button, TextField, Select（+ChevronDownIcon）, Checkbox, RadioButton, FormField（render-props pattern for id/aria-describedby/aria-invalid propagation）, ErrorBoundary（class component, top-level only, console.error only, generic i18n fallback UI, no internal details exposed）, all with testId props and barrel export at design-system/index.ts. Rewrote main.tsx to wrap <App/> in the single top-level ErrorBoundary, and App.tsx into a placeholder screen (documented as such, satisfying STORY-0.1's 'actually functioning' requirement without pre-building a real feature screen per FR-0.3) exercising all components plus a monospace SQL sample block. Removed Vite's default demo assets/boilerplate CSS. Step 5: wrote *.test.tsx for all 7 components (25 tests total covering rendering, click/keyboard interaction, ARIA attributes) — all passing. Step 6: rewrote frontend/README.md (setup/dev/test/lint/format/build/audit instructions, font license notice) and created aidlc-docs/construction/unit-01/code/summary.md. Verification: `tsc --noEmit` clean, `vitest run` 7 files/25 tests passed, `oxlint` clean (exit 0), `npm run build` succeeded, `npm audit` 0 vulnerabilities. Updated unit-01-code-generation-plan.md checkboxes for Steps 2-6."
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2 Generation (Steps 10-13, loop over Steps 2-6)
+
+---

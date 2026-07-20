@@ -34,32 +34,32 @@
 **注記**: `backend/`, `devenv/`ディレクトリは本ユニットでは作成しない。バックエンドコンポーネントが必要になるUNIT-02以降で、必要になった時点で作成する（`requirements.md`§4のプロジェクト構成は維持しつつ、段階的に実体化する）
 
 ### Step 2: デザイントークン生成
-- [ ] 2-1. `@fontsource/noto-sans-jp`と`@fontsource/noto-sans-mono`をインストールし、フォントファイルを自己ホストする（外部CDN非依存）
-- [ ] 2-2. 色・タイポグラフィ（本文font-familyに Noto Sans JP、コード/SQL表示用font-familyに `'Noto Sans Mono', 'Noto Sans JP', monospace`（日本語文字はNoto Sans JPへフォールバック）を設定）・スペーシング・ブレークポイント（デスクトップ/タブレット2段階）のデザイントークンをCSS変数として定義する（`frontend/src/design-system/tokens/`）
-- [ ] 2-3. テーマ切替可能な構造（`[data-theme="light"]`セレクタ）としつつ、初期値はライトテーマのみ定義する
+- [x] 2-1. `@fontsource/noto-sans-jp`と`@fontsource/noto-sans-mono`をインストールし、フォントファイルを自己ホストする（外部CDN非依存）
+- [x] 2-2. 色・タイポグラフィ（本文font-familyに Noto Sans JP、コード/SQL表示用font-familyに `'Noto Sans Mono', 'Noto Sans JP', monospace`（日本語文字はNoto Sans JPへフォールバック）を設定）・スペーシング・ブレークポイント（デスクトップ/タブレット2段階）のデザイントークンをCSS変数として定義する（`frontend/src/design-system/tokens/`）
+- [x] 2-3. テーマ切替可能な構造（`[data-theme="light"]`セレクタ）としつつ、初期値はライトテーマのみ定義する
 
 ### Step 3: i18n基盤セットアップ
-- [ ] 3-1. react-i18nextを初期化する（`frontend/src/design-system/i18n/`）
-- [ ] 3-2. 日本語（`ja`）・英語（`en`）の初期名前空間ファイルを作成する（共通UIコンポーネントの文言: ボタンラベル、フォームバリデーションメッセージ、ErrorBoundaryのフォールバック文言等）
+- [x] 3-1. react-i18nextを初期化する（`frontend/src/design-system/i18n/`）
+- [x] 3-2. 日本語（`ja`）・英語（`en`）の初期名前空間ファイルを作成する（共通UIコンポーネントの文言: ボタンラベル、フォームバリデーションメッセージ、ErrorBoundaryのフォールバック文言等）
 
 ### Step 4: 共通UIコンポーネント生成
-- [ ] 4-1. Button（`frontend/src/design-system/components/Button/`）
-- [ ] 4-2. TextField（テキスト入力、`frontend/src/design-system/components/TextField/`）
-- [ ] 4-3. Select（選択、`frontend/src/design-system/components/Select/`。ドロップダウン表示用に最小限のChevronDownアイコンを1つ自作SVGコンポーネントとして追加）
-- [ ] 4-4. Checkbox（`frontend/src/design-system/components/Checkbox/`）
-- [ ] 4-5. RadioButton（`frontend/src/design-system/components/RadioButton/`）
-- [ ] 4-6. FormField（ラベル・ヘルプテキスト・エラーメッセージのラッパー、`frontend/src/design-system/components/FormField/`）
-- [ ] 4-7. ErrorBoundary（アプリケーション全体のトップレベル用、`frontend/src/design-system/components/ErrorBoundary/`。フォールバック表示は汎用メッセージのみ、内部情報は含めない。捕捉したエラーは`console.error`に出力）
-- [ ] 4-8. 各コンポーネントに`data-testid`を付与できるよう`testId`プロップを用意する（命名規則: `{component}-{element-role}`、例: `login-form-submit-button`）
-- [ ] 4-9. バレルファイル（`frontend/src/design-system/index.ts`）で全コンポーネントを名前付きエクスポートする
+- [x] 4-1. Button（`frontend/src/design-system/components/Button/`）
+- [x] 4-2. TextField（テキスト入力、`frontend/src/design-system/components/TextField/`）
+- [x] 4-3. Select（選択、`frontend/src/design-system/components/Select/`。ドロップダウン表示用に最小限のChevronDownアイコンを1つ自作SVGコンポーネントとして追加）
+- [x] 4-4. Checkbox（`frontend/src/design-system/components/Checkbox/`）
+- [x] 4-5. RadioButton（`frontend/src/design-system/components/RadioButton/`）
+- [x] 4-6. FormField（ラベル・ヘルプテキスト・エラーメッセージのラッパー、`frontend/src/design-system/components/FormField/`）
+- [x] 4-7. ErrorBoundary（アプリケーション全体のトップレベル用、`frontend/src/design-system/components/ErrorBoundary/`。フォールバック表示は汎用メッセージのみ、内部情報は含めない。捕捉したエラーは`console.error`に出力）
+- [x] 4-8. 各コンポーネントに`data-testid`を付与できるよう`testId`プロップを用意する（命名規則: `{component}-{element-role}`、例: `login-form-submit-button`）
+- [x] 4-9. バレルファイル（`frontend/src/design-system/index.ts`）で全コンポーネントを名前付きエクスポートする
 
 ### Step 5: 共通UIコンポーネントのユニットテスト
-- [ ] 5-1. Button, TextField, Select, Checkbox, RadioButton, FormField, ErrorBoundaryの各コンポーネントについて、レンダリング・基本的なユーザ操作・キーボード操作・ARIA属性をVitest + React Testing Libraryで検証するテストを作成する
+- [x] 5-1. Button, TextField, Select, Checkbox, RadioButton, FormField, ErrorBoundaryの各コンポーネントについて、レンダリング・基本的なユーザ操作・キーボード操作・ARIA属性をVitest + React Testing Libraryで検証するテストを作成する（7ファイル・25テスト、全てパス）
 
 ### Step 6: ドキュメント生成
-- [ ] 6-1. `frontend/README.md`を作成する（セットアップ手順、開発サーバ起動、テスト実行、ビルド、`npm audit`実行手順）
-- [ ] 6-2. `aidlc-docs/construction/unit-01/code/summary.md`を作成する（生成した構造・コンポーネント一覧のサマリ、Markdownのみ）
-- [ ] 6-3. `frontend/README.md`にNoto Sans JP・Noto Sans Monoのライセンス表記（いずれもSIL Open Font License 1.1）を記載する
+- [x] 6-1. `frontend/README.md`を作成する（セットアップ手順、開発サーバ起動、テスト実行、ビルド、`npm audit`実行手順）
+- [x] 6-2. `aidlc-docs/construction/unit-01/code/summary.md`を作成する（生成した構造・コンポーネント一覧のサマリ、Markdownのみ）
+- [x] 6-3. `frontend/README.md`にNoto Sans JP・Noto Sans Monoのライセンス表記（いずれもSIL Open Font License 1.1）を記載する
 
 ### Step 7: デプロイ成果物生成
 - **N/A**: 本ユニットは共通UIコンポーネント一式の提供のみであり、単独でデプロイ可能な成果物を持たない。デプロイ関連の成果物は、実際にエンドツーエンドで動作する画面が揃う後続ユニット以降で検討する

@@ -1,0 +1,9 @@
+{
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "message": "An unexpected error occurred. Please reload the page."
+  },
+  "formField": {
+    "requiredIndicator": "Required"
+  }
+}

@@ -1,122 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import {
+  Button,
+  Checkbox,
+  FormField,
+  RadioButton,
+  Select,
+  TextField,
+} from './design-system';
+import styles from './App.module.css';
+
+const RDBMS_OPTIONS = [
+  { value: 'mysql', label: 'MySQL' },
+  { value: 'mariadb', label: 'MariaDB' },
+  { value: 'postgresql', label: 'PostgreSQL' },
+  { value: 'h2', label: 'H2 Database' },
+];
+
+// Placeholder screen for UNIT-01 (STORY-0.1): proves the common UI
+// components render and behave correctly. Real feature screens are built
+// per-unit starting with UNIT-02 (FR-0.3 — no upfront, all-screens mockup).
 function App() {
-  const [count, setCount] = useState(0)
+  const { t } = useTranslation();
+  const [email, setEmail] = useState('');
+  const [rdbms, setRdbms] = useState('mysql');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [dbEngine, setDbEngine] = useState('mysql');
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main className={styles.page}>
+      <h1 className={styles.title}>MasterMeister</h1>
 
-      <div className="ticks"></div>
+      <FormField label="メールアドレス" helperText="登録済みのメールアドレスを入力してください">
+        {(fieldProps) => (
+          <TextField
+            {...fieldProps}
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            testId="email-field-input"
+          />
+        )}
+      </FormField>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <FormField label="対象RDBMS">
+        {(fieldProps) => (
+          <Select
+            {...fieldProps}
+            options={RDBMS_OPTIONS}
+            value={rdbms}
+            onChange={(event) => setRdbms(event.target.value)}
+            testId="rdbms-select-input"
+          />
+        )}
+      </FormField>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <Checkbox
+        label="ログイン状態を保持する"
+        checked={rememberMe}
+        onChange={(event) => setRememberMe(event.target.checked)}
+        testId="remember-me-checkbox"
+      />
+
+      <fieldset>
+        <legend>{t('formField.requiredIndicator')}: DBエンジン</legend>
+        {RDBMS_OPTIONS.map((option) => (
+          <RadioButton
+            key={option.value}
+            label={option.label}
+            name="db-engine"
+            value={option.value}
+            checked={dbEngine === option.value}
+            onChange={() => setDbEngine(option.value)}
+            testId={`db-engine-${option.value}-radio`}
+          />
+        ))}
+      </fieldset>
+
+      <pre className={styles.sqlSample}>
+        {'SELECT id, name FROM 顧客 WHERE status = ?'}
+      </pre>
+
+      <div className={styles.actions}>
+        <Button variant="primary" testId="app-submit-button">
+          送信
+        </Button>
+        <Button variant="secondary" testId="app-cancel-button">
+          キャンセル
+        </Button>
+      </div>
+    </main>
+  );
 }
 
-export default App
+export default App;

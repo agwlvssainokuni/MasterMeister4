@@ -1,0 +1,22 @@
+:root,
+[data-theme='light'] {
+  /* Body text: self-hosted Noto Sans JP, falling back to OS UI fonts */
+  --font-family-base:
+    'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Code / SQL display: self-hosted Noto Sans Mono, falling back to Noto Sans JP
+     for Japanese characters not covered by the monospace font */
+  --font-family-mono: 'Noto Sans Mono', 'Noto Sans JP', ui-monospace, monospace;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  --line-height-base: 1.5;
+  --line-height-tight: 1.25;
+}
