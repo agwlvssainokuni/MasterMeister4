@@ -815,3 +815,19 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design（承認済み文書への追記）、メール件名管理方式の決定
 
 ---
+
+## UNIT-02 NFR Requirements - 内部DBアクセス方式の指摘、追加質問
+**Timestamp**: 2026-07-20T21:37:00Z
+**User Input**: "内部DBにアクセスするさいの仕組みについて触れておいた方が良い。"
+**AI Response**: "requirements.md §2で内部DBのDBアクセス方式（JPA）・DB種別（H2）は既に確定済みだが、UNIT-02がそれを実際に実装する最初のユニットであるにもかかわらずnfr-requirements.md/tech-stack-decisions.mdに反映されていなかった抜けと認識。unit-02-nfr-requirements-plan.mdにQuestion 8〜10（Spring Data JPA、スキーマ管理・マイグレーション方式（Flyway/Liquibase/ddl-auto）、H2の永続化モード）を追加し、それぞれ推奨（A: Spring Data JPA、A: Flyway、A: ファイルベース永続化）を提示。コネクションプールはrequirements.mdの記載が対象RDBMS向けであり内部DBには適用されないため、Spring Boot標準のHikariCPを追加の議論なく用いる方針も合わせて提示。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Requirements、内部DBアクセス方式の追加質問
+
+---
+
+## UNIT-02 NFR Requirements - 内部DBアクセス方式の回答受領・成果物更新
+**Timestamp**: 2026-07-20T21:42:00Z
+**User Input**: "全て推奨通りとする。"
+**AI Response**: "unit-02-nfr-requirements-plan.mdのQuestion 8〜10に全問A（Spring Data JPA、Flyway、H2ファイルベース永続化）で回答を記入。nfr-requirements.mdに新規§7（データアクセス（内部DB））を追加（Security Baseline評価を§8、PBT拡張評価を§9に繰り下げ）。tech-stack-decisions.mdに新規§8（内部DBへのアクセス方式）と依存関係まとめ（spring-boot-starter-data-jpa, com.h2database:h2, org.flywaydb:flyway-core）を追加。計画チェックリストStep A〜Cを更新完了、Step D（承認待ち）へ。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Requirements、内部DBアクセス方式の反映
+
+---

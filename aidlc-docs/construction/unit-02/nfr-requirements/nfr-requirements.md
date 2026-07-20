@@ -32,7 +32,18 @@ Functional Design（frontend-components.md）で対応済み。追加のUsabilit
 
 ---
 
-## 7. Security Baseline拡張 該当ルール評価
+## 7. データアクセス（内部DB、レビュー指摘の反映）
+
+requirements.md §2で内部DBのDBアクセス方式（JPA）・データベース種別（H2 Database）は既に確定済み。UNIT-02はUser・RegistrationToken・RefreshToken・AuditLogEntry等を実際に永続化する最初のユニットのため、具体的な実装方式をここで確定する。
+
+- **NFR-02-06**: Spring Data JPA（リポジトリインターフェースによるCRUD）を用いる（Q8=A）
+- **NFR-02-07**: スキーマ管理・マイグレーションはFlywayで行う（Q9=A）。Hibernateの`ddl-auto=update`による自動生成は、本番運用でのスキーマドリフトのリスクを避けるため使用しない
+- **NFR-02-08**: H2 Databaseはファイルベース永続化モード（`jdbc:h2:file:...`）で運用する（Q10=A）。DBファイルパスは環境変数（`mm.app.datasource.path`等、詳細名称はCode Generation段階で確定）で指定する（NFR-2.3準拠）。開発・テストではインメモリモード（`jdbc:h2:mem:...`）も使用可とする
+- **NFR-02-09**: コネクションプールはSpring Boot標準のHikariCP（デフォルト設定）を用いる。requirements.md §2「コネクションプール」の記載は対象RDBMS（UNIT-03でのユーザ設定接続）向けであり、内部DBには適用されない
+
+---
+
+## 8. Security Baseline拡張 該当ルール評価
 
 | ルール | 判定 | 本ユニットでの対応方針 |
 |---|---|---|
@@ -52,7 +63,7 @@ Functional Design（frontend-components.md）で対応済み。追加のUsabilit
 | SECURITY-14（アラート・監視） | 該当（既存方針を踏襲） | NFR-4.5のとおり、ログベースの軽量な検知で足りるものとし、本格的な監視ダッシュボードは求めない |
 | SECURITY-15（例外処理・フェイルセーフ） | 該当 | グローバル例外ハンドラでBR-API-01形式に変換し、認証・認可の失敗時はfail closed（拒否）を徹底する。実装パターンはNFR Design段階で確定 |
 
-## 8. Property-Based Testing拡張
+## 9. Property-Based Testing拡張
 
 - **PBT-01**（Functional Design段階でのプロパティ識別）: 対応済み。business-logic-model.mdで「No PBT properties identified」と判定・記録済み（リフレッシュトークンのローテーション・再利用検知は状態数が限定的な有限状態機械のため、ユニットテストでの網羅で十分と判断）
 - **PBT-09**（フレームワーク選定）: 本ユニットでjqwikに最終確定（Q5=A）。プロジェクト全体で共有する初のバックエンドPBTフレームワーク選定であり、後続ユニット（UNIT-04権限判定・YAML入出力、UNIT-07 SQL生成等）が利用する

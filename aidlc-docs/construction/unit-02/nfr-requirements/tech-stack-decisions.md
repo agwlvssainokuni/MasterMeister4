@@ -60,6 +60,18 @@
 
 **理由**: SECURITY-09（ハードニング）・NFR-2.3（全設定は環境変数経由）に準拠する既定方針。UNIT-01で確定済みのTwelve-Factor App準拠方針（NFR-2.1）とも整合する。
 
+## 8. 内部DBへのアクセス方式（Q8〜Q10=A、レビュー指摘の反映）
+
+**決定**:
+- ORM抽象化: Spring Data JPA（リポジトリインターフェースによるCRUD）
+- スキーマ管理: Flyway（バージョン管理されたSQLマイグレーションスクリプト、`src/main/resources/db/migration/`配下）
+- H2永続化モード: ファイルベース（`jdbc:h2:file:...`）。DBファイルパスは環境変数で指定。開発・テストではインメモリモード（`jdbc:h2:mem:...`）も使用可
+- コネクションプール: Spring Boot標準のHikariCP（デフォルト設定）
+
+**理由**: requirements.md §2で内部DBのDBアクセス方式（JPA）・データベース種別（H2）は既に確定済みであり、UNIT-02はこれを実装する最初のユニット。Spring Data JPAはSpring Bootの標準的な使い方でボイラープレートを削減できる。Hibernateの`ddl-auto=update`による自動スキーマ生成は、本番運用でのスキーマドリフト（意図しないカラム変更・削除の見落とし等）のリスクがあるため避け、Flywayによる明示的でバージョン管理されたマイグレーションを採用する。
+
+**依存関係**: `spring-boot-starter-data-jpa`, `com.h2database:h2`, `org.flywaydb:flyway-core`
+
 ---
 
 ## 依存関係まとめ（backend、UNIT-02で追加）
@@ -70,6 +82,9 @@
 | `spring-boot-starter-oauth2-resource-server` | JWT検証（`JwtDecoder`） |
 | `spring-boot-starter-validation` | 入力バリデーション（SECURITY-05） |
 | `spring-boot-starter-mail` | メール送信（NFR-3.1〜3.2、既存決定） |
+| `spring-boot-starter-data-jpa` | 内部DBへのアクセス（Spring Data JPA） |
+| `com.h2database:h2` | 内部DB（H2 Database） |
+| `org.flywaydb:flyway-core` | 内部DBのスキーママイグレーション |
 | `logstash-logback-encoder` | 本番プロファイルの構造化JSON出力 |
 | `net.jqwik:jqwik`（testImplementation） | Property-Based Testing基盤 |
 

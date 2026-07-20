@@ -6,9 +6,9 @@ Functional Design成果物（business-logic-model.md, business-rules.md, domain-
 
 ## 計画チェックリスト
 
-- [x] Step A: 質問への回答を収集する（全問A: Spring Security OAuth2 Resource Server, HS256, BCrypt, 登録エンドポイントのレート制限新設, jqwik, SLF4J+Logback, 環境変数のみ）
+- [x] Step A: 質問への回答を収集する（全問A: Spring Security OAuth2 Resource Server, HS256, BCrypt, 登録エンドポイントのレート制限新設, jqwik, SLF4J+Logback, 環境変数のみ。追加Q8〜Q10も全問A: Spring Data JPA, Flyway, H2ファイルベース永続化 — レビュー指摘の反映）
 - [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 全問単一選択肢の明確な回答であり曖昧性なし
-- [x] Step C: 成果物を作成する（nfr-requirements.md, tech-stack-decisions.md）
+- [x] Step C: 成果物を作成する（nfr-requirements.md, tech-stack-decisions.md。Q8〜Q10反映分を追記済み）
 - [ ] Step D: 完了メッセージを提示し、承認を得る
 
 ## NFRカテゴリ評価
@@ -112,6 +112,37 @@ B) Other（[Answer]: の後に内容を記述）
 初期管理者アカウント等の機微な設定情報の取り扱いについて（SECURITY-09, NFR-2.3）
 
 A) 環境変数経由でのみ受け渡す（`mm.app.admin.bootstrap.password`等）。アプリ起動ログ・例外メッセージ・監査ログのいずれにも値を出力しない
+
+B) Other（[Answer]: の後に内容を記述）
+
+[Answer]: A
+
+### Question 8（追加、レビュー指摘の反映）
+内部DBへのアクセス方式について（requirements.mdで「DBアクセス（内部DB）: JPA」「内部データベース: H2 Database」は既に確定済み。UNIT-02がUser・RegistrationToken・RefreshToken・AuditLogEntry等を実際に永続化する最初のユニットのため、具体化する）
+
+A) Spring Data JPA（リポジトリインターフェースによるCRUD。Spring Bootの標準的な使い方で、ボイラープレートを削減できる）
+
+B) Other（[Answer]: の後に内容を記述）
+
+[Answer]: A
+
+### Question 9（追加、レビュー指摘の反映）
+内部DBのスキーマ管理・マイグレーション方式について
+
+A) Flyway（バージョン管理されたSQLマイグレーションスクリプト）。Hibernateの`ddl-auto=update`は本番運用でのスキーマドリフトのリスクがあるため使用しない
+
+B) Liquibase（XML/YAML/JSON形式のマイグレーション定義）
+
+C) Hibernateの`ddl-auto`（エンティティ定義からスキーマを自動生成、マイグレーション管理は行わない）
+
+D) Other（[Answer]: の後に内容を記述）
+
+[Answer]: A
+
+### Question 10（追加、レビュー指摘の反映）
+H2 Databaseの永続化モードについて
+
+A) ファイルベース永続化（`jdbc:h2:file:...`）。DBファイルパスは環境変数で指定する（NFR-2.3準拠）。開発・テストではインメモリモード（`jdbc:h2:mem:...`）も使用可とする
 
 B) Other（[Answer]: の後に内容を記述）
 
