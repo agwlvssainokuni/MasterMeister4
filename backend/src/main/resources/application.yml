@@ -58,7 +58,7 @@ mm:
       email: ${MM_APP_ADMIN_BOOTSTRAP_EMAIL:}
       password: ${MM_APP_ADMIN_BOOTSTRAP_PASSWORD:}
     frontend:
-      base-url: ${MM_APP_FRONTEND_BASE_URL:http://localhost:8080}
+      base-url: ${MM_APP_FRONTEND_BASE_URL:http://localhost:5173}
     datasource:
       path: ${MM_APP_DATASOURCE_PATH:./data/mastermeister}
     mail:

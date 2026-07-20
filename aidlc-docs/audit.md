@@ -1103,3 +1103,11 @@
 **Context**: 開発環境（devenv）整備、UNIT-03着手前の準備
 
 ---
+
+## mm.app.frontend.base-urlのデフォルトをVite devサーバに変更
+**Timestamp**: 2026-07-20T23:07:00Z
+**User Input**: "frontend.base-url は vite の方で。"
+**AI Response**: "`mm.app.frontend.base-url`（登録確認メール・承認結果メール中のリンク生成に使用）のデフォルト値を`http://localhost:8080`から`http://localhost:5173`（Vite devサーバ）へ変更。split dev-server構成（frontend :5173／backend :8080）ではバックエンド単体はSPA静的ファイルを持たないため、メールリンクがバックエンドのポートを指すと登録完了・ログイン画面へ正しく遷移できない。`backend/README.md`の環境変数表に、単一WAR構成の本番ではバックエンドのオリジンを設定する旨を注記。`./gradlew :backend:test`で全テスト成功を確認。"
+**Context**: 開発環境設定の見直し
+
+---

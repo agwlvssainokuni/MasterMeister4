@@ -36,7 +36,7 @@ export MM_APP_JWT_SECRET="$(openssl rand -base64 32)"
 | `MM_APP_USER_REGISTRATION_RATE_LIMIT_MAX_REQUESTS` | `3` | 登録レート制限（回数） |
 | `MM_APP_USER_REGISTRATION_RATE_LIMIT_WINDOW` | `PT1H` | 登録レート制限（時間枠） |
 | `MM_APP_ADMIN_BOOTSTRAP_EMAIL` / `MM_APP_ADMIN_BOOTSTRAP_PASSWORD` | (空) | 初回起動時作成される初期管理者。いずれか未設定ならブートストラップをスキップ |
-| `MM_APP_FRONTEND_BASE_URL` | `http://localhost:8080` | 登録確認メール本文中のリンク生成に使用するフロントエンドのベースURL |
+| `MM_APP_FRONTEND_BASE_URL` | `http://localhost:5173` | 登録確認メール本文中のリンク生成に使用するフロントエンドのベースURL。devはViteのdevサーバ（`npm run dev`）を指す。単一WAR構成で本番稼働させる場合はバックエンドのオリジン（`SERVER_PORT`）を設定する |
 | `MM_APP_DATASOURCE_PATH` | `./data/mastermeister` | 内部H2データベースのファイルパス |
 | `MM_APP_DATASOURCE_USERNAME` / `MM_APP_DATASOURCE_PASSWORD` | `sa` / (空) | 内部H2データベースの認証情報 |
 | `MM_APP_MAIL_HOST` / `MM_APP_MAIL_PORT` | `localhost` / `1025` | 送信メールサーバ（devはMailPit） |
