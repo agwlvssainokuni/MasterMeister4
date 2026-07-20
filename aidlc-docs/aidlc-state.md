@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Design（計画作成中）
-- **Next Stage**: NFR Design計画への回答を受け、パターン・論理コンポーネントを確定
+- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Design（計画提示、回答待ち）
+- **Next Stage**: unit-01-nfr-design-plan.mdの回答を受け、パターン・論理コンポーネントを確定
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-01)
