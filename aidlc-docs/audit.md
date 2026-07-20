@@ -759,3 +759,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design、画面統合・トップ画面新設の反映
 
 ---
+
+## UNIT-02 Functional Design - レビュー指摘2点の反映（無効化時のトークン失効、ルート認証ガード）
+**Timestamp**: 2026-07-20T21:01:00Z
+**User Input**: "確認しておいた方が良い事項はありますか？" → (2点の指摘と推奨を提示) → "OK"
+**AI Response**: "推奨どおり反映。(1) domain-entities.mdのRefreshToken.revokedReasonに`ADMIN_DISABLED`を追加し、不変条件に『Userが`DISABLED`に遷移した時点で、当該userIdに紐づく有効なRefreshTokenは存在してはならない（複数端末・複数トークンファミリ全件が対象）』を追加。business-logic-model.md §3の無効化時の記述を『当該ユーザに紐づく有効なリフレッシュトークンを全て失効させる（revokedReason=ADMIN_DISABLED、FR-3.6により該当userIdの全件が対象）』に具体化。business-rules.mdに新規BR-TOKEN-04（管理者による無効化に伴う失効、BR-TOKEN-02の再利用検知との違い＝トークンファミリ単位かuserId全体か、を明記）を追加。(2) frontend-components.md §7（認証状態管理）に、トップ画面（`/`）がAppShell配下のindexルートであり未ログイン時は`/login`へリダイレクトする旨を明記。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、レビュー指摘の反映
+
+---
