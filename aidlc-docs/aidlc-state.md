@@ -50,9 +50,16 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤（Per-Unit Loop開始）
-- **Next Stage**: UNIT-01のFunctional Design要否判定
+- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Requirements（計画・質問作成中）
+- **Next Stage**: UNIT-01のNFR Requirements質問への回答収集
 - **Status**: 実施中
+
+## UNIT-01 デザインシステム基盤 - ステージ判定
+- [x] Functional Design — SKIP（承認済み 2026-07-20T12:10:00Z、新規データモデル・複雑な業務ロジックなし）
+- [ ] NFR Requirements — EXECUTE（承認済み、計画作成中）
+- [ ] NFR Design — EXECUTE予定（NFR Requirements結果次第）
+- [ ] Infrastructure Design — SKIP（承認済み 2026-07-20T12:10:00Z、新規インフラ要素なし）
+- [ ] Code Generation — 未着手
 
 ## Current Unit Progress
 - [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS

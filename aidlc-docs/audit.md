@@ -247,3 +247,19 @@
 **Context**: INCEPTION - Units Generation (Steps 17-19, approval)
 
 ---
+
+## UNIT-01 - Per-Unit Stage Judgment Proposed
+**Timestamp**: 2026-07-20T12:08:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Presented independent per-unit EXECUTE/SKIP judgment for UNIT-01 (デザインシステム基盤): Functional Design=SKIP（新規データモデル・複雑な業務ロジックなし）, NFR Requirements=EXECUTE（i18n基盤・テスト方針・アクセシビリティ/レスポンシブ方針の確定が必要）, NFR Design=EXECUTE（NFR Requirements結果次第）, Infrastructure Design=SKIP（新規インフラ要素なし）。"
+**Context**: CONSTRUCTION - UNIT-01 Per-Unit Loop (stage judgment)
+
+---
+
+## UNIT-01 - Per-Unit Stage Judgment Approved
+**Timestamp**: 2026-07-20T12:10:00Z
+**User Input**: "進めてください。"
+**AI Response**: "UNIT-01の判定（Functional Design=SKIP, NFR Requirements=EXECUTE, NFR Design=EXECUTE, Infrastructure Design=SKIP）を承認。Functional Designをスキップし、NFR Requirementsに進む。"
+**Context**: CONSTRUCTION - UNIT-01 Per-Unit Loop (stage judgment approval)
+
+---
