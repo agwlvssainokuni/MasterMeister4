@@ -55,7 +55,7 @@
 - **Status**: 実施中
 
 ## Current Unit Progress
-- [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS
+- [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS（Code Generation Part 1 Planning着手時、参考資材の配置をユーザーに依頼すること。unit-of-work.md UNIT-01「参考資材の依頼」参照）
 - [ ] UNIT-02 ユーザ登録・認証
 - [ ] UNIT-03 RDBMSセットアップ
 - [ ] UNIT-04 アクセス制御
