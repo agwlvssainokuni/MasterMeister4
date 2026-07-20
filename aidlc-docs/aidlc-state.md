@@ -33,8 +33,8 @@
 - [x] Requirements Analysis — COMPLETED (approved 2026-07-20T10:41:00Z)
 - [x] User Stories — COMPLETED (approved 2026-07-20T10:57:00Z)
 - [x] Workflow Planning — COMPLETED (approved 2026-07-20T11:10:00Z)
-- [x] Application Design — generated (2026-07-20T11:22:00Z), pending user approval
-- [ ] Units Generation — EXECUTE
+- [x] Application Design — COMPLETED (approved 2026-07-20T11:45:00Z)
+- [ ] Units Generation — IN PROGRESS
 
 ### 🟢 CONSTRUCTION PHASE
 **注記**: 以下4ステージの「EXECUTE（ユニットごと）」はプロジェクト全体の見通しであり確約ではない。各ユニット着手時にそのユニット単独でEXECUTE/SKIPを判定し、他ユニットの判定は引き継がない（詳細は execution-plan.md 参照）。
@@ -50,6 +50,6 @@
 
 ## Current Status
 - **Lifecycle Phase**: INCEPTION
-- **Current Stage**: Application Design
-- **Next Stage**: Units Generation
+- **Current Stage**: Units Generation
+- **Next Stage**: CONSTRUCTION PHASE（ユニット1: デザインシステム基盤より開始）
 - **Status**: 実施中
