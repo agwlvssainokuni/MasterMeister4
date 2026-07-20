@@ -13,6 +13,7 @@
 - **責務**: サードパーティUIライブラリを使わない独自の共通UIコンポーネント（配色・タイポグラフィ・ボタン・フォーム部品等）の構築
 - **対応コンポーネント**: フロントエンドのみ（バックエンドコンポーネントなし）
 - **前提ユニット**: なし（最初に着手）
+- **リポジトリ骨格構築**: このユニットのCode Generationにて、`settings.gradle.kts`／`backend`（最小限のSpring Boot起動クラスのみ。業務コンポーネントはUNIT-02以降で追加）／`frontend`／`devenv`のプロジェクト構造一式を最初に構築する（プロジェクト構成の再検討、INCEPTION継続審議で決定。requirements.md §4参照）
 
 ## UNIT-02: ユーザ登録・認証
 - **優先度**: P1
@@ -89,7 +90,8 @@
 
 ## コード構成方針（Greenfield、Q5=A）
 
-- **プロジェクト構造**: requirements.md §4のとおり `backend/`, `frontend/`, `devenv/` の3ディレクトリ構成を維持
+- **プロジェクト構造**: requirements.md §4のとおり `backend/`, `frontend/`, `devenv/` の3ディレクトリ構成を維持。Gradleマルチモジュール構成とし、`frontend`を`backend`のサブプロジェクトとして取り込む。リリースビルド時のみGradle Node Pluginでフロントエンドをビルドし単一JARに内包する。バックエンド単体ビルド・フロントエンド単体開発（`npm run dev`）はそれぞれ従来どおり独立して行える（プロジェクト構成の再検討、INCEPTION継続審議で決定）
+- **骨格構築のタイミング**: `settings.gradle.kts`・`backend`（最小起動クラスのみ）・`frontend`・`devenv`一式は、最初に着手するUNIT-01のCode Generationで一括構築する（後続ユニットでの構成変更を避けるため。UNIT-01時点ではbackendは中身のない最小構成）
 - **バックエンドパッケージ方針**: package-by-feature。ベースパッケージは `cherry.mastermeister`
 - **ユニット→パッケージ対応**:
 

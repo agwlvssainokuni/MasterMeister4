@@ -247,3 +247,75 @@
 **Context**: INCEPTION - Units Generation (Steps 17-19, approval)
 
 ---
+
+## CONSTRUCTION Rollback (User-Initiated, Outside AI Session Control)
+**Timestamp**: 2026-07-20T13:00:00Z
+**User Input**: "コンストラクションを全てロールバックしました。プロジェクトの状況を把握してください。"
+**AI Response**: "Confirmed via git log/status and file inspection: HEAD is back at d1d8a0c (post-Units-Generation-approval, pre-CONSTRUCTION). All CONSTRUCTION-phase commits (UNIT-01 NFR Requirements/NFR Design/Code Generation, UNIT-02 stage judgment/Functional Design) removed from history. frontend/ and design-system--/ no longer exist on disk. aidlc-docs/construction/ does not exist. aidlc-state.md and audit.md both match their exact pre-CONSTRUCTION state. Reported findings to user; no CONSTRUCTION work resumed pending further instruction."
+**Context**: State verification after user-performed git rollback (git status clean, up to date with origin/main)
+
+---
+
+## INCEPTION Continuation - Intent Clarification
+**Timestamp**: 2026-07-20T13:10:00Z
+**User Input**: "INCEPTIONをもう少し続けたい。"
+**AI Response**: "All INCEPTION stages already approved (Requirements Analysis, User Stories, Workflow Planning, Application Design, Units Generation). Asked clarifying question via AskUserQuestion on what kind of continuation was intended (revise existing stage / add new stage-perspective / increase documentation granularity)."
+**Context**: INCEPTION continuation request, ambiguity resolution
+
+---
+
+## INCEPTION Continuation - Scope Narrowing
+**Timestamp**: 2026-07-20T13:12:00Z
+**User Input**: (AskUserQuestion selection) "新しいステージ/観点を追加"
+**AI Response**: "Asked follow-up AskUserQuestion to narrow down which new area (system-wide NFR review / external integration & infra policy / other)."
+**Context**: INCEPTION continuation request, ambiguity resolution
+
+---
+
+## INCEPTION Continuation - Topic Identified
+**Timestamp**: 2026-07-20T13:14:00Z
+**User Input**: (AskUserQuestion selection) "その他（具体的に説明します）"
+**AI Response**: "Asked user to describe the topic directly."
+**Context**: INCEPTION continuation request, ambiguity resolution
+
+---
+
+## プロジェクト構成の再検討 - 論点提示
+**Timestamp**: 2026-07-20T13:16:00Z
+**User Input**: "プロジェクト構成について。frontend, backend, devend を当初要件に記載していたがこれはMUSTではありません。より適切なプロジェクト構成を提案してください。"
+**AI Response**: "requirements.md §4・unit-of-work.mdの既存記述（backend/frontend/devenvのフラット3分割）を確認。単独開発者・MVPファースト・Gradle(Java25)+Vite(React19)+Docker Composeという制約を踏まえ、3案を提示: 案A=現状維持（フラット3分割）、案B=apps/+infra/構成、案C=Gradleマルチモジュールでfrontendを取り込み単一アーティファクト化。推奨は案Aとしつつ、AskUserQuestionで選択を依頼。"
+**Context**: INCEPTION継続審議 - プロジェクト構成
+
+---
+
+## プロジェクト構成の再検討 - 追加質問への回答
+**Timestamp**: 2026-07-20T13:20:00Z
+**User Input**: (AskUserQuestion、選択肢未選択、備考) "オプションでbackendのみビルドということは可能か？"
+**AI Response**: "案C（Gradleマルチモジュール）でも`./gradlew :backend:build`のようにモジュール指定でバックエンドのみビルド・テスト可能であることを説明。frontendビルドの内包処理はリリース用の統合タスクにのみ紐付ければ、日常のバックエンド開発サイクルはfrontendの影響を受けない旨を回答。"
+**Context**: INCEPTION継続審議 - プロジェクト構成
+
+---
+
+## プロジェクト構成の再検討 - 決定
+**Timestamp**: 2026-07-20T13:22:00Z
+**User Input**: "C"
+**AI Response**: "案C（Gradleマルチモジュールでfrontendをbackendのサブプロジェクトとして取り込み、リリースビルド時のみGradle Node Pluginで単一JARに内包）を採用。requirements.md §2（ビルドツール欄）・§4（プロジェクト構成、ビルド方針を新設）、および unit-of-work.md のコード構成方針セクションを更新。"
+**Context**: INCEPTION継続審議 - プロジェクト構成、決定確定
+
+---
+
+## プロジェクト構成の再検討 - 骨格構築タイミング
+**Timestamp**: 2026-07-20T13:30:00Z
+**User Input**: "このプロジェクト構成を作るタイミングはいつになる？"
+**AI Response**: "実体作成はCONSTRUCTIONフェーズ・UNIT-01のCode Generationステージであることを説明。ただしUNIT-01はフロントエンドのみのユニットであるため、settings.gradle.kts／backendサブプロジェクトをUNIT-01で一括構築するか（案A）、UNIT-02（最初のバックエンドユニット）まで先送りするか（案B）の論点を提示し、案Aを推奨として回答。"
+**Context**: INCEPTION継続審議 - プロジェクト構成
+
+---
+
+## プロジェクト構成の再検討 - 骨格構築タイミング決定
+**Timestamp**: 2026-07-20T13:31:00Z
+**User Input**: "A"
+**AI Response**: "案A（UNIT-01のCode Generationでsettings.gradle.kts・backend（最小起動クラスのみ）・frontend・devenv一式を一括構築）を採用。unit-of-work.mdのUNIT-01定義に「リポジトリ骨格構築」項目を追加し、コード構成方針セクションに「骨格構築のタイミング」を追記。"
+**Context**: INCEPTION継続審議 - プロジェクト構成、骨格構築タイミング確定
+
+---
