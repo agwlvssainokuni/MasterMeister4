@@ -6,10 +6,18 @@
 /build/
 backend/build/
 frontend/build/
+cherry-mustache-core/build/
+
+# jqwik（Property-Based Testing）の再現用データベース
+.jqwik-database
 
 # Node / Vite
 frontend/node_modules/
 frontend/dist/
+
+# 内部DB（H2、開発時のローカルファイル）
+/data/
+backend/data/
 
 # OS
 .DS_Store

@@ -24,12 +24,12 @@
 
 ### 1. Project Structure Setup
 
-- [ ] Step 1.1: `reference/mustache-engine/cherry-mustache-core`（パッケージ`cherry.mustache`、テストコード一式含む）をワークスペース直下`cherry-mustache-core/`へそのままコピーする（BR-MAIL-02）
-- [ ] Step 1.2: `settings.gradle.kts`に`include("cherry-mustache-core")`を追加する
-- [ ] Step 1.3: `backend/build.gradle.kts`に依存関係を追加する: `implementation(project(":cherry-mustache-core"))`, `spring-boot-starter-security`, `spring-boot-starter-oauth2-resource-server`, `spring-boot-starter-validation`, `spring-boot-starter-mail`, `spring-boot-starter-data-jpa`, `com.h2database:h2`, `org.flywaydb:flyway-core`, `org.springframework.boot:spring-boot-flyway`, `logstash-logback-encoder`（本番プロファイル用）, `net.jqwik:jqwik`（testImplementation）
-- [ ] Step 1.4: `backend/src/main/resources/application.yml`を拡張する（H2ファイルベース接続設定、JPA/Flyway設定、`mm.app.*`配下のJWT・パスワードポリシー・ログイン試行制限・登録レート制限・初期管理者・フロントエンドベースURL等の設定項目、Mail設定。値はすべて環境変数プレースホルダー、NFR-2.3準拠）
-- [ ] Step 1.5: `AppProperties`（`cherry.mastermeister.common.config`）を作成する。`@ConfigurationProperties(prefix = "mm.app")`を付与したrecordをトップとし、機能領域ごとにネストしたrecord（`Jwt`（secret, accessTokenExpiry, refreshTokenExpiry）, `Password`（bcryptStrength, minLength）, `LoginAttempt`（maxFailures, lockDuration）, `UserRegistration`（tokenExpiry, rateLimitMaxRequests, rateLimitWindow）, `AdminBootstrap`（email, password）, `Frontend`（baseUrl）, `Datasource`（path））に分割する。各recordのコンパクトコンストラクタで値検証（必須項目のnullチェック、JWT鍵長、正の数値等）を行う。`@ConfigurationPropertiesScan`または明示的な`@EnableConfigurationProperties`で有効化する
-- [ ] Step 1.6: **検証チェックポイント**: `./gradlew :cherry-mustache-core:test`（コピーしたテスト一式が単体で成功することを確認）、`./gradlew :backend:build`（新規依存関係の解決、`AppProperties`のバインディング・検証ロジックを含む起動確認）
+- [x] Step 1.1: `reference/mustache-engine/cherry-mustache-core`（パッケージ`cherry.mustache`、テストコード一式含む）をワークスペース直下`cherry-mustache-core/`へそのままコピーする（BR-MAIL-02）
+- [x] Step 1.2: `settings.gradle.kts`に`include("cherry-mustache-core")`を追加する
+- [x] Step 1.3: `backend/build.gradle.kts`に依存関係を追加する: `implementation(project(":cherry-mustache-core"))`, `spring-boot-starter-security`, `spring-boot-starter-oauth2-resource-server`, `spring-boot-starter-validation`, `spring-boot-starter-mail`, `spring-boot-starter-data-jpa`, `com.h2database:h2`, `org.flywaydb:flyway-core`, `org.springframework.boot:spring-boot-flyway`, `logstash-logback-encoder`（本番プロファイル用）, `net.jqwik:jqwik`（testImplementation）。あわせてOpenAPI（Step 10.7で使用）の`springdoc-openapi-starter-webmvc-ui`も先行追加
+- [x] Step 1.4: `backend/src/main/resources/application.yml`を拡張する（H2ファイルベース接続設定、JPA/Flyway設定、`mm.app.*`配下のJWT・パスワードポリシー・ログイン試行制限・登録レート制限・初期管理者・フロントエンドベースURL等の設定項目、Mail設定。値はすべて環境変数プレースホルダー、NFR-2.3準拠）
+- [x] Step 1.5: `AppProperties`（`cherry.mastermeister.common.config`）を作成する。`@ConfigurationProperties(prefix = "mm.app")`を付与したrecordをトップとし、機能領域ごとにネストしたrecord（`Jwt`（secret, accessTokenExpiry, refreshTokenExpiry）, `Password`（bcryptStrength, minLength）, `LoginAttempt`（maxFailures, lockDuration）, `UserRegistration`（tokenExpiry, rateLimitMaxRequests, rateLimitWindow）, `AdminBootstrap`（email, password）, `Frontend`（baseUrl）, `Datasource`（path））に分割する。各recordのコンパクトコンストラクタで値検証（必須項目のnullチェック、JWT鍵長、正の数値等）を行う。`MasterMeisterApplication`に`@ConfigurationPropertiesScan`を付与して有効化した
+- [x] Step 1.6: **検証チェックポイント**: `./gradlew :cherry-mustache-core:test`（成功）、`./gradlew :backend:build`（成功）。`cherry-mustache-core/build.gradle.kts`は独立プロジェクトの想定だったため`repositories{}`・Java toolchain・`useJUnitPlatform()`が root側委譲で未設定だった（reference/mustache-engine/build.gradle.ktsのallprojects設定に依存していたため）。MasterMeisterにはルートbuild.gradle.ktsが存在しないため、これらをcherry-mustache-core/build.gradle.kts自体に追加して解決（OWASP Dependency-Checkプラグインのバージョンもbackendと同じ12.1.0に統一）
 
 ### 2. Database Migration Scripts
 

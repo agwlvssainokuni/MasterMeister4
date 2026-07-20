@@ -22,9 +22,23 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-flyway")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+    implementation(project(":cherry-mustache-core"))
+    runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.flywaydb:flyway-core")
+    runtimeOnly("net.logstash.logback:logstash-logback-encoder:8.0")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat-runtime")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    testImplementation("net.jqwik:jqwik:1.9.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

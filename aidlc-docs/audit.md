@@ -919,3 +919,19 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 1、追加指示の反映
 
 ---
+
+## UNIT-02 Code Generation Part 1 - 承認、Part 2着手
+**Timestamp**: 2026-07-20T23:30:00Z
+**User Input**: "OK"
+**AI Response**: "Code Generation Part 1（計画）を承認として記録。aidlc-state.mdを更新（Part 1完了、Part 2着手）。Part 2（実際のコード生成）をSection 1から順に実行開始。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 1 完了、Part 2開始
+
+---
+
+## UNIT-02 Code Generation Part 2 - Section 1（Project Structure Setup）完了
+**Timestamp**: 2026-07-20T23:36:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Section 1を実行: cherry-mustache-coreをreference/mustache-engine/からワークスペース直下へコピー（build/除く）、settings.gradle.ktsに追加、backend/build.gradle.ktsに新規依存関係（Spring Security, OAuth2 Resource Server, Validation, Mail, Data JPA, H2, Flyway, springdoc-openapi, jqwik等）を追加、application.ymlをmm.app.*設定項目を含めて拡張、AppProperties（record階層、コンパクトコンストラクタでの値検証）を作成しMasterMeisterApplicationに@ConfigurationPropertiesScanを付与。検証チェックポイントで:cherry-mustache-core:testと:backend:buildがいずれも成功することを確認。途中、cherry-mustache-core/build.gradle.ktsが独立プロジェクト（reference/mustache-engine）のルート設定に依存していたrepositories/toolchain/useJUnitPlatformが欠落していたため、同ファイルに直接追加して解決（OWASP Dependency-Checkのバージョンもbackendと同じ12.1.0に統一）。.gitignoreにcherry-mustache-core/build/と内部DB用の/data/を追加。計画チェックリストSection 1（Step 1.1〜1.6）を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 1完了
+
+---
