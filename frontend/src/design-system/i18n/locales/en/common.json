@@ -9,6 +9,7 @@
     "save": "Save",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "ok": "OK",
     "close": "Close",
     "edit": "Edit",
     "delete": "Delete",
@@ -26,5 +27,9 @@
     "success": "Success",
     "warning": "Warning",
     "danger": "Error"
+  },
+  "form": {
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   }
 }

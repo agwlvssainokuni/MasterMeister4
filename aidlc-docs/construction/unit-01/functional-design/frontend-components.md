@@ -133,12 +133,15 @@ Q8=Aにより、UNIT-04で正式設計する権限モデル（主権限・補助
 - `Alert`（`tone: info/success/warning/danger`の単一コンポーネント。当初案の`ErrorAlert`/`SuccessAlert`を統合）
 - `Badge`
 - `Spinner`
-- `ConfirmDialog`（`Modal` / `Overlay`を土台に構築）
+- `Modal`（汎用の`Overlay`背景幕コンポーネントは存在せず、Modal内部で直接処理する）
+- `ConfirmDialog`（`Modal`を土台に構築）
 - `FilterBar`（簡易版）
 - `Tabs`
 - `Toast`
 - `CodeBlock`
 - `KeyValueList`
+- `Dropdown`（HeaderControlのユーザーメニュー等で使用。キーボード操作・フォーカストラップ対応）
+- `Tooltip`（ホバー/フォーカスで表示する補足情報）
 - `Icon`（自作SVGアイコンセット）
 
 **対象外**: `reference/mocks/pages/screens/QueryRunMock.tsx`はUNIT-01の代表5画面（FR-0.4）に含まれないため、画面モックとしては今回作成しない（クエリ実行はUNIT-06/07のスコープ）。

@@ -607,3 +607,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション2完了
 
 ---
+
+## UNIT-01 Code Generation Part 2 - Overlay.tsxの内容誤認・Dropdown/Tooltipの追加
+**Timestamp**: 2026-07-20T18:10:00Z
+**User Input**: "進めてください。" → (AskUserQuestion) "両方とも今回建設する（推奨）"
+**AI Response**: "セクション3（Icon: 20種+eye/eye-off、Button/IconButton、TextInput/PasswordInput/TextArea/Select/SearchInput、Choice、FormField）を実装しnpm run build・lint・format:checkが通ることを確認。実装中にreference/design-system/components/Overlay.tsxの中身が汎用の背景幕コンポーネントではなくDropdown・Tooltipだったことが判明（当初の仕分けで見落とし）。ユーザーに確認し両方とも建設する方針で決定。unit-01-code-generation-plan.md Section 5とfrontend-components.mdの新設コンポーネント一覧を修正（Overlayを削除、Dropdown・Tooltipを追加）。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション3完了・参考実装の追加発見
+
+---

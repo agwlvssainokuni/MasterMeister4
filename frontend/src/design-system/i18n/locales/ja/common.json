@@ -9,6 +9,7 @@
     "save": "保存",
     "cancel": "キャンセル",
     "confirm": "確認",
+    "ok": "OK",
     "close": "閉じる",
     "edit": "編集",
     "delete": "削除",
@@ -26,5 +27,9 @@
     "success": "成功",
     "warning": "警告",
     "danger": "エラー"
+  },
+  "form": {
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを非表示"
   }
 }

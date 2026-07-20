@@ -103,8 +103,7 @@
   --mm-color-overlay: rgb(17 24 39 / 45%);
 
   /* ---- タイポグラフィ ---- */
-  --mm-font-sans:
-    'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', Meiryo, sans-serif;
+  --mm-font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', Meiryo, sans-serif;
   --mm-font-mono:
     'Noto Sans Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Noto Sans JP', monospace;
   --mm-font-size-xs: 11px;

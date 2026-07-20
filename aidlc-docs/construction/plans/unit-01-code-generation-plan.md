@@ -73,11 +73,11 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 
 ### 3. Frontend Components Generation - 基本部品・フォーム
 
-- [ ] Step 3.1: `Button`を作成する
-- [ ] Step 3.2: `TextInput`を作成する
-- [ ] Step 3.3: `Choice`（`Checkbox` / `RadioGroup` / `Switch`）を作成する
-- [ ] Step 3.4: `FormField`を作成する（`cloneElement`方式でid/aria属性を子要素へ注入）
-- [ ] Step 3.5: `Icon`（自作SVGアイコンセット）を作成する。「Icon一覧（ベースライン）」の20種を実装する
+- [x] Step 3.1: `Button`を作成する（`IconButton`含む。ローディング表示は`Spinner`コンポーネント非依存の内蔵CSSスピナーとし、Section 5との依存順序を回避）
+- [x] Step 3.2: `TextInput`を作成する（`PasswordInput`/`TextArea`/`Select`/`SearchInput`も併せて作成。参考実装の構成に合わせて拡張）
+- [x] Step 3.3: `Choice`（`Checkbox` / `RadioGroup` / `Switch`）を作成する
+- [x] Step 3.4: `FormField`を作成する（`cloneElement`方式でid/aria属性を子要素へ注入）
+- [x] Step 3.5: `Icon`（自作SVGアイコンセット）を作成する。「Icon一覧（ベースライン）」の20種に加え、`PasswordInput`の表示切替用に`eye`/`eye-off`を追加
 
 ### 4. Frontend Components Generation - グランドデザイン
 
@@ -96,12 +96,14 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 - [ ] Step 5.6: `Alert`（tone: info/success/warning/danger）を作成する
 - [ ] Step 5.7: `Badge`を作成する
 - [ ] Step 5.8: `Spinner`を作成する
-- [ ] Step 5.9: `Overlay` / `Modal`を作成する
+- [ ] Step 5.9: `Modal`を作成する（汎用の`Overlay`背景幕コンポーネントは存在しない。Modal内部で直接処理する構成に修正）
 - [ ] Step 5.10: `ConfirmDialog`を作成する（`Modal`を土台に構築）
 - [ ] Step 5.11: `FilterBar`を作成する（簡易版）
 - [ ] Step 5.12: `Tabs`を作成する
 - [ ] Step 5.13: `Toast`を作成する
 - [ ] Step 5.14: `CodeBlock`を作成する
+- [ ] Step 5.16: `Dropdown`を作成する（HeaderControlのユーザーメニュー等で使用。キーボード操作・フォーカストラップ対応）
+- [ ] Step 5.17: `Tooltip`を作成する（ホバー/フォーカスで表示する補足情報）
 - [ ] Step 5.15: `KeyValueList`を作成する
 
 ### 6. Frontend Components Unit Testing
