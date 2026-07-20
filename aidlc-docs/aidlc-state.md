@@ -32,8 +32,8 @@
 - [x] Workspace Detection — COMPLETED (2026-07-20T09:54:00Z)
 - [x] Requirements Analysis — COMPLETED (approved 2026-07-20T10:41:00Z)
 - [x] User Stories — COMPLETED (approved 2026-07-20T10:57:00Z)
-- [x] Workflow Planning — plan created (2026-07-20T11:00:00Z), pending approval
-- [ ] Application Design — EXECUTE
+- [x] Workflow Planning — COMPLETED (approved 2026-07-20T11:10:00Z)
+- [ ] Application Design — IN PROGRESS
 - [ ] Units Generation — EXECUTE
 
 ### 🟢 CONSTRUCTION PHASE
@@ -50,6 +50,6 @@
 
 ## Current Status
 - **Lifecycle Phase**: INCEPTION
-- **Current Stage**: Workflow Planning（承認待ち）
-- **Next Stage**: Application Design
-- **Status**: ユーザ承認待ち
+- **Current Stage**: Application Design
+- **Next Stage**: Units Generation
+- **Status**: 実施中
