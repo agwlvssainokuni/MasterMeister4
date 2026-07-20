@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - Functional Design（計画作成中）
-- **Next Stage**: UNIT-02のFunctional Design計画提示
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - Functional Design（質問回答待ち）
+- **Next Stage**: UNIT-02のFunctional Design質問への回答収集
 - **Status**: 実施中
 
 ## Current Unit Progress

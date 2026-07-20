@@ -423,3 +423,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Per-Unit Loop (stage judgment)
 
 ---
+
+## UNIT-02 Functional Design - Plan Created
+**Timestamp**: 2026-07-20T14:23:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Created aidlc-docs/construction/plans/unit-02-functional-design-plan.md with 11 questions covering: password hashing algorithm (bcrypt/Argon2), breached password check method (HIBP API/local list/both), JWT library/signing (jjwt HMAC/RSA), refresh token hash method, login attempt tracking storage (DB/in-memory), lockout threshold/duration defaults, role model, registration email link format, audit event types for this unit (6 proposed), frontend screen list (4 proposed), and error message specificity for locked/rejected/failed login (generic vs detailed). User answer pending."
+**Context**: CONSTRUCTION - UNIT-02 Functional Design (Steps 1-3)
+
+---
