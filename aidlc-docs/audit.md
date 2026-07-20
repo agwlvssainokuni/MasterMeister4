@@ -503,3 +503,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Design、成果物生成
 
 ---
+
+## UNIT-01 モックルーティング - パス確認・確定
+**Timestamp**: 2026-07-20T14:46:00Z
+**User Input**: "モック画面のパスは？" → "/mock/* にしたい。"
+**AI Response**: "これまで`/__mocks__/*`は例示であり未確定だった旨を回答。ユーザーの指定により`/mock/*`プレフィックスで確定し、6パス（/mock/catalog, /mock/login, /mock/register, /mock/dashboard, /mock/master-data, /mock/permissions）をfrontend-components.mdに表として追加。tech-stack-decisions.md・logical-components.mdの`/__mocks__/*`表記も`/mock/*`に統一。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Design、モックルーティングパスの確定
+
+---

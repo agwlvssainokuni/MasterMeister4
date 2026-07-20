@@ -31,7 +31,7 @@
 
 ## 5. コンポーネントカタログ（NFR-01-04、devビルド限定）
 
-- devビルド限定ルート（例: `/__mocks__/catalog`）で、UNIT-01が新設する共通コンポーネント一式・代表5画面モックを一覧表示する
+- devビルド限定ルート`/mock/catalog`で、UNIT-01が新設する共通コンポーネント一式・代表5画面モックを一覧表示する（各代表画面モック本体は`/mock/login`等、`/mock/*`配下の個別パスに配置。パス一覧はfunctional-design/frontend-components.md参照）
 - `React.lazy` + `Suspense`で遅延読み込みし、本番ビルドのバンドルに含めない（Q4=A）
 
 ## 6. Gradle Node Plugin統合（単一WAR生成、Q7=A）
