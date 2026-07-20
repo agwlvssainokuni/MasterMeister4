@@ -6,11 +6,11 @@ execution-plan.mdの暫定ユニット見通し（10ユニット）と、compone
 
 ## 実行チェックリスト
 
-- [ ] Step A: `aidlc-docs/inception/application-design/unit-of-work.md` を作成する（ユニット定義・責務、Greenfield向けコード構成方針を含む）
-- [ ] Step B: `aidlc-docs/inception/application-design/unit-of-work-dependency.md` を作成する（依存関係マトリクス）
-- [ ] Step C: `aidlc-docs/inception/application-design/unit-of-work-story-map.md` を作成する（全29ストーリーのユニットへの割当）
-- [ ] Step D: ユニット境界・依存関係を検証する
-- [ ] Step E: 全ストーリーがいずれかのユニットに割り当てられていることを確認する
+- [x] Step A: `aidlc-docs/inception/application-design/unit-of-work.md` を作成する（ユニット定義・責務、Greenfield向けコード構成方針を含む）
+- [x] Step B: `aidlc-docs/inception/application-design/unit-of-work-dependency.md` を作成する（依存関係マトリクス）
+- [x] Step C: `aidlc-docs/inception/application-design/unit-of-work-story-map.md` を作成する（全29ストーリーのユニットへの割当）
+- [x] Step D: ユニット境界・依存関係を検証する（循環依存なしを確認）
+- [x] Step E: 全ストーリーがいずれかのユニットに割り当てられていることを確認する（29ストーリー全て割当済み）
 
 ---
 
