@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: INCEPTION - Requirements Analysis
+- **Current Stage**: INCEPTION - Workflow Planning
 
 ## Workspace State
 - **Existing Code**: No
@@ -22,9 +22,33 @@
 | Resiliency Baseline | No | Requirements Analysis |
 | Property-Based Testing | Yes (Full enforcement) | Requirements Analysis |
 
+## Execution Plan Summary
+- **Total Stages**: 8（Application Design, Units Generation, Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Build and Test）
+- **Stages to Execute**: Application Design, Units Generation, Functional Design（ユニットごと）, NFR Requirements（ユニットごと）, NFR Design（ユニットごと）, Infrastructure Design（ユニットごと）, Code Generation, Build and Test
+- **Stages to Skip**: なし（Operationsはプレースホルダーのため対象外）
+
 ## Stage Progress
 ### 🔵 INCEPTION PHASE
 - [x] Workspace Detection — COMPLETED (2026-07-20T09:54:00Z)
 - [x] Requirements Analysis — COMPLETED (approved 2026-07-20T10:41:00Z)
 - [x] User Stories — COMPLETED (approved 2026-07-20T10:57:00Z)
-- [ ] Workflow Planning — IN PROGRESS
+- [x] Workflow Planning — plan created (2026-07-20T11:00:00Z), pending approval
+- [ ] Application Design — EXECUTE
+- [ ] Units Generation — EXECUTE
+
+### 🟢 CONSTRUCTION PHASE
+- [ ] Functional Design — EXECUTE（ユニットごと）
+- [ ] NFR Requirements — EXECUTE（ユニットごと）
+- [ ] NFR Design — EXECUTE（ユニットごと）
+- [ ] Infrastructure Design — EXECUTE（ユニットごと）
+- [ ] Code Generation — EXECUTE
+- [ ] Build and Test — EXECUTE
+
+### 🟡 OPERATIONS PHASE
+- [ ] Operations — PLACEHOLDER
+
+## Current Status
+- **Lifecycle Phase**: INCEPTION
+- **Current Stage**: Workflow Planning（承認待ち）
+- **Next Stage**: Application Design
+- **Status**: ユーザ承認待ち
