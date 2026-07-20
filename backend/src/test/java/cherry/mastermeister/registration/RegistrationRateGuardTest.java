@@ -54,7 +54,8 @@ class RegistrationRateGuardTest {
                 userRegistration,
                 new AppProperties.AdminBootstrap("", ""),
                 new AppProperties.Frontend("https://example.com"),
-                new AppProperties.Datasource("./data/test"));
+                new AppProperties.Datasource("./data/test"),
+                new AppProperties.Mail("no-reply@example.com"));
         guard = new RegistrationRateGuard(registrationRateStateRepository, appProperties);
     }
 

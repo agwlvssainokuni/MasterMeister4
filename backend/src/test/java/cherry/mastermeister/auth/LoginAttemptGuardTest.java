@@ -55,7 +55,8 @@ class LoginAttemptGuardTest {
                 new AppProperties.UserRegistration(Duration.ofHours(3), 3, Duration.ofHours(1)),
                 new AppProperties.AdminBootstrap("", ""),
                 new AppProperties.Frontend("https://example.com"),
-                new AppProperties.Datasource("./data/test"));
+                new AppProperties.Datasource("./data/test"),
+                new AppProperties.Mail("no-reply@example.com"));
         guard = new LoginAttemptGuard(loginAttemptStateRepository, appProperties);
     }
 

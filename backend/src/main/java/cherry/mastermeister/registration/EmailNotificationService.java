@@ -16,34 +16,28 @@
 
 package cherry.mastermeister.registration;
 
-import cherry.mastermeister.common.mail.MailTemplateRenderer;
-import cherry.mastermeister.common.mail.RenderedMail;
+import cherry.mastermeister.common.mail.MailDeliveryService;
 import cherry.mastermeister.registration.entity.Language;
-import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
  * COMP-06。business-logic-model.md §9、BR-MAIL-01〜03。送信失敗時はフェイルオープン
- * （nfr-design-patterns.md §1.2）とし、呼び出し元の業務処理をロールバックさせない。
+ * （nfr-design-patterns.md §1.2）とし、呼び出し元の業務処理をロールバックさせない
+ * （テンプレートレンダリング・SMTP送信の実処理は{@link MailDeliveryService}に委譲する）。
  */
 @Service
 public class EmailNotificationService {
 
     private static final Logger log = LoggerFactory.getLogger(EmailNotificationService.class);
 
-    private final MailTemplateRenderer mailTemplateRenderer;
-    private final JavaMailSender mailSender;
+    private final MailDeliveryService mailDeliveryService;
 
-    public EmailNotificationService(MailTemplateRenderer mailTemplateRenderer, JavaMailSender mailSender) {
-        this.mailTemplateRenderer = mailTemplateRenderer;
-        this.mailSender = mailSender;
+    public EmailNotificationService(MailDeliveryService mailDeliveryService) {
+        this.mailDeliveryService = mailDeliveryService;
     }
 
     /**
@@ -69,13 +63,7 @@ public class EmailNotificationService {
 
     private void send(String to, String templateName, Language language, Map<String, Object> variables) {
         try {
-            RenderedMail mail = mailTemplateRenderer.render(templateName, language.name(), variables);
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, StandardCharsets.UTF_8.name());
-            helper.setTo(to);
-            helper.setSubject(mail.subject());
-            helper.setText(mail.htmlBody(), true);
-            mailSender.send(message);
+            mailDeliveryService.send(to, templateName, language.name(), variables);
         } catch (Exception e) {
             log.warn("Failed to send email (template={}, fail-open per nfr-design-patterns.md §1.2): {}",
                     templateName, e.toString());

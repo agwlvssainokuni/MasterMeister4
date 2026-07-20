@@ -61,6 +61,8 @@ mm:
       base-url: ${MM_APP_FRONTEND_BASE_URL:http://localhost:8080}
     datasource:
       path: ${MM_APP_DATASOURCE_PATH:./data/mastermeister}
+    mail:
+      from: ${MM_APP_MAIL_FROM:no-reply@mastermeister.example}
 
 springdoc:
   swagger-ui:

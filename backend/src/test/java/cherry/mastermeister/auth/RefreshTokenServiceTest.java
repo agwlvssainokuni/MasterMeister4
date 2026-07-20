@@ -69,7 +69,8 @@ class RefreshTokenServiceTest {
                 new AppProperties.UserRegistration(Duration.ofHours(3), 3, Duration.ofHours(1)),
                 new AppProperties.AdminBootstrap("", ""),
                 new AppProperties.Frontend("https://example.com"),
-                new AppProperties.Datasource("./data/test"));
+                new AppProperties.Datasource("./data/test"),
+                new AppProperties.Mail("no-reply@example.com"));
         refreshTokenService = new RefreshTokenService(refreshTokenRepository, tokenGenerator, auditEventPublisher,
                 appProperties);
     }

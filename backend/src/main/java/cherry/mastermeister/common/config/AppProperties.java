@@ -30,7 +30,8 @@ public record AppProperties(
         UserRegistration userRegistration,
         AdminBootstrap adminBootstrap,
         Frontend frontend,
-        Datasource datasource
+        Datasource datasource,
+        Mail mail
 ) {
 
     public AppProperties {
@@ -41,6 +42,7 @@ public record AppProperties(
         Objects.requireNonNull(adminBootstrap, "mm.app.admin-bootstrap must be configured");
         Objects.requireNonNull(frontend, "mm.app.frontend must be configured");
         Objects.requireNonNull(datasource, "mm.app.datasource must be configured");
+        Objects.requireNonNull(mail, "mm.app.mail must be configured");
     }
 
     public record Jwt(String secret, Duration accessTokenExpiry, Duration refreshTokenExpiry) {
@@ -115,6 +117,15 @@ public record AppProperties(
         public Datasource {
             if (path == null || path.isBlank()) {
                 throw new IllegalArgumentException("mm.app.datasource.path must not be blank");
+            }
+        }
+    }
+
+    public record Mail(String from) {
+
+        public Mail {
+            if (from == null || from.isBlank()) {
+                throw new IllegalArgumentException("mm.app.mail.from must not be blank");
             }
         }
     }

@@ -1087,3 +1087,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Complete、レビュー対応（Request Changes扱い）
 
 ---
+
+## UNIT-02 Code Generation - EmailNotificationServiceの責務分離、およびFromアドレス欠落の修正
+**Timestamp**: 2026-07-20T22:20:00Z
+**User Input**: "EmailNotificationServiceのsend()は共通機能にしても良いかも。例外の捌きはregistration固有かもだけど。" ／ 続けて（ツール呼び出し拒否後）: "Mail template not found のIllegalStateExceptionもthrows節に書いて。あとメールの差出人は？"
+**AI Response**: "ユーザ指摘の通り、`EmailNotificationService.send()`が担っていたテンプレートレンダリング＋`MimeMessageHelper`によるSMTP送信は`registration`固有ではない横断的インフラであり、送信失敗時のフェイルオープンのみが`registration`固有の方針と判断。前者を`common.mail.MailDeliveryService`（新設）へ切り出し、`send()`メソッドのシグネチャに`throws MessagingException, IllegalStateException`を明示（後者は`MailTemplateRenderer.render()`起因のテンプレート欠落・件名不正を指す注釈）。あわせて、メールのFromアドレスが一度も設定されておらず`application.yml`にも該当設定が存在しない欠落を発見（JavaMailのOS依存フォールバックで送信自体は成立してしまうため、Section 18の起動検証では気づかれなかった）。`AppProperties`に`Mail(from)`を追加（`MM_APP_MAIL_FROM`、デフォルト`no-reply@mastermeister.example`）し、`MailDeliveryService`で明示的に`setFrom()`するよう修正。`AppProperties`のコンストラクタ引数追加に伴い5件のテストファイルを追従。`aidlc-docs/construction/unit-02/code/business-logic-summary.md`（設計ギャップ項目4追加）・`aidlc-docs/construction/unit-02/nfr-design/logical-components.md`（訂正注記、`MailDeliveryService`項を新設）・`backend/README.md`（`MM_APP_MAIL_FROM`追加）を更新。`./gradlew :backend:test`で全テスト成功を確認。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Complete、レビュー対応（Request Changes扱い）
+
+---

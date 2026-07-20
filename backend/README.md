@@ -42,6 +42,7 @@ export MM_APP_JWT_SECRET="$(openssl rand -base64 32)"
 | `MM_APP_MAIL_HOST` / `MM_APP_MAIL_PORT` | `localhost` / `1025` | 送信メールサーバ（devはMailPit） |
 | `MM_APP_MAIL_USERNAME` / `MM_APP_MAIL_PASSWORD` | (空) | 送信メールサーバの認証情報 |
 | `MM_APP_MAIL_SMTP_AUTH` / `MM_APP_MAIL_SMTP_STARTTLS` | `false` / `false` | 送信メールサーバのSMTP認証・STARTTLS |
+| `MM_APP_MAIL_FROM` | `no-reply@mastermeister.example` | 送信メールのFromアドレス |
 | `SERVER_PORT` | `8080` | Webサーバのポート |
 
 ## Flywayマイグレーション

@@ -9,7 +9,8 @@
 | `TokenGenerator` | `common.security` | BR-REG-02（トークン生成・ハッシュ化の共通ユーティリティ） |
 | `PasswordBreachChecker` | `registration` | BR-PWD-02（HIBP k-Anonymity API、3秒タイムアウト、フェイルオープン） |
 | `MailTemplateRenderer` | `common.mail` | BR-MAIL-02〜03（`cherry-mustache-core`ラップ、件名抽出） |
-| `EmailNotificationService`（COMP-06） | `registration` | business-logic-model.md §9、送信失敗時フェイルオープン |
+| `MailDeliveryService` | `common.mail` | テンプレートレンダリング＋SMTP送信の実処理（`MimeMessageHelper`、Fromアドレス設定）。横断的インフラのため送信失敗時は例外を呼び出し元に送出する（フェイルオープンか否かは呼び出し元の方針） |
+| `EmailNotificationService`（COMP-06） | `registration` | business-logic-model.md §9、`MailDeliveryService`呼び出しを送信失敗時フェイルオープンで包む |
 | `RegistrationRateGuard` | `registration` | BR-REG-07（登録エンドポイントのレート制限） |
 | `UserRegistrationService`（COMP-01） | `registration` | business-logic-model.md §1〜4（登録・承認・却下・却下取消・無効化・再有効化・初期管理者作成） |
 | `AdminBootstrapService`（COMP-02） | `registration` | `ApplicationRunner`、FR-1.14 |
@@ -50,3 +51,4 @@ Mockitoベースのユニットテスト（`@ExtendWith(MockitoExtension.class)`
 1. **`AUTH_ACCOUNT_NOT_APPROVED`とBR-REG-03の矛盾**: frontend-components.mdが承認待ち/却下済みユーザのログイン試行を別エラーコードとして列挙していたが、これはBR-REG-03（メールアドレス列挙攻撃対策のため認証情報不備時と同一メッセージとする）と矛盾していた。`AUTH_INVALID_CREDENTIALS`に統合し、frontend-components.mdを修正
 2. **リフレッシュトークン再利用検知の監査イベント種別が未定義**: business-logic-model.md §6で「該当イベントを発行する」としていたが対応する`AuditEventType`がなかった。`TOKEN_REUSE_DETECTED`を追加し、domain-entities.md・business-rules.md・business-logic-model.mdを整合させた
 3. **`PasswordBreachChecker`の2コンストラクタがSpringのビーン生成で解決不能（Section 18の起動検証で発覚）**: 本番用（`RestClient.Builder`）とテスト専用（package-private、`RestClient`直接注入）の2コンストラクタを持つが、いずれにも`@Autowired`が付与されておらず、コンストラクタが2つ以上ある場合にSpringが自動選択できず起動時に`NoSuchMethodException`（デフォルトコンストラクタ探索）で失敗していた。Mockitoベースの単体テストはこのクラスをモック化するため、本番相当のフルコンテキスト起動を伴うテストがこれまで存在せず検出されなかった。本番用コンストラクタに`@Autowired`を明示して解決。加えて、Spring Boot 4.1では`RestClient.Builder`の自動構成が`spring-boot-starter-web`から`spring-boot-restclient`モジュールへ分離されており（DataJpaTest/WebMvcTestと同様のモジュール分割パターン）、当該依存を追加するまでは`RestClient.Builder`のBeanそのものが存在しなかった
+4. **`EmailNotificationService.send()`にメールのFromアドレス設定が漏れていた（Code Generation Completeのレビューで発覚）**: `MimeMessageHelper`に`setFrom(...)`を一度も呼んでおらず、`application.yml`にも`spring.mail.from`相当の設定が存在しなかった。JavaMailは`From`未設定でも`InternetAddress.getLocalAddress()`によるOS依存のフォールバック（実行ユーザ名+ホスト名等）で送信自体は成立してしまうため、Section 18の起動検証（MailPit）では気づかれなかった。`AppProperties`に`Mail(from)`を追加（`MM_APP_MAIL_FROM`、デフォルト`no-reply@mastermeister.example`）し、送信処理側で明示的に設定するよう修正。あわせてレビュー指摘（テンプレートレンダリング＋SMTP送信という汎用的な機構と、送信失敗時のフェイルオープンという`registration`固有の方針が同一クラスに同居していた）を受け、前者を`common.mail.MailDeliveryService`へ切り出した（`EmailNotificationService`は`MailDeliveryService`を呼び出し例外をフェイルオープンで包むのみ）
