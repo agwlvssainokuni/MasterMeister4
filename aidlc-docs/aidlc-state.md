@@ -50,9 +50,16 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 — COMPLETED。UNIT-02（ユーザ登録・認証）着手前
-- **Next Stage**: UNIT-02のステージ判定（Functional Design/NFR Requirements/NFR Design/Infrastructure DesignのEXECUTE/SKIP）
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - Functional Design（計画作成中）
+- **Next Stage**: Functional Design計画を作成し提示
 - **Status**: 実施中
+
+## Current Unit - Stage Progress (UNIT-02)
+- [ ] Functional Design — EXECUTE、IN PROGRESS
+- [ ] NFR Requirements — EXECUTE
+- [ ] NFR Design — EXECUTE
+- [ ] Infrastructure Design — SKIP（メール送信・JWT鍵管理は設定レベルで対応可能）
+- [ ] Code Generation
 
 ## Current Unit - Stage Progress (UNIT-01)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T14:20:00Z。グランドデザイン・代表画面モックのコンポーネント構造設計のため）

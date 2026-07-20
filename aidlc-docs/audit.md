@@ -671,3 +671,11 @@
 **Context**: CONSTRUCTION - UNIT-01完了、UNIT-02開始
 
 ---
+
+## UNIT-02 ステージ判定 - 承認
+**Timestamp**: 2026-07-20T19:36:00Z
+**User Input**: "OK"
+**AI Response**: "UNIT-02のステージ判定（Functional Design/NFR Requirements/NFR Design=EXECUTE、Infrastructure Design=SKIP）を承認として記録。Functional Designに着手。"
+**Context**: CONSTRUCTION - UNIT-02 ステージ判定
+
+---
