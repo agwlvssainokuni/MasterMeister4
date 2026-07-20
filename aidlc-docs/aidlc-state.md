@@ -37,10 +37,11 @@
 - [ ] Units Generation — EXECUTE
 
 ### 🟢 CONSTRUCTION PHASE
-- [ ] Functional Design — EXECUTE（ユニットごと）
-- [ ] NFR Requirements — EXECUTE（ユニットごと）
-- [ ] NFR Design — EXECUTE（ユニットごと）
-- [ ] Infrastructure Design — EXECUTE（ユニットごと）
+**注記**: 以下4ステージの「EXECUTE（ユニットごと）」はプロジェクト全体の見通しであり確約ではない。各ユニット着手時にそのユニット単独でEXECUTE/SKIPを判定し、他ユニットの判定は引き継がない（詳細は execution-plan.md 参照）。
+- [ ] Functional Design — EXECUTE（ユニットごと、判定は都度独立）
+- [ ] NFR Requirements — EXECUTE（ユニットごと、判定は都度独立）
+- [ ] NFR Design — EXECUTE（ユニットごと、判定は都度独立）
+- [ ] Infrastructure Design — EXECUTE（ユニットごと、判定は都度独立）
 - [ ] Code Generation — EXECUTE
 - [ ] Build and Test — EXECUTE
 

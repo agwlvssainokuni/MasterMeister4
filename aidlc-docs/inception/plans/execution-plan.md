@@ -122,6 +122,9 @@ OPERATIONSフェーズ
   - **根拠**: requirements.mdの実装優先順位・stories.mdの10エピック構成から、複数の実装ユニットへの分解が明らかに必要（デザインシステム基盤、ユーザ管理、RDBMSセットアップ、アクセス制御、データ表示、その他機能、監査ログ、CI/CD等）
 
 ### 🟢 CONSTRUCTION PHASE（ユニットごとに繰り返し）
+
+**重要**: 以下のFunctional Design／NFR Requirements／NFR Design／Infrastructure Designの「EXECUTE」はプロジェクト全体としての一般的な見通しであり、確約ではない。CLAUDE.mdのPer-Unit Loop定義どおり、各ユニットの着手時にそのユニット固有の内容（新規データモデルの有無、複雑な業務ロジックの有無、NFR要件の有無等）に基づいて**そのユニット単独で**EXECUTE/SKIPを判定する。前のユニットでEXECUTEしたからといって次のユニットも自動的にEXECUTEするわけではなく、逆に前のユニットでSKIPしたステージが後のユニットで必要になればEXECUTEする。ユニット間で判定を引き継がない。
+
 - [ ] Functional Design — **EXECUTE（ユニットごとに判定）**
   - **根拠**: アクセス権限判定・合成ロジック（PBT対象）、SQL生成ロジック（PBT対象）、JWTローテーション等、詳細設計が必要な複雑ロジックを含むユニットが多い
 - [ ] NFR Requirements — **EXECUTE（ユニットごとに判定）**

@@ -151,3 +151,11 @@
 **Context**: INCEPTION - Workflow Planning (Request Changes)
 
 ---
+
+## Workflow Planning - Request Changes: Emphasize Per-Unit Independence
+**Timestamp**: 2026-07-20T11:08:00Z
+**User Input**: "Construction各ステージ（Functional Design等）を「ユニットごとに判定」とするのはOK。ユニットごとに判定するので合って、前ユニットの判定を引き継ぐわけではない点を強調しておきたい。"
+**AI Response**: "Added an explicit note in execution-plan.md before the Construction phase checklist and in aidlc-state.md Stage Progress, clarifying that the per-unit EXECUTE/SKIP determination for Functional Design, NFR Requirements, NFR Design, and Infrastructure Design is independent for each unit — no inheritance from prior units' decisions in either direction (an EXECUTE on one unit doesn't force EXECUTE on the next; a SKIP on one unit doesn't force SKIP on the next)."
+**Context**: INCEPTION - Workflow Planning (Request Changes)
+
+---
