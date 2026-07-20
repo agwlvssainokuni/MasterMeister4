@@ -399,3 +399,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation (Request Changes cycle, reference-driven implementation)
 
 ---
+
+## UNIT-01 Code Generation - Wholesale Replacement Question Resolved, Reference Dir Gitignored
+**Timestamp**: 2026-07-20T14:16:00Z
+**User Input**: "design-system-- へ置き換えることは妥当ですか？" → "このまま進めてください。design-system-- は参考として引き続きおいておきます。誤ってコミットしないよう注意してください。"
+**AI Response**: "Explained why wholesale-replacing the implementation with the reference would be inappropriate: (1) reference lacks data-testid/testId props required by CLAUDE.md's Automation Friendly Code Rules, (2) reference uses semicolons/double quotes, contradicting the user's own recent Request Changes, (3) reference includes Category B feature-adjacent components (Table/Modal/Toast/etc.) that were just deliberately deferred per FR-0.3. Recommended keeping the current merged implementation. User agreed to proceed as-is and asked to guard against accidentally committing design-system--. Created workspace-root .gitignore excluding /design-system--/ (previously no root .gitignore existed); verified via git status that the directory no longer appears as untracked."
+**Context**: CONSTRUCTION - UNIT-01 Code Generation (Request Changes cycle, final confirmation)
+
+---
