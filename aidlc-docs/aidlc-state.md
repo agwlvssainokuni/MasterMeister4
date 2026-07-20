@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - Functional Design（計画提示、回答待ち）
-- **Next Stage**: unit-02-functional-design-plan.mdの回答を受け、成果物を作成
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - Functional Design（成果物作成完了、承認待ち）
+- **Next Stage**: ユーザーの承認後、NFR Requirementsへ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)

@@ -1,0 +1,160 @@
+# UNIT-02 ユーザ登録・認証 - Domain Entities
+
+business-rules.mdで定義したルールに対応するドメインエンティティを定義する。永続化技術（テーブル定義・カラム型等）の詳細はNFR Design／Code Generationステージで確定する。ここでは論理的な属性・関係のみを扱う。
+
+---
+
+## 1. User
+
+アプリケーションの利用者（一般ユーザ・管理者）を表す。
+
+| 属性 | 型 | 説明 |
+|---|---|---|
+| `id` | UserId | 一意識別子 |
+| `email` | String | メールアドレス（一意） |
+| `passwordHash` | String | 適応型ハッシュアルゴリズムでハッシュ化されたパスワード（BR-PWD-03） |
+| `fullName` | String | 氏名（BR-REG-05、Step2で収集） |
+| `preferredLanguage` | Language | 言語設定（`ja`/`en`、BR-REG-05、Step2で収集） |
+| `status` | UserStatus | `PENDING`/`APPROVED`/`REJECTED`/`DISABLED`（BR-REG-01） |
+| `role` | Role | `USER`/`ADMIN` |
+| `createdAt` | Instant | 登録完了（Step2）日時 |
+| `statusChangedAt` | Instant | 直近のステータス変更日時 |
+| `statusChangedBy` | UserId（nullable） | 直近のステータス変更を行った管理者。初期管理者ブートストラップ等、操作者が存在しない遷移ではnull |
+
+**不変条件**: `status`が`APPROVED`のユーザのみログイン可能（BR-REG-03）。
+
+---
+
+## 2. RegistrationToken
+
+2段階登録フローのStep1〜Step2間で使用する、メール確認・パスワード設定用のトークン（BR-REG-02）。
+
+| 属性 | 型 | 説明 |
+|---|---|---|
+| `id` | RegistrationTokenId | 一意識別子 |
+| `email` | String | 対象メールアドレス（Step2完了時点でUser.emailに引き継ぐ） |
+| `tokenHash` | String | トークンのハッシュ値（平文は保存しない） |
+| `expiresAt` | Instant | 有効期限（デフォルト発行から3時間、`mm.app.user-registration.token-expiry`） |
+| `usedAt` | Instant（nullable） | 使用済み（Step2完了）日時。null＝未使用 |
+| `createdAt` | Instant | 発行日時 |
+
+**不変条件**:
+- 同一`email`に対し、同時に有効な（未使用かつ未失効の）トークンは高々1件（BR-REG-02、新規発行時に旧トークンを無効化する）
+- `usedAt`が設定済みのトークンは再利用不可（Step2の再実行を拒否）
+
+**Userとの関係**: Step2完了までUserレコードは存在しないため、直接の外部キー関係は持たない（`email`で対応付ける）。Step2完了時にUserレコードが新規作成される。
+
+---
+
+## 3. RefreshToken
+
+JWTアクセストークンと対をなす、ローテーション・再利用検知対象のリフレッシュトークン（BR-TOKEN-01〜03）。
+
+| 属性 | 型 | 説明 |
+|---|---|---|
+| `id` | RefreshTokenId | 一意識別子 |
+| `userId` | UserId | 発行対象ユーザ（外部キー） |
+| `tokenFamilyId` | TokenFamilyId | トークンファミリID。ログイン時に新規採番、ローテーション時は引き継ぐ |
+| `tokenHash` | String | トークンのハッシュ値（平文は保存しない） |
+| `issuedAt` | Instant | 発行日時 |
+| `expiresAt` | Instant | 有効期限（デフォルト24時間、`mm.app.jwt.refresh-token-expiry`） |
+| `revokedAt` | Instant（nullable） | 失効日時。null＝有効 |
+| `revokedReason` | RevokeReason（nullable） | `ROTATED`（ローテーションによる無効化）/ `REUSE_DETECTED`（再利用検知による一括失効）/ `LOGOUT`（ログアウトによる失効） |
+
+**不変条件**:
+- 同一`tokenFamilyId`内で`revokedReason = REUSE_DETECTED`のトークンが1件でも存在する場合、同一ファミリの全トークンは失効済みでなければならない（BR-TOKEN-02）
+- 1つのRefreshTokenは1回のみリフレッシュに使用可能（使用時に`ROTATED`として即座に失効させる）
+
+**Userとの関係**: User 1 – N RefreshToken（1ユーザが複数端末・複数トークンファミリを持ちうる。FR-3.6同時ログイン許可）
+
+---
+
+## 4. LoginAttemptState
+
+ログイン試行制限（BR-LOGIN-01〜03）のための、メールアドレス単位の失敗状態。
+
+| 属性 | 型 | 説明 |
+|---|---|---|
+| `email` | String | 対象メールアドレス（主キー） |
+| `failureCount` | int | 連続失敗回数 |
+| `lockedUntil` | Instant（nullable） | ロック解除予定日時。null＝ロックされていない |
+| `lastFailureAt` | Instant（nullable） | 直近の失敗日時 |
+
+**不変条件**: `failureCount`が閾値（デフォルト5、`mm.app.login-attempt.max-failures`）に達した時点で`lockedUntil`が設定される。`lockedUntil`経過後の次回参照時、`failureCount`は0にリセットされる。
+
+**Userとの関係**: 直接の外部キー関係は持たない（`email`ベース。Userが存在しないメールアドレスへのログイン試行もBR-REG-04により同様に扱うため）。
+
+---
+
+## 5. AuditLogEntry
+
+監査ログの1レコード（BR-AUDIT-01〜03、§6.2）。UNIT-02で記録基盤を新設するが、エンティティ自体は全ユニット共通で利用される。
+
+| 属性 | 型 | 説明 |
+|---|---|---|
+| `id` | AuditLogEntryId | 一意識別子 |
+| `occurredAt` | Instant | 発生日時（ISO 8601） |
+| `userId` | UserId（nullable） | 操作を行ったユーザ。ログイン失敗等、ユーザが特定できない場合はnull（試行されたメールアドレスは別途`detail`に記録） |
+| `connectionId` | ConnectionId（nullable） | 対象RDBMS接続ID。本ユニットのイベントでは通常null（UNIT-03以降で利用） |
+| `eventType` | AuditEventType | `LOGIN` / `LOGOUT` / `LOGIN_FAILURE` / `REGISTRATION_REQUESTED` / `USER_APPROVED` / `USER_REJECTED`（本ユニットで追加する種別。他ユニットが追加する種別は各ユニットのFunctional Designで定義） |
+| `targetResource` | String（nullable） | 操作対象の識別情報（例: 対象ユーザのメールアドレス） |
+| `resultStatus` | ResultStatus | `SUCCESS` / `FAILURE` |
+| `detail` | String（nullable） | 補足情報（機微情報は含めない。SECURITY-03準拠） |
+
+**Userとの関係**: User 0..1 – N AuditLogEntry（`userId`が特定できるイベントのみ）
+
+---
+
+## 6. AuditEvent（永続化しないDTO）
+
+AuditEventPublisherが発行し、AuditLogServiceが受信してAuditLogEntryへ変換する、コンポーネント間受け渡し用のイベントオブジェクト（BR-AUDIT-01）。エンティティ（永続化対象）ではなく、AuditLogEntryとほぼ同じ属性を持つ一時的なデータ構造。
+
+---
+
+## エンティティ関連図
+
+```mermaid
+erDiagram
+    USER ||--o{ REFRESH_TOKEN : "発行対象となる"
+    USER ||--o{ AUDIT_LOG_ENTRY : "操作を行う（任意）"
+    REGISTRATION_TOKEN }o..|| USER : "Step2完了時にemailで対応付け・User新規作成"
+
+    USER {
+        UserId id
+        string email
+        string passwordHash
+        string fullName
+        Language preferredLanguage
+        UserStatus status
+        Role role
+    }
+    REGISTRATION_TOKEN {
+        RegistrationTokenId id
+        string email
+        string tokenHash
+        Instant expiresAt
+        Instant usedAt
+    }
+    REFRESH_TOKEN {
+        RefreshTokenId id
+        UserId userId
+        TokenFamilyId tokenFamilyId
+        string tokenHash
+        Instant expiresAt
+        Instant revokedAt
+        RevokeReason revokedReason
+    }
+    AUDIT_LOG_ENTRY {
+        AuditLogEntryId id
+        Instant occurredAt
+        UserId userId
+        AuditEventType eventType
+        ResultStatus resultStatus
+    }
+```
+
+**テキスト代替（複雑な視覚コンテンツのため）**:
+- User（1）は複数のRefreshToken（0..N）を持つ。RefreshTokenは必ず1件のUserに属する
+- User（1）は複数のAuditLogEntry（0..N）に紐づく。AuditLogEntryのuserIdはnull許容（ユーザ特定不可のイベント）
+- RegistrationTokenはUserへの外部キーを持たず、emailで緩やかに対応付けられる。Step2完了時点でRegistrationTokenのemailを引き継いだ新しいUserレコードが作成される
+- LoginAttemptState、AuditEvent（DTO）は上図には含めない（Userとの直接的な永続化リレーションを持たないため）

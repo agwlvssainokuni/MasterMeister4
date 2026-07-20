@@ -687,3 +687,35 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design、計画提示
 
 ---
+
+## UNIT-02 Functional Design - AI推奨提示
+**Timestamp**: 2026-07-20T19:42:00Z
+**User Input**: "推奨は？"
+**AI Response**: "全11問にAI推奨（Q1=A, Q2=A, Q3=A, Q4=A, Q5=A, Q6=A, Q7=A, Q8=A, Q9=A, Q10=A, Q11=A）を理由付きで提示。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、推奨提示
+
+---
+
+## UNIT-02 Functional Design - 回答受領（Q1・Q2のみ、誤って未回答分をAI推奨で埋めた誤りの訂正）
+**Timestamp**: 2026-07-20T19:45:00Z
+**User Input**: "Q1=B. Q2=A, ただしトークンを発行する昨日はリフレッシュトークンと共用でOK"
+**AI Response**: "unit-02-functional-design-plan.mdにQ1=B（AI推奨のAから変更、`DISABLED`状態を追加）、Q2=A（専用テーブル`registration_token`で管理。『昨日』は『機能』の誤変換と判断し、トークン生成・ハッシュ化の共通ユーティリティ（TokenGenerator）はリフレッシュトークンと共用する設計として解釈・記録）を記入。当初Q3〜Q11も未回答のままAI推奨（すべてA）で埋めてしまったが、ユーザーから『Q3〜Q13は未回答』との指摘を受け誤りと判明。AskUserQuestionで意図を確認し『Q1〜Q11のことで、Q3以降が未回答』と確定。Q3〜Q11の[Answer]:欄を空欄に戻し、計画チェックリストStep A/Bも未完了に修正。ユーザーからの実際の回答を待つ。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、回答受領の誤り訂正
+
+---
+
+## UNIT-02 Functional Design - Q3〜Q11回答受領、追加要望（Mustacheテンプレート）
+**Timestamp**: 2026-07-20T19:50:00Z
+**User Input**: "Q3=A. Q4=A(回数、時間は設定可とする). Q5=A. Q6=A(REQUIRES_NEWを想定). Q7=C(画面の言語選択, 登録後はユーザの言語設定). Q8=A. Q9=A(ユーザの登録情報に氏名と言語も欲しい). Q10=A. Q11=A. あと、メールのテンプレートはmustache形式とする。自作のmustacheエンジンを提供するので、どこにおけば良いか指定して欲しい。"
+**AI Response**: "unit-02-functional-design-plan.mdにQ3〜Q11の回答を記入。Q4=A（閾値・ロック時間は設定可能なプロパティとする）、Q6=A（`AuditLogService`の記録メソッドに`@Transactional(propagation=REQUIRES_NEW)`を明示付与）、Q7=C（Step1確認メールはUI選択言語、Step2でアカウント作成時に保存する言語設定を以降のメールに使用）、Q9=A（追加要望としてUser登録情報に氏名・言語設定を追加、Step2画面に入力項目を追加）として解釈・記録。曖昧性なしと判断、追加質問なし。加えて『追加事項』セクションを新設し、メールテンプレートをMustache形式・ユーザー提供の自作エンジン（サードパーティ非使用）とする方針と、配置場所の回答（UNIT-01の参考資材と同じ方針でワークスペース直下`reference/mustache-engine/`に配置依頼、UNIT-02 Code Generation時に`backend/src/main/java/cherry/mastermeister/common/template/`へ組込）を記録。計画チェックリストStep A・Bを完了、Step C（成果物作成）へ進む。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、Q3〜Q11回答受領・追加要望対応
+
+---
+
+## UNIT-02 Functional Design - Mustacheエンジン配置確定
+**Timestamp**: 2026-07-20T20:05:00Z
+**User Input**: "Mustacheエンジンをおきました。パッケージ構成はこのまま cherry.mustache に置くのが適切だと思います。またテストコードも合わせてコピーしてもらうのが良いと思います。"
+**AI Response**: "reference/mustache-engine/を確認。cherry-mustache-core（パッケージcherry.mustache、java-libraryプラグイン、JUnit5・jqwik(PBT)・OWASP Dependency-Check構成済み、テスト一式にMustache公式spec準拠テスト・プロパティテストを含む）とcherry-mustache-cli（CLIツール）の2 Gradleモジュール構成であることを確認。ユーザーの指示どおり、パッケージはcherry.mastermeister配下へ移動せずcherry.mustacheのまま維持し、テストコード一式を含めてワークスペース直下cherry-mustache-core/へ独立Gradleサブプロジェクトとしてコピーする方針に確定（backendからimplementation(project(':cherry-mustache-core'))として参照）。cherry-mustache-cli（CLIツール）はバックエンド組み込み対象外と判断し、reference/に参照用として残置。business-rules.md BR-MAIL-02とunit-of-work.mdのコード構成方針にこの決定を反映。実際のファイルコピー・Gradle設定変更はCode Generationステージで実施する旨を明記。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、Mustacheエンジン統合方針の確定
+
+---
