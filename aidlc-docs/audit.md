@@ -343,3 +343,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 Planning (plan amendment)
 
 ---
+
+## UNIT-01 Code Generation Part 1 - Plan Approved
+**Timestamp**: 2026-07-20T12:52:00Z
+**User Input**: "確認すべき事項は？" → "OK"
+**AI Response**: "Presented 3 judgment calls from the font decision follow-up (package name/license assumptions to verify during Part 2, specific fallback CSS implementation, Noto Sans Mono readability trade-off vs dedicated code fonts). User confirmed with 'OK'. Treated as approval of the full unit-01-code-generation-plan.md (including both font amendments). Proceeding to Part 2 (Generation)."
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 Planning (Step 7-8, approval)
+
+---
