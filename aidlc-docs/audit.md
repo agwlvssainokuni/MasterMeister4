@@ -343,3 +343,27 @@
 **Context**: INCEPTION継続審議 - UNIT-01着手時の依頼事項
 
 ---
+
+## CONSTRUCTION再開 - UNIT-01ステージ判定
+**Timestamp**: 2026-07-20T14:00:00Z
+**User Input**: "continue"
+**AI Response**: "UNIT-01の4条件付きステージ（Functional Design/NFR Requirements/NFR Design/Infrastructure Design）を判定。今回のスコープ拡大（グランドデザイン・代表画面モック）を踏まえ、Functional DesignをEXECUTEに変更（従来はSKIP想定だったが、フロントエンドのコンポーネント構造設計が必要なため）。NFR Requirements/NFR DesignはEXECUTE、Infrastructure DesignはSKUPのまま（devenvはローカル開発環境設定でありデプロイインフラ設計には該当しないため）。判定内容を提示し承認を依頼。"
+**Context**: CONSTRUCTION - UNIT-01 ステージ判定
+
+---
+
+## UNIT-01ステージ判定 - 承認
+**Timestamp**: 2026-07-20T14:02:00Z
+**User Input**: "OK"
+**AI Response**: "ステージ判定を承認として記録。Functional Designに着手。Step 1（Analyze Unit Context）としてunit-of-work.md・unit-of-work-story-map.md・stories.mdを確認したところ、STORY-0.2の対応要件がFR-0.3のままであり、UNIT-01スコープ拡張で追加したFR-0.3〜0.5との対応関係が更新されていないトレーサビリティの不整合を発見。stories.mdを修正: STORY-0.1にFR-0.3（グランドデザイン）の受け入れ基準を追加、STORY-0.2の対応要件をFR-0.4に修正、STORY-0.3（代表画面モックによる早期デザイン確認、FR-0.4/0.5対応）を新設。unit-of-work-story-map.mdにSTORY-0.3のUNIT-01への割当を追加し、ストーリー総数を29→30に更新。"
+**Context**: CONSTRUCTION - UNIT-01 Functional Design、トレーサビリティ修正
+
+---
+
+## UNIT-01 Functional Design - 計画作成
+**Timestamp**: 2026-07-20T14:05:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "aidlc-docs/construction/plans/unit-01-functional-design-plan.mdを作成。UNIT-01がフロントエンドのみのユニットであるため、Business Logic Modeling/Domain Model/Business Rules/Data Flow/Integration PointsはN/Aと明記し、Frontend Components（グランドデザイン・代表5画面モックのコンポーネント構造）に焦点を当てた8問（レイアウト分離、ナビ項目、モックデータ、画面状態バリエーション、レスポンシブ対応範囲、フォーム操作性、配置場所、権限設定画面の権限モデル先取り度合い）を[Answer]:タグ形式で出題。aidlc-state.mdのCurrent Statusを更新。"
+**Context**: CONSTRUCTION - UNIT-01 Functional Design、計画提示
+
+---

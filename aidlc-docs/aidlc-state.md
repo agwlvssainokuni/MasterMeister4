@@ -50,9 +50,15 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤（Per-Unit Loop開始）
-- **Next Stage**: UNIT-01のFunctional Design要否判定
+- **Current Stage**: UNIT-01 デザインシステム基盤 - Functional Design（計画への回答待ち）
+- **Next Stage**: unit-01-functional-design-plan.mdの回答を受け、frontend-components.mdを作成
 - **Status**: 実施中
+
+## Current Unit - Stage Judgment (UNIT-01)
+- Functional Design: EXECUTE（グランドデザイン・代表画面モックのコンポーネント構造設計のため）
+- NFR Requirements: EXECUTE
+- NFR Design: EXECUTE
+- Infrastructure Design: SKIP（devenvはローカル開発環境設定であり、本番デプロイのインフラ設計には該当しない）
 
 ## Current Unit Progress
 - [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS（Code Generation Part 1 Planning着手時、参考資材の配置をユーザーに依頼すること。unit-of-work.md UNIT-01「参考資材の依頼」参照）
