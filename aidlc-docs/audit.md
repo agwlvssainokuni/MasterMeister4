@@ -911,3 +911,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 1、計画提示
 
 ---
+
+## UNIT-02 Code Generation Part 1 - 追加指示の反映（SPAルーティング・AppProperties）
+**Timestamp**: 2026-07-20T23:25:00Z
+**User Input**: "frontendとの統合があるので、SecurityConfigでAPI以外はpermitAll()。また、存在する静的リソースはそれを返却、APIはスルー、それ以外は/index.htmlを返却の処理を追加。あと、application.ymlは、本アプリのrecordクラス群(トップはAppProperties)でまとめて受け取るようにしておきたい、各機能はAppPropertiesをDIして参照。AppPropertiesのコンストラクタで値の検証もできるはずなので。"
+**AI Response**: "unit-02-code-generation-plan.mdに「Part 1計画へのユーザー追加指示の反映」セクションを新設し、設定値アクセス方針（AppPropertiesをトップとするrecord階層、@ConfigurationProperties、コンパクトコンストラクタでの値検証、各コンポーネントはDIで参照しVALUE直書き禁止）とSPA配信方針（/api/**以外はpermitAll、静的リソース優先・APIスルー・それ以外はindex.htmlフォールバック）を明記。Section 1にStep 1.5（AppProperties作成、ネストレコード: Jwt/Password/LoginAttempt/UserRegistration/AdminBootstrap/Frontend/Datasource）を追加。Section 9のSecurityConfig（Step 9.1）を/api/**以外permitAllに修正、JwtDecoder/Encoder（Step 9.2）をAppProperties.Jwt参照に修正、新規Step 9.6（SPAフォールバックルーティング、WebMvcConfigurerのリソースハンドラ拡張）を追加。Step 6.8（AdminBootstrapService）の記述もAppProperties.AdminBootstrap経由に修正。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 1、追加指示の反映
+
+---

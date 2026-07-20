@@ -13,6 +13,11 @@
 
 本計画は`unit-02-functional-design-plan.md`・`unit-02-nfr-requirements-plan.md`・`unit-02-nfr-design-plan.md`で確定した内容の実装への落とし込みであり、本計画自体が新たな設計判断を行う場ではない（既存決定と矛盾する記述を発見した場合は生成前に指摘する）。
 
+## Part 1計画へのユーザー追加指示の反映
+
+- **設定値アクセス方針**: `application.yml`の`mm.app.*`配下の設定値は、`AppProperties`をトップとするrecordクラス階層（`@ConfigurationProperties(prefix = "mm.app")`）で受け取る。機能領域ごとにネストしたrecord（`Jwt`, `Password`, `LoginAttempt`, `UserRegistration`, `AdminBootstrap`, `Datasource`等）に分割する。各コンポーネントは個別に`@Value`を使わず、`AppProperties`（またはそのネストレコード）をコンストラクタインジェクションで参照する。recordのコンパクトコンストラクタで値検証（必須項目のnullチェック、JWT鍵長、正の数値等）を行う
+- **SPA配信とSecurityConfig**: フロントエンドは単一WARに同梱されるSPA（React Router、クライアントサイドルーティング）であるため、SecurityFilterChainは`/api/**`以外を`permitAll()`とする（ページレベルの認可はクライアント側のAuthContextが担い、サーバ側では`/api/**`のみを認可制御する）。あわせて、存在する静的リソースはそのまま返却し、`/api/**`はコントローラへスルーし、それ以外（React Routerのクライアントサイドルート）は`/index.html`にフォールバックするルーティング処理を追加する
+
 ---
 
 ## 計画チェックリスト
@@ -22,8 +27,9 @@
 - [ ] Step 1.1: `reference/mustache-engine/cherry-mustache-core`（パッケージ`cherry.mustache`、テストコード一式含む）をワークスペース直下`cherry-mustache-core/`へそのままコピーする（BR-MAIL-02）
 - [ ] Step 1.2: `settings.gradle.kts`に`include("cherry-mustache-core")`を追加する
 - [ ] Step 1.3: `backend/build.gradle.kts`に依存関係を追加する: `implementation(project(":cherry-mustache-core"))`, `spring-boot-starter-security`, `spring-boot-starter-oauth2-resource-server`, `spring-boot-starter-validation`, `spring-boot-starter-mail`, `spring-boot-starter-data-jpa`, `com.h2database:h2`, `org.flywaydb:flyway-core`, `org.springframework.boot:spring-boot-flyway`, `logstash-logback-encoder`（本番プロファイル用）, `net.jqwik:jqwik`（testImplementation）
-- [ ] Step 1.4: `backend/src/main/resources/application.yml`を拡張する（H2ファイルベース接続設定、JPA/Flyway設定、JWT設定項目のプレースホルダー、パスワードポリシー・ログイン試行制限・登録レート制限の設定項目、Mail設定、`mm.app.frontend.base-url`等。値はすべて環境変数プレースホルダー、NFR-2.3準拠）
-- [ ] Step 1.5: **検証チェックポイント**: `./gradlew :cherry-mustache-core:test`（コピーしたテスト一式が単体で成功することを確認）、`./gradlew :backend:build`（新規依存関係の解決を確認、この時点ではまだ業務コードがないため最小限の起動確認のみ）
+- [ ] Step 1.4: `backend/src/main/resources/application.yml`を拡張する（H2ファイルベース接続設定、JPA/Flyway設定、`mm.app.*`配下のJWT・パスワードポリシー・ログイン試行制限・登録レート制限・初期管理者・フロントエンドベースURL等の設定項目、Mail設定。値はすべて環境変数プレースホルダー、NFR-2.3準拠）
+- [ ] Step 1.5: `AppProperties`（`cherry.mastermeister.common.config`）を作成する。`@ConfigurationProperties(prefix = "mm.app")`を付与したrecordをトップとし、機能領域ごとにネストしたrecord（`Jwt`（secret, accessTokenExpiry, refreshTokenExpiry）, `Password`（bcryptStrength, minLength）, `LoginAttempt`（maxFailures, lockDuration）, `UserRegistration`（tokenExpiry, rateLimitMaxRequests, rateLimitWindow）, `AdminBootstrap`（email, password）, `Frontend`（baseUrl）, `Datasource`（path））に分割する。各recordのコンパクトコンストラクタで値検証（必須項目のnullチェック、JWT鍵長、正の数値等）を行う。`@ConfigurationPropertiesScan`または明示的な`@EnableConfigurationProperties`で有効化する
+- [ ] Step 1.6: **検証チェックポイント**: `./gradlew :cherry-mustache-core:test`（コピーしたテスト一式が単体で成功することを確認）、`./gradlew :backend:build`（新規依存関係の解決、`AppProperties`のバインディング・検証ロジックを含む起動確認）
 
 ### 2. Database Migration Scripts
 
@@ -59,7 +65,7 @@
 - [ ] Step 6.5: メールテンプレートファイルを作成する（`backend/src/main/resources/mail-templates/{ja,en}/registration-confirmation.html`, `approval-result.html`, `rejection-result.html`。各`<title>`要素に件名を含む）
 - [ ] Step 6.6: `RegistrationRateGuard`（`cherry.mastermeister.registration`）を作成する（BR-REG-07、デフォルト1時間3回）
 - [ ] Step 6.7: `UserRegistrationService`（COMP-01、`cherry.mastermeister.registration`）を作成する（business-logic-model.md §1〜3の登録・承認・却下・却下取消・無効化・再有効化フローを実装。`createApprovedAccount()`含む）
-- [ ] Step 6.8: `AdminBootstrapService`（COMP-02、`cherry.mastermeister.registration`）を作成する（`ApplicationRunner`、環境変数からの初期管理者作成、business-logic-model.md §4）
+- [ ] Step 6.8: `AdminBootstrapService`（COMP-02、`cherry.mastermeister.registration`）を作成する（`ApplicationRunner`、`AppProperties.AdminBootstrap`経由での初期管理者作成、business-logic-model.md §4）
 - [ ] Step 6.9: `LoginAttemptGuard`（COMP-05、`cherry.mastermeister.auth`）を作成する（BR-LOGIN-01〜03）
 - [ ] Step 6.10: `AuthenticationService`（COMP-03、`cherry.mastermeister.auth`）を作成する（ログイン・ログアウト・アクセストークン発行、`JwtEncoder`利用、business-logic-model.md §5）
 - [ ] Step 6.11: `RefreshTokenService`（COMP-04、`cherry.mastermeister.auth`）を作成する（ローテーション・再利用検知、`TokenGenerator`共用、business-logic-model.md §6。無効化時の`ADMIN_DISABLED`一括失効メソッドも含む）
@@ -81,11 +87,12 @@
 
 ### 9. Security Configuration
 
-- [ ] Step 9.1: `SecurityConfig`（`cherry.mastermeister.common.security`）を作成する（`SecurityFilterChain`、URLパターンマッチング: nfr-design-patterns.md §3.6）
-- [ ] Step 9.2: `JwtDecoder`/`JwtEncoder` Beanを作成する（HS256、`mm.app.jwt.secret`から鍵読込、起動時に鍵長を検証）
+- [ ] Step 9.1: `SecurityConfig`（`cherry.mastermeister.common.security`）を作成する（`SecurityFilterChain`。`/api/**`以外は`permitAll()`とする（SPA配信のため、ページレベル認可はクライアント側のAuthContextが担う）。`/api/**`配下は従来どおりnfr-design-patterns.md §3.6のURLパターンマッチング: `/api/auth/**`・`/api/registrations/**`を`permitAll()`、`/api/admin/**`を`hasRole('ADMIN')`、その他の`/api/**`を`authenticated()`とする）
+- [ ] Step 9.2: `JwtDecoder`/`JwtEncoder` Beanを作成する（HS256、`AppProperties.Jwt`（Step 1.5で作成）から鍵・有効期限を取得。鍵長検証は`AppProperties.Jwt`のコンパクトコンストラクタで実施済みのため、Bean定義側では追加検証しない）
 - [ ] Step 9.3: `JwtAuthenticationConverter`を作成する（JWTクレーム→ロール変換）
 - [ ] Step 9.4: HTTPセキュリティヘッダ設定を作成する（Spring Securityデフォルト + CSP明示、nfr-design-patterns.md §3.2）
 - [ ] Step 9.5: CORS設定を作成する（許可オリジンの明示列挙）
+- [ ] Step 9.6: SPAフォールバックルーティングを実装する（`WebMvcConfigurer`の`addResourceHandlers`にPathResourceResolverを拡張し、リクエストパスが実在する静的リソースに一致すればそれを返却、`/api/**`はコントローラへスルー（`addResourceHandlers`の対象外とする）、それ以外は`/index.html`にフォールバックする。React Routerのクライアントサイドルート（`/`, `/login`, `/register`, `/users`等）がリロード・直接アクセスされた場合も正しく配信されることをStep 18.2の手動確認で検証する）
 
 ### 10. API Layer Generation
 
