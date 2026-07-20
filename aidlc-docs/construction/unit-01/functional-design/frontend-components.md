@@ -110,19 +110,38 @@ Q8=Aにより、UNIT-04で正式設計する権限モデル（主権限・補助
   - 空状態（`EmptyState`で「権限が設定されていません」を表示）
   - エラー（保存失敗を`ErrorAlert`で表示）
 
-## 4. UNIT-01で新設する共通コンポーネント（代表画面モックから導出）
+## 4. UNIT-01で新設する共通コンポーネント（代表画面モックから導出、参考実装の取込方針を反映）
 
-上記の代表画面モックを構築する過程で、既存の基本部品（ボタン・フォーム部品等）に加え、以下の共通コンポーネントが必要になる。UNIT-01のCode Generationで実装する。
+`reference/design-system/`との突き合わせにより、以下を確定する（Code Generation計画作成時の決定）。取り込み範囲はユーザー判断により拡大し、参考実装のコンポーネント一式を今回まとめて構築する。
 
+**基本部品・フォーム**
+- `Button`, `TextInput`, `Choice`（`Checkbox` / `RadioGroup` / `Switch`）
+- `FormField`（`cloneElement`方式でid/aria属性を子要素へ注入。参考実装と同じパターン）
+
+**グランドデザイン**
 - `PublicLayout` / `AppShell` / `Header` / `SideNav` / `Footer`
-- `AuthCard`
+- `HeaderControl`（ユーザメニュー等のヘッダー内コントロール群）
+- `LanguageSwitcher`（i18n言語切替）
+- `ThemeToggle`（ダークモード切替）
+
+**表示・フィードバック**
+- `AuthCard`, `Card`（汎用カード。`AuthCard`は`Card`を土台に構築）
 - `PageHeader`
-- `DataTable`（列定義・簡易表示のみ。ソート・ページングの実ロジックは後続ユニットで拡張）
+- `DataTable`（`Table`を土台に、列定義・簡易表示のみ実装。ソート・ページングの実ロジックは後続ユニットで拡張）
+- `Pagination`（見た目のみ、ページ送りの実ロジックは後続ユニットで拡張）
 - `EmptyState`
-- `ErrorAlert` / `SuccessAlert`
-- `ConfirmDialog`
+- `Alert`（`tone: info/success/warning/danger`の単一コンポーネント。当初案の`ErrorAlert`/`SuccessAlert`を統合）
+- `Badge`
+- `Spinner`
+- `ConfirmDialog`（`Modal` / `Overlay`を土台に構築）
 - `FilterBar`（簡易版）
+- `Tabs`
+- `Toast`
+- `CodeBlock`
+- `KeyValueList`
 - `Icon`（自作SVGアイコンセット）
+
+**対象外**: `reference/mocks/pages/screens/QueryRunMock.tsx`はUNIT-01の代表5画面（FR-0.4）に含まれないため、画面モックとしては今回作成しない（クエリ実行はUNIT-06/07のスコープ）。
 
 ## 5. Testable Properties（PBT-01対応）
 

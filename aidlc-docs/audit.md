@@ -535,3 +535,19 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Design 完了、Code Generation開始
 
 ---
+
+## UNIT-01 Code Generation - 参考資材の精査・取込方針の提示
+**Timestamp**: 2026-07-20T14:58:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "reference/design-system/の各コンポーネント（Display.tsx: Badge/Alert/Card/EmptyState/CodeBlock/KeyValueList、Choice.tsx: Checkbox/RadioGroup/Switch、FormField.tsx: cloneElement方式）を確認。Foundational（今回採用）とFeature-adjacent（Tabs→UNIT-07、Toast/CodeBlock/KeyValueList→保留、QueryRunMock→対象外）に分類し、ErrorAlert/SuccessAlertをAlert(tone)に統合する設計変更を提案。AskUserQuestionで方針確認。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation、参考資材の取込方針
+
+---
+
+## UNIT-01 Code Generation - 取込方針の決定（拡大）
+**Timestamp**: 2026-07-20T15:00:00Z
+**User Input**: (AskUserQuestion選択) "もっと多く取り込む（Tabs/Toast等も今回建設）"
+**AI Response**: "Feature-adjacentとして保留予定だったTabs/Toast/CodeBlock/KeyValueListも含め、reference/design-system/のコンポーネント一式をUNIT-01で今回まとめて構築する方針に変更。frontend-components.mdの『UNIT-01で新設する共通コンポーネント』セクションを全面更新（基本部品・フォーム／グランドデザイン／表示・フィードバックに再分類、Alert統合、Badge/Card/Pagination/Tabs/Toast/CodeBlock/KeyValueListを追加）。QueryRunMock.tsxはFR-0.4の代表5画面に含まれないため対象外のまま。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation、取込方針の決定
+
+---
