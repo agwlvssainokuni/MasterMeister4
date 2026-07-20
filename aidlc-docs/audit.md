@@ -263,3 +263,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Per-Unit Loop (stage judgment approval)
 
 ---
+
+## UNIT-01 NFR Requirements - Plan Created
+**Timestamp**: 2026-07-20T12:12:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Created aidlc-docs/construction/plans/unit-01-nfr-requirements-plan.md. Category assessment: Scalability=N/A, Availability=N/A（静的コンポーネント群のため）, Performance/Security/Tech Stack Selection/Reliability/Maintainability/Usabilityは質問あり。9問を作成（CSS方式, i18nライブラリ, アイコン方針, アクセシビリティ目標, コンポーネントドキュメント方針, エラーバウンダリ戦略, パフォーマンス方針, レスポンシブブレークポイント, 依存脆弱性スキャン）。ユーザ回答待ち。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements (Steps 1-4)
+
+---
