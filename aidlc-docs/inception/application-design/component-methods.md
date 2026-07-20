@@ -8,9 +8,10 @@
 - `listPendingUsers(): List<PendingUser>` — 承認待ちユーザ一覧
 - `approveUser(userId: UserId, approvedBy: UserId): void`
 - `rejectUser(userId: UserId, rejectedBy: UserId): void`
+- `createApprovedAccount(email: String, rawPassword: String, role: Role): UserId` — 通常フロー（トークン発行〜承認）を経ずに、パスワードハッシュ化等の共通ロジックのみ再利用して承認済みアカウントを作成する。AdminBootstrapService専用の内部エントリポイント
 
 ## COMP-02: AdminBootstrapService
-- `bootstrapInitialAdmin(): void` — アプリ起動時に呼び出される（`ApplicationRunner`等）
+- `bootstrapInitialAdmin(): void` — アプリ起動時に呼び出される（`ApplicationRunner`等）。内部で`UserRegistrationService.createApprovedAccount()`を呼び出す
 
 ## COMP-03: AuthenticationService
 - `login(email: String, password: String): TokenPair` — アクセストークン+リフレッシュトークン発行

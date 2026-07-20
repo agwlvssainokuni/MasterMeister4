@@ -16,7 +16,7 @@
 
 ### COMP-02: AdminBootstrapService
 - **目的**: アプリ初回起動時の初期管理者アカウント自動作成
-- **責務**: 環境変数からの管理者情報読込、承認済み管理者アカウントの作成（アプリケーション起動ライフサイクルにフックする性質上、UserRegistrationServiceとは別コンポーネント）
+- **責務**: 環境変数からの管理者情報読込。アカウント作成自体はUserRegistrationServiceの専用メソッド（`createApprovedAccount()`）を呼び出して行い、パスワードハッシュ化等の共通ロジックの重複を避ける。起動ライフサイクルへのフックという性質上、UserRegistrationServiceとは別コンポーネントとして分離
 - **対応要件**: FR-1.14
 
 ### COMP-03: AuthenticationService

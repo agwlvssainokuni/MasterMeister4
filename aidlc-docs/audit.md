@@ -191,3 +191,11 @@
 **Context**: INCEPTION - Application Design (Steps 10-12)
 
 ---
+
+## Application Design - Request Changes: AdminBootstrapService/QueryHistory Clarified
+**Timestamp**: 2026-07-20T11:28:00Z
+**User Input**: "コンポーネント数: OK." → (asked for remaining 2 items) → "2は二重記録でOK。1の推奨は？" → (recommendation given: AdminBootstrapService calls UserRegistrationService.createApprovedAccount() to reuse password hashing logic) → user implicitly accepted by asking to reflect
+**AI Response**: "Confirmed: (1) component count of 19 accepted as final. (2) QueryHistoryService/AuditLogService dual recording of query execution accepted as intentional (user-facing history vs admin audit trail are separate concerns). (3) AdminBootstrapService now explicitly depends on UserRegistrationService via a new createApprovedAccount() method (reuses password hashing/validation logic, bypasses the token-based flow) rather than constructing user records independently — reduces risk of security logic drift between the two paths. Updated components.md, component-methods.md, component-dependency.md (matrix, Mermaid diagram, text alternative) accordingly."
+**Context**: INCEPTION - Application Design (Request Changes)
+
+---

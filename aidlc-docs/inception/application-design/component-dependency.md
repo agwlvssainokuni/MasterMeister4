@@ -5,7 +5,7 @@
 | コンポーネント | 依存先 |
 |---|---|
 | UserRegistrationService | EmailNotificationService, AuditEventPublisher |
-| AdminBootstrapService | UserRegistrationServiceの内部データ構造（アカウント作成、承認済み状態で直接生成） |
+| AdminBootstrapService | UserRegistrationService（`createApprovedAccount()`等の専用メソッド経由。パスワードハッシュ化等の共通ロジックを再利用し、通常の登録フロー（トークン発行〜承認）を経ずに承認済みアカウントを作成する） |
 | AuthenticationService | RefreshTokenService, LoginAttemptGuard, AuditEventPublisher |
 | RefreshTokenService | AuditEventPublisher |
 | LoginAttemptGuard | （なし、独立） |
@@ -73,6 +73,7 @@ flowchart LR
 
     C01 --> C06
     C01 --> C19
+    C02 --> C01
     C03 --> C04
     C03 --> C05
     C03 --> C19
@@ -103,6 +104,7 @@ flowchart LR
 ```
 ユーザ登録・認証ドメイン:
   UserRegistrationService -> EmailNotificationService, AuditEventPublisher
+  AdminBootstrapService -> UserRegistrationService（createApprovedAccount経由）
   AuthenticationService -> RefreshTokenService, LoginAttemptGuard, AuditEventPublisher
 
 RDBMSセットアップドメイン:
