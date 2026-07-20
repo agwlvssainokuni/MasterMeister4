@@ -70,7 +70,7 @@
 
 **理由**: requirements.md §2で内部DBのDBアクセス方式（JPA）・データベース種別（H2）は既に確定済みであり、UNIT-02はこれを実装する最初のユニット。Spring Data JPAはSpring Bootの標準的な使い方でボイラープレートを削減できる。Hibernateの`ddl-auto=update`による自動スキーマ生成は、本番運用でのスキーマドリフト（意図しないカラム変更・削除の見落とし等）のリスクがあるため避け、Flywayによる明示的でバージョン管理されたマイグレーションを採用する。
 
-**依存関係**: `spring-boot-starter-data-jpa`, `com.h2database:h2`, `org.flywaydb:flyway-core`
+**依存関係**: `spring-boot-starter-data-jpa`, `com.h2database:h2`, `org.flywaydb:flyway-core`, `org.springframework.boot:spring-boot-flyway`（Spring BootのFlyway自動構成モジュール）
 
 ---
 
@@ -85,6 +85,7 @@
 | `spring-boot-starter-data-jpa` | 内部DBへのアクセス（Spring Data JPA） |
 | `com.h2database:h2` | 内部DB（H2 Database） |
 | `org.flywaydb:flyway-core` | 内部DBのスキーママイグレーション |
+| `org.springframework.boot:spring-boot-flyway` | Spring BootのFlyway自動構成モジュール |
 | `logstash-logback-encoder` | 本番プロファイルの構造化JSON出力 |
 | `net.jqwik:jqwik`（testImplementation） | Property-Based Testing基盤 |
 

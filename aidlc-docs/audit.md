@@ -831,3 +831,11 @@
 **Context**: CONSTRUCTION - UNIT-02 NFR Requirements、内部DBアクセス方式の反映
 
 ---
+
+## UNIT-02 NFR Requirements - Flyway関連依存関係の追加指摘
+**Timestamp**: 2026-07-20T21:45:00Z
+**User Input**: "org.springframework.boot:spring-boot-flyway も必要。"
+**AI Response**: "tech-stack-decisions.mdの§8「内部DBへのアクセス方式」および依存関係まとめ表に`org.springframework.boot:spring-boot-flyway`（Spring BootのFlyway自動構成モジュール）を`org.flywaydb:flyway-core`と併記する形で追加。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Requirements、依存関係の追加反映
+
+---
