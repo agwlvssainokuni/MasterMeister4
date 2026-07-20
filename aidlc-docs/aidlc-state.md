@@ -50,14 +50,14 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - NFR Requirements（成果物作成完了、承認待ち）
-- **Next Stage**: ユーザーの承認後、NFR Designへ
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - NFR Design（着手）
+- **Next Stage**: NFR Design計画の作成・提示
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
-- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T21:10:00Z。business-logic-model.md, business-rules.md, domain-entities.md, frontend-components.mdを作成。レビューで複数回の修正を反映: DISABLED運用フロー、email一意制約、REJECTED再登録方針、管理者ダッシュボード/ユーザ管理画面の統合とトップ画面新設、無効化時のトークン失効、AuditLogEntry記録内容の一元化）
-- [ ] NFR Requirements — EXECUTE、IN PROGRESS
-- [ ] NFR Design — EXECUTE
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T21:10:00Z。business-logic-model.md, business-rules.md, domain-entities.md, frontend-components.mdを作成。レビューで複数回の修正を反映: DISABLED運用フロー、email一意制約、REJECTED再登録方針、管理者ダッシュボード/ユーザ管理画面の統合とトップ画面新設、無効化時のトークン失効、AuditLogEntry記録内容の一元化、メール件名管理方式）
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-20T21:46:00Z。Spring Security OAuth2 Resource Server、HS256、BCrypt、登録エンドポイントのレート制限、jqwik（NFR-5.2最終確定）、SLF4J+Logback、内部DBアクセス方式（Spring Data JPA、Flyway、H2ファイルベース永続化）を決定）
+- [ ] NFR Design — EXECUTE、IN PROGRESS
 - [ ] Infrastructure Design — SKIP（メール送信・JWT鍵管理は設定レベルで対応可能）
 - [ ] Code Generation
 

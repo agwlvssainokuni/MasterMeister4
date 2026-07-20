@@ -9,7 +9,7 @@ Functional Design成果物（business-logic-model.md, business-rules.md, domain-
 - [x] Step A: 質問への回答を収集する（全問A: Spring Security OAuth2 Resource Server, HS256, BCrypt, 登録エンドポイントのレート制限新設, jqwik, SLF4J+Logback, 環境変数のみ。追加Q8〜Q10も全問A: Spring Data JPA, Flyway, H2ファイルベース永続化 — レビュー指摘の反映）
 - [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 全問単一選択肢の明確な回答であり曖昧性なし
 - [x] Step C: 成果物を作成する（nfr-requirements.md, tech-stack-decisions.md。Q8〜Q10反映分を追記済み）
-- [ ] Step D: 完了メッセージを提示し、承認を得る
+- [x] Step D: 完了メッセージを提示し、承認を得る（承認 2026-07-20T21:46:00Z）
 
 ## NFRカテゴリ評価
 
