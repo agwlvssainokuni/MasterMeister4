@@ -447,3 +447,19 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Requirements、要件追加、決定確定
 
 ---
+
+## UNIT-01 NFR Requirements - レスポンシブ対応・依存関係スキャンの追加指摘
+**Timestamp**: 2026-07-20T14:34:00Z
+**User Input**: "他に確認すべき事項は？"
+**AI Response**: "requirements.mdの他のNFRセクション（§7.4, §7.9等）を横断的に再確認。2点指摘: (1) 承認済みFunctional Design（Q5=A）の『ブレークポイント設計を行わない』が、既存のNFR-8.1（タブレット等で大きく崩れない程度のレスポンシブ対応）と矛盾。(2) NFR-4.4（依存関係脆弱性スキャン、backend側は./gradlew dependencyCheckAnalyze例示）に対し、NFR Requirements Q10ではフロントエンドnpm auditのみ記載しbackend側のGradleプラグイン導入が未反映。それぞれ対応案を提示し、1=NFR-8.1を正とする（最低限のタブレット対応を追加）、2=UNIT-01でプラグイン導入、を推奨。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements、レビュー観点の追加提起
+
+---
+
+## UNIT-01 NFR Requirements - レスポンシブ対応・依存関係スキャンの決定反映
+**Timestamp**: 2026-07-20T14:35:00Z
+**User Input**: "1: NFR-8.1を正とする。2: UNIT-01で導入。"
+**AI Response**: "frontend-components.mdのレスポンシブ対応セクションを修正（タブレット幅768px前後でSideNav折りたたみ等、崩れないブレークポイントを1つ設ける）。nfr-requirements.mdにNFR-01-11（レスポンシブ）を追加し、SECURITY-10・NFR-01-05にバックエンドのOWASP Dependency-Check Gradleプラグイン導入を追記。tech-stack-decisions.mdにレスポンシブ対応セクションを新設し、依存関係脆弱性スキャンセクションにバックエンド分を追記。unit-of-work.mdのUNIT-01リポジトリ骨格構築にDependency-Checkプラグイン導入も追記。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements、決定反映
+
+---

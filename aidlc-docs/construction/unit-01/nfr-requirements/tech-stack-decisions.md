@@ -36,6 +36,11 @@
 - モダンブラウザの最新2バージョン（Chrome, Edge, Firefox, Safari）
 - Viteの`browserslist`設定等でビルドターゲットを明示する（詳細はCode Generation段階）
 
+## レスポンシブ対応（requirements.md §7.9 NFR-8.1）
+
+- デスクトップ利用を中心としつつ、タブレット幅（目安768px前後）でSideNav折りたたみ等、レイアウトが大きく崩れないブレークポイントを1つ設ける
+- モバイル（スマートフォン）向けの専用最適化は対象外（将来検討）
+
 ## パフォーマンス（Q7=A）
 
 - 明確な数値目標は設けず、Viteの標準的な最適化（コード分割・Tree Shaking）に委ねる
@@ -50,7 +55,8 @@
 - Storybookは導入しない
 - アプリ内の軽量な一覧ページ（devビルド限定ルート、例: `/__mocks__/catalog`）で共通コンポーネント一式を確認できるようにする
 
-## 依存関係の脆弱性スキャン（Q10=A）
+## 依存関係の脆弱性スキャン（Q10=A、requirements.md §7.4 NFR-4.4）
 
-- `npm audit`をローカル/CI実行のベースラインとする
-- Dependabot等の自動化ツールの導入はUNIT-10（CI/CD）で検討する
+- フロントエンド: `npm audit`をローカル/CI実行のベースラインとする
+- バックエンド: OWASP Dependency-Check Gradleプラグイン（`dependencyCheckAnalyze`タスク）を導入する。UNIT-01のリポジトリ骨格構築（`settings.gradle.kts`／`backend`の初期構成）時にプラグインを組み込む（確認事項の回答で追加決定）
+- Dependabot等の自動化ツール、CIパイプラインへの組み込みはUNIT-10（CI/CD）で検討する
