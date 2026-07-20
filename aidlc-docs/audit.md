@@ -71,3 +71,11 @@
 **Context**: INCEPTION - Requirements Analysis (Step 7-9)
 
 ---
+
+## Requirements Analysis - Request Changes: NFR-4.1 (Admin MFA) Removed
+**Timestamp**: 2026-07-20T10:35:00Z
+**User Input**: "NFR-4.1: 管理者アカウントのMFA対応は不要。"
+**AI Response**: "Flagged that removing admin MFA conflicts with the blocking SECURITY-12 rule under the enabled Security Baseline extension (Q1=A). Asked user via AskUserQuestion how to reconcile: (A) record as a documented exception to SECURITY-12 with rationale, or (B) other. User chose (A) documented exception. Updated requirements.md NFR-4.1 to state the exception explicitly with rationale (small trusted internal admin team, ~10 users), noting other SECURITY-12 sub-requirements (password policy, adaptive hashing, brute-force protection, session management, no hardcoded credentials) remain in force. Updated §10 Extension Configuration Summary table to reference the exception."
+**Context**: INCEPTION - Requirements Analysis (post-completion, Request Changes)
+
+---

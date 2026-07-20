@@ -272,7 +272,7 @@ MasterMeister/
 
 セキュリティ拡張（`.aidlc-rule-details/extensions/security/baseline/security-baseline.md`、SECURITY-01〜15）を全面適用する。以降の全ステージ（設計・コード生成）でブロッキング制約として検証する。`initial-request.md`には明記されていなかったが、本拡張ルールに基づき以下を追加要件とする。
 
-- **NFR-4.1**: 管理者アカウントはMFA（多要素認証）に対応する（SECURITY-12）。一般ユーザへのMFA提供は必須ではないが推奨とする
+- **NFR-4.1**: 【SECURITY-12からの文書化された例外】管理者アカウントのMFA（多要素認証）対応は行わない。SECURITY-12は「管理者アカウントへのMFA対応必須」を求めるが、本プロジェクトはユーザレビューにより意図的にこの項目を適用除外とする（理由: 同時利用者約10名規模の社内ツールであり、管理者を信頼できる小規模チームで運用するため）。他のSECURITY-12要件（パスワードポリシー、適応型ハッシュ、ブルートフォース対策、セッション管理、認証情報のハードコード禁止）は引き続き適用する
 - **NFR-4.2**: 全HTML配信エンドポイントに以下のHTTPセキュリティヘッダーを設定する: `Content-Security-Policy`、`Strict-Transport-Security`、`X-Content-Type-Options`、`X-Frame-Options`、`Referrer-Policy`（SECURITY-04）
 - **NFR-4.3**: 全APIエンドポイントで入力バリデーション（型・長さ・形式・サニタイズ）を実施し、SQLインジェクション対策としてパラメータ化クエリを徹底する（SECURITY-05。マスタメンテナンス・クエリビルダー・クエリ実行機能における動的SQL生成部分は特に重点対応）
 - **NFR-4.4**: 依存関係は lock file で固定し、ビルド時に脆弱性スキャンを実施する（SECURITY-10）。Q12でCI/CDを今回スコープ外としたため、当面はローカルのビルド手順（例: `./gradlew dependencyCheckAnalyze`、`npm audit`）に組み込む
@@ -363,6 +363,6 @@ PBT拡張（`.aidlc-rule-details/extensions/testing/property-based/property-base
 
 | 拡張機能 | 有効化 | 決定内容 |
 |---|---|---|
-| セキュリティベースライン | Yes | SECURITY-01〜15を全面適用（ブロッキング制約） |
+| セキュリティベースライン | Yes | SECURITY-01〜15を全面適用（ブロッキング制約）。ただしSECURITY-12の管理者MFA要件のみ、ユーザレビューにより文書化された例外として適用除外（NFR-4.1参照） |
 | レジリエンシーベースライン | No | 規模・開発体制を理由にスキップ |
 | プロパティベーステスト | Yes（全面適用） | PBT-01〜10を全面適用（ブロッキング制約） |
