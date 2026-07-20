@@ -50,19 +50,19 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Design（成果物提示、承認待ち）
-- **Next Stage**: 承認後、Code Generationへ
+- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation（Part 1 Planning着手）
+- **Next Stage**: Code Generation計画（Part 1）を作成し、参考資材との突き合わせを行う
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-01)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T14:20:00Z。グランドデザイン・代表画面モックのコンポーネント構造設計のため）
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-20T14:40:00Z）
-- [ ] NFR Design — EXECUTE、IN PROGRESS
-- [ ] Infrastructure Design — SKIP（devenvはローカル開発環境設定であり、本番デプロイのインフラ設計には該当しない）
-- [ ] Code Generation
+- [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-20T14:55:00Z）
+- [x] Infrastructure Design — SKIP（devenvはローカル開発環境設定であり、本番デプロイのインフラ設計には該当しない）
+- [ ] Code Generation — IN PROGRESS（Part 1 Planning）
 
 ## Current Unit Progress
-- [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS（Code Generation Part 1 Planning着手時、参考資材の配置をユーザーに依頼すること。unit-of-work.md UNIT-01「参考資材の依頼」参照）
+- [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS（参考資材は`reference/design-system/`・`reference/mocks/`に配置済み、`.gitignore`で除外済み。対応完了）
 - [ ] UNIT-02 ユーザ登録・認証
 - [ ] UNIT-03 RDBMSセットアップ
 - [ ] UNIT-04 アクセス制御

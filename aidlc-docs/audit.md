@@ -511,3 +511,27 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Design、モックルーティングパスの確定
 
 ---
+
+## UNIT-01 参考資材の配置依頼・受領
+**Timestamp**: 2026-07-20T14:50:00Z
+**User Input**: "参考にして欲しい design-system はどこで提示すれば良い？あと、参考にして欲しいモック画面もある。"
+**AI Response**: "前回セッションでfrontend/配下に参考資材を置いた結果Prettier/Vitestに巻き込まれた経緯を踏まえ、ワークスペース直下の`reference/design-system/`・`reference/mocks/`への配置を提案。"
+**Context**: CONSTRUCTION - UNIT-01、参考資材の配置依頼
+
+---
+
+## UNIT-01 参考資材の配置確認
+**Timestamp**: 2026-07-20T14:52:00Z
+**User Input**: "おきました。"
+**AI Response**: "reference/design-system/・reference/mocks/の配置を確認。.gitignoreを新規作成し/reference/を除外、git check-ignoreで正しく除外されることを確認。中身を一覧化（design-system: AppShell/Button/FormField/Modal/Table/Tabs/Toast/TextInput/Pagination/Spinner/Overlay/HeaderControl/LanguageSwitcher/ThemeToggle/ThemeProvider/tokens.css/i18n、mocks: MockCatalog/TokensPage/ComponentsPage/LoginMock/UserListMock/RecordEditMock/QueryRunMock）。詳細な過不足点検はCode Generation Part 1 Planningで行う旨を提案。"
+**Context**: CONSTRUCTION - UNIT-01、参考資材の配置確認
+
+---
+
+## UNIT-01 NFR Design - 承認、Code Generationへ
+**Timestamp**: 2026-07-20T14:55:00Z
+**User Input**: "OK"
+**AI Response**: "NFR Designを承認として記録。unit-01-nfr-design-plan.mdのStep Dを完了に更新。aidlc-state.mdを更新（NFR Design完了、Code Generation Part 1 Planning着手。参考資材配置の対応完了）。Code Generation Part 1 Planningに着手。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Design 完了、Code Generation開始
+
+---
