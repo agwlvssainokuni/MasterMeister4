@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - Code Generation（着手、Infrastructure DesignはSKIP）
-- **Next Stage**: Code Generation Part 1 計画の作成・提示
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - Code Generation Part 1（計画提示、承認待ち）
+- **Next Stage**: unit-02-code-generation-plan.mdの承認を受け、Part 2（コード生成）を実行
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
