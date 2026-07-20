@@ -351,3 +351,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 Planning (Step 7-8, approval)
 
 ---
+
+## UNIT-01 Code Generation Part 2 - Step 1 Executed, Lint Tooling Changed
+**Timestamp**: 2026-07-20T12:58:00Z
+**User Input**: "oxlintの方が良いの？" → "そのように変更してください。"
+**AI Response**: "Scaffolded frontend/ via `npm create vite@latest frontend -- --template react-ts` (React 19.2.7, Vite 8.1.1, TypeScript 6.0.2). Observed Vite's latest template defaults to oxlint instead of ESLint. Presented comparison (speed, ecosystem maturity, a11y lint coverage, formatting) and recommended keeping oxlint (matches Vite's new default, faster) + adding Prettier for formatting, dropping ESLint entirely. User approved the change. Removed default demo assets (react.svg, vite.svg, hero.png, App counter styles pending). Installed devDependencies: prettier, vitest, jsdom, @testing-library/react, @testing-library/jest-dom, @testing-library/user-event. Installed dependencies: react-i18next, i18next, @fontsource/noto-sans-jp, @fontsource/noto-sans-mono (verified OFL-1.1 license on both font packages, `npm audit` = 0 vulnerabilities). Configured Vitest in vite.config.ts (jsdom environment, globals, setupFiles), added src/test/setup.ts, updated tsconfig.app.json types. Added .prettierrc.json/.prettierignore. Updated package.json scripts (dev/build/lint/format/test/audit). Verified with `tsc --noEmit`（成功）。unit-01-code-generation-plan.md Step 1のチェックボックスを更新し、計画変更ログを追記。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2 Generation (Step 1)
+
+---

@@ -16,17 +16,20 @@
   - アクセシビリティは基本的なキーボード操作・ARIA属性のみ（`nfr-requirements.md` NFR-UNIT01-5）
   - ブレークポイントはデスクトップ・タブレットの2段階（`nfr-requirements.md` NFR-UNIT01-6）
   - Vitest + React Testing Libraryでテスト、Storybook等の専用カタログなし（`nfr-requirements.md` NFR-UNIT01-4）
-  - フォントはセルフホストのWebフォントを採用し、外部CDNには依存しない（SECURITY-13のN/A判定と整合）。本文用は「Noto Sans JP」（`@fontsource/noto-sans-jp`）、SQL/コード表示用の等幅フォントは「Noto Sans Mono」（`@fontsource/noto-sans-mono`）とし、Noto Sans Monoでカバーされない日本語文字はNoto Sans JPにフォールバックする（本Code Generation Planning中に追加確認）
+  - フォントはセルフホストのWebフォントを採用し、外部CDNには依存しない（SECURITY-13のN/A判定と整合）。本文用は「Noto Sans JP」（`@fontsource/noto-sans-jp`）、SQL/コード表示用の等幅フォントは「Noto Sans Mono」（`@fontsource/noto-sans-mono`）とし、Noto Sans Monoでカバーされない日本語文字はNoto Sans JPにフォールバックする（本Code Generation Planning中に追加確認。いずれもOFL-1.1ライセンスであることをnpmインストール後に確認済み）
+  - Lint/フォーマット: oxlint（Vite最新テンプレートの既定）+ Prettier（Part 2実装中にユーザ確認の上、当初計画のESLint+Prettierから変更）
 
 ## 実行ステップ
 
 ### Step 1: プロジェクト構造セットアップ（Greenfield・最初のユニット）
-- [ ] 1-1. `frontend/`ディレクトリを作成し、Vite + React 19 + TypeScriptプロジェクトを初期化する
-- [ ] 1-2. Vitest + React Testing Library + jsdom環境をセットアップする（テスト設定ファイル、セットアップファイル）
-- [ ] 1-3. CSS Modules対応を確認する（Viteの標準機能、追加設定は最小限）
-- [ ] 1-4. ESLint + Prettierの基本設定を行う（TypeScript向け標準ルール）
-- [ ] 1-5. `frontend/package.json`に`dev`, `build`, `test`, `lint`, `audit`（`npm audit`）の各スクリプトを定義する
-- [ ] 1-6. `frontend/.gitignore`を作成する（`node_modules/`, `dist/`等）
+- [x] 1-1. `frontend/`ディレクトリを作成し、Vite + React 19 + TypeScriptプロジェクトを初期化する
+- [x] 1-2. Vitest + React Testing Library + jsdom環境をセットアップする（テスト設定ファイル、セットアップファイル）
+- [x] 1-3. CSS Modules対応を確認する（Viteの標準機能、追加設定は最小限）
+- [x] 1-4. ~~ESLint + Prettier~~ → **oxlint（Vite既定）+ Prettier**の基本設定を行う（計画変更、下記「計画変更ログ」参照）
+- [x] 1-5. `frontend/package.json`に`dev`, `build`, `test`, `lint`, `format`, `audit`（`npm audit`）の各スクリプトを定義する
+- [x] 1-6. `frontend/.gitignore`を確認する（Vite既定を採用。`node_modules/`, `dist/`等を含む）
+
+**計画変更ログ**: Vite最新版のデフォルトテンプレートがESLintではなくoxlint（Rust製高速Linter）を採用していたため、ユーザに確認の上、方針を「oxlint（Lint）+ Prettier（フォーマット）」に変更した（当初計画のESLint+Prettierから変更）。
 
 **注記**: `backend/`, `devenv/`ディレクトリは本ユニットでは作成しない。バックエンドコンポーネントが必要になるUNIT-02以降で、必要になった時点で作成する（`requirements.md`§4のプロジェクト構成は維持しつつ、段階的に実体化する）
 
