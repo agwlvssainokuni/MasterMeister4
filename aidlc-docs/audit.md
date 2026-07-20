@@ -551,3 +551,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation、取込方針の決定
 
 ---
+
+## UNIT-01 Code Generation Part 1 - 計画作成、承認依頼
+**Timestamp**: 2026-07-20T15:03:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "aidlc-docs/construction/plans/unit-01-code-generation-plan.mdを作成。フロントエンドルーティングにReact Routerを採用する旨を補足決定として明記。11セクション・約45ステップ（Project Structure Setup、デザイントークン・プロバイダ、基本部品・フォーム、グランドデザイン、表示・フィードバック、ユニットテスト×4区分、Frontend Components Summary、Mock Screens Generation/Testing、Documentation、Deployment Artifacts=N/A）で構成。STORY-0.1〜0.3のトレーサビリティを記載。承認を依頼。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1、計画提示・承認依頼
+
+---

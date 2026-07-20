@@ -1,0 +1,118 @@
+# UNIT-01 デザインシステム基盤 - Code Generation Plan（Part 1）
+
+本計画は、Code Generation（Part 2実行）における唯一の実行根拠（single source of truth）である。
+
+## Unit Context
+
+- **対応ストーリー**: STORY-0.1（共通デザイン基盤の構築）, STORY-0.2（個別画面デザインの段階的整備）, STORY-0.3（代表画面モックによる早期デザイン確認）
+- **対応コンポーネント**: なし（COMP-01〜19はいずれも対象外。UNIT-01はフロントエンドのみ、業務コンポーネントを持たない）
+- **前提ユニット**: なし（最初に着手するユニット）
+- **依存関係**: なし
+- **参照した設計成果物**:
+  - `aidlc-docs/construction/unit-01/functional-design/frontend-components.md`
+  - `aidlc-docs/construction/unit-01/nfr-requirements/nfr-requirements.md`, `tech-stack-decisions.md`
+  - `aidlc-docs/construction/unit-01/nfr-design/nfr-design-patterns.md`, `logical-components.md`
+  - `reference/design-system/`, `reference/mocks/`（参考資材。取込方針は上記frontend-components.mdに確定済み）
+- **後続ユニットへの申し送り**: `backend`には本ユニットで最小起動クラス・i18n基盤・依存関係スキャンプラグインのみ用意する。業務コンポーネント（COMP-01等）はUNIT-02以降で追加する
+
+## 未決定だった技術選定の補足
+
+- **フロントエンドルーティング**: React Router（`react-router-dom`）を採用する。SPAのルーティングとして標準的な選択肢であり、`/mock/*`のdevビルド限定ルート分離にも利用する
+
+## 計画チェックリスト
+
+### 1. Project Structure Setup（Greenfield）
+
+- [ ] Step 1.1: ルートに`settings.gradle.kts`を作成し、`backend`・`frontend`をサブプロジェクトとして定義する
+- [ ] Step 1.2: `backend/build.gradle.kts`を作成する（Spring Boot 4.1, Java 25, `war`パッケージング, OWASP Dependency-Check Gradleプラグイン, 最小限の依存関係）
+- [ ] Step 1.3: `backend/src/main/java/cherry/mastermeister/MasterMeisterApplication.java`を作成する（`SpringBootServletInitializer`継承、`java -jar app.war`実行と外部Tomcat WARデプロイの両対応）
+- [ ] Step 1.4: backend i18n基盤を作成する（`MessageSource`設定クラス、`messages_ja.properties`/`messages_en.properties`の空の雛形）
+- [ ] Step 1.5: `backend/src/main/resources/application.yml`を作成する（最小設定、環境変数プレースホルダー）
+- [ ] Step 1.6: `frontend/`をVite + React 19 + TypeScriptでスキャフォールドする（`package.json`, `tsconfig.json`, `vite.config.ts`等）
+- [ ] Step 1.7: `frontend`にoxlint + Prettier（セミコロンなし、シングルクォート）を設定する
+- [ ] Step 1.8: `frontend/build.gradle.kts`にGradle Node Plugin（`com.github.node-gradle.node`）を設定し、`npmInstall`/`npmBuild`タスクを定義する
+- [ ] Step 1.9: `backend`の`bootWar`タスクが`frontend`の`npmBuild`成果物（`frontend/dist`）をbackendの静的リソースへコピーする処理に依存する構成にする（`backend:build`単体には影響しないことを確認）
+- [ ] Step 1.10: `devenv/docker-compose.yml`を作成する（MailPit, MySQL/MariaDB/PostgreSQLコンテナ）
+- [ ] Step 1.11: 全ソースファイルにApache License 2.0ヘッダーコメントを付与する方針を適用する（以降の全生成ステップで継続）
+
+### 2. Frontend Components Generation - デザイントークン・プロバイダ
+
+- [ ] Step 2.1: デザイントークン（2層: プリミティブ`--mm-palette-*` + セマンティック`--mm-color-*`/`--mm-font-*`/`--mm-space-*`等、ライト/ダーク両対応）をCSSとして作成する
+- [ ] Step 2.2: セルフホストフォント（本文用・SQL/コード表示用等幅フォント）を`@fontsource`経由で導入し、`font-display: swap`を設定する
+- [ ] Step 2.3: `ThemeProvider`を作成する（light/dark/system、`data-theme`属性切り替え、`localStorage`、`matchMedia`）
+- [ ] Step 2.4: i18n初期化（react-i18next、`common`/`design-system`名前空間、日本語・英語リソース、`navigator.language`検出、`localStorage`保存）を作成する
+- [ ] Step 2.5: `ErrorBoundary`を作成する（コンソール出力のみ、汎用フォールバックUI）
+
+### 3. Frontend Components Generation - 基本部品・フォーム
+
+- [ ] Step 3.1: `Button`を作成する
+- [ ] Step 3.2: `TextInput`を作成する
+- [ ] Step 3.3: `Choice`（`Checkbox` / `RadioGroup` / `Switch`）を作成する
+- [ ] Step 3.4: `FormField`を作成する（`cloneElement`方式でid/aria属性を子要素へ注入）
+- [ ] Step 3.5: `Icon`（自作SVGアイコンセット）を作成する
+
+### 4. Frontend Components Generation - グランドデザイン
+
+- [ ] Step 4.1: `PublicLayout`を作成する
+- [ ] Step 4.2: `AppShell` / `Header` / `SideNav` / `Footer`を作成する（タブレット幅ブレークポイント対応含む）
+- [ ] Step 4.3: `HeaderControl` / `LanguageSwitcher` / `ThemeToggle`を作成する
+- [ ] Step 4.4: SideNavのナビゲーション項目（全10ユニット見込み、frontend-components.md §1.3参照）を実装する
+
+### 5. Frontend Components Generation - 表示・フィードバック
+
+- [ ] Step 5.1: `Card` / `AuthCard`を作成する
+- [ ] Step 5.2: `PageHeader`を作成する
+- [ ] Step 5.3: `DataTable`を作成する（`Table`を土台に、列定義・簡易表示のみ）
+- [ ] Step 5.4: `Pagination`を作成する（見た目のみ）
+- [ ] Step 5.5: `EmptyState`を作成する
+- [ ] Step 5.6: `Alert`（tone: info/success/warning/danger）を作成する
+- [ ] Step 5.7: `Badge`を作成する
+- [ ] Step 5.8: `Spinner`を作成する
+- [ ] Step 5.9: `Overlay` / `Modal`を作成する
+- [ ] Step 5.10: `ConfirmDialog`を作成する（`Modal`を土台に構築）
+- [ ] Step 5.11: `FilterBar`を作成する（簡易版）
+- [ ] Step 5.12: `Tabs`を作成する
+- [ ] Step 5.13: `Toast`を作成する
+- [ ] Step 5.14: `CodeBlock`を作成する
+- [ ] Step 5.15: `KeyValueList`を作成する
+
+### 6. Frontend Components Unit Testing
+
+- [ ] Step 6.1: デザイントークン・`ThemeProvider`・i18n初期化・`ErrorBoundary`のユニットテストを作成する（Vitest + React Testing Library）
+- [ ] Step 6.2: 基本部品・フォーム（Button, TextInput, Choice, FormField, Icon）のユニットテストを作成する
+- [ ] Step 6.3: グランドデザイン（PublicLayout, AppShell, Header, SideNav, Footer, HeaderControl, LanguageSwitcher, ThemeToggle）のユニットテストを作成する
+- [ ] Step 6.4: 表示・フィードバックコンポーネント（Card, AuthCard, PageHeader, DataTable, Pagination, EmptyState, Alert, Badge, Spinner, Overlay, Modal, ConfirmDialog, FilterBar, Tabs, Toast, CodeBlock, KeyValueList）のユニットテストを作成する
+
+### 7. Frontend Components Summary
+
+- [ ] Step 7.1: 生成した全コンポーネントの一覧をドキュメント化する（`aidlc-docs/construction/unit-01/code/`）
+
+### 8. Mock Screens Generation（`/mock/*`、devビルド限定）
+
+- [ ] Step 8.1: React Routerを導入し、`/mock/*`をdevビルド限定（`import.meta.env.DEV`等）で`React.lazy` + `Suspense`により遅延読み込みする構成にする
+- [ ] Step 8.2: `/mock/login`（ログイン画面モック）を作成する
+- [ ] Step 8.3: `/mock/register`（ユーザ登録画面モック、メール送信・PW設定の2ステップ）を作成する
+- [ ] Step 8.4: `/mock/dashboard`（管理者ダッシュボードモック）を作成する
+- [ ] Step 8.5: `/mock/master-data`（マスタメンテナンス画面モック）を作成する
+- [ ] Step 8.6: `/mock/permissions`（権限設定画面モック）を作成する
+- [ ] Step 8.7: `/mock/catalog`（コンポーネントカタログ）を作成する。UNIT-01の全共通コンポーネントを一覧表示する
+
+### 9. Mock Screens Unit Testing
+
+- [ ] Step 9.1: 5つの代表画面モック（login/register/dashboard/master-data/permissions）の画面状態（通常/空/エラー）が正しく切り替わることを検証するテストを作成する
+- [ ] Step 9.2: `/mock/*`ルートが本番ビルドのバンドルに含まれないこと（コード分割）を検証する
+
+### 10. Documentation Generation
+
+- [ ] Step 10.1: `frontend/README.md`を作成する（開発手順、`npm run dev`、テスト実行方法等）
+- [ ] Step 10.2: `aidlc-docs/construction/unit-01/code/summary.md`を作成する（生成物一覧、設計判断の要約）
+
+### 11. Deployment Artifacts
+
+- [ ] Step 11.1: N/A — Infrastructure DesignはSKIP。本番デプロイ関連の成果物は生成しない（devenv/docker-compose.ymlはStep 1.10で対応済み、ローカル開発環境用）
+
+## Story Traceability
+
+- STORY-0.1（共通デザイン基盤の構築）→ Step 2〜3, 6
+- STORY-0.2（個別画面デザインの段階的整備）→ Step 4（グランドデザイン確立により後続ユニットが個別画面を実装できる土台を提供）
+- STORY-0.3（代表画面モックによる早期デザイン確認）→ Step 8〜9
