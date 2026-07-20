@@ -111,3 +111,7 @@ Q8=Aにより、UNIT-04で正式設計する権限モデル（主権限・補助
 - `ConfirmDialog`
 - `FilterBar`（簡易版）
 - `Icon`（自作SVGアイコンセット）
+
+## 5. Testable Properties（PBT-01対応）
+
+UNIT-01は静的な見た目のみの提示用コンポーネント・モックであり、往復変換・不変条件・冪等性・可換性・オラクル・帰納法・検証容易性のいずれのプロパティも識別されない。**No PBT properties identified** — アルゴリズム的処理・データ変換を一切含まないため（stories.md STORY-0.1〜0.3も「PBT対象: いいえ」と明記済み）。

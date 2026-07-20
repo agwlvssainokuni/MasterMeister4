@@ -407,3 +407,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Functional Design 完了、NFR Requirements開始
 
 ---
+
+## UNIT-01 NFR Requirements - PBT-01対応、計画作成
+**Timestamp**: 2026-07-20T14:25:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Security Baseline拡張（.aidlc-rule-details/extensions/security/baseline/security-baseline.md）とProperty-Based Testing拡張のルールを確認。PBT-01（Functional Design段階でのTestable Properties識別）が未対応だったため、frontend-components.mdに『Testable Properties』セクションを追記（No PBT properties identified、静的UIのためアルゴリズム的処理なし）。続いてunit-01-nfr-requirements-plan.mdを作成: Scalability/AvailabilityはN/A、Security BaselineルールはSECURITY-09（モックのdevビルド限定は対応済み）/10（サプライチェーン）/13（整合性）/15（例外処理）のみ該当と評価。フォント（本文・SQL用）、ダークモード、i18n、アクセシビリティ目標、ブラウザサポート、バンドルサイズ方針、Error Boundary、コンポーネントカタログ方針、依存関係脆弱性スキャンの10問を出題。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements、計画提示
+
+---
