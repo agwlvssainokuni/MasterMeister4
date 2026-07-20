@@ -287,3 +287,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Requirements (Steps 5-6)
 
 ---
+
+## UNIT-01 NFR Requirements - Judgment Calls Confirmed and Approved
+**Timestamp**: 2026-07-20T12:24:00Z
+**User Input**: "確認すべき事項は？" → "すべてOKです。"
+**AI Response**: "Presented 4 judgment calls made beyond the literal Q&A answers: (1) Security Compliance表の15項目判定（特にSECURITY-13のN/A根拠：外部CDN/サードパーティスクリプト不使用の前提）, (2) ErrorBoundaryの汎用フォールバック表示方針（SECURITY-15整合のための追加推論）, (3) react-i18nextの名前空間分割方針（詳細はCode Generation段階に留保済み）, (4) 依存パッケージ固定をpackage-lock.jsonと明記。ユーザが全て承認。NFR Requirements stage approved for UNIT-01."
+**Context**: CONSTRUCTION - UNIT-01 NFR Requirements (Step 8, approval)
+
+---
