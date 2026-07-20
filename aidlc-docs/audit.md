@@ -495,3 +495,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Design、計画提示
 
 ---
+
+## UNIT-01 NFR Design - 推奨提示・回答受領・成果物生成
+**Timestamp**: 2026-07-20T14:44:00Z
+**User Input**: "推奨はありますか？" → "推奨どおりで。"
+**AI Response**: "全7問にAI推奨（すべてA）を理由付きで提示後、unit-01-nfr-design-plan.mdに全問A（AI推奨どおり）で回答を記入。曖昧性なし。aidlc-docs/construction/unit-01/nfr-design/nfr-design-patterns.md（Resilience: Error Boundaryはコンソール出力のみ、Performance: コード分割・i18n名前空間分割・フォント静的バンドル、Security: セルフホスト継続・devルート分離）とlogical-components.md（デザイントークン2層構成、ThemeProvider、I18nProvider、ErrorBoundary、コンポーネントカタログ、Gradle Node Plugin統合、Icon自作SVG）を作成。計画チェックリストStep A〜Cを完了、Step D（承認待ち）へ。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Design、成果物生成
+
+---
