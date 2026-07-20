@@ -679,3 +679,11 @@
 **Context**: CONSTRUCTION - UNIT-02 ステージ判定
 
 ---
+
+## UNIT-02 Functional Design - 計画作成
+**Timestamp**: 2026-07-20T19:40:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "requirements.md §5.1（FR-1.1〜1.14）・§5.3（FR-3.1〜3.7）・§6（監査ログ要件）を確認し、aidlc-docs/construction/plans/unit-02-functional-design-plan.mdを作成。Userステータスモデル、登録トークン管理方式、リフレッシュトークンのファミリID設計、ログイン試行制限の具体的閾値、HIBP API失敗時のフェイルオープン/クローズ、監査ログ記録方式（ApplicationEventPublisher）、メール通知の多言語対応、パスワードリセット機能のスコープ、フロントエンド実装方針（モックからの新規実装）、APIエラーレスポンス形式、IPベースレート制限の要否の11問を出題。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、計画提示
+
+---
