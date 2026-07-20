@@ -663,3 +663,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション10-12完了、Code Generation全体完了
 
 ---
+
+## UNIT-01 Code Generation - 承認、UNIT-01完了
+**Timestamp**: 2026-07-20T19:26:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "Code Generationを承認として記録。これによりUNIT-01デザインシステム基盤のPer-Unit Loop（Functional Design/NFR Requirements/NFR Design/Infrastructure Design SKIP/Code Generation）がすべて完了。aidlc-state.mdを更新（UNIT-01完了、UNIT-02着手前）。UNIT-02（ユーザ登録・認証）のステージ判定に着手。"
+**Context**: CONSTRUCTION - UNIT-01完了、UNIT-02開始
+
+---
