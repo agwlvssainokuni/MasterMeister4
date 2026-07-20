@@ -295,3 +295,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Requirements (Step 8, approval)
 
 ---
+
+## UNIT-01 NFR Design - Plan Created
+**Timestamp**: 2026-07-20T12:26:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Created aidlc-docs/construction/plans/unit-01-nfr-design-plan.md. Category assessment: Scalability Patterns=N/A（NFR RequirementsでScalability自体がN/A）, Resilience/Performance/Security/Logical Componentsは質問あり。6問を作成（ErrorBoundary粒度・配置, エラーログ記録方針, コンポーネントエクスポート方式, リポジトリ配置, デザイントークン構造, XSS対策方針）。ユーザ回答待ち。"
+**Context**: CONSTRUCTION - UNIT-01 NFR Design (Steps 1-4)
+
+---
