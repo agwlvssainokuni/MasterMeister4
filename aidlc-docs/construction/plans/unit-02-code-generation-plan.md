@@ -117,15 +117,15 @@
 
 ### 13. Frontend Components Generation
 
-- [ ] Step 13.1: APIクライアント（`frontend/src/api/`）を作成する（`registrations.ts`, `auth.ts`, `adminUsers.ts`、フェッチラッパー、BR-API-01エラー形式の共通処理）
-- [ ] Step 13.2: トークン保管ユーティリティ（`frontend/src/auth/tokenStorage.ts`）を作成する（`sessionStorage`、nfr-design-patterns.md §3.1）
-- [ ] Step 13.3: 認証状態管理（`frontend/src/auth/AuthContext.tsx`等）を作成する（AppShell配下ルートの認証ガード、アクセストークン期限切れ時のリフレッシュ自動再試行、frontend-components.md §7）
-- [ ] Step 13.4: `LoginPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1）
-- [ ] Step 13.5: `RegisterStep1Page`・`RegisterStep2Page`を作成する（frontend-components.md §2〜3、氏名・言語設定入力を含む）
-- [ ] Step 13.6: `UserManagementPage`を作成する（frontend-components.md §4、統合済みの全ステータス対応・アクション出し分け）
-- [ ] Step 13.7: `HomePage`（`FeatureCard`新設コンポーネント含む）を作成する（frontend-components.md §5、`Card`をベースに構築）
-- [ ] Step 13.8: AppShell Headerのログアウト導線を実装する（既存の`Header`/`HeaderControl`コンポーネントを修正、frontend-components.md §6）
-- [ ] Step 13.9: ルーティング設定を更新する（`/`, `/login`, `/register`, `/register/complete`, `/users`を追加し、AppShell配下ルートに認証ガードを適用）
+- [x] Step 13.1: APIクライアント（`frontend/src/api/`）を作成する（`registrations.ts`, `auth.ts`, `adminUsers.ts`、フェッチラッパー、BR-API-01エラー形式の共通処理）
+- [x] Step 13.2: トークン保管ユーティリティ（`frontend/src/auth/tokenStorage.ts`）を作成する（`sessionStorage`、nfr-design-patterns.md §3.1）
+- [x] Step 13.3: 認証状態管理（`frontend/src/auth/AuthContext.tsx`等）を作成する（AppShell配下ルートの認証ガード、アクセストークン期限切れ時のリフレッシュ自動再試行、frontend-components.md §7）
+- [x] Step 13.4: `LoginPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1）
+- [x] Step 13.5: `RegisterStep1Page`・`RegisterStep2Page`を作成する（frontend-components.md §2〜3、氏名・言語設定入力を含む）
+- [x] Step 13.6: `UserManagementPage`を作成する（frontend-components.md §4、統合済みの全ステータス対応・アクション出し分け）
+- [x] Step 13.7: `HomePage`（`FeatureCard`新設コンポーネント含む）を作成する（frontend-components.md §5、`Card`をベースに構築）
+- [x] Step 13.8: AppShell Headerのログアウト導線を実装する（既存の`Header`/`HeaderControl`コンポーネントを修正、frontend-components.md §6）
+- [x] Step 13.9: ルーティング設定を更新する（`/`, `/login`, `/register`, `/register/complete`, `/users`を追加し、AppShell配下ルートに認証ガードを適用）
 
 ### 14. Frontend Components Unit Testing
 

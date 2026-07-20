@@ -975,3 +975,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 9〜12完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 13完了（Frontend Components Generation）
+**Timestamp**: 2026-07-21T01:10:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Section 13の残タスクを完了。tokenStorage.ts（sessionStorage）、http.ts（apiFetch、Accept-Language付与、認証付きリクエストの401時リフレッシュ自動再試行、最終失敗時にmastermeister:unauthorized DOMイベント発行）、auth.ts/registrations.ts/adminUsers.ts（APIクライアント）、AuthContext.tsx（AuthProvider/useAuth、unauthorizedイベント監視）、ProtectedRoute.tsx、jwt.ts（表示用JWTデコード）、AuthenticatedLayout.tsx、LoginPage、RegisterStep1Page、RegisterStep2Page、UserManagementPageは前セクションまでに作成済みであることを確認。今回新たにFeatureCard（Cardベースの新設コンポーネント、implemented:falseは非活性＋「準備中」バッジ）とHomePage（NAV_ROUTESから8枚のカードグリッドを描画、ユーザ管理のみimplemented:true）を作成し、frontend/src/design-system/i18n/locales/{ja,en}/common.jsonにhome.card.*（8キー）を追加。App.tsxを実ルーティングへ更新（/login, /register, /register/complete を公開ルート、/ と /users をAuthProvider配下のProtectedRouteで保護。devビルド限定の/mock/*は維持）。実装中にUNIT-01由来の不整合として、navigation.tsのNAV_ROUTESに残っていた廃止済みnav.dashboardエントリ（UNIT-02のダッシュボード→ユーザ管理統合決定と矛盾）を発見し削除、design-system.jsonの孤立したnav.dashboardキーも削除（grep確認済み、他画面のmock.dashboard.*キーとは無関係のため維持）。またビルド確認中にUserManagementPage.tsxのDataTable rowKeyが number を返しstring型と不一致でtsc -bが失敗する既存バグを発見し、String(user.id)へ修正。npx tsc --noEmit、npm run build、npm run lint（oxlint）、npm test（65件全て成功、事前確認したnpx vitest runでの失敗はNODE_OPTIONS=--no-experimental-webstorageを付与しない誤った実行方法による環境起因のものと判明）で全て成功を確認。計画チェックリストSection 13（Step 13.1〜13.9）を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 13完了
+
+---

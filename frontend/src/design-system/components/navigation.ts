@@ -18,10 +18,10 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import type { NavItem } from './AppShell'
 
-// 全10ユニットを見込んだナビ項目一式（frontend-components.md §1.3）。
+// 全10ユニットを見込んだナビ項目一式（frontend-components.md §1.3、UNIT-02で
+// 「ダッシュボード」を「ユーザ管理」に統合。レビュー指摘の反映）。
 // リンク先は各ユニット未着手の間はプレースホルダー（実装済みユニットのみ実際に遷移可能）。
 export const NAV_ROUTES = [
-  { key: 'dashboard', labelKey: 'nav.dashboard', path: '/dashboard' },
   { key: 'users', labelKey: 'nav.users', path: '/users' },
   { key: 'connections', labelKey: 'nav.connections', path: '/connections' },
   { key: 'accessControl', labelKey: 'nav.accessControl', path: '/access-control' },

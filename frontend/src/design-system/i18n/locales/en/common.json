@@ -42,5 +42,67 @@
     "prev": "Previous page",
     "next": "Next page",
     "page": "Page {{page}} of {{total}}"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "email": "Email address",
+    "password": "Password",
+    "loginButton": "Log in",
+    "registerLink": "Don't have an account?"
+  },
+  "registration": {
+    "step1Title": "User Registration",
+    "step1Submit": "Submit",
+    "step1Sent": "A confirmation email has been sent. Please set your password using the link in the email.",
+    "step2Title": "Set Password",
+    "fullName": "Full name",
+    "language": "Language",
+    "password": "Password",
+    "passwordConfirm": "Confirm password",
+    "passwordMismatch": "Passwords do not match",
+    "step2Submit": "Complete Registration",
+    "step2Complete": "Registration complete. Please wait for administrator approval.",
+    "invalidLink": "This link is invalid",
+    "backToLogin": "Back to login"
+  },
+  "users": {
+    "title": "User Management",
+    "filterAll": "All",
+    "email": "Email address",
+    "fullName": "Full name",
+    "status": "Status",
+    "createdAt": "Registered at",
+    "actions": "Actions",
+    "statusPending": "Pending",
+    "statusApproved": "Approved",
+    "statusRejected": "Rejected",
+    "statusDisabled": "Disabled",
+    "approve": "Approve",
+    "reject": "Reject",
+    "disable": "Disable",
+    "enable": "Enable",
+    "empty": "No matching users",
+    "confirmApproveTitle": "Confirm Approval",
+    "confirmApproveMessage": "Approve this user?",
+    "confirmRejectTitle": "Confirm Rejection",
+    "confirmRejectMessage": "Reject this user?",
+    "confirmDisableTitle": "Confirm Disable",
+    "confirmDisableMessage": "Disable this user?",
+    "confirmEnableTitle": "Confirm Enable",
+    "confirmEnableMessage": "Re-enable this user?"
+  },
+  "home": {
+    "welcome": "Welcome to MasterMeister",
+    "comingSoon": "Coming soon",
+    "card": {
+      "users": "Approve, disable, and re-enable user accounts",
+      "connections": "Register and manage target RDBMS connections",
+      "accessControl": "Configure access permissions and user groups",
+      "masterData": "View and edit master data",
+      "savedQueries": "Manage named saved queries",
+      "queryBuilder": "Build SQL using the tabbed builder UI",
+      "queryHistory": "Search query execution history",
+      "auditLog": "View the audit log"
+    }
   }
 }

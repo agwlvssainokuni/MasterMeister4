@@ -16,6 +16,13 @@
 
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AuthProvider } from './auth/AuthContext'
+import { ProtectedRoute } from './auth/ProtectedRoute'
+import { HomePage } from './pages/HomePage'
+import { LoginPage } from './pages/LoginPage'
+import { RegisterStep1Page } from './pages/RegisterStep1Page'
+import { RegisterStep2Page } from './pages/RegisterStep2Page'
+import { UserManagementPage } from './pages/UserManagementPage'
 
 // devビルド限定ルート（/mock/*）。lazy()呼び出し自体をimport.meta.env.DEVの
 // 三項演算子内に置くことで、本番ビルド時（DEV=falseへ静的に置換される）に
@@ -27,19 +34,39 @@ const MockRoutes = import.meta.env.DEV ? lazy(() => import('./mocks/MockRoutes')
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<div>MasterMeister</div>} />
-        {MockRoutes ? (
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterStep1Page />} />
+          <Route path="/register/complete" element={<RegisterStep2Page />} />
           <Route
-            path="/mock/*"
+            path="/"
             element={
-              <Suspense fallback={null}>
-                <MockRoutes />
-              </Suspense>
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
             }
           />
-        ) : null}
-      </Routes>
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute>
+                <UserManagementPage />
+              </ProtectedRoute>
+            }
+          />
+          {MockRoutes ? (
+            <Route
+              path="/mock/*"
+              element={
+                <Suspense fallback={null}>
+                  <MockRoutes />
+                </Suspense>
+              }
+            />
+          ) : null}
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

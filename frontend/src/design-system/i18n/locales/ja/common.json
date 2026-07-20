@@ -42,5 +42,67 @@
     "prev": "前のページ",
     "next": "次のページ",
     "page": "{{page}} / {{total}} ページ"
+  },
+  "auth": {
+    "loginTitle": "ログイン",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "loginButton": "ログイン",
+    "registerLink": "アカウントをお持ちでない方はこちら"
+  },
+  "registration": {
+    "step1Title": "ユーザ登録",
+    "step1Submit": "送信",
+    "step1Sent": "確認メールを送信しました。メール内のリンクからパスワードを設定してください。",
+    "step2Title": "パスワード設定",
+    "fullName": "氏名",
+    "language": "言語設定",
+    "password": "パスワード",
+    "passwordConfirm": "パスワード（確認）",
+    "passwordMismatch": "パスワードが一致しません",
+    "step2Submit": "登録完了",
+    "step2Complete": "登録が完了しました。管理者の承認をお待ちください。",
+    "invalidLink": "無効なリンクです",
+    "backToLogin": "ログイン画面へ"
+  },
+  "users": {
+    "title": "ユーザ管理",
+    "filterAll": "すべて",
+    "email": "メールアドレス",
+    "fullName": "氏名",
+    "status": "ステータス",
+    "createdAt": "登録日時",
+    "actions": "アクション",
+    "statusPending": "承認待ち",
+    "statusApproved": "承認済み",
+    "statusRejected": "却下",
+    "statusDisabled": "無効化",
+    "approve": "承認",
+    "reject": "却下",
+    "disable": "無効化",
+    "enable": "再有効化",
+    "empty": "対象のユーザはいません",
+    "confirmApproveTitle": "承認確認",
+    "confirmApproveMessage": "このユーザを承認しますか？",
+    "confirmRejectTitle": "却下確認",
+    "confirmRejectMessage": "このユーザを却下しますか？",
+    "confirmDisableTitle": "無効化確認",
+    "confirmDisableMessage": "このユーザを無効化しますか？",
+    "confirmEnableTitle": "再有効化確認",
+    "confirmEnableMessage": "このユーザを再有効化しますか？"
+  },
+  "home": {
+    "welcome": "ようこそ、MasterMeisterへ",
+    "comingSoon": "準備中",
+    "card": {
+      "users": "ユーザの承認・無効化・再有効化を行います",
+      "connections": "対象RDBMSの接続情報を登録・管理します",
+      "accessControl": "アクセス権限・ユーザグループを設定します",
+      "masterData": "マスタデータの参照・編集を行います",
+      "savedQueries": "名前付きで保存したクエリを管理します",
+      "queryBuilder": "タブUIでSQLを組み立てます",
+      "queryHistory": "クエリ実行履歴を検索します",
+      "auditLog": "監査ログを閲覧します"
+    }
   }
 }

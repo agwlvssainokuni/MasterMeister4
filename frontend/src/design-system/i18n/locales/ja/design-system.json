@@ -3,7 +3,6 @@
     "name": "MasterMeister"
   },
   "nav": {
-    "dashboard": "ダッシュボード",
     "users": "ユーザ管理",
     "connections": "RDBMS接続設定",
     "accessControl": "アクセス制御",
