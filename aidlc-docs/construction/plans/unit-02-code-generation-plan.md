@@ -138,8 +138,8 @@
 
 ### 16. Documentation Generation
 
-- [ ] Step 16.1: `backend/README.md`を更新する（新規依存関係、環境変数一覧、Flywayマイグレーション運用、OpenAPI閲覧方法）
-- [ ] Step 16.2: `frontend/README.md`を更新する（新規ページ・ルーティングの追記）
+- [x] Step 16.1: `backend/README.md`を更新する（新規依存関係、環境変数一覧、Flywayマイグレーション運用、OpenAPI閲覧方法）
+- [x] Step 16.2: `frontend/README.md`を更新する（新規ページ・ルーティングの追記）
 
 ### 17. Deployment Artifacts
 

@@ -999,3 +999,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 15完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 16完了（Documentation Generation）
+**Timestamp**: 2026-07-21T01:40:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "backend/README.mdを新規作成（起動手順、環境変数一覧表、Flywayマイグレーション運用方針、OpenAPI/Swagger UI閲覧方法、ビルド・テストコマンド、モジュール構成）。frontend/README.mdを更新（UNIT-02で追加したauth/api/pagesディレクトリの説明、devサーバの起動手順）。ドキュメント作成中、devサーバ(:5173)からのAPI呼び出しがSecurityConfigで`http://localhost:5173`向けにCORSを設定済みであるにも関わらず、frontendのapiFetchが相対パス（`/api/...`）でリクエストしておりVite devサーバ自身にリクエストが向かってしまい、プロキシもしくは絶対URLの仕組みが存在しない限りバックエンド(:8080)に到達できない一未実装のギャップを発見。CORS設定の存在が示す本来の想定（フロントエンドdevサーバとバックエンドを別プロセスで動かす構成）に合わせ、`vite.config.ts`に`server.proxy`で`/api`を`http://localhost:8080`へプロキシする設定を追加し解消（本番のWAR配信では同一オリジンのため影響なし）。修正後`npm test`（105件成功）・`npm run build`で回帰がないことを確認。計画チェックリストSection 16（Step 16.1〜16.2）を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 16完了
+
+---
