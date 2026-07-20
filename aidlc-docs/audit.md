@@ -431,3 +431,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design (Steps 1-3)
 
 ---
+
+## UNIT-02 Functional Design - Answers Collected and Artifacts Generated
+**Timestamp**: 2026-07-20T14:30:00Z
+**User Input**: "Q1=A, Q2=A, Q3=A, Q4=A, Q5=A, Q6=A, Q7=A, Q8=A, Q9=A, Q10=A, Q11=A"
+**AI Response**: "Filled unit-02-functional-design-plan.md answers (all A: bcrypt, HIBP k-anonymity API, jjwt HMAC-SHA256, SHA-256 refresh token hash, DB-persisted login attempt tracking, 5 failures/15min lockout, USER/ADMIN roles only, query-param registration link, 6 audit event types, 4 frontend screens, generic auth error message). No contradictions or ambiguity. Generated: domain-entities.md (User/RegistrationToken/RefreshToken/LoginLockState/AuditLogEntry with fields and state transitions), business-rules.md (BR-1〜BR-22), business-logic-model.md (7 flows: registration start/complete, admin approve-reject, admin bootstrap, login, refresh, logout, plus audit cross-cutting), frontend-components.md (4 screens mapped to design-system components, explicitly avoiding the deferred rich Table/Modal components in favor of a plain <table> and no confirmation dialog for approve/reject). Judgment calls introduced beyond the literal Q&A (to be disclosed to user): HIBP API failure handling as fail-open with warning log (not asked), extending SHA-256 hashing to registration tokens by analogy with Q4's refresh-token decision, idempotent admin bootstrap (skip if user exists), and no confirmation dialog for admin approve/reject actions (consequence of deferring Modal to a later unit)."
+**Context**: CONSTRUCTION - UNIT-02 Functional Design (Steps 5-6)
+
+---
