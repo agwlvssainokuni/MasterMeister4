@@ -327,3 +327,19 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 Planning (Steps 1-6)
 
 ---
+
+## UNIT-01 Code Generation - Judgment Calls Confirmed, Font Decision Added
+**Timestamp**: 2026-07-20T12:44:00Z
+**User Input**: "OKです。フォントについて何か決めておいた方が良いですか？" → "C"
+**AI Response**: "Confirmed the 5 judgment calls presented (component list scope, ESLint+Prettier addition, design-system directory finalization, deferred backend/devenv scaffolding, minimal ChevronDown icon addition) - user approved all ('OKです'). User then raised font selection as an open item not yet decided. Presented 3 options: A) システムフォントスタック（推奨）, B) Webフォント（CDN経由）, C) Webフォント（セルフホスト）. User selected C. Updated unit-01-code-generation-plan.md: added font decision (Noto Sans JP via @fontsource/noto-sans-jp, self-hosted, no external CDN, consistent with SECURITY-13 N/A determination) to the approved-decisions list, added Step 2-1 (install/self-host font) and Step 2-2 (apply to typography tokens), added Step 6-3 (OFL 1.1 license notice in README)."
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 Planning (plan amendment)
+
+---
+
+## UNIT-01 Code Generation - Monospace Font Decision Added
+**Timestamp**: 2026-07-20T12:48:00Z
+**User Input**: "SQL用のフォントも考えた方が良い？" → "B, JetBrains Mono以外の選択肢は？" → "Noto Sans Mono"
+**AI Response**: "User raised need for a monospace font for SQL/code display (relevant to later query builder/execution/history units, UNIT-06〜08). Presented options A) システム等幅フォントスタック, B) セルフホストのコード用Webフォント（推奨、JetBrains Mono例示）. User chose B but asked for alternatives to JetBrains Mono; presented JetBrains Mono, Source Code Pro, IBM Plex Mono, Fira Code（リガチャの懸念を指摘）, Noto Sans Mono. User selected Noto Sans Mono for family consistency with the already-chosen Noto Sans JP. Updated unit-01-code-generation-plan.md: added Noto Sans Mono（`@fontsource/noto-sans-mono`, self-hosted）as the code/SQL font-family token with fallback to Noto Sans JP for uncovered Japanese characters; updated Step 2 and Step 6-3 (license notice) accordingly."
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 Planning (plan amendment)
+
+---

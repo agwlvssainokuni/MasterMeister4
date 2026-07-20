@@ -16,6 +16,7 @@
   - アクセシビリティは基本的なキーボード操作・ARIA属性のみ（`nfr-requirements.md` NFR-UNIT01-5）
   - ブレークポイントはデスクトップ・タブレットの2段階（`nfr-requirements.md` NFR-UNIT01-6）
   - Vitest + React Testing Libraryでテスト、Storybook等の専用カタログなし（`nfr-requirements.md` NFR-UNIT01-4）
+  - フォントはセルフホストのWebフォントを採用し、外部CDNには依存しない（SECURITY-13のN/A判定と整合）。本文用は「Noto Sans JP」（`@fontsource/noto-sans-jp`）、SQL/コード表示用の等幅フォントは「Noto Sans Mono」（`@fontsource/noto-sans-mono`）とし、Noto Sans Monoでカバーされない日本語文字はNoto Sans JPにフォールバックする（本Code Generation Planning中に追加確認）
 
 ## 実行ステップ
 
@@ -30,8 +31,9 @@
 **注記**: `backend/`, `devenv/`ディレクトリは本ユニットでは作成しない。バックエンドコンポーネントが必要になるUNIT-02以降で、必要になった時点で作成する（`requirements.md`§4のプロジェクト構成は維持しつつ、段階的に実体化する）
 
 ### Step 2: デザイントークン生成
-- [ ] 2-1. 色・タイポグラフィ・スペーシング・ブレークポイント（デスクトップ/タブレット2段階）のデザイントークンをCSS変数として定義する（`frontend/src/design-system/tokens/`）
-- [ ] 2-2. テーマ切替可能な構造（`[data-theme="light"]`セレクタ）としつつ、初期値はライトテーマのみ定義する
+- [ ] 2-1. `@fontsource/noto-sans-jp`と`@fontsource/noto-sans-mono`をインストールし、フォントファイルを自己ホストする（外部CDN非依存）
+- [ ] 2-2. 色・タイポグラフィ（本文font-familyに Noto Sans JP、コード/SQL表示用font-familyに `'Noto Sans Mono', 'Noto Sans JP', monospace`（日本語文字はNoto Sans JPへフォールバック）を設定）・スペーシング・ブレークポイント（デスクトップ/タブレット2段階）のデザイントークンをCSS変数として定義する（`frontend/src/design-system/tokens/`）
+- [ ] 2-3. テーマ切替可能な構造（`[data-theme="light"]`セレクタ）としつつ、初期値はライトテーマのみ定義する
 
 ### Step 3: i18n基盤セットアップ
 - [ ] 3-1. react-i18nextを初期化する（`frontend/src/design-system/i18n/`）
@@ -54,6 +56,7 @@
 ### Step 6: ドキュメント生成
 - [ ] 6-1. `frontend/README.md`を作成する（セットアップ手順、開発サーバ起動、テスト実行、ビルド、`npm audit`実行手順）
 - [ ] 6-2. `aidlc-docs/construction/unit-01/code/summary.md`を作成する（生成した構造・コンポーネント一覧のサマリ、Markdownのみ）
+- [ ] 6-3. `frontend/README.md`にNoto Sans JP・Noto Sans Monoのライセンス表記（いずれもSIL Open Font License 1.1）を記載する
 
 ### Step 7: デプロイ成果物生成
 - **N/A**: 本ユニットは共通UIコンポーネント一式の提供のみであり、単独でデプロイ可能な成果物を持たない。デプロイ関連の成果物は、実際にエンドツーエンドで動作する画面が揃う後続ユニット以降で検討する
