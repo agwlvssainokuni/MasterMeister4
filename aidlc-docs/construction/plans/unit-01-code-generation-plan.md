@@ -1,0 +1,72 @@
+# UNIT-01（デザインシステム基盤）Code Generation 計画
+
+## ユニットコンテキスト
+
+- **対応ストーリー**: STORY-0.1（共通デザイン基盤の構築）。STORY-0.2（個別画面デザインの段階的整備）はプロセス上の原則であり、UNIT-01固有の成果物は生成しない（以降の各機能ユニットの実装時に順次満たされる）
+- **対応コンポーネント**: フロントエンドのみ（バックエンドコンポーネントなし）。Business Logic / API Layer / Repository Layer / Database Migration Scriptsの各ステップは本ユニットでは**N/A**
+- **依存ユニット**: なし（最初に着手するユニット）
+- **本ユニットが提供するインターフェース**: `frontend/src/design-system/`配下の共通UIコンポーネント一式。以降の全機能ユニット（UNIT-02〜UNIT-09）がこれをimportして利用する
+- **入力とする既承認の決定事項**:
+  - 技術スタック: React 19 + TypeScript + Vite（`tech-stack-decisions.md`、`nfr-requirements.md` NFR-UNIT01-4）
+  - CSS Modules、react-i18next、最小限のアイコン方針（`tech-stack-decisions.md`）
+  - 共通ErrorBoundary（トップレベル1つ、`nfr-design-patterns.md` DP-UNIT01-1, DP-UNIT01-2）
+  - バレルエクスポート構成（`nfr-design-patterns.md` DP-UNIT01-3）
+  - `dangerouslySetInnerHTML`不使用の徹底（`nfr-design-patterns.md` DP-UNIT01-4）
+  - `frontend/src/design-system/`への配置、テーマ切替対応トークン構造（`logical-components.md`）
+  - アクセシビリティは基本的なキーボード操作・ARIA属性のみ（`nfr-requirements.md` NFR-UNIT01-5）
+  - ブレークポイントはデスクトップ・タブレットの2段階（`nfr-requirements.md` NFR-UNIT01-6）
+  - Vitest + React Testing Libraryでテスト、Storybook等の専用カタログなし（`nfr-requirements.md` NFR-UNIT01-4）
+
+## 実行ステップ
+
+### Step 1: プロジェクト構造セットアップ（Greenfield・最初のユニット）
+- [ ] 1-1. `frontend/`ディレクトリを作成し、Vite + React 19 + TypeScriptプロジェクトを初期化する
+- [ ] 1-2. Vitest + React Testing Library + jsdom環境をセットアップする（テスト設定ファイル、セットアップファイル）
+- [ ] 1-3. CSS Modules対応を確認する（Viteの標準機能、追加設定は最小限）
+- [ ] 1-4. ESLint + Prettierの基本設定を行う（TypeScript向け標準ルール）
+- [ ] 1-5. `frontend/package.json`に`dev`, `build`, `test`, `lint`, `audit`（`npm audit`）の各スクリプトを定義する
+- [ ] 1-6. `frontend/.gitignore`を作成する（`node_modules/`, `dist/`等）
+
+**注記**: `backend/`, `devenv/`ディレクトリは本ユニットでは作成しない。バックエンドコンポーネントが必要になるUNIT-02以降で、必要になった時点で作成する（`requirements.md`§4のプロジェクト構成は維持しつつ、段階的に実体化する）
+
+### Step 2: デザイントークン生成
+- [ ] 2-1. 色・タイポグラフィ・スペーシング・ブレークポイント（デスクトップ/タブレット2段階）のデザイントークンをCSS変数として定義する（`frontend/src/design-system/tokens/`）
+- [ ] 2-2. テーマ切替可能な構造（`[data-theme="light"]`セレクタ）としつつ、初期値はライトテーマのみ定義する
+
+### Step 3: i18n基盤セットアップ
+- [ ] 3-1. react-i18nextを初期化する（`frontend/src/design-system/i18n/`）
+- [ ] 3-2. 日本語（`ja`）・英語（`en`）の初期名前空間ファイルを作成する（共通UIコンポーネントの文言: ボタンラベル、フォームバリデーションメッセージ、ErrorBoundaryのフォールバック文言等）
+
+### Step 4: 共通UIコンポーネント生成
+- [ ] 4-1. Button（`frontend/src/design-system/components/Button/`）
+- [ ] 4-2. TextField（テキスト入力、`frontend/src/design-system/components/TextField/`）
+- [ ] 4-3. Select（選択、`frontend/src/design-system/components/Select/`。ドロップダウン表示用に最小限のChevronDownアイコンを1つ自作SVGコンポーネントとして追加）
+- [ ] 4-4. Checkbox（`frontend/src/design-system/components/Checkbox/`）
+- [ ] 4-5. RadioButton（`frontend/src/design-system/components/RadioButton/`）
+- [ ] 4-6. FormField（ラベル・ヘルプテキスト・エラーメッセージのラッパー、`frontend/src/design-system/components/FormField/`）
+- [ ] 4-7. ErrorBoundary（アプリケーション全体のトップレベル用、`frontend/src/design-system/components/ErrorBoundary/`。フォールバック表示は汎用メッセージのみ、内部情報は含めない。捕捉したエラーは`console.error`に出力）
+- [ ] 4-8. 各コンポーネントに`data-testid`を付与できるよう`testId`プロップを用意する（命名規則: `{component}-{element-role}`、例: `login-form-submit-button`）
+- [ ] 4-9. バレルファイル（`frontend/src/design-system/index.ts`）で全コンポーネントを名前付きエクスポートする
+
+### Step 5: 共通UIコンポーネントのユニットテスト
+- [ ] 5-1. Button, TextField, Select, Checkbox, RadioButton, FormField, ErrorBoundaryの各コンポーネントについて、レンダリング・基本的なユーザ操作・キーボード操作・ARIA属性をVitest + React Testing Libraryで検証するテストを作成する
+
+### Step 6: ドキュメント生成
+- [ ] 6-1. `frontend/README.md`を作成する（セットアップ手順、開発サーバ起動、テスト実行、ビルド、`npm audit`実行手順）
+- [ ] 6-2. `aidlc-docs/construction/unit-01/code/summary.md`を作成する（生成した構造・コンポーネント一覧のサマリ、Markdownのみ）
+
+### Step 7: デプロイ成果物生成
+- **N/A**: 本ユニットは共通UIコンポーネント一式の提供のみであり、単独でデプロイ可能な成果物を持たない。デプロイ関連の成果物は、実際にエンドツーエンドで動作する画面が揃う後続ユニット以降で検討する
+
+---
+
+## Story Traceability
+
+| ストーリー | 対応ステップ |
+|---|---|
+| STORY-0.1 共通デザイン基盤の構築 | Step 1〜6 |
+| STORY-0.2 個別画面デザインの段階的整備 | 本ユニットでは対象外（以降の各機能ユニットで順次満たす） |
+
+---
+
+このプランは、UNIT-01のCode Generation実行における唯一の正とする。承認後、Step 1から順に実行し、各ステップ完了時にチェックボックスを更新する。

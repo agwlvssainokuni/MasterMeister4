@@ -319,3 +319,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Design (Step 8, approval)
 
 ---
+
+## UNIT-01 Code Generation - Plan Created, Approval Requested
+**Timestamp**: 2026-07-20T12:40:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Created aidlc-docs/construction/plans/unit-01-code-generation-plan.md. Business Logic/API/Repository Layer/Database Migration=N/A（バックエンドコンポーネントなし）。7ステップを定義: (1) プロジェクト構造セットアップ（frontend/のVite+React19+TypeScript初期化、backend/devenv/は本ユニットでは作成しない）, (2) デザイントークン生成, (3) i18n基盤セットアップ（react-i18next, ja/en）, (4) 共通UIコンポーネント生成（Button/TextField/Select/Checkbox/RadioButton/FormField/ErrorBoundary、data-testid付与、バレルエクスポート）, (5) ユニットテスト作成, (6) ドキュメント生成, (7) デプロイ成果物=N/A。STORY-0.1をStep1-6に、STORY-0.2は本ユニット対象外とマッピング。ユーザ承認待ち。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 Planning (Steps 1-6)
+
+---
