@@ -991,3 +991,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 14完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 15完了（Frontend Components Summary）
+**Timestamp**: 2026-07-21T01:35:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "aidlc-docs/construction/unit-02/code/frontend-summary.mdを作成。認証基盤（tokenStorage/jwt/AuthContext/ProtectedRoute/http.ts/apiクライアント）、6画面（LoginPage/RegisterStep1Page/RegisterStep2Page/UserManagementPage/HomePage+FeatureCard/AuthenticatedLayout）とApp.tsxのルーティング構成、i18nリソース追加、UNIT-01由来の不整合修正（nav.dashboard残存、DataTable rowKey型不一致）、テスト結果一覧（11ファイル・40ケース）、テスト用共通ヘルパー（renderPage）、実装時のトラブルシューティング（vi.restoreAllMocksがvi.mock()の呼び出し履歴をクリアしない仕様、UNIT間のドキュメント修正と実装追従漏れの注意点）を記載し、後続ユニットへの申し送りとした。計画チェックリストSection 15を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 15完了
+
+---

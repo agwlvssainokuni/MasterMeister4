@@ -134,7 +134,7 @@
 
 ### 15. Frontend Components Summary
 
-- [ ] Step 15.1: `aidlc-docs/construction/unit-02/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
+- [x] Step 15.1: `aidlc-docs/construction/unit-02/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
 
 ### 16. Documentation Generation
 
