@@ -74,16 +74,16 @@
 
 ### 7. Business Logic Unit Testing
 
-- [ ] Step 7.1: `UserRegistrationService`のユニットテストを作成する（Mockito、登録・承認・却下・却下取消・無効化・再有効化の各分岐、BR-REG-01〜07の境界値）
-- [ ] Step 7.2: `AuthenticationService`・`LoginAttemptGuard`のユニットテストを作成する（ロック閾値・解除、BR-LOGIN-01〜03）
-- [ ] Step 7.3: `RefreshTokenService`のユニットテストを作成する（ローテーション、再利用検知、ファミリ一括失効、BR-TOKEN-01〜04）
-- [ ] Step 7.4: `MailTemplateRenderer`のユニットテストを作成する（件名抽出の境界値: 改行を含む`<title>`、属性付き`<title>`、`<title>`欠落時の例外、HTMLエンティティのデコード）。jqwikによるプロパティベーステストも検討する（NFR Requirements PBT-09基盤の初適用機会だが、本ユニットはPBT対象プロパティなしと判定済みのためexample-basedテストのみとする）
-- [ ] Step 7.5: `AuditLogService`のユニットテストを作成する（イベント受信・別トランザクション記録の検証、domain-entities.md §6.1のイベント種別ごとのuserId/targetResource/detail検証）
-- [ ] Step 7.6: `TokenGenerator`・`PasswordBreachChecker`・`RegistrationRateGuard`のユニットテストを作成する
+- [x] Step 7.1: `UserRegistrationService`のユニットテストを作成する（Mockito、登録・承認・却下・却下取消・無効化・再有効化の各分岐、BR-REG-01〜07の境界値）
+- [x] Step 7.2: `AuthenticationService`・`LoginAttemptGuard`のユニットテストを作成する（ロック閾値・解除、BR-LOGIN-01〜03）
+- [x] Step 7.3: `RefreshTokenService`のユニットテストを作成する（ローテーション、再利用検知、ファミリ一括失効、BR-TOKEN-01〜04）
+- [x] Step 7.4: `MailTemplateRenderer`のユニットテストを作成する（件名抽出の境界値: 改行を含む`<title>`、属性付き`<title>`、`<title>`欠落時の例外、HTMLエンティティのデコード）。jqwikによるプロパティベーステストも検討する（NFR Requirements PBT-09基盤の初適用機会だが、本ユニットはPBT対象プロパティなしと判定済みのためexample-basedテストのみとする）
+- [x] Step 7.5: `AuditLogService`のユニットテストを作成する（イベント受信・別トランザクション記録の検証、domain-entities.md §6.1のイベント種別ごとのuserId/targetResource/detail検証）
+- [x] Step 7.6: `TokenGenerator`・`PasswordBreachChecker`・`RegistrationRateGuard`のユニットテストを作成する
 
 ### 8. Business Logic Summary
 
-- [ ] Step 8.1: `aidlc-docs/construction/unit-02/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、テスト結果）
+- [x] Step 8.1: `aidlc-docs/construction/unit-02/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、テスト結果）
 
 ### 9. Security Configuration
 
