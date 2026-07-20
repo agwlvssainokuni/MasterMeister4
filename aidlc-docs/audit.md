@@ -631,3 +631,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション5完了
 
 ---
+
+## UNIT-01 Code Generation Part 2 - セクション6-7完了（ユニットテスト・コンポーネントサマリ）
+**Timestamp**: 2026-07-20T18:50:00Z
+**User Input**: （継続実行）
+**AI Response**: "テスト基盤の不具合（globals:falseのためRTLの自動DOMクリーンアップが未登録、複数テスト間でDOMが蓄積し要素重複エラー）をtest/setup.tsにafterEach(cleanup)を追加して修正。ThemeProvider/ErrorBoundary/Button/TextInput/Choice/FormField/AppShell/PublicLayout/LanguageSwitcher/ThemeToggle/Modal・ConfirmDialog/Tabs/Toast/DataTable/Display（Badge/Alert/Card/EmptyState/CodeBlock/KeyValueList）/Dropdown/Tooltip/Pagination/FilterBarのテストを作成（19ファイル・51テスト）。実装中、Switchのinput要素がpointer-events:noneのためuserEvent.clickが失敗する問題をfireEvent.clickに変更して解決、Tooltipのfocus()がReactのonFocusを発火しない問題をuserEvent.tab()に変更して解決。あわせてButton.tsxのローディング表示を、Section 5で作成済みのSpinnerコンポーネント（role=status）を使う構成にリファクタリング（Section 3時点では未作成のため内蔵CSSスピナーで代替していた）。aidlc-docs/construction/unit-01/code/component-inventory.mdを作成し、全コンポーネント一覧・取込方針の要約・テスト方針を文書化。npm test/build/lint/formatすべて成功。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション6-7完了
+
+---

@@ -15,6 +15,7 @@
  */
 
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import { Spinner } from './Spinner'
 import styles from './Button.module.css'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost'
@@ -48,7 +49,7 @@ export function Button({
       aria-busy={loading || undefined}
       {...rest}
     >
-      {loading ? <span className={styles.spinner} aria-hidden="true" /> : null}
+      {loading ? <Spinner size="sm" /> : null}
       <span className={loading ? styles.loadingLabel : undefined}>{children}</span>
     </button>
   )
