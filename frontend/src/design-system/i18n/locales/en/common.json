@@ -31,5 +31,16 @@
   "form": {
     "showPassword": "Show password",
     "hidePassword": "Hide password"
+  },
+  "table": {
+    "selectAll": "Select all",
+    "selectRow": "Select row",
+    "sortAsc": "Sort ascending",
+    "sortDesc": "Sort descending"
+  },
+  "pagination": {
+    "prev": "Previous page",
+    "next": "Next page",
+    "page": "Page {{page}} of {{total}}"
   }
 }

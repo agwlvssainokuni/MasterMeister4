@@ -31,5 +31,16 @@
   "form": {
     "showPassword": "パスワードを表示",
     "hidePassword": "パスワードを非表示"
+  },
+  "table": {
+    "selectAll": "すべて選択",
+    "selectRow": "この行を選択",
+    "sortAsc": "昇順で並び替え",
+    "sortDesc": "降順で並び替え"
+  },
+  "pagination": {
+    "prev": "前のページ",
+    "next": "次のページ",
+    "page": "{{page}} / {{total}} ページ"
   }
 }

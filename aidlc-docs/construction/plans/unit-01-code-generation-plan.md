@@ -88,23 +88,23 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 
 ### 5. Frontend Components Generation - 表示・フィードバック
 
-- [ ] Step 5.1: `Card` / `AuthCard`を作成する
-- [ ] Step 5.2: `PageHeader`を作成する
-- [ ] Step 5.3: `DataTable`を作成する（`Table`を土台に、列定義・簡易表示のみ）
-- [ ] Step 5.4: `Pagination`を作成する（見た目のみ）
-- [ ] Step 5.5: `EmptyState`を作成する
-- [ ] Step 5.6: `Alert`（tone: info/success/warning/danger）を作成する
-- [ ] Step 5.7: `Badge`を作成する
-- [ ] Step 5.8: `Spinner`を作成する
-- [ ] Step 5.9: `Modal`を作成する（汎用の`Overlay`背景幕コンポーネントは存在しない。Modal内部で直接処理する構成に修正）
-- [ ] Step 5.10: `ConfirmDialog`を作成する（`Modal`を土台に構築）
-- [ ] Step 5.11: `FilterBar`を作成する（簡易版）
-- [ ] Step 5.12: `Tabs`を作成する
-- [ ] Step 5.13: `Toast`を作成する
-- [ ] Step 5.14: `CodeBlock`を作成する
-- [ ] Step 5.16: `Dropdown`を作成する（HeaderControlのユーザーメニュー等で使用。キーボード操作・フォーカストラップ対応）
-- [ ] Step 5.17: `Tooltip`を作成する（ホバー/フォーカスで表示する補足情報）
-- [ ] Step 5.15: `KeyValueList`を作成する
+- [x] Step 5.1: `Card` / `AuthCard`を作成する
+- [x] Step 5.2: `PageHeader`を作成する
+- [x] Step 5.3: `DataTable`を作成する（`Table`を土台に、列定義・簡易表示のみ）
+- [x] Step 5.4: `Pagination`を作成する（見た目のみ）
+- [x] Step 5.5: `EmptyState`を作成する
+- [x] Step 5.6: `Alert`（tone: info/success/warning/danger）を作成する（各toneにIcon: info/check-circle/warning-triangle/x-circleを付与）
+- [x] Step 5.7: `Badge`を作成する
+- [x] Step 5.8: `Spinner`を作成する
+- [x] Step 5.9: `Modal`を作成する（汎用の`Overlay`背景幕コンポーネントは存在しない。Modal内部で直接処理する構成に修正）
+- [x] Step 5.10: `ConfirmDialog`を作成する（`Modal`を土台に構築）
+- [x] Step 5.11: `FilterBar`を作成する（簡易版）
+- [x] Step 5.12: `Tabs`を作成する
+- [x] Step 5.13: `Toast`を作成する
+- [x] Step 5.14: `CodeBlock`を作成する
+- [x] Step 5.16: `Dropdown`を作成する（HeaderControlのユーザーメニュー等で使用。キーボード操作・フォーカストラップ対応）
+- [x] Step 5.17: `Tooltip`を作成する（ホバー/フォーカスで表示する補足情報）
+- [x] Step 5.15: `KeyValueList`を作成する
 
 ### 6. Frontend Components Unit Testing
 

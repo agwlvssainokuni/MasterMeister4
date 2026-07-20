@@ -623,3 +623,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション4完了
 
 ---
+
+## UNIT-01 Code Generation Part 2 - セクション5完了（表示・フィードバックコンポーネント）
+**Timestamp**: 2026-07-20T18:35:00Z
+**User Input**: （継続実行）
+**AI Response**: "Spinner, Display.tsx（Badge/Alert/Card/EmptyState/CodeBlock/KeyValueList、AlertはtoneごとにIcon付与、CodeBlockのコピー/折り返しボタンをIcon化）, DataTable（Table相当、列定義・簡易表示のみ、ソート表示をIcon化）, Pagination（Icon化）, Tabs, Toast, Modal/ConfirmDialog（閉じるボタンをIcon化）, Dropdown, Tooltip, FilterBar（簡易版、独自追加）, AuthCard, PageHeaderを作成。table.*/pagination.*のi18nキーを追加。componentsのindex.tsに全エクスポートを整理。npm run build/lint/formatがすべて通ることを確認。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション5完了
+
+---
