@@ -50,14 +50,14 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Requirements（成果物提示、承認待ち）
-- **Next Stage**: 承認後、NFR Designへ
+- **Current Stage**: UNIT-01 デザインシステム基盤 - NFR Design（計画作成中）
+- **Next Stage**: NFR Design計画への回答を受け、パターン・論理コンポーネントを確定
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-01)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T14:20:00Z。グランドデザイン・代表画面モックのコンポーネント構造設計のため）
-- [ ] NFR Requirements — EXECUTE、IN PROGRESS
-- [ ] NFR Design — EXECUTE
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-20T14:40:00Z）
+- [ ] NFR Design — EXECUTE、IN PROGRESS
 - [ ] Infrastructure Design — SKIP（devenvはローカル開発環境設定であり、本番デプロイのインフラ設計には該当しない）
 - [ ] Code Generation
 
