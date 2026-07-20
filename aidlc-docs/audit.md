@@ -847,3 +847,11 @@
 **Context**: CONSTRUCTION - UNIT-02 NFR Requirements 完了、NFR Design開始
 
 ---
+
+## UNIT-02 NFR Design - 計画作成
+**Timestamp**: 2026-07-20T21:48:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "nfr-requirements.md/tech-stack-decisions.mdを確認し、NFR Requirements段階からNFR Design段階へ明示的に据え置かれていた事項（NFR-4.7リフレッシュトークン配信方式、SECURITY-04/05実装パターン、グローバル例外ハンドラパターン等）を洗い出し。Resiliency Baseline拡張は非適用（Q2=B）だが、カテゴリ網羅の観点で基本的なエラーハンドリング（外部API・SMTP送信失敗時の挙動）も評価対象に含めた。unit-02-nfr-design-plan.mdを作成し、リフレッシュトークン配信方式（Cookie vs レスポンスボディ）、HTTPセキュリティヘッダ実装パターン、入力バリデーション実装パターン、内部DB保存時暗号化方針、グローバル例外ハンドラパターン、SecurityFilterChain構成、HIBP呼び出しのタイムアウト・エラー処理、メール送信失敗時の登録処理継続方針の8問を出題。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Design、計画提示
+
+---

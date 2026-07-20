@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - NFR Design（着手）
-- **Next Stage**: NFR Design計画の作成・提示
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - NFR Design（計画提示、回答待ち）
+- **Next Stage**: unit-02-nfr-design-plan.mdの回答を受け、成果物を作成
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
