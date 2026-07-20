@@ -1071,3 +1071,19 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 18完了・全セクション完了
 
 ---
+
+## UNIT-02 Code Generation Complete提示、次ステージに関する質問への回答
+**Timestamp**: 2026-07-21T02:25:00Z
+**User Input**: "次はBuild and Testですか？"
+**AI Response**: "全18セクション完了を受け、code-generation.mdの標準完了メッセージ（AI Summary・REVIEW REQUIRED・WHAT'S NEXT？）を提示。続けてユーザの質問に対し、Build and Testは全ユニット（UNIT-01〜UNIT-10）完了後に実行される段階であり、UNIT-02承認後はUNIT-03（RDBMSセットアップ）のPer-Unit Loopに進む旨を回答し、完了メッセージへの明示的な承認（Continue to Next StageかRequest Changesか）を改めて求めた。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Complete、承認待ち
+
+---
+
+## UNIT-02 Code Generation - CORS設定不要の指摘によるレビュー対応
+**Timestamp**: 2026-07-21T06:59:00Z
+**User Input**: "viteのproxyを使うので, 開発時もCORSは不要なはず。"
+**AI Response**: "指摘の通り、Vite devサーバの`server.proxy`（`/api`→`http://localhost:8080`、Section 16で追加）はサーバサイドで転送するため、ブラウザから見ると開発時も常に同一オリジンとなりCORSプリフライトは発生しない。`SecurityConfig.java`から`corsConfigurationSource()` Bean・`HttpSecurity.cors(...)`呼び出し・関連import（`CorsConfiguration`/`CorsConfigurationSource`/`UrlBasedCorsConfigurationSource`/`List`）を削除し、代わりに同一オリジンのため不要である旨のコメントを追加。関連ドキュメントを訂正: `aidlc-docs/construction/unit-02/code/api-layer-summary.md`（CORS行を削除しトラブルシューティング項に訂正経緯を追記）、承認済みのNFR Design成果物`aidlc-docs/construction/unit-02/nfr-design/{nfr-design-patterns.md,logical-components.md}`（取り消し線＋「訂正（UNIT-02 Code Generationにて）」注記、既存の訂正パターンに準拠）。`./gradlew :backend:compileJava :backend:test`で全テスト成功を確認。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Complete、レビュー対応（Request Changes扱い）
+
+---

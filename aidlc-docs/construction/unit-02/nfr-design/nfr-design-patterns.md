@@ -58,7 +58,7 @@
   - `permitAll()`: `/api/auth/login`, `/api/auth/refresh`, `/api/auth/logout`, `/api/registrations/**`
   - `hasRole('ADMIN')`: `/api/admin/**`
   - `authenticated()`: 上記以外の`/api/**`
-- CORS設定は許可オリジンを明示的に列挙する（ワイルドカード不使用、NFR-4.6/SECURITY-08）。単一WAR構成（フロントエンドを同一オリジンで配信）のため、実運用では追加のCORS許可設定は最小限で済む見込み
+- ~~CORS設定は許可オリジンを明示的に列挙する（ワイルドカード不使用、NFR-4.6/SECURITY-08）。単一WAR構成（フロントエンドを同一オリジンで配信）のため、実運用では追加のCORS許可設定は最小限で済む見込み~~ 訂正（UNIT-02 Code Generationにて）: 開発時もVite devサーバのプロキシ（`/api`→バックエンド）を導入したため、ブラウザから見て開発時・本番時とも常に同一オリジンとなる。クロスオリジンアクセス自体が発生しないためCORS設定（`corsConfigurationSource()` Bean）は不要と判明し削除した
 
 ---
 

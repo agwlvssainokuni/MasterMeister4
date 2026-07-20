@@ -33,14 +33,10 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 /**
  * nfr-design-patterns.md §3.2・3.6。SPA配信のため{@code /api/**}以外は{@code permitAll()}とする
@@ -80,30 +76,14 @@ public class SecurityConfig {
         return converter;
     }
 
-    /**
-     * 開発時（Viteのdevサーバ）からのクロスオリジンアクセスのみを許可する（NFR-4.6、ワイルドカード不使用）。
-     * 本番はフロントエンドを同一オリジンで配信するため、通常はCORSの対象外となる。
-     */
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
-        return source;
-    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                      JwtAuthenticationConverter jwtAuthenticationConverter)
             throws Exception {
         http
                 // Cookieを用いずレスポンスボディでトークンを配信するため、CSRF対策は不要（nfr-design-patterns.md §3.1）
+                // devサーバのViteプロキシ経由でアクセスするため常に同一オリジンとなり、CORS設定は不要
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> {
-                })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**", "/api/registrations/**").permitAll()

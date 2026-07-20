@@ -8,7 +8,6 @@
 - `JwtEncoder`/`JwtDecoder`: HS256、`AppProperties.Jwt.secret`（32バイト以上をコンストラクタで検証）
 - `JwtAuthenticationConverter`: JWTの`role`クレーム→`ROLE_*`権限
 - `SecurityFilterChain`: `/api/auth/**`・`/api/registrations/**`は`permitAll()`、`/api/admin/**`は`hasRole('ADMIN')`、他の`/api/**`は`authenticated()`。`/api/**`以外はSPA配信のため`permitAll()`
-- CORS: `http://localhost:5173`（Vite devサーバ）のみ許可（ワイルドカード不使用、NFR-4.6）
 - CSP: `default-src 'self'`を明示設定
 
 ## SPA配信（`common/web/SpaWebConfig.java`）
@@ -50,3 +49,4 @@ OpenAPI/Swagger UIは`springdoc-openapi-starter-webmvc-ui`により`/v3/api-docs
 - **Spring Boot 4.1でのAPIパッケージ移動**: `@DataJpaTest`（Section 5と同様）に加え、`@WebMvcTest`/`AutoConfigureMockMvc`も`org.springframework.boot.test.autoconfigure.web.servlet`ではなく`org.springframework.boot.webmvc.test.autoconfigure`（`spring-boot-starter-webmvc-test`）に移動していた。`MacAlgorithm`も`org.springframework.security.oauth2.jwt`ではなく`org.springframework.security.oauth2.jose.jws`。`@MockBean`は廃止され`org.springframework.test.context.bean.override.mockito.MockitoBean`を使用する
 - **`@AuthenticationPrincipal`と`addFilters=false`の相性**: `@AuthenticationPrincipal`の引数リゾルバは`@EnableWebSecurity`（`SecurityConfig`）がインポートされて初めて登録される。また`SecurityMockMvcRequestPostProcessors.jwt()`は実際の`SecurityFilterChain`が有効（`addFilters=false`を指定しない）でないと`SecurityContext`へ反映されない。このため`@AuthenticationPrincipal`を使う`AdminUserController`のテストのみ、`SecurityConfig`をインポートしADMIN権限のJWTで実フィルタを通す方式とした
 - **`NimbusJwtEncoder`は`JwsHeader`未指定だとデフォルトでRS256を試み、HMAC秘密鍵JWKSourceでは`JwtEncodingException: Failed to select a JWK signing key`になる（Section 18の起動検証で発覚）**: `AuthenticationService.generateAccessToken()`が`JwtEncoderParameters.from(claims)`（`JwsHeader`省略）を使っていたため、`SecurityConfig`で構成した`ImmutableSecret`（HS256用）とアルゴリズムが一致せず失敗していた。`@WebMvcTest`ベースの`AuthControllerTest`は`JwtEncoder`自体を`@MockitoBean`で差し替えるため、これまで検出されなかった。`JwsHeader.with(MacAlgorithm.HS256).build()`を明示的に渡す`JwtEncoderParameters.from(header, claims)`に修正
+- **CORS設定は不要と判明し削除（訂正、承認後の修正）**: `SecurityConfig`に設けていた`corsConfigurationSource()`（許可オリジンを`http://localhost:5173`に限定）は、Section 16で追加したVite devサーバの`server.proxy`（`/api`→`http://localhost:8080`）と役割が重複していた。プロキシはサーバサイドで転送するため、ブラウザから見ると常に同一オリジンへのリクエストとなりCORSプリフライト自体が発生しない。ユーザ指摘により`corsConfigurationSource()` Bean・`HttpSecurity.cors(...)`呼び出しを削除
