@@ -14,8 +14,20 @@
     "auditLog": "監査ログ"
   },
   "theme": {
+    "label": "テーマ",
     "light": "ライト",
     "dark": "ダーク",
     "system": "システム"
+  },
+  "language": {
+    "label": "言語",
+    "ja": "日本語",
+    "en": "English"
+  },
+  "userMenu": {
+    "label": "ユーザメニュー"
+  },
+  "footer": {
+    "version": "バージョン {{version}}"
   }
 }

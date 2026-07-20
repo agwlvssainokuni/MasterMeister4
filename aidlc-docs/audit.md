@@ -615,3 +615,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション3完了・参考実装の追加発見
 
 ---
+
+## UNIT-01 Code Generation Part 2 - セクション4完了（グランドデザイン）
+**Timestamp**: 2026-07-20T18:20:00Z
+**User Input**: （継続実行）
+**AI Response**: "PublicLayout（ロゴ+コンテンツ+言語/テーマ切替）、AppShell（ヘッダー+サイドナビ+コンテンツ+Footerを内包、タブレット幅768pxでサイドナビ折りたたみのメディアクエリ追加、ユーザ情報・ログアウトのプレースホルダー導線）、Footer、HeaderControl.module.css、LanguageSwitcher、ThemeToggleを作成。navigation.ts（useDefaultNavItems、9項目、react-router-dom連携）でナビゲーション項目を実装。design-system.jsonにtheme.label/language.*/userMenu.*/footer.versionキーを追加、common.jsonにaction.okを追加。npm run build/lint/formatがすべて通ることを確認。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション4完了
+
+---

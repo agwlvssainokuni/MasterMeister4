@@ -14,8 +14,20 @@
     "auditLog": "Audit Log"
   },
   "theme": {
+    "label": "Theme",
     "light": "Light",
     "dark": "Dark",
     "system": "System"
+  },
+  "language": {
+    "label": "Language",
+    "ja": "日本語",
+    "en": "English"
+  },
+  "userMenu": {
+    "label": "User menu"
+  },
+  "footer": {
+    "version": "Version {{version}}"
   }
 }

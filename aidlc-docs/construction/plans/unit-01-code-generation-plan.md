@@ -81,10 +81,10 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 
 ### 4. Frontend Components Generation - グランドデザイン
 
-- [ ] Step 4.1: `PublicLayout`を作成する
-- [ ] Step 4.2: `AppShell` / `Header` / `SideNav` / `Footer`を作成する（タブレット幅ブレークポイント対応含む）
-- [ ] Step 4.3: `HeaderControl` / `LanguageSwitcher` / `ThemeToggle`を作成する
-- [ ] Step 4.4: SideNavのナビゲーション項目（全10ユニット見込み、frontend-components.md §1.3参照）を実装する
+- [x] Step 4.1: `PublicLayout`を作成する
+- [x] Step 4.2: `AppShell` / `Header` / `SideNav` / `Footer`を作成する（タブレット幅ブレークポイント対応含む。Header/SideNavは参考実装に合わせAppShellに内包する構成、Footerは独立コンポーネント）
+- [x] Step 4.3: `HeaderControl` / `LanguageSwitcher` / `ThemeToggle`を作成する（HeaderControlは共有CSSモジュール。ヘッダーのユーザ情報・ログアウト導線はAppShell内にプレースホルダーとして実装）
+- [x] Step 4.4: SideNavのナビゲーション項目（全10ユニット見込み、frontend-components.md §1.3参照）を実装する（`navigation.ts`の`useDefaultNavItems`、React Router連携）
 
 ### 5. Frontend Components Generation - 表示・フィードバック
 
