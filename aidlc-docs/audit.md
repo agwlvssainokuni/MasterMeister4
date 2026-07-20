@@ -895,3 +895,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design（承認済み文書への追記）、レート制限フローの反映
 
 ---
+
+## UNIT-02 NFR Design - 承認、Code Generationへ
+**Timestamp**: 2026-07-20T22:11:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "NFR Designを承認として記録。unit-02-nfr-design-plan.mdのStep Dを完了に更新。aidlc-state.mdを更新（UNIT-02 NFR Design完了。Infrastructure DesignはSKIP判定済みのため、Code Generationに着手）。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Design 完了、Code Generation開始
+
+---
