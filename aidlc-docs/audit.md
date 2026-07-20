@@ -559,3 +559,27 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1、計画提示・承認依頼
 
 ---
+
+## UNIT-01 Code Generation Part 1 - レビュー観点の提起（承認前確認）
+**Timestamp**: 2026-07-20T15:06:00Z
+**User Input**: "確認しておいた方が良い事項はありますか？"
+**AI Response**: "3点を提起: (1) Iconコンポーネントの具体的な一覧が未確定、(2) UNIT-01の土台（Gradleマルチモジュール・Vite統合）のビルド疎通確認をいつ行うか（正式プロセスは全ユニット完了後のBuild and Testステージだが、土台ユニットのため早期確認を推奨）、(3) 約45ステップあるPart 2の実行ペース（セクション区切り vs 一括実行）。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1、承認前レビュー
+
+---
+
+## UNIT-01 Code Generation Part 1 - Icon一覧の確定
+**Timestamp**: 2026-07-20T15:08:00Z
+**User Input**: "1: 先にアイコン一覧を洗い出してから着手して欲しいです。(過不足あればあとで対応でも良いですが、はじめにベースラインとして洗い出しておきたい)"
+**AI Response**: "unit-01-code-generation-plan.mdに『Icon一覧（ベースライン）』セクションを追加。SideNav/Pagination/ThemeToggle/HeaderControl/LanguageSwitcher/Alert/ConfirmDialog/DataTable/マスタメンテナンス画面/FilterBar/CodeBlock由来の20種を列挙。Step 3.5から参照する形に更新。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1、Icon一覧確定
+
+---
+
+## UNIT-01 Code Generation Part 1 - ビルド検証タイミング・実行ペースの決定
+**Timestamp**: 2026-07-20T15:10:00Z
+**User Input**: (AskUserQuestion) "1は最低限として、Part 2完了するまでにも一区切りごとに実行できると嬉しい。" / "セクション単位で区切って報告（推奨）"
+**AI Response**: "計画にビルド検証チェックポイントを3箇所（Step 1.12: プロジェクト構造セットアップ後のbackend単体ビルド・frontendビルド、Step 6.5: 全コンポーネント・テスト完了後のnpm test/build、Step 9.3: モック画面完了後のnpm test/build）追加。さらに新規セクション12（最終ビルド検証）を追加し、Step 12.1でルートからの統合ビルド（bootWar含む）、Step 12.2でOWASP Dependency-Check・npm auditの実行を検証項目として明記。Part 2の実行はセクション単位で区切り、進捗報告・コミットを行う方針とする。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1、決定確定
+
+---

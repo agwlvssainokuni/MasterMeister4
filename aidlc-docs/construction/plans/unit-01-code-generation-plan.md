@@ -19,6 +19,33 @@
 
 - **フロントエンドルーティング**: React Router（`react-router-dom`）を採用する。SPAのルーティングとして標準的な選択肢であり、`/mock/*`のdevビルド限定ルート分離にも利用する
 
+## Icon一覧（ベースライン）
+
+Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンのベースライン。過不足があれば以降のステップ・後続ユニットで随時追加する。
+
+| アイコン名 | 用途 |
+|---|---|
+| `menu` | SideNavの開閉（ハンバーガーメニュー） |
+| `chevron-left` / `chevron-right` | Paginationのページ送り、SideNav階層の開閉 |
+| `chevron-down` / `chevron-up` | ドロップダウン・折りたたみの開閉表示 |
+| `close` | Modal・Toast・FilterBarのクリア操作 |
+| `sun` / `moon` | ThemeToggle（ライト/ダーク切替） |
+| `user` | HeaderControl（アカウント表示） |
+| `logout` | HeaderControl（ログアウト導線） |
+| `globe` | LanguageSwitcher（言語切替） |
+| `check` / `check-circle` | Alert(success)、管理者ダッシュボードの承認アクション |
+| `warning-triangle` | Alert(warning)、ConfirmDialog |
+| `x-circle` | Alert(danger)、管理者ダッシュボードの却下アクション |
+| `info` | Alert(info) |
+| `edit` | DataTable行アクション、マスタメンテナンス画面の編集 |
+| `delete` | DataTable行アクション、マスタメンテナンス画面の削除 |
+| `add` | マスタメンテナンス画面のレコード追加 |
+| `save` | 各種保存ボタンの補助アイコン |
+| `search` | FilterBarの検索 |
+| `copy` | CodeBlockのコピー操作 |
+| `wrap-text` | CodeBlockの折り返し切替 |
+| `sort` | DataTable列見出しのソート表示（表示のみ、実ソートロジックは後続ユニット） |
+
 ## 計画チェックリスト
 
 ### 1. Project Structure Setup（Greenfield）
@@ -34,6 +61,7 @@
 - [ ] Step 1.9: `backend`の`bootWar`タスクが`frontend`の`npmBuild`成果物（`frontend/dist`）をbackendの静的リソースへコピーする処理に依存する構成にする（`backend:build`単体には影響しないことを確認）
 - [ ] Step 1.10: `devenv/docker-compose.yml`を作成する（MailPit, MySQL/MariaDB/PostgreSQLコンテナ）
 - [ ] Step 1.11: 全ソースファイルにApache License 2.0ヘッダーコメントを付与する方針を適用する（以降の全生成ステップで継続）
+- [ ] Step 1.12: **検証チェックポイント**: `./gradlew :backend:build`（backend単体ビルド）、`npm install` / `npm run build`（frontend）が通ることを確認する
 
 ### 2. Frontend Components Generation - デザイントークン・プロバイダ
 
@@ -49,7 +77,7 @@
 - [ ] Step 3.2: `TextInput`を作成する
 - [ ] Step 3.3: `Choice`（`Checkbox` / `RadioGroup` / `Switch`）を作成する
 - [ ] Step 3.4: `FormField`を作成する（`cloneElement`方式でid/aria属性を子要素へ注入）
-- [ ] Step 3.5: `Icon`（自作SVGアイコンセット）を作成する
+- [ ] Step 3.5: `Icon`（自作SVGアイコンセット）を作成する。「Icon一覧（ベースライン）」の20種を実装する
 
 ### 4. Frontend Components Generation - グランドデザイン
 
@@ -82,6 +110,7 @@
 - [ ] Step 6.2: 基本部品・フォーム（Button, TextInput, Choice, FormField, Icon）のユニットテストを作成する
 - [ ] Step 6.3: グランドデザイン（PublicLayout, AppShell, Header, SideNav, Footer, HeaderControl, LanguageSwitcher, ThemeToggle）のユニットテストを作成する
 - [ ] Step 6.4: 表示・フィードバックコンポーネント（Card, AuthCard, PageHeader, DataTable, Pagination, EmptyState, Alert, Badge, Spinner, Overlay, Modal, ConfirmDialog, FilterBar, Tabs, Toast, CodeBlock, KeyValueList）のユニットテストを作成する
+- [ ] Step 6.5: **検証チェックポイント**: `npm test`（全コンポーネントのユニットテスト）、`npm run build`が通ることを確認する
 
 ### 7. Frontend Components Summary
 
@@ -101,6 +130,7 @@
 
 - [ ] Step 9.1: 5つの代表画面モック（login/register/dashboard/master-data/permissions）の画面状態（通常/空/エラー）が正しく切り替わることを検証するテストを作成する
 - [ ] Step 9.2: `/mock/*`ルートが本番ビルドのバンドルに含まれないこと（コード分割）を検証する
+- [ ] Step 9.3: **検証チェックポイント**: `npm test`、`npm run build`が通ることを確認する
 
 ### 10. Documentation Generation
 
@@ -110,6 +140,11 @@
 ### 11. Deployment Artifacts
 
 - [ ] Step 11.1: N/A — Infrastructure DesignはSKIP。本番デプロイ関連の成果物は生成しない（devenv/docker-compose.ymlはStep 1.10で対応済み、ローカル開発環境用）
+
+### 12. 最終ビルド検証
+
+- [ ] Step 12.1: **検証チェックポイント**: `./gradlew build`（ルートから、backend・frontend両サブプロジェクトの`bootWar`統合を含む全体ビルド）が通ることを確認する
+- [ ] Step 12.2: OWASP Dependency-Check（`./gradlew :backend:dependencyCheckAnalyze`）、`npm audit`をそれぞれ実行し、重大な既知脆弱性がないことを確認する
 
 ## Story Traceability
 
