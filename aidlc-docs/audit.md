@@ -775,3 +775,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design、AuditLogEntry記録内容の一元化
 
 ---
+
+## UNIT-02 Functional Design - 承認、NFR Requirementsへ
+**Timestamp**: 2026-07-20T21:10:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "Functional Designを承認として記録。unit-02-functional-design-plan.mdのStep Dを完了に更新。aidlc-state.mdを更新（UNIT-02 Functional Design完了、NFR Requirements着手）。NFR Requirementsに着手。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design 完了、NFR Requirements開始
+
+---

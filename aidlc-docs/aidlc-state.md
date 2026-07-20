@@ -50,13 +50,13 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - Functional Design（成果物作成完了、承認待ち）
-- **Next Stage**: ユーザーの承認後、NFR Requirementsへ
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - NFR Requirements（着手）
+- **Next Stage**: NFR Requirements計画の作成・提示
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
-- [ ] Functional Design — EXECUTE、IN PROGRESS
-- [ ] NFR Requirements — EXECUTE
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T21:10:00Z。business-logic-model.md, business-rules.md, domain-entities.md, frontend-components.mdを作成。レビューで複数回の修正を反映: DISABLED運用フロー、email一意制約、REJECTED再登録方針、管理者ダッシュボード/ユーザ管理画面の統合とトップ画面新設、無効化時のトークン失効、AuditLogEntry記録内容の一元化）
+- [ ] NFR Requirements — EXECUTE、IN PROGRESS
 - [ ] NFR Design — EXECUTE
 - [ ] Infrastructure Design — SKIP（メール送信・JWT鍵管理は設定レベルで対応可能）
 - [ ] Code Generation

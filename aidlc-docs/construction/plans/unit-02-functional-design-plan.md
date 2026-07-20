@@ -12,7 +12,7 @@
 - [x] Step A: 質問への回答を収集する（Q1=B, Q2=A(トークン発行ロジックはrefresh tokenと共用), Q3=A, Q4=A(閾値・ロック時間は設定可能), Q5=A, Q6=A(REQUIRES_NEW明示), Q7=C(UI選択言語→登録後は保存済み言語設定), Q8=A, Q9=A(氏名・言語設定を追加), Q10=A, Q11=A）
 - [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— Q2/Q7の解釈をStep Aの回答欄に明記。いずれも一意に解釈可能であり追加質問は不要と判断
 - [x] Step C: 成果物を作成する（business-logic-model.md, business-rules.md, domain-entities.md, frontend-components.md）
-- [ ] Step D: 完了メッセージを提示し、承認を得る
+- [x] Step D: 完了メッセージを提示し、承認を得る（承認 2026-07-20T21:10:00Z）
 
 ## 追加事項（質問一覧外）
 
