@@ -767,3 +767,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design、レビュー指摘の反映
 
 ---
+
+## UNIT-02 Functional Design - AuditLogEntryのtargetResource/detail意味論の一元化
+**Timestamp**: 2026-07-20T21:07:00Z
+**User Input**: "AuditLogEntryのtargetResourceとdetailは、eventTypeに応じて様式が変わると理解しています。どのように読解すれば良いか、最終的にはどこか一箇所にまとめて欲しいです。"
+**AI Response**: "domain-entities.mdのAuditLogEntry定義直後に新規§5.1（イベント種別ごとの記録内容）を追加し、9種のeventType（LOGIN/LOGOUT/LOGIN_FAILURE/REGISTRATION_REQUESTED/REGISTRATION_COMPLETED/USER_APPROVED/USER_REJECTED/USER_DISABLED/USER_ENABLED）ごとにuserId・targetResource・detailの意味を表形式で一元化。基本方針として『userIdは操作主体（自己操作は本人、管理操作は管理者）、targetResourceは操作対象を人間可読な形（本ユニットでは一貫してメールアドレス）で表す、detailは本ユニットでは未使用』と整理。従来userIdフィールドの説明文に『ログイン失敗時の試行メールアドレスはdetailに記録』とあったが、targetResourceの一般説明（対象ユーザのメールアドレス）と矛盾していたため、targetResourceに記録する扱いに統一。business-rules.md BR-AUDIT-03は、この一元化した参照先（domain-entities.md §5.1）を指すのみとし、重複説明を排除。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、AuditLogEntry記録内容の一元化
+
+---
