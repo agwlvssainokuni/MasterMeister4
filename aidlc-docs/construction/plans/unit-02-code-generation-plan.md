@@ -33,28 +33,28 @@
 
 ### 2. Database Migration Scripts
 
-- [ ] Step 2.1: `backend/src/main/resources/db/migration/V1__create_user_table.sql`を作成する（domain-entities.md §1 User、`email`一意制約は全ステータス共通、BR-REG-06）
-- [ ] Step 2.2: `V2__create_registration_token_table.sql`を作成する（domain-entities.md §2）
-- [ ] Step 2.3: `V3__create_refresh_token_table.sql`を作成する（domain-entities.md §3、`revokedReason`に`ADMIN_DISABLED`を含む）
-- [ ] Step 2.4: `V4__create_login_attempt_state_table.sql`を作成する（domain-entities.md §4）
-- [ ] Step 2.5: `V5__create_registration_rate_state_table.sql`を作成する（domain-entities.md §5、BR-REG-07）
-- [ ] Step 2.6: `V6__create_audit_log_entry_table.sql`を作成する（domain-entities.md §6、`eventType`は本ユニットで追加する9種を含むが、他ユニットの追加を見越して文字列型で保持する）
-- [ ] Step 2.7: **検証チェックポイント**: Flywayマイグレーションが起動時に正常適用されることを、後続のRepository層テスト（Section 4）実行時に確認する
+- [x] Step 2.1: `backend/src/main/resources/db/migration/V1__create_user_table.sql`を作成する（domain-entities.md §1 User、`email`一意制約は全ステータス共通、BR-REG-06）
+- [x] Step 2.2: `V2__create_registration_token_table.sql`を作成する（domain-entities.md §2）
+- [x] Step 2.3: `V3__create_refresh_token_table.sql`を作成する（domain-entities.md §3、`revokedReason`に`ADMIN_DISABLED`を含む）
+- [x] Step 2.4: `V4__create_login_attempt_state_table.sql`を作成する（domain-entities.md §4）
+- [x] Step 2.5: `V5__create_registration_rate_state_table.sql`を作成する（domain-entities.md §5、BR-REG-07）
+- [x] Step 2.6: `V6__create_audit_log_entry_table.sql`を作成する（domain-entities.md §6、`eventType`は本ユニットで追加する9種を含むが、他ユニットの追加を見越して文字列型で保持する）
+- [x] Step 2.7: **検証チェックポイント**: Flywayマイグレーションが起動時に正常適用されることを、後続のRepository層テスト（Section 4）実行時に確認した
 
 ### 3. Repository Layer Generation
 
-- [ ] Step 3.1: JPAエンティティを作成する: `User`, `RegistrationToken`, `RefreshToken`, `LoginAttemptState`, `RegistrationRateState`, `AuditLogEntry`（domain-entities.md §1〜6の属性・不変条件をエンティティ制約として反映。`UserStatus`, `Role`, `Language`, `RevokeReason`, `AuditEventType`, `ResultStatus`はenumとして作成）
-- [ ] Step 3.2: Spring Data JPAリポジトリを作成する: `UserRepository`, `RegistrationTokenRepository`, `RefreshTokenRepository`, `LoginAttemptStateRepository`, `RegistrationRateStateRepository`, `AuditLogEntryRepository`（`cherry.mastermeister.registration.repository`, `cherry.mastermeister.auth.repository`, `cherry.mastermeister.audit.repository`）
-- [ ] Step 3.3: `AuditEvent`（永続化しないDTO、domain-entities.md §7）を作成する
+- [x] Step 3.1: JPAエンティティを作成する: `User`, `RegistrationToken`, `RefreshToken`, `LoginAttemptState`, `RegistrationRateState`, `AuditLogEntry`（domain-entities.md §1〜6の属性・不変条件をエンティティ制約として反映。`UserStatus`, `Role`, `Language`, `RevokeReason`, `AuditEventType`, `ResultStatus`はenumとして作成）
+- [x] Step 3.2: Spring Data JPAリポジトリを作成する: `UserRepository`, `RegistrationTokenRepository`, `RefreshTokenRepository`, `LoginAttemptStateRepository`, `RegistrationRateStateRepository`, `AuditLogEntryRepository`（`cherry.mastermeister.registration.repository`, `cherry.mastermeister.auth.repository`, `cherry.mastermeister.audit.repository`）
+- [x] Step 3.3: `AuditEvent`（永続化しないDTO、domain-entities.md §7）を作成する
 
 ### 4. Repository Layer Unit Testing
 
-- [ ] Step 4.1: `@DataJpaTest`で各リポジトリの基本CRUD・制約（`User.email`一意制約、`RegistrationToken`の有効期限判定用クエリ等）を検証するテストを作成する
-- [ ] Step 4.2: Flywayマイグレーションが`@DataJpaTest`実行時に正常適用されることを確認する
+- [x] Step 4.1: `@DataJpaTest`で各リポジトリの基本CRUD・制約（`User.email`一意制約、`RegistrationToken`の有効期限判定用クエリ等）を検証するテストを作成する
+- [x] Step 4.2: Flywayマイグレーションが`@DataJpaTest`実行時に正常適用されることを確認する（`refresh_token.user_id`にapp_userへのFK制約を追加していたため、テストが実在しないuserIdを使っていて失敗していた点を修正し、全16テスト成功を確認）
 
 ### 5. Repository Layer Summary
 
-- [ ] Step 5.1: `aidlc-docs/construction/unit-02/code/repository-layer-summary.md`を作成する（作成したエンティティ・リポジトリ・マイグレーション一覧、テスト結果）
+- [x] Step 5.1: `aidlc-docs/construction/unit-02/code/repository-layer-summary.md`を作成する（作成したエンティティ・リポジトリ・マイグレーション一覧、テスト結果）
 
 ### 6. Business Logic Generation
 

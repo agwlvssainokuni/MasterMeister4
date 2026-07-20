@@ -36,6 +36,8 @@ dependencies {
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat-runtime")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("net.jqwik:jqwik:1.9.1")
