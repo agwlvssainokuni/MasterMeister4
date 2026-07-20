@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation Part 1（計画提示、承認待ち）
-- **Next Stage**: 承認後、Code Generation Part 2（実装）へ
+- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation Part 2（セクション1: Project Structure Setup 実行中）
+- **Next Stage**: セクション1完了後、検証チェックポイント（Step 1.12）を実行し、セクション2へ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-01)
