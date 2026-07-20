@@ -11,7 +11,7 @@ business-rules.mdで定義したルールに対応するドメインエンティ
 | 属性 | 型 | 説明 |
 |---|---|---|
 | `id` | UserId | 一意識別子 |
-| `email` | String | メールアドレス。`REJECTED`以外のステータスのレコードに対して一意（BR-REG-06）。同一メールアドレスで`REJECTED`のレコードが存在していても新規登録は可能 |
+| `email` | String | メールアドレス（全ステータスを通じて一意、BR-REG-06訂正版）。`REJECTED`・`DISABLED`いずれのステータスでも、同一メールアドレスでの新規登録（Step1やり直し）は許可しない |
 | `passwordHash` | String | 適応型ハッシュアルゴリズムでハッシュ化されたパスワード（BR-PWD-03） |
 | `fullName` | String | 氏名（BR-REG-05、Step2で収集） |
 | `preferredLanguage` | Language | 言語設定（`ja`/`en`、BR-REG-05、Step2で収集） |

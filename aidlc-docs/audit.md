@@ -727,3 +727,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design、レビュー指摘の反映
 
 ---
+
+## UNIT-02 Functional Design - REJECTED再登録方針の訂正
+**Timestamp**: 2026-07-20T20:29:00Z
+**User Input**: "訂正です。REJECTEDの人が再登録できるのは避けたい。それをするなら、REJECTEDにした人はAPPROVEDできるようにする方が良いように思う。どうだろうか？"
+**AI Response**: "提案を採用し、REJECTED→APPROVEDの遷移（却下の取り消し）を新設。REJECTEDでの同一メールアドレスでの新規登録は不可とし、email一意制約を全ステータス共通に単純化（BR-REG-06訂正版、REJECTED例外を撤回）。却下取り消しは初回承認と同一の`POST /api/admin/users/{id}/approve`エンドポイント・`USER_APPROVED`イベントを再利用する設計とし（新規エンドポイント・イベント種別は追加しない）、business-logic-model.mdに§2.1「却下の取り消し」を追加。frontend-components.md §5（ユーザ管理画面）のREJECTED行アクションを「アクションなし」から「承認ボタン」に変更。business-rules.md（BR-REG-01, BR-REG-06）、domain-entities.md（User.email説明）を整合させて更新。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、ユーザステータス遷移の訂正
+
+---

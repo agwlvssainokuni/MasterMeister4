@@ -10,7 +10,7 @@
 
 ### 1.1 Step 1: メールアドレス送信（登録開始）
 1. ユーザが登録画面でメールアドレスと、その時点で画面上選択している言語（UI言語）を送信する（`POST /api/registrations`）
-2. UserRegistrationServiceは、同一メールアドレスが`PENDING`／`APPROVED`／`DISABLED`のいずれかで既に存在するかを確認する（BR-REG-06。`REJECTED`は対象外とし、新規登録として扱う）
+2. UserRegistrationServiceは、同一メールアドレスがいずれかのステータス（`PENDING`／`APPROVED`／`REJECTED`／`DISABLED`）で既に存在するかを確認する（BR-REG-06訂正版。ステータスによる例外は設けない）
    - 存在有無に関わらず、APIレスポンスは常に同一の内容を返す（BR-REG-04、メールアドレス列挙攻撃対策）
 3. 新規メールアドレスの場合のみ、登録用トークンを新規発行する（COMP-01内部でRegistrationTokenの生成・保存を行う。トークン生成・ハッシュ化ロジックはRefreshTokenServiceと共用のユーティリティを用いる。BR-REG-02）
 4. EmailNotificationServiceへ登録確認メール送信を依頼する。この時点ではUserレコードが未作成のため、メール生成言語にはリクエスト時点でユーザが画面上選択していた言語をそのまま用いる（BR-MAIL-01）
@@ -31,9 +31,14 @@
 1. 管理者ダッシュボードが、`PENDING`ステータスのユーザ一覧を取得する（`GET /api/admin/users?status=PENDING`）
 2. 管理者が個別ユーザに対し承認または却下を選択する
 3. **承認時**（`POST /api/admin/users/{id}/approve`）: UserステータスをPENDING→APPROVEDに遷移させる。ログイン可能となる
-4. **却下時**（`POST /api/admin/users/{id}/reject`）: UserステータスをPENDING→REJECTEDに遷移させる。却下後、同一メールアドレスでの再登録は新規登録（Step1からやり直し）として扱う（BR-REG-01, BR-REG-06）
+4. **却下時**（`POST /api/admin/users/{id}/reject`）: UserステータスをPENDING→REJECTEDに遷移させる。同一メールアドレスでの新規登録（再登録）は許可しない（BR-REG-06訂正版）
 5. いずれの場合も、EmailNotificationServiceへ承認結果通知メール送信を依頼する。この時点ではUserレコードが存在するため、Userの`preferredLanguage`（登録時に保存済み）を用いて言語を決定する（BR-MAIL-01）
 6. AuditEventPublisher経由で「管理者によるアカウント承認／却下」イベントを発行する
+
+### 2.1 却下の取り消し（訂正版、BR-REG-01）
+1. 「ユーザ管理」画面（frontend-components.md §5参照）で、管理者が`REJECTED`ステータスのユーザに対し承認を選択する
+2. 上記3.と同一の`POST /api/admin/users/{id}/approve`エンドポイントを呼び出す（遷移元がPENDINGかREJECTEDかで処理を分けない）。UserステータスをREJECTED→APPROVEDに遷移させる
+3. 上記5.・6.と同様、承認結果通知メールを送信し、`USER_APPROVED`イベントを発行する（却下の取り消しを示す区別は行わない。承認という行為として一貫させる）
 
 ---
 

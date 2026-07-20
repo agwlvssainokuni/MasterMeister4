@@ -111,7 +111,7 @@ AdminDashboardPage (AppShell)
 
 ## 5. ユーザ管理画面（全ステータスのユーザ一覧、`/users`、`AppShell`）
 
-UNIT-01のナビゲーション項目「ユーザ管理」（`/mock/dashboard`とは別画面として仮決め済み）に対応する、承認待ちに限らない全ステータスのユーザを対象とした管理画面。管理者によるアカウント無効化・再有効化（business-logic-model.md §3、BR-REG-01）をここで行う。
+UNIT-01のナビゲーション項目「ユーザ管理」（`/mock/dashboard`とは別画面として仮決め済み）に対応する、承認待ちに限らない全ステータスのユーザを対象とした管理画面。管理者によるアカウント無効化・再有効化（business-logic-model.md §3、BR-REG-01）と、却下の取り消し（business-logic-model.md §2.1、訂正版）をここで行う。
 
 ### コンポーネント構造
 ```
@@ -120,22 +120,24 @@ UserManagementPage (AppShell)
   ├ FilterBar（ステータス絞り込み: 全件/PENDING/APPROVED/REJECTED/DISABLED）
   ├ DataTable（列: 氏名, メールアドレス, ステータス（Badge表示）, 登録日時, アクション）
   │  └ 行ごとに、ステータスに応じたアクションボタンを出し分け
+  │     - PENDING → アクションなし（承認/却下は§4のダッシュボードで行う）
   │     - APPROVED → Button（「無効化」）
+  │     - REJECTED → Button（「承認」、却下の取り消し）
   │     - DISABLED → Button（「再有効化」）
-  │     - PENDING/REJECTED → アクションなし（承認/却下は§4のダッシュボードで行う）
-  ├ ConfirmDialog（無効化／再有効化の確認。誤操作防止）
+  ├ ConfirmDialog（無効化／再有効化／承認の確認。誤操作防止）
   ├ EmptyState（対象ユーザが0件の場合）
-  └ Alert（tone=danger、一覧取得・無効化・再有効化失敗時）
+  └ Alert（tone=danger、一覧取得・各操作失敗時）
 ```
 
 ### State
 - `users: UserSummary[]`, `statusFilter: UserStatus | 'ALL'`, `loading: boolean`, `errorMessage: string | null`
-- `confirmTarget: { userId: string, action: 'disable' | 'enable' } | null`（ConfirmDialog表示制御）
+- `confirmTarget: { userId: string, action: 'disable' | 'enable' | 'approve' } | null`（ConfirmDialog表示制御）
 
 ### API連携
 - `GET /api/admin/users?status={statusFilter}` → 一覧取得（`status`省略時は全件）
 - `POST /api/admin/users/{id}/disable` → `APPROVED`ユーザに対してのみ実行可能。確認ダイアログでの最終確認後に実行
 - `POST /api/admin/users/{id}/enable` → `DISABLED`ユーザに対してのみ実行可能。同上
+- `POST /api/admin/users/{id}/approve` → `REJECTED`ユーザに対してのみ実行可能（§4ダッシュボードの承認ボタンと同一エンドポイント）。同上
 - 管理者ロール以外でのアクセス時は403エラーとなる想定（§4ダッシュボードと同様）
 
 ---
