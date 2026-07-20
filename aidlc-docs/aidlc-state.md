@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証（Per-Unit Loop開始）
-- **Next Stage**: UNIT-02のFunctional Design要否判定
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - Functional Design（計画作成中）
+- **Next Stage**: UNIT-02のFunctional Design計画提示
 - **Status**: 実施中
 
 ## Current Unit Progress
@@ -59,6 +59,13 @@
 
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認済み 2026-07-20T14:17:00Z）
 - [ ] UNIT-02 ユーザ登録・認証 — IN PROGRESS
+
+### UNIT-02 ユーザ登録・認証 - 内訳
+- [ ] Functional Design — EXECUTE（計画作成中）
+- [ ] NFR Requirements — EXECUTE予定
+- [ ] NFR Design — EXECUTE予定
+- [ ] Infrastructure Design — 要確認
+- [ ] Code Generation — 未着手
 - [ ] UNIT-03 RDBMSセットアップ
 - [ ] UNIT-04 アクセス制御
 - [ ] UNIT-05 マスタメンテナンス

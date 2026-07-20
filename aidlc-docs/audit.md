@@ -415,3 +415,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation (Step 16, approval) / UNIT-01 complete, transition to UNIT-02
 
 ---
+
+## UNIT-02 - Per-Unit Stage Judgment Proposed and Approved
+**Timestamp**: 2026-07-20T14:19:00Z
+**User Input**: "進めてください。"
+**AI Response**: "Presented independent per-unit judgment for UNIT-02 (ユーザ登録・認証): Functional Design=EXECUTE（新規データモデル・複雑な業務ロジック: 2段階登録, JWTローテーション・再利用検知, ログイン試行制限, 管理者ブートストラップ）, NFR Requirements=EXECUTE（SECURITY-12等に直結する技術選定）, NFR Design=EXECUTE予定, Infrastructure Design=要確認（メール送信/devenv絡み）。User approved. Proceeding to Functional Design."
+**Context**: CONSTRUCTION - UNIT-02 Per-Unit Loop (stage judgment)
+
+---
