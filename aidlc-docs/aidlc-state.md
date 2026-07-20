@@ -54,14 +54,16 @@
 - **Next Stage**: UNIT-01のNFR Requirements質問への回答収集
 - **Status**: 実施中
 
-## UNIT-01 デザインシステム基盤 - ステージ判定
-- [x] Functional Design — SKIP（承認済み 2026-07-20T12:10:00Z、新規データモデル・複雑な業務ロジックなし）
-- [ ] NFR Requirements — EXECUTE（承認済み、計画作成中）
-- [ ] NFR Design — EXECUTE予定（NFR Requirements結果次第）
-- [ ] Infrastructure Design — SKIP（承認済み 2026-07-20T12:10:00Z、新規インフラ要素なし）
+## Current Unit Progress
+**注記**: 「現在進行中ユニットの内訳」のみをここに保持する（判定理由はaudit.md参照）。当該ユニットのCode Generationが完了したら、この内訳セクションは削除し、下記一覧の該当行を `COMPLETED` に更新する。
+
+### UNIT-01 デザインシステム基盤 - 内訳
+- [x] Functional Design — SKIP
+- [ ] NFR Requirements — EXECUTE（計画作成中）
+- [ ] NFR Design — EXECUTE予定
+- [ ] Infrastructure Design — SKIP
 - [ ] Code Generation — 未着手
 
-## Current Unit Progress
 - [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS
 - [ ] UNIT-02 ユーザ登録・認証
 - [ ] UNIT-03 RDBMSセットアップ

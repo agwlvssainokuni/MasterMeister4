@@ -271,3 +271,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Requirements (Steps 1-4)
 
 ---
+
+## aidlc-state.md - Structure Correction
+**Timestamp**: 2026-07-20T12:14:00Z
+**User Input**: "その前に。aidlc-state.mdにUNIT-01の内訳を書くのは適正？" → "推奨で。"
+**AI Response**: "CLAUDE.mdのTwo-Level Checkbox Tracking System（Plan-Level=各ステージplanファイル, Stage-Level=aidlc-state.md）に照らし、直前に追加した「UNIT-01ステージ判定」セクションの判定理由（rationale）はaudit.mdと重複するため削除。ステータスのみを残す形に修正し、セクション名を「Current Unit Progress」配下の「UNIT-01 内訳」に統合。ユニット完了時にはこの内訳セクションを削除し、一覧の該当行をCOMPLETEDに畳み込む運用とする注記を追加。"
+**Context**: CONSTRUCTION - aidlc-state.md structure fix (state-tracker scope correction)
+
+---
