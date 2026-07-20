@@ -1,2 +1,15 @@
 # 参考資材（デザインシステム・モック画面の参考実装）。誤コミット防止のため除外
 /reference/
+
+# Gradle
+.gradle/
+/build/
+backend/build/
+frontend/build/
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store

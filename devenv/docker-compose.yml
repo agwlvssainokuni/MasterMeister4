@@ -1,0 +1,30 @@
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025" # Web UI
+      - "1025:1025" # SMTP
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: mastermeister
+      MYSQL_DATABASE: mastermeister
+    ports:
+      - "3306:3306"
+
+  mariadb:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: mastermeister
+      MARIADB_DATABASE: mastermeister
+    ports:
+      - "3307:3306"
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: mastermeister
+      POSTGRES_DB: mastermeister
+    ports:
+      - "5432:5432"

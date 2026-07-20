@@ -50,18 +50,18 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 
 ### 1. Project Structure Setup（Greenfield）
 
-- [ ] Step 1.1: ルートに`settings.gradle.kts`を作成し、`backend`・`frontend`をサブプロジェクトとして定義する
-- [ ] Step 1.2: `backend/build.gradle.kts`を作成する（Spring Boot 4.1, Java 25, `war`パッケージング, OWASP Dependency-Check Gradleプラグイン, 最小限の依存関係）
-- [ ] Step 1.3: `backend/src/main/java/cherry/mastermeister/MasterMeisterApplication.java`を作成する（`SpringBootServletInitializer`継承、`java -jar app.war`実行と外部Tomcat WARデプロイの両対応）
-- [ ] Step 1.4: backend i18n基盤を作成する（`MessageSource`設定クラス、`messages_ja.properties`/`messages_en.properties`の空の雛形）
-- [ ] Step 1.5: `backend/src/main/resources/application.yml`を作成する（最小設定、環境変数プレースホルダー）
-- [ ] Step 1.6: `frontend/`をVite + React 19 + TypeScriptでスキャフォールドする（`package.json`, `tsconfig.json`, `vite.config.ts`等）
-- [ ] Step 1.7: `frontend`にoxlint + Prettier（セミコロンなし、シングルクォート）を設定する
-- [ ] Step 1.8: `frontend/build.gradle.kts`にGradle Node Plugin（`com.github.node-gradle.node`）を設定し、`npmInstall`/`npmBuild`タスクを定義する
-- [ ] Step 1.9: `backend`の`bootWar`タスクが`frontend`の`npmBuild`成果物（`frontend/dist`）をbackendの静的リソースへコピーする処理に依存する構成にする（`backend:build`単体には影響しないことを確認）
-- [ ] Step 1.10: `devenv/docker-compose.yml`を作成する（MailPit, MySQL/MariaDB/PostgreSQLコンテナ）
-- [ ] Step 1.11: 全ソースファイルにApache License 2.0ヘッダーコメントを付与する方針を適用する（以降の全生成ステップで継続）
-- [ ] Step 1.12: **検証チェックポイント**: `./gradlew :backend:build`（backend単体ビルド）、`npm install` / `npm run build`（frontend）が通ることを確認する
+- [x] Step 1.1: ルートに`settings.gradle.kts`を作成し、`backend`・`frontend`をサブプロジェクトとして定義する
+- [x] Step 1.2: `backend/build.gradle.kts`を作成する（Spring Boot 4.1, Java 25, `war`パッケージング, OWASP Dependency-Check Gradleプラグイン, 最小限の依存関係）
+- [x] Step 1.3: `backend/src/main/java/cherry/mastermeister/MasterMeisterApplication.java`を作成する（`SpringBootServletInitializer`継承、`java -jar app.war`実行と外部Tomcat WARデプロイの両対応）
+- [x] Step 1.4: backend i18n基盤を作成する（`MessageSource`設定クラス、`messages_ja.properties`/`messages_en.properties`の空の雛形）
+- [x] Step 1.5: `backend/src/main/resources/application.yml`を作成する（最小設定、環境変数プレースホルダー）
+- [x] Step 1.6: `frontend/`をVite + React 19 + TypeScriptでスキャフォールドする（`package.json`, `tsconfig.json`, `vite.config.ts`等）
+- [x] Step 1.7: `frontend`にoxlint + Prettier（セミコロンなし、シングルクォート）を設定する
+- [x] Step 1.8: `frontend/build.gradle.kts`にGradle Node Plugin（`com.github.node-gradle.node`）を設定し、`npmInstall`/`npmBuild`タスクを定義する
+- [x] Step 1.9: `backend`の`bootWar`タスクが`frontend`の`npmBuild`成果物（`frontend/dist`）をbackendの静的リソースへコピーする処理に依存する構成にする（`backend:build`単体には影響しないことを確認） — `providedRuntime`は`spring-boot-starter-tomcat-runtime`を使用（`spring-boot-starter-tomcat`だと`spring-web`まで除外される問題があったため）
+- [x] Step 1.10: `devenv/docker-compose.yml`を作成する（MailPit, MySQL/MariaDB/PostgreSQLコンテナ）
+- [x] Step 1.11: 全ソースファイルにApache License 2.0ヘッダーコメントを付与する方針を適用する（以降の全生成ステップで継続）
+- [x] Step 1.12: **検証チェックポイント**: `./gradlew :backend:build`（backend単体ビルド、frontendを巻き込まないことを確認）、`npm run build`（frontend）、`./gradlew :backend:bootWar`（統合WAR、`java -jar`起動・HTTP 200・静的配信を実機確認）がすべて通ることを確認した
 
 ### 2. Frontend Components Generation - デザイントークン・プロバイダ
 

@@ -591,3 +591,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 1 完了、Part 2開始
 
 ---
+
+## UNIT-01 Code Generation Part 2 - セクション1完了（Project Structure Setup）
+**Timestamp**: 2026-07-20T17:55:00Z
+**User Input**: （実装中の複数の技術的訂正）"providedRuntime("org.springframework.boot:spring-boot-starter-tomcat") を指定すると、spring-web がランタイムパスから除外されて実行時エラーになります。代替のライブラリをprovidedRuntimeする必要があるはず。(末尾-runtimeだったと思う)" → "org.springframework.boot:spring-boot-tomcat-runtime だったと思います" → "org.springframework.boot:spring-boot-starter-tomcat-runtime はどうでしょうか？" → "WARファイル名は mastermeister-バージョン.war でお願い。" → "basenameかなんかだけでいけるのでは？" → "archiveBaseNameですね。"
+**AI Response**: "settings.gradle.kts、backend（MasterMeisterApplication、MessageSourceConfig、messages_ja/en.properties、application.yml、build.gradle.kts）、frontend（Vite+React+TS、oxlint+Prettier、Vitest+RTLセットアップ、@fontsource、react-router-dom、react-i18next導入）、frontend/build.gradle.kts（Gradle Node Plugin）、devenv/docker-compose.ymlを作成。bootWar統合で`spring-boot-starter-tomcat`をprovidedRuntimeすると`spring-web`まで実行時クラスパスから除外される不具合が発生し、ユーザーの訂正により`spring-boot-starter-tomcat-runtime`へ変更して解決。WARファイル名もユーザー指摘により`archiveBaseName`方式（`mastermeister-0.0.1-SNAPSHOT.war`）に修正。`:backend:build`がfrontendを巻き込まないこと、`:backend:bootWar`が統合WARを生成し実際に`java -jar`起動・HTTP 200・静的アセット配信まで実機確認できることを検証。計画Step 1.1〜1.12を完了。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション1完了
+
+---

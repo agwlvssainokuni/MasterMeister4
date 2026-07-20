@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: mastermeister
+  web:
+    locale: ja
+    locale-resolver: accept_header
+
+server:
+  port: ${SERVER_PORT:8080}
