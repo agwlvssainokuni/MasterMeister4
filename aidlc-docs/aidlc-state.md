@@ -16,10 +16,12 @@
 - **Structure patterns**: See code-generation.md Critical Rules
 
 ## Extension Configuration
-- **Security Baseline**: Pending opt-in decision (to be asked during Requirements Analysis)
-- **Resiliency Baseline**: Pending opt-in decision (to be asked during Requirements Analysis)
-- **Property-Based Testing**: Pending opt-in decision (to be asked during Requirements Analysis)
+| Extension | Enabled | Decided At |
+|---|---|---|
+| Security Baseline | Yes | Requirements Analysis |
+| Resiliency Baseline | No | Requirements Analysis |
+| Property-Based Testing | Yes (Full enforcement) | Requirements Analysis |
 
 ## Stage Progress
 - [x] Workspace Detection — COMPLETED (2026-07-20T09:54:00Z)
-- [ ] Requirements Analysis — NEXT
+- [ ] Requirements Analysis — IN PROGRESS (clarification questions pending)
