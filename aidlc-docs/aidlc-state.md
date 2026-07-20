@@ -50,22 +50,15 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation Part 2（実装完了、承認待ち）
-- **Next Stage**: UNIT-01のCode Generation承認 → UNIT-02（ユーザ登録・認証）へ
+- **Current Stage**: UNIT-02 ユーザ登録・認証（Per-Unit Loop開始）
+- **Next Stage**: UNIT-02のFunctional Design要否判定
 - **Status**: 実施中
 
 ## Current Unit Progress
 **注記**: 「現在進行中ユニットの内訳」のみをここに保持する（判定理由はaudit.md参照）。当該ユニットのCode Generationが完了したら、この内訳セクションは削除し、下記一覧の該当行を `COMPLETED` に更新する。
 
-### UNIT-01 デザインシステム基盤 - 内訳
-- [x] Functional Design — SKIP
-- [x] NFR Requirements — COMPLETED（承認済み 2026-07-20T12:24:00Z）
-- [x] NFR Design — COMPLETED（承認済み 2026-07-20T12:36:00Z）
-- [x] Infrastructure Design — SKIP
-- [ ] Code Generation — EXECUTE（Part 1承認済み、Part 2実装完了・承認待ち）
-
-- [ ] UNIT-01 デザインシステム基盤 — IN PROGRESS
-- [ ] UNIT-02 ユーザ登録・認証
+- [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認済み 2026-07-20T14:17:00Z）
+- [ ] UNIT-02 ユーザ登録・認証 — IN PROGRESS
 - [ ] UNIT-03 RDBMSセットアップ
 - [ ] UNIT-04 アクセス制御
 - [ ] UNIT-05 マスタメンテナンス

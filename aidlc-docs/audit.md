@@ -407,3 +407,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation (Request Changes cycle, final confirmation)
 
 ---
+
+## UNIT-01 Code Generation - Approved, UNIT-01 Complete
+**Timestamp**: 2026-07-20T14:17:00Z
+**User Input**: "承認します。"
+**AI Response**: "UNIT-01（デザインシステム基盤）のCode Generationを承認。UNIT-01完了（Functional Design=SKIP, NFR Requirements=EXECUTE/承認済み, NFR Design=EXECUTE/承認済み, Infrastructure Design=SKIP, Code Generation=EXECUTE/承認済み、参考実装との突合による拡張を含む）。aidlc-state.mdを更新: UNIT-01をCurrent Unit ProgressでCOMPLETEDに畳み込み、Current StageをUNIT-02（ユーザ登録・認証）Per-Unit Loop開始に変更。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation (Step 16, approval) / UNIT-01 complete, transition to UNIT-02
+
+---
