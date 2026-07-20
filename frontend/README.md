@@ -47,7 +47,7 @@ npm run audit
 
 `src/design-system/`に共通UIコンポーネント（Button, TextField, Select, Checkbox, RadioButton, FormField, ErrorBoundary）、デザイントークン、i18n基盤を配置する。以降の全機能ユニットはこのディレクトリのコンポーネントをimportして画面を構築する。
 
-専用のコンポーネントカタログ（Storybook等）は導入していない。各コンポーネントの仕様はTypeScriptの型定義とテストコード（`*.test.tsx`）を参照すること。
+Storybook等の専用ツールは導入せず、代わりに`src/design-system/catalog/CatalogPage.tsx`が全コンポーネントの主要なバリエーションを一覧できる軽量な一覧ページを提供する（`npm run dev`後、`/catalog`にアクセス）。各コンポーネントの正式な仕様はTypeScriptの型定義とテストコード（`*.test.tsx`）を参照すること（カタログページは視覚的な一覧目的のみ）。
 
 ## フォントライセンス
 

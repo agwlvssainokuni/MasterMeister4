@@ -17,7 +17,9 @@
   - ブレークポイントはデスクトップ・タブレットの2段階（`nfr-requirements.md` NFR-UNIT01-6）
   - Vitest + React Testing Libraryでテスト、Storybook等の専用カタログなし（`nfr-requirements.md` NFR-UNIT01-4）
   - フォントはセルフホストのWebフォントを採用し、外部CDNには依存しない（SECURITY-13のN/A判定と整合）。本文用は「Noto Sans JP」（`@fontsource/noto-sans-jp`）、SQL/コード表示用の等幅フォントは「Noto Sans Mono」（`@fontsource/noto-sans-mono`）とし、Noto Sans Monoでカバーされない日本語文字はNoto Sans JPにフォールバックする（本Code Generation Planning中に追加確認。いずれもOFL-1.1ライセンスであることをnpmインストール後に確認済み）
-  - Lint/フォーマット: oxlint（Vite最新テンプレートの既定）+ Prettier（Part 2実装中にユーザ確認の上、当初計画のESLint+Prettierから変更）
+  - Lint/フォーマット: oxlint（Vite最新テンプレートの既定）+ Prettier（Part 2実装中にユーザ確認の上、当初計画のESLint+Prettierから変更）。Prettierは`semi: false`（セミコロンなし、Code Generation完了後のレビュー指摘で変更）
+  - 全ソースファイル（`.ts`/`.tsx`/`.css`）先頭にApache License 2.0のヘッダーコメントを付与（Code Generation完了後のレビュー指摘で追加）
+  - コンポーネントカタログ: Storybook等は導入せず、`src/design-system/catalog/CatalogPage.tsx`という軽量なアプリ内一覧ページ（`/catalog`）で対応（NFR-UNIT01-4の「専用カタログ不使用」方針は維持。Code Generation完了後のレビュー指摘で追加、ユーザに方式を確認済み）
 
 ## 実行ステップ
 

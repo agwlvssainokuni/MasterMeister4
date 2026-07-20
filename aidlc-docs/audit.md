@@ -367,3 +367,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2 Generation (Steps 10-13, loop over Steps 2-6)
 
 ---
+
+## UNIT-01 Code Generation - Request Changes (License Headers, No-Semicolon Style, Component Catalog)
+**Timestamp**: 2026-07-20T13:12:00Z
+**User Input**: "Request Changes: プログラムにライセンス表記コメントを追加、TypeScriptコードは末尾セミコロンなし、コンポーネントカタログのページも作って欲しい。"
+**AI Response**: "3件のRequest Changesを受領。カタログページの方式（NFR-UNIT01-4『専用カタログ不使用』との整合）についてAskUserQuestionで確認: A)アプリ内の軽量な一覧ページ（推奨） B)Storybook等の専用ツール導入。ユーザはAを選択。実施内容: (1) LICENSE（Apache-2.0）に基づき、frontend/src配下の全.ts/.tsx/.cssファイル（43件）にライセンスヘッダーコメントを追加するシェルスクリプトを実行。(2) .prettierrc.jsonのsemiをfalseに変更し`npx prettier --write`で全ファイルを再フォーマット（コード中のセミコロンは全て除去、ライセンスヘッダー文言中のセミコロンのみ残存することをgrepで確認）。(3) src/design-system/catalog/CatalogPage.tsx（+CSS Module, テスト）を新規作成し、全共通コンポーネントの主要バリエーションを一覧表示。ルーティングライブラリは未導入のためmain.tsxでwindow.location.pathname==='/catalog'による簡易分岐を追加（ライブラリ選定は将来のユニットに委ねる判断として明記）。frontend/README.mdとaidlc-docs/construction/unit-01/code/summary.mdを更新。検証: tsc --noEmit clean, vitest run 8ファイル/27テスト全パス, oxlint clean, prettier --check clean, npm run build成功。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation (Step 15, Request Changes cycle)
+
+---
