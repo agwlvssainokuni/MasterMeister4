@@ -175,3 +175,11 @@
 **Context**: INCEPTION - Application Design (Steps 2-7)
 
 ---
+
+## Application Design - Plan Questions Answered
+**Timestamp**: 2026-07-20T11:16:00Z
+**User Input**: "Q1=A, Q2=A, Q3=B(同期, 監査ログ記録は別トランザクション), Q4=A, Q5=A"
+**AI Response**: "Filled application-design-plan.md answers: Q1=A (epic-level ~10 services), Q2=A (Strategy/Adapter pattern for multi-RDBMS dialects), Q3=B customized (event-driven via Spring ApplicationEvent, but synchronous not async, and audit log write committed in a separate transaction from the business transaction — exact propagation mechanism deferred to NFR Design/Code Generation), Q4=A (standalone EffectivePermissionResolver component), Q5=A (defer frontend module detail to per-unit Code Generation). No unresolved ambiguity. Proceeding to generate design artifacts."
+**Context**: INCEPTION - Application Design (Steps 8-10)
+
+---
