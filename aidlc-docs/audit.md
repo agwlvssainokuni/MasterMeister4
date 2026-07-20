@@ -887,3 +887,11 @@
 **Context**: CONSTRUCTION - UNIT-02 NFR Design、レビュー指摘の反映
 
 ---
+
+## UNIT-02 - BR-REG-07のbusiness-logic-model.md未反映を修正
+**Timestamp**: 2026-07-20T22:05:00Z
+**User Input**: "確認しておいた方が良い事項はありますか？" → (business-logic-model.md §1.1にBR-REG-07のチェックが未反映である旨を指摘、反映可否を確認) → AskUserQuestionで「はい、反映してください（推奨）」を選択
+**AI Response**: "business-logic-model.md §1.1（Step1）のフローを7ステップに更新: 新規ステップ2でRegistrationRateGuardによるレート制限チェック（BR-REG-07、閾値到達時は後続処理をスキップしBR-REG-04と同様に同一レスポンスを返す）、ステップ3で`RegistrationRateState`のインクリメントを追加。既存の重複メールチェック・トークン発行・メール送信・監査イベント発行のステップ番号を4〜7に繰り下げ、レート制限時は監査イベントも発行しない旨を明記。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design（承認済み文書への追記）、レート制限フローの反映
+
+---

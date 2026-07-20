@@ -10,11 +10,14 @@
 
 ### 1.1 Step 1: メールアドレス送信（登録開始）
 1. ユーザが登録画面でメールアドレスと、その時点で画面上選択している言語（UI言語）を送信する（`POST /api/registrations`）
-2. UserRegistrationServiceは、同一メールアドレスがいずれかのステータス（`PENDING`／`APPROVED`／`REJECTED`／`DISABLED`）で既に存在するかを確認する（BR-REG-06訂正版。ステータスによる例外は設けない）
+2. RegistrationRateGuardが、当該メールアドレスの直近時間窓（デフォルト1時間）での送信回数を確認する（BR-REG-07）。閾値（デフォルト3回）に達している場合、後続のトークン発行・メール送信（4〜6）は行わない
+   - 閾値到達の有無に関わらず、APIレスポンスは常に同一の内容を返す（BR-REG-04と同様の理由。レート制限の状態を露見させない）
+3. 閾値内の場合、`RegistrationRateState`の送信回数をインクリメントする
+4. UserRegistrationServiceは、同一メールアドレスがいずれかのステータス（`PENDING`／`APPROVED`／`REJECTED`／`DISABLED`）で既に存在するかを確認する（BR-REG-06訂正版。ステータスによる例外は設けない）
    - 存在有無に関わらず、APIレスポンスは常に同一の内容を返す（BR-REG-04、メールアドレス列挙攻撃対策）
-3. 新規メールアドレスの場合のみ、登録用トークンを新規発行する（COMP-01内部でRegistrationTokenの生成・保存を行う。トークン生成・ハッシュ化ロジックはRefreshTokenServiceと共用のユーティリティを用いる。BR-REG-02）
-4. EmailNotificationServiceへ登録確認メール送信を依頼する。この時点ではUserレコードが未作成のため、メール生成言語にはリクエスト時点でユーザが画面上選択していた言語をそのまま用いる（BR-MAIL-01）
-5. AuditEventPublisher経由で「アカウント登録申請」イベントを発行する
+5. 新規メールアドレスの場合のみ、登録用トークンを新規発行する（COMP-01内部でRegistrationTokenの生成・保存を行う。トークン生成・ハッシュ化ロジックはRefreshTokenServiceと共用のユーティリティを用いる。BR-REG-02）
+6. EmailNotificationServiceへ登録確認メール送信を依頼する。この時点ではUserレコードが未作成のため、メール生成言語にはリクエスト時点でユーザが画面上選択していた言語をそのまま用いる（BR-MAIL-01）
+7. AuditEventPublisher経由で「アカウント登録申請」イベントを発行する（2でレート制限により後続処理をスキップした場合は発行しない）
 
 ### 1.2 Step 2: パスワード設定・登録完了
 1. ユーザがメール内リンク（トークン付きURL）からパスワード設定画面へ遷移し、パスワード・氏名・言語設定を入力して送信する（`POST /api/registrations/{token}/complete`）
