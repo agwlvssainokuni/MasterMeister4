@@ -109,7 +109,38 @@ AdminDashboardPage (AppShell)
 
 ---
 
-## 5. AppShell Headerのログアウト導線（実装）
+## 5. ユーザ管理画面（全ステータスのユーザ一覧、`/users`、`AppShell`）
+
+UNIT-01のナビゲーション項目「ユーザ管理」（`/mock/dashboard`とは別画面として仮決め済み）に対応する、承認待ちに限らない全ステータスのユーザを対象とした管理画面。管理者によるアカウント無効化・再有効化（business-logic-model.md §3、BR-REG-01）をここで行う。
+
+### コンポーネント構造
+```
+UserManagementPage (AppShell)
+└ PageHeader（タイトル「ユーザ管理」）
+  ├ FilterBar（ステータス絞り込み: 全件/PENDING/APPROVED/REJECTED/DISABLED）
+  ├ DataTable（列: 氏名, メールアドレス, ステータス（Badge表示）, 登録日時, アクション）
+  │  └ 行ごとに、ステータスに応じたアクションボタンを出し分け
+  │     - APPROVED → Button（「無効化」）
+  │     - DISABLED → Button（「再有効化」）
+  │     - PENDING/REJECTED → アクションなし（承認/却下は§4のダッシュボードで行う）
+  ├ ConfirmDialog（無効化／再有効化の確認。誤操作防止）
+  ├ EmptyState（対象ユーザが0件の場合）
+  └ Alert（tone=danger、一覧取得・無効化・再有効化失敗時）
+```
+
+### State
+- `users: UserSummary[]`, `statusFilter: UserStatus | 'ALL'`, `loading: boolean`, `errorMessage: string | null`
+- `confirmTarget: { userId: string, action: 'disable' | 'enable' } | null`（ConfirmDialog表示制御）
+
+### API連携
+- `GET /api/admin/users?status={statusFilter}` → 一覧取得（`status`省略時は全件）
+- `POST /api/admin/users/{id}/disable` → `APPROVED`ユーザに対してのみ実行可能。確認ダイアログでの最終確認後に実行
+- `POST /api/admin/users/{id}/enable` → `DISABLED`ユーザに対してのみ実行可能。同上
+- 管理者ロール以外でのアクセス時は403エラーとなる想定（§4ダッシュボードと同様）
+
+---
+
+## 6. AppShell Headerのログアウト導線（実装）
 
 UNIT-01では「プレースホルダー」だったAppShell Headerのログアウト導線を、本ユニットで実装する。
 
@@ -127,7 +158,7 @@ Header (AppShell内)
 
 ---
 
-## 6. 認証状態管理（画面横断）
+## 7. 認証状態管理（画面横断）
 
 - アクセストークン・リフレッシュトークンの保持方式、AppShell配下ルートの認証ガード（未ログイン時は`/login`へリダイレクト）等、フロントエンド全体に関わる実装方式（保存先: メモリ/localStorage等の選定含む）は、セキュリティ上重要な判断のためNFR Design段階で確定する
 - 本ドキュメントでは、各画面が「ログイン状態」を前提とするか（`AppShell`配下）／前提としないか（`PublicLayout`配下）の区分のみを定義する

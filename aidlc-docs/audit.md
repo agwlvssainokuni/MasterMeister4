@@ -719,3 +719,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design、Mustacheエンジン統合方針の確定
 
 ---
+
+## UNIT-02 Functional Design - レビュー指摘3点の反映
+**Timestamp**: 2026-07-20T20:22:00Z
+**User Input**: "確認しておいた方が良い事項はありますか？" → (3点の指摘と推奨を提示) → "OK"
+**AI Response**: "レビューで発見した3点の矛盾・抜けを推奨どおり反映。(1) DISABLED運用フロー未設計: business-logic-model.mdに新規§3（管理者によるアカウント無効化・再有効化、API `POST /api/admin/users/{id}/disable`/`enable`、無効化時は既存リフレッシュトークンも失効）を追加し、後続セクションを§4〜§9に繰り下げ。frontend-components.mdに新規§5（ユーザ管理画面、`/users`、全ステータス対象、ステータス別アクション出し分け）を追加し§5以降を§6〜§7に繰り下げ。domain-entities.md・business-rules.md（BR-AUDIT-02）にAuditEventType `USER_DISABLED`/`USER_ENABLED`を追加。(2) email一意制約の矛盾: business-rules.mdに新規BR-REG-06（emailの一意制約は`REJECTED`以外に限定。Step1の重複チェック対象は`PENDING`/`APPROVED`/`DISABLED`のみ、`DISABLED`は乗っ取り防止のため意図的にブロック対象とする）を追加し、domain-entities.md User.email説明とbusiness-logic-model.md §1.1を整合させた。(3) 登録完了イベント種別の未確定: business-rules.md BR-AUDIT-02に`REGISTRATION_COMPLETED`を追加し、business-logic-model.md §1.2の記述を確定（Step1の`REGISTRATION_REQUESTED`とは別イベントとして記録）。domain-entities.mdのAuditEventType列挙も更新。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、レビュー指摘の反映
+
+---
