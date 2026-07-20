@@ -311,3 +311,11 @@
 **Context**: CONSTRUCTION - UNIT-01 NFR Design (Steps 5-6)
 
 ---
+
+## UNIT-01 NFR Design - Judgment Calls Confirmed and Approved
+**Timestamp**: 2026-07-20T12:36:00Z
+**User Input**: "確認すべき事項は？" → "OKです。"
+**AI Response**: "Presented 4 judgment calls made beyond the literal Q&A answers: (1) DP-UNIT01-2にプレースホルダー接続点も用意しない旨を明記, (2) リポジトリ配置例frontend/src/design-system/は仮称（正式名称はCode Generation段階で確定）, (3) テーマ切替実装例として[data-theme=...]パターンを例示, (4) サニタイズライブラリ例としてDOMPurifyを言及。ユーザが承認。NFR Design stage approved for UNIT-01."
+**Context**: CONSTRUCTION - UNIT-01 NFR Design (Step 8, approval)
+
+---
