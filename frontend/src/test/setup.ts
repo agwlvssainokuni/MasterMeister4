@@ -15,4 +15,25 @@
  */
 
 import '@testing-library/jest-dom/vitest'
-import '../design-system/i18n'
+import i18n from '../design-system/i18n'
+
+// jsdom's navigator.language does not necessarily match this app's default
+// (ja); force Japanese so component tests render deterministic text
+// regardless of the environment the test runner happens to report.
+await i18n.changeLanguage('ja')
+
+// jsdom does not implement matchMedia; ThemeProvider's "system" setting
+// resolution (prefers-color-scheme) needs it to exist.
+if (!window.matchMedia) {
+  window.matchMedia = (query: string) =>
+    ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    }) as MediaQueryList
+}

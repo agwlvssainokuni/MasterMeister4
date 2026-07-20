@@ -27,7 +27,7 @@ export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 
 export function TextArea({ monospace, testId, className, style, ...rest }: TextAreaProps) {
   const classes = [styles.textArea, className].filter(Boolean).join(' ')
-  const mergedStyle = monospace ? { fontFamily: 'var(--font-family-mono)', ...style } : style
+  const mergedStyle = monospace ? { fontFamily: 'var(--mm-font-mono)', ...style } : style
 
   return <textarea className={classes} style={mergedStyle} data-testid={testId} {...rest} />
 }

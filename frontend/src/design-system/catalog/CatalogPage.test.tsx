@@ -18,7 +18,16 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { ThemeProvider } from '../theme/ThemeProvider'
 import { CatalogPage } from './CatalogPage'
+
+function renderCatalogPage() {
+  return render(
+    <ThemeProvider>
+      <CatalogPage />
+    </ThemeProvider>,
+  )
+}
 
 describe('CatalogPage', () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>
@@ -29,18 +38,27 @@ describe('CatalogPage', () => {
 
   afterEach(() => {
     consoleErrorSpy.mockRestore()
+    window.localStorage.clear()
+    document.documentElement.removeAttribute('data-theme')
   })
 
   it('renders a section for every common component', () => {
-    render(<CatalogPage />)
+    renderCatalogPage()
 
     for (const heading of [
       'Button',
+      'Spinner',
       'TextField / FormField',
+      'PasswordInput / SearchInput',
       'TextArea',
       'Select',
       'Checkbox',
       'RadioButton',
+      'Switch',
+      'Badge',
+      'Alert',
+      'Card',
+      'EmptyState',
       'ErrorBoundary',
     ]) {
       expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument()
@@ -49,7 +67,7 @@ describe('CatalogPage', () => {
 
   it('demonstrates the ErrorBoundary fallback without affecting the rest of the page', async () => {
     const user = userEvent.setup()
-    render(<CatalogPage />)
+    renderCatalogPage()
 
     await user.click(screen.getByRole('button', { name: 'エラーを発生させる' }))
 

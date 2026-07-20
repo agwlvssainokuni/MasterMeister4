@@ -20,11 +20,33 @@ import { initReactI18next } from 'react-i18next'
 import commonJa from './locales/ja/common.json'
 import commonEn from './locales/en/common.json'
 
-// No language switcher exists yet (out of scope for UNIT-01 / STORY-0.1).
-// Default to Japanese; a later unit can add detection/switching on top of
-// this same i18next instance without changing the resource structure.
+export type Language = 'ja' | 'en'
+
+const STORAGE_KEY = 'mastermeister.lang'
+
+export function detectInitialLanguage(): Language {
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    if (stored === 'ja' || stored === 'en') {
+      return stored
+    }
+  } catch {
+    /* localStorage 不可の環境ではブラウザ言語に従う */
+  }
+  return navigator.language.toLowerCase().startsWith('ja') ? 'ja' : 'en'
+}
+
+export function changeLanguage(language: Language): void {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, language)
+  } catch {
+    /* 保存不可でも切替は継続 */
+  }
+  void i18next.changeLanguage(language)
+}
+
 void i18next.use(initReactI18next).init({
-  lng: 'ja',
+  lng: detectInitialLanguage(),
   fallbackLng: 'en',
   defaultNS: 'common',
   resources: {
@@ -35,5 +57,10 @@ void i18next.use(initReactI18next).init({
     escapeValue: false, // React already escapes output
   },
 })
+
+i18next.on('languageChanged', (language) => {
+  document.documentElement.setAttribute('lang', language)
+})
+document.documentElement.setAttribute('lang', i18next.language)
 
 export default i18next

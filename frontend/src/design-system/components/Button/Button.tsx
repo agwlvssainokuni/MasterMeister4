@@ -16,13 +16,17 @@
 
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
+import { Spinner } from '../Spinner'
 import styles from './Button.module.css'
 
-export type ButtonVariant = 'primary' | 'secondary'
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost'
+export type ButtonSize = 'sm' | 'md'
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   children: ReactNode
   variant?: ButtonVariant
+  size?: ButtonSize
+  loading?: boolean
   type?: 'button' | 'submit'
   /** data-testid value; naming convention: `{component}-{element-role}` */
   testId?: string
@@ -31,14 +35,54 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
 export function Button({
   children,
   variant = 'primary',
+  size = 'md',
+  loading = false,
+  disabled,
   type = 'button',
   testId,
   className,
   ...rest
 }: ButtonProps) {
-  const variantClass = variant === 'primary' ? styles.primary : styles.secondary
-  const classes = [styles.button, variantClass, className].filter(Boolean).join(' ')
+  const classes = [styles.button, styles[variant], styles[size], className]
+    .filter(Boolean)
+    .join(' ')
 
+  return (
+    <button
+      type={type}
+      className={classes}
+      disabled={disabled || loading}
+      data-testid={testId}
+      {...rest}
+    >
+      {loading ? <Spinner size="sm" /> : null}
+      <span className={loading ? styles.loadingLabel : undefined}>{children}</span>
+    </button>
+  )
+}
+
+export interface IconButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+  'aria-label': string
+  variant?: ButtonVariant
+  size?: ButtonSize
+  children: ReactNode
+  type?: 'button' | 'submit'
+  /** data-testid value; naming convention: `{component}-{element-role}` */
+  testId?: string
+}
+
+export function IconButton({
+  variant = 'ghost',
+  size = 'md',
+  type = 'button',
+  testId,
+  className,
+  children,
+  ...rest
+}: IconButtonProps) {
+  const classes = [styles.button, styles.icon, styles[variant], styles[size], className]
+    .filter(Boolean)
+    .join(' ')
   return (
     <button type={type} className={classes} data-testid={testId} {...rest}>
       {children}

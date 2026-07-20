@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { Button } from './Button'
-export type { ButtonProps, ButtonVariant } from './Button'
+export { Button, IconButton } from './Button'
+export type { ButtonProps, ButtonVariant, ButtonSize, IconButtonProps } from './Button'

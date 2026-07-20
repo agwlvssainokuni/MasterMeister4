@@ -21,24 +21,36 @@ import { FormField } from './FormField'
 
 describe('FormField', () => {
   it('links the label to the field via htmlFor/id', () => {
-    render(<FormField label="Email">{(fieldProps) => <input {...fieldProps} />}</FormField>)
+    render(
+      <FormField label="Email">
+        <input />
+      </FormField>,
+    )
     expect(screen.getByLabelText('Email')).toBeInTheDocument()
   })
 
   it('shows the required indicator when required', () => {
     render(
       <FormField label="Email" required>
-        {(fieldProps) => <input {...fieldProps} />}
+        <input />
       </FormField>,
     )
-    expect(screen.getByText('Email')).toBeInTheDocument()
     expect(screen.getByText(/必須/)).toBeInTheDocument()
+  })
+
+  it('marks aria-required on the field when required', () => {
+    render(
+      <FormField label="Email" required>
+        <input />
+      </FormField>,
+    )
+    expect(screen.getByLabelText(/Email/)).toHaveAttribute('aria-required', 'true')
   })
 
   it('associates the error message via aria-describedby and marks aria-invalid', () => {
     render(
       <FormField label="Email" error="Invalid email address">
-        {(fieldProps) => <input {...fieldProps} />}
+        <input />
       </FormField>,
     )
     const input = screen.getByLabelText('Email')
@@ -52,7 +64,7 @@ describe('FormField', () => {
   it('shows helper text when there is no error', () => {
     render(
       <FormField label="Email" helperText="We will never share your email">
-        {(fieldProps) => <input {...fieldProps} />}
+        <input />
       </FormField>,
     )
     expect(screen.getByText('We will never share your email')).toBeInTheDocument()

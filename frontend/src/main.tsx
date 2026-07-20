@@ -17,7 +17,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { ErrorBoundary } from './design-system'
+import { ErrorBoundary, ThemeProvider } from './design-system'
 import { CatalogPage } from './design-system/catalog'
 import App from './App.tsx'
 
@@ -28,6 +28,8 @@ const page = window.location.pathname === '/catalog' ? <CatalogPage /> : <App />
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ErrorBoundary>{page}</ErrorBoundary>
+    <ThemeProvider>
+      <ErrorBoundary>{page}</ErrorBoundary>
+    </ThemeProvider>
   </StrictMode>,
 )

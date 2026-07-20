@@ -24,7 +24,11 @@ import { TextArea } from './TextArea'
 describe('TextArea', () => {
   it('accepts multi-line typed input', async () => {
     const user = userEvent.setup()
-    render(<FormField label="SQL">{(fieldProps) => <TextArea {...fieldProps} />}</FormField>)
+    render(
+      <FormField label="SQL">
+        <TextArea />
+      </FormField>,
+    )
 
     const textarea = screen.getByLabelText('SQL')
     await user.type(textarea, 'SELECT 1{enter}FROM dual')
@@ -40,7 +44,7 @@ describe('TextArea', () => {
   it('reflects aria-invalid when used inside a FormField with an error', () => {
     render(
       <FormField label="SQL" error="SQLを入力してください">
-        {(fieldProps) => <TextArea {...fieldProps} />}
+        <TextArea />
       </FormField>,
     )
     expect(screen.getByLabelText('SQL')).toHaveAttribute('aria-invalid', 'true')
@@ -49,7 +53,7 @@ describe('TextArea', () => {
   it('switches to the monospace font token when monospace is set', () => {
     render(<TextArea monospace testId="sql-textarea" />)
     expect(screen.getByTestId('sql-textarea')).toHaveStyle({
-      fontFamily: 'var(--font-family-mono)',
+      fontFamily: 'var(--mm-font-mono)',
     })
   })
 })

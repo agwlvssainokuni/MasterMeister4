@@ -1,0 +1,46 @@
+/*
+ * Copyright 2026 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.alert {
+  padding: var(--mm-space-3) var(--mm-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--mm-radius-md);
+  font-size: var(--mm-font-size-md);
+}
+
+.alertInfo {
+  background: var(--mm-color-primary-subtle);
+  border-color: var(--mm-color-primary);
+  color: var(--mm-color-text);
+}
+
+.alertSuccess {
+  background: var(--mm-color-success-subtle);
+  border-color: var(--mm-color-success);
+  color: var(--mm-color-text);
+}
+
+.alertWarning {
+  background: var(--mm-color-warning-subtle);
+  border-color: var(--mm-color-warning);
+  color: var(--mm-color-text);
+}
+
+.alertDanger {
+  background: var(--mm-color-danger-subtle);
+  border-color: var(--mm-color-danger);
+  color: var(--mm-color-text);
+}

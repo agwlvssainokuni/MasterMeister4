@@ -18,7 +18,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Button } from './Button'
+import { Button, IconButton } from './Button'
 
 describe('Button', () => {
   it('renders its children', () => {
@@ -70,5 +70,27 @@ describe('Button', () => {
   it('defaults to type="button" so it does not submit an enclosing form', () => {
     render(<Button>Save</Button>)
     expect(screen.getByRole('button', { name: 'Save' })).toHaveAttribute('type', 'button')
+  })
+
+  it('is disabled and shows a spinner while loading', () => {
+    render(<Button loading>Save</Button>)
+    expect(screen.getByRole('button')).toBeDisabled()
+    expect(screen.getByRole('status')).toBeInTheDocument()
+  })
+})
+
+describe('IconButton', () => {
+  it('requires and exposes an aria-label', () => {
+    render(<IconButton aria-label="削除">x</IconButton>)
+    expect(screen.getByRole('button', { name: '削除' })).toBeInTheDocument()
+  })
+
+  it('applies the testId as data-testid', () => {
+    render(
+      <IconButton aria-label="削除" testId="delete-icon-button">
+        x
+      </IconButton>,
+    )
+    expect(screen.getByTestId('delete-icon-button')).toBeInTheDocument()
   })
 })

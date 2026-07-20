@@ -14,18 +14,48 @@
  * limitations under the License.
  */
 
-:root,
-[data-theme='light'] {
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-8: 48px;
+:root {
+  /* ---- スペーシング(4px グリッド) ---- */
+  --mm-space-0_5: 2px;
+  --mm-space-1: 4px;
+  --mm-space-2: 8px;
+  --mm-space-3: 12px;
+  --mm-space-4: 16px;
+  --mm-space-5: 20px;
+  --mm-space-6: 24px;
+  --mm-space-8: 32px;
+  --mm-space-10: 40px;
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  /* ---- 形状・エレベーション ---- */
+  --mm-radius-sm: 3px;
+  --mm-radius-md: 6px;
+  --mm-radius-full: 9999px;
+  --mm-shadow-sm: 0 1px 2px rgb(17 24 39 / 8%);
+  --mm-shadow-md: 0 4px 8px rgb(17 24 39 / 12%);
+  --mm-shadow-lg: 0 8px 24px rgb(17 24 39 / 18%);
+  --mm-focus-ring: 0 0 0 2px var(--mm-color-focus-ring);
 
-  --focus-ring-width: 2px;
+  /* ---- Z-index ---- */
+  --mm-z-dropdown: 1000;
+  --mm-z-modal: 1300;
+  --mm-z-toast: 1400;
+  --mm-z-tooltip: 1500;
+
+  /* ---- トランジション ---- */
+  --mm-duration-fast: 100ms;
+  --mm-duration-normal: 200ms;
+
+  /* ---- コンポーネント寸法(高密度) ---- */
+  --mm-control-height-sm: 26px;
+  --mm-control-height-md: 32px;
+  --mm-table-row-height: 34px;
+  --mm-header-height: 48px;
+  --mm-sidenav-width: 220px;
+  --mm-sidenav-width-collapsed: 48px;
+}
+
+:root[data-theme='dark'] {
+  --mm-shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+  --mm-shadow-md: 0 4px 8px rgb(0 0 0 / 50%);
+  --mm-shadow-lg: 0 8px 24px rgb(0 0 0 / 60%);
 }

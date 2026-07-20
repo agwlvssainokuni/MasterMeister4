@@ -37,7 +37,7 @@ describe('Select', () => {
     const user = userEvent.setup()
     render(
       <FormField label="Language">
-        {(fieldProps) => <Select {...fieldProps} options={options} />}
+        <Select options={options} />
       </FormField>,
     )
 

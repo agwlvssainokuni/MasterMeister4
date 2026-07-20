@@ -56,8 +56,21 @@
 - [x] 4-8. 各コンポーネントに`data-testid`を付与できるよう`testId`プロップを用意する（命名規則: `{component}-{element-role}`、例: `login-form-submit-button`）
 - [x] 4-9. バレルファイル（`frontend/src/design-system/index.ts`）で全コンポーネントを名前付きエクスポートする
 
+### Step 4b: 参考実装との突合による追加コンポーネント生成（Code Generation完了後のレビュー指摘で追加）
+ユーザ提供の参考デザインシステム（`design-system--`、ワークスペースルート直下、frontend/の対象外）との過不足点検の結果、以下を追加。詳細は`aidlc-docs/construction/unit-01/code/summary.md`「レビュー対応ログ」参照。
+- [x] 4b-1. Button拡張（variant: danger/ghost追加、size: sm/md、loading状態+Spinner連携）、IconButton
+- [x] 4b-2. Spinner
+- [x] 4b-3. PasswordInput、SearchInput
+- [x] 4b-4. Switch
+- [x] 4b-5. Badge、Alert、Card、EmptyState
+- [x] 4b-6. ThemeProvider（light/dark/system、localStorage永続化、OS設定追従）、ThemeToggle
+- [x] 4b-7. LanguageSwitcher、i18n語彙拡張（action/state/theme/language/pagination/table/form）、ブラウザ言語自動検出
+- [x] 4b-8. デザイントークンをプリミティブ層(`--mm-palette-*`)+セマンティック層(`--mm-color-*`等)に再構成し、ダークモードの実データを追加
+- [x] 4b-9. FormFieldのAPIをrender-props方式から`cloneElement`方式に変更（ユーザ承認済み）
+- **見送り**: Table, Modal/ConfirmDialog, Toast, Dropdown/Tooltip, Tabs, Pagination, AppShell, CodeBlock, KeyValueList等の機能寄りコンポーネントは、FR-0.3の方針に従い後続ユニット（UNIT-05等）に委ねる
+
 ### Step 5: 共通UIコンポーネントのユニットテスト
-- [x] 5-1. Button, TextField, TextArea, Select, Checkbox, RadioButton, FormField, ErrorBoundaryの各コンポーネントについて、レンダリング・基本的なユーザ操作・キーボード操作・ARIA属性をVitest + React Testing Libraryで検証するテストを作成する（9ファイル・31テスト、全てパス）
+- [x] 5-1. 全コンポーネントについて、レンダリング・基本的なユーザ操作・キーボード操作・ARIA属性をVitest + React Testing Libraryで検証するテストを作成する（20ファイル・56テスト、全てパス）
 
 ### Step 6: ドキュメント生成
 - [x] 6-1. `frontend/README.md`を作成する（セットアップ手順、開発サーバ起動、テスト実行、ビルド、`npm audit`実行手順）

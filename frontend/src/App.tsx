@@ -17,7 +17,17 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button, Checkbox, FormField, RadioButton, Select, TextField } from './design-system'
+import {
+  Button,
+  Checkbox,
+  FormField,
+  LanguageSwitcher,
+  PasswordInput,
+  RadioButton,
+  Select,
+  TextField,
+  ThemeToggle,
+} from './design-system'
 import styles from './App.module.css'
 
 const RDBMS_OPTIONS = [
@@ -39,30 +49,33 @@ function App() {
 
   return (
     <main className={styles.page}>
+      <div className={styles.headerControls}>
+        <ThemeToggle />
+        <LanguageSwitcher />
+      </div>
+
       <h1 className={styles.title}>MasterMeister</h1>
 
       <FormField label="メールアドレス" helperText="登録済みのメールアドレスを入力してください">
-        {(fieldProps) => (
-          <TextField
-            {...fieldProps}
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            testId="email-field-input"
-          />
-        )}
+        <TextField
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          testId="email-field-input"
+        />
+      </FormField>
+
+      <FormField label="パスワード">
+        <PasswordInput testId="password-field-input" />
       </FormField>
 
       <FormField label="対象RDBMS">
-        {(fieldProps) => (
-          <Select
-            {...fieldProps}
-            options={RDBMS_OPTIONS}
-            value={rdbms}
-            onChange={(event) => setRdbms(event.target.value)}
-            testId="rdbms-select-input"
-          />
-        )}
+        <Select
+          options={RDBMS_OPTIONS}
+          value={rdbms}
+          onChange={(event) => setRdbms(event.target.value)}
+          testId="rdbms-select-input"
+        />
       </FormField>
 
       <Checkbox

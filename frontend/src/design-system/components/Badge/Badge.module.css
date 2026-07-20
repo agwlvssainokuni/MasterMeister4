@@ -1,0 +1,51 @@
+/*
+ * Copyright 2026 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--mm-space-2);
+  height: 20px;
+  border-radius: var(--mm-radius-full);
+  font-size: var(--mm-font-size-xs);
+  font-weight: var(--mm-font-weight-medium);
+  line-height: 1;
+}
+
+.badgeNeutral {
+  background: var(--mm-color-border);
+  color: var(--mm-color-text);
+}
+
+.badgePrimary {
+  background: var(--mm-color-primary-subtle);
+  color: var(--mm-color-primary);
+}
+
+.badgeSuccess {
+  background: var(--mm-color-success-subtle);
+  color: var(--mm-color-success);
+}
+
+.badgeWarning {
+  background: var(--mm-color-warning-subtle);
+  color: var(--mm-color-warning);
+}
+
+.badgeDanger {
+  background: var(--mm-color-danger-subtle);
+  color: var(--mm-color-danger);
+}

@@ -24,7 +24,11 @@ import { TextField } from './TextField'
 describe('TextField', () => {
   it('accepts typed input', async () => {
     const user = userEvent.setup()
-    render(<FormField label="Email">{(fieldProps) => <TextField {...fieldProps} />}</FormField>)
+    render(
+      <FormField label="Email">
+        <TextField />
+      </FormField>,
+    )
 
     const input = screen.getByLabelText('Email')
     await user.type(input, 'user@example.com')
@@ -40,7 +44,7 @@ describe('TextField', () => {
   it('reflects aria-invalid when used inside a FormField with an error', () => {
     render(
       <FormField label="Email" error="Invalid email address">
-        {(fieldProps) => <TextField {...fieldProps} />}
+        <TextField />
       </FormField>,
     )
     expect(screen.getByLabelText('Email')).toHaveAttribute('aria-invalid', 'true')

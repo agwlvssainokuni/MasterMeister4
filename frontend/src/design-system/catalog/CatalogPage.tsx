@@ -16,14 +16,24 @@
 
 import { useState } from 'react'
 
-import { Button } from '../components/Button'
+import { Alert } from '../components/Alert'
+import { Badge } from '../components/Badge'
+import { Button, IconButton } from '../components/Button'
+import { Card } from '../components/Card'
 import { Checkbox } from '../components/Checkbox'
+import { EmptyState } from '../components/EmptyState'
 import { ErrorBoundary } from '../components/ErrorBoundary'
 import { FormField } from '../components/FormField'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
+import { PasswordInput } from '../components/PasswordInput'
 import { RadioButton } from '../components/RadioButton'
+import { SearchInput } from '../components/SearchInput'
 import { Select } from '../components/Select'
+import { Spinner } from '../components/Spinner'
+import { Switch } from '../components/Switch'
 import { TextArea } from '../components/TextArea'
 import { TextField } from '../components/TextField'
+import { ThemeToggle } from '../components/ThemeToggle'
 import styles from './CatalogPage.module.css'
 
 const RDBMS_OPTIONS = [
@@ -41,9 +51,15 @@ function Bomb(): never {
 // component's visual states in one place without reading test files.
 export function CatalogPage() {
   const [showError, setShowError] = useState(false)
+  const [switchOn, setSwitchOn] = useState(false)
 
   return (
     <main className={styles.page}>
+      <div className={styles.headerControls}>
+        <ThemeToggle />
+        <LanguageSwitcher />
+      </div>
+
       <h1 className={styles.title}>コンポーネントカタログ</h1>
 
       <section className={styles.section}>
@@ -51,38 +67,62 @@ export function CatalogPage() {
         <div className={styles.row}>
           <Button variant="primary">Primary</Button>
           <Button variant="secondary">Secondary</Button>
+          <Button variant="danger">Danger</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="primary" size="sm">
+            Small
+          </Button>
+          <Button variant="primary" loading>
+            Loading
+          </Button>
           <Button variant="primary" disabled>
             Disabled
           </Button>
+          <IconButton aria-label="削除">🗑</IconButton>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Spinner</h2>
+        <div className={styles.row}>
+          <Spinner size="sm" />
+          <Spinner size="md" />
+          <Spinner size="lg" />
         </div>
       </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>TextField / FormField</h2>
         <FormField label="メールアドレス" helperText="ヘルプテキストの表示例">
-          {(fieldProps) => <TextField {...fieldProps} type="email" />}
+          <TextField type="email" />
         </FormField>
         <FormField
           label="メールアドレス（エラー state）"
           error="有効なメールアドレスを入力してください"
         >
-          {(fieldProps) => <TextField {...fieldProps} type="email" />}
+          <TextField type="email" />
         </FormField>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>PasswordInput / SearchInput</h2>
+        <FormField label="パスワード">
+          <PasswordInput />
+        </FormField>
+        <SearchInput placeholder="テーブル名で検索" aria-label="テーブル検索" />
       </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>TextArea</h2>
         <FormField label="SQL" helperText="monospaceを指定するとNoto Sans Monoで表示されます">
-          {(fieldProps) => (
-            <TextArea {...fieldProps} monospace defaultValue={'SELECT id, name\nFROM 顧客'} />
-          )}
+          <TextArea monospace defaultValue={'SELECT id, name\nFROM 顧客'} />
         </FormField>
       </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Select</h2>
         <FormField label="対象RDBMS">
-          {(fieldProps) => <Select {...fieldProps} options={RDBMS_OPTIONS} />}
+          <Select options={RDBMS_OPTIONS} />
         </FormField>
       </section>
 
@@ -107,6 +147,38 @@ export function CatalogPage() {
             />
           ))}
         </div>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Switch</h2>
+        <Switch checked={switchOn} onChange={setSwitchOn} label="通知を受け取る" />
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Badge</h2>
+        <div className={styles.row}>
+          <Badge tone="neutral">Neutral</Badge>
+          <Badge tone="primary">Primary</Badge>
+          <Badge tone="success">Success</Badge>
+          <Badge tone="warning">Warning</Badge>
+          <Badge tone="danger">Danger</Badge>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Alert</h2>
+        <Alert tone="info">情報メッセージの表示例です。</Alert>
+        <Alert tone="danger">エラーメッセージの表示例です。</Alert>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Card</h2>
+        <Card title="接続設定">カード本文の表示例です。</Card>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>EmptyState</h2>
+        <EmptyState />
       </section>
 
       <section className={styles.section}>

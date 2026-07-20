@@ -19,21 +19,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  padding: var(--space-8);
+  gap: var(--mm-space-3);
+  padding: var(--mm-space-8);
   text-align: center;
-  font-family: var(--font-family-base);
-  color: var(--color-text-primary);
+  font-family: var(--mm-font-sans);
+  color: var(--mm-color-text);
 }
 
 .title {
   margin: 0;
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--mm-font-size-xl);
+  font-weight: var(--mm-font-weight-bold);
 }
 
 .message {
   margin: 0;
-  font-size: var(--font-size-md);
-  color: var(--color-text-secondary);
+  font-size: var(--mm-font-size-md);
+  color: var(--mm-color-text-muted);
 }

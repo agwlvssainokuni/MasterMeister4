@@ -1,0 +1,73 @@
+/*
+ * Copyright 2026 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  cursor: pointer;
+  font-family: var(--mm-font-sans);
+  font-size: var(--mm-font-size-md);
+  color: var(--mm-color-text);
+}
+
+.switchInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.switchTrack {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  border-radius: var(--mm-radius-full);
+  background: var(--mm-color-border-strong);
+  transition: background-color var(--mm-duration-fast);
+}
+
+.switchTrack::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--mm-radius-full);
+  background: var(--mm-color-surface);
+  transition: transform var(--mm-duration-fast);
+}
+
+.switchInput:checked + .switchTrack {
+  background: var(--mm-color-primary);
+}
+
+.switchInput:checked + .switchTrack::before {
+  transform: translateX(16px);
+}
+
+.switchInput:focus-visible + .switchTrack {
+  box-shadow: var(--mm-focus-ring);
+}
+
+.switchInput:disabled + .switchTrack {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

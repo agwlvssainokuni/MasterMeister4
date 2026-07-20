@@ -18,44 +18,88 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
+  gap: var(--mm-space-1);
   border: 1px solid transparent;
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  border-radius: var(--mm-radius-sm);
+  font-family: inherit;
+  font-size: var(--mm-font-size-md);
+  font-weight: var(--mm-font-weight-medium);
+  line-height: 1;
   cursor: pointer;
-}
-
-.button:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-border-focus);
-  outline-offset: 2px;
+  transition:
+    background-color var(--mm-duration-fast),
+    border-color var(--mm-duration-fast);
+  white-space: nowrap;
 }
 
 .button:disabled {
+  opacity: 0.55;
   cursor: not-allowed;
-  color: var(--color-text-disabled);
-  background-color: var(--color-bg-disabled);
-  border-color: var(--color-border-default);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--mm-focus-ring);
+}
+
+.md {
+  height: var(--mm-control-height-md);
+  padding: 0 var(--mm-space-3);
+}
+
+.sm {
+  height: var(--mm-control-height-sm);
+  padding: 0 var(--mm-space-2);
+  font-size: var(--mm-font-size-sm);
+}
+
+.icon.md {
+  width: var(--mm-control-height-md);
+  padding: 0;
+}
+
+.icon.sm {
+  width: var(--mm-control-height-sm);
+  padding: 0;
 }
 
 .primary {
-  color: var(--color-text-inverse);
-  background-color: var(--color-primary-500);
+  background: var(--mm-color-primary);
+  color: var(--mm-color-text-inverse);
 }
 
 .primary:hover:not(:disabled) {
-  background-color: var(--color-primary-600);
+  background: var(--mm-color-primary-hover);
 }
 
 .secondary {
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-body);
-  border-color: var(--color-border-default);
+  background: var(--mm-color-surface);
+  border-color: var(--mm-color-border-strong);
+  color: var(--mm-color-text);
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: var(--color-bg-surface);
+  background: var(--mm-color-bg);
+}
+
+.danger {
+  background: var(--mm-color-danger);
+  color: var(--mm-color-text-inverse);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--mm-color-danger-hover);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--mm-color-text);
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--mm-color-primary-subtle);
+}
+
+.loadingLabel {
+  opacity: 0.8;
 }

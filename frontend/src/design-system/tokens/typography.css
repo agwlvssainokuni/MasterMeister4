@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-:root,
-[data-theme='light'] {
+:root {
   /* Body text: self-hosted Noto Sans JP, falling back to OS UI fonts */
-  --font-family-base: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mm-font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', Meiryo, sans-serif;
 
   /* Code / SQL display: self-hosted Noto Sans Mono, falling back to Noto Sans JP
      for Japanese characters not covered by the monospace font */
-  --font-family-mono: 'Noto Sans Mono', 'Noto Sans JP', ui-monospace, monospace;
+  --mm-font-mono:
+    'Noto Sans Mono', 'Noto Sans JP', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.5rem;
+  --mm-font-size-xs: 11px;
+  --mm-font-size-sm: 12px;
+  --mm-font-size-md: 14px;
+  --mm-font-size-lg: 16px;
+  --mm-font-size-xl: 18px;
+  --mm-font-size-2xl: 22px;
 
-  --font-weight-regular: 400;
-  --font-weight-bold: 700;
+  --mm-font-weight-normal: 400;
+  --mm-font-weight-medium: 500;
+  --mm-font-weight-bold: 700;
 
-  --line-height-base: 1.5;
-  --line-height-tight: 1.25;
+  --mm-line-height-tight: 1.3;
+  --mm-line-height-normal: 1.6;
 }

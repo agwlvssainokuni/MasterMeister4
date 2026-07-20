@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-import { useId, type ReactNode } from 'react'
+import { cloneElement, useId } from 'react'
+import type { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './FormField.module.css'
 
-export interface FormFieldRenderProps {
-  id: string
-  'aria-describedby'?: string
+export interface FormFieldChildProps {
+  id?: string
   'aria-invalid'?: boolean
+  'aria-describedby'?: string
+  'aria-required'?: boolean
 }
 
 export interface FormFieldProps {
@@ -30,8 +32,8 @@ export interface FormFieldProps {
   helperText?: string
   error?: string
   required?: boolean
-  /** Renders the field's input, wired up with the id/aria-* props needed for the label and error to be announced. */
-  children: (fieldProps: FormFieldRenderProps) => ReactNode
+  /** A single field element (e.g. TextField, Select); id/aria-* are injected via cloneElement. */
+  children: ReactElement<FormFieldChildProps>
   testId?: string
 }
 
@@ -49,17 +51,20 @@ export function FormField({
   const errorId = error ? `${id}-error` : undefined
   const describedBy = [helperId, errorId].filter(Boolean).join(' ') || undefined
 
+  const field = cloneElement(children, {
+    id,
+    'aria-invalid': Boolean(error) || children.props['aria-invalid'],
+    'aria-describedby': describedBy,
+    'aria-required': required || undefined,
+  })
+
   return (
     <div className={styles.field} data-testid={testId}>
       <label htmlFor={id} className={styles.label}>
         {label}
         {required && <span className={styles.required}> ({t('formField.requiredIndicator')})</span>}
       </label>
-      {children({
-        id,
-        'aria-describedby': describedBy,
-        'aria-invalid': error ? true : undefined,
-      })}
+      {field}
       {helperText && !error && (
         <p id={helperId} className={styles.helper}>
           {helperText}

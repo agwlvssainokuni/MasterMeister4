@@ -14,47 +14,114 @@
  * limitations under the License.
  */
 
-:root,
-[data-theme='light'] {
-  /* Neutral scale */
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #f7f8f9;
-  --color-neutral-100: #eceef1;
-  --color-neutral-200: #d8dce1;
-  --color-neutral-300: #b9c0c9;
-  --color-neutral-400: #8b95a1;
-  --color-neutral-500: #667085;
-  --color-neutral-600: #4b5563;
-  --color-neutral-700: #364152;
-  --color-neutral-800: #1f2937;
-  --color-neutral-900: #111827;
+/*
+ * カラートークン
+ * - プリミティブ層: --mm-palette-* (コンポーネントから直接参照しない)
+ * - セマンティック層: --mm-color-* (コンポーネント・画面はこの層のみ参照)
+ * - テーマ: :root = ライト(既定)、:root[data-theme="dark"] = ダーク上書き
+ */
 
-  /* Primary (brand) */
-  --color-primary-50: #eef4ff;
-  --color-primary-100: #d9e6ff;
-  --color-primary-300: #85aaff;
-  --color-primary-500: #2f6fed;
-  --color-primary-600: #1d5bd6;
-  --color-primary-700: #1747a8;
+:root {
+  /* ---- プリミティブ層 ---- */
+  --mm-palette-blue-50: #eff6ff;
+  --mm-palette-blue-100: #dbeafe;
+  --mm-palette-blue-200: #bfdbfe;
+  --mm-palette-blue-300: #93c5fd;
+  --mm-palette-blue-400: #60a5fa;
+  --mm-palette-blue-500: #3b82f6;
+  --mm-palette-blue-600: #2563eb;
+  --mm-palette-blue-700: #1d4ed8;
+  --mm-palette-blue-800: #1e40af;
+  --mm-palette-blue-900: #1e3a8a;
 
-  /* Semantic */
-  --color-success-500: #12b76a;
-  --color-warning-500: #f79009;
-  --color-error-500: #f04438;
-  --color-info-500: #2f6fed;
+  --mm-palette-gray-50: #f9fafb;
+  --mm-palette-gray-100: #f3f4f6;
+  --mm-palette-gray-200: #e5e7eb;
+  --mm-palette-gray-300: #d1d5db;
+  --mm-palette-gray-400: #9ca3af;
+  --mm-palette-gray-500: #6b7280;
+  --mm-palette-gray-600: #4b5563;
+  --mm-palette-gray-700: #374151;
+  --mm-palette-gray-800: #1f2937;
+  --mm-palette-gray-900: #111827;
 
-  /* Surface / text / border roles (compose from the scales above) */
-  --color-bg-body: var(--color-neutral-0);
-  --color-bg-surface: var(--color-neutral-50);
-  --color-bg-disabled: var(--color-neutral-100);
+  --mm-palette-green-50: #f0fdf4;
+  --mm-palette-green-100: #dcfce7;
+  --mm-palette-green-200: #bbf7d0;
+  --mm-palette-green-300: #86efac;
+  --mm-palette-green-400: #4ade80;
+  --mm-palette-green-500: #22c55e;
+  --mm-palette-green-600: #16a34a;
+  --mm-palette-green-700: #15803d;
+  --mm-palette-green-800: #166534;
+  --mm-palette-green-900: #14532d;
 
-  --color-text-primary: var(--color-neutral-900);
-  --color-text-secondary: var(--color-neutral-600);
-  --color-text-disabled: var(--color-neutral-400);
-  --color-text-inverse: var(--color-neutral-0);
-  --color-text-error: var(--color-error-500);
+  --mm-palette-amber-50: #fffbeb;
+  --mm-palette-amber-100: #fef3c7;
+  --mm-palette-amber-200: #fde68a;
+  --mm-palette-amber-300: #fcd34d;
+  --mm-palette-amber-400: #fbbf24;
+  --mm-palette-amber-500: #f59e0b;
+  --mm-palette-amber-600: #d97706;
+  --mm-palette-amber-700: #b45309;
+  --mm-palette-amber-800: #92400e;
+  --mm-palette-amber-900: #78350f;
 
-  --color-border-default: var(--color-neutral-200);
-  --color-border-focus: var(--color-primary-500);
-  --color-border-error: var(--color-error-500);
+  --mm-palette-red-50: #fef2f2;
+  --mm-palette-red-100: #fee2e2;
+  --mm-palette-red-200: #fecaca;
+  --mm-palette-red-300: #fca5a5;
+  --mm-palette-red-400: #f87171;
+  --mm-palette-red-500: #ef4444;
+  --mm-palette-red-600: #dc2626;
+  --mm-palette-red-700: #b91c1c;
+  --mm-palette-red-800: #991b1b;
+  --mm-palette-red-900: #7f1d1d;
+
+  --mm-palette-white: #ffffff;
+
+  /* ---- セマンティック層(ライト、既定) ---- */
+  --mm-color-bg: var(--mm-palette-gray-50);
+  --mm-color-surface: var(--mm-palette-white);
+  --mm-color-surface-raised: var(--mm-palette-white);
+  --mm-color-text: var(--mm-palette-gray-900);
+  --mm-color-text-muted: var(--mm-palette-gray-500);
+  --mm-color-text-inverse: var(--mm-palette-white);
+  --mm-color-border: var(--mm-palette-gray-200);
+  --mm-color-border-strong: var(--mm-palette-gray-300);
+  --mm-color-primary: var(--mm-palette-blue-600);
+  --mm-color-primary-hover: var(--mm-palette-blue-700);
+  --mm-color-primary-subtle: var(--mm-palette-blue-50);
+  --mm-color-success: var(--mm-palette-green-600);
+  --mm-color-success-subtle: var(--mm-palette-green-50);
+  --mm-color-warning: var(--mm-palette-amber-600);
+  --mm-color-warning-subtle: var(--mm-palette-amber-50);
+  --mm-color-danger: var(--mm-palette-red-600);
+  --mm-color-danger-hover: var(--mm-palette-red-700);
+  --mm-color-danger-subtle: var(--mm-palette-red-50);
+  --mm-color-focus-ring: rgb(59 130 246 / 50%);
+  --mm-color-overlay: rgb(17 24 39 / 45%);
+}
+
+:root[data-theme='dark'] {
+  --mm-color-bg: var(--mm-palette-gray-900);
+  --mm-color-surface: var(--mm-palette-gray-800);
+  --mm-color-surface-raised: var(--mm-palette-gray-700);
+  --mm-color-text: var(--mm-palette-gray-100);
+  --mm-color-text-muted: var(--mm-palette-gray-400);
+  --mm-color-text-inverse: var(--mm-palette-gray-900);
+  --mm-color-border: var(--mm-palette-gray-600);
+  --mm-color-border-strong: var(--mm-palette-gray-500);
+  --mm-color-primary: var(--mm-palette-blue-500);
+  --mm-color-primary-hover: var(--mm-palette-blue-400);
+  --mm-color-primary-subtle: rgb(30 58 138 / 30%);
+  --mm-color-success: var(--mm-palette-green-500);
+  --mm-color-success-subtle: rgb(20 83 45 / 30%);
+  --mm-color-warning: var(--mm-palette-amber-500);
+  --mm-color-warning-subtle: rgb(120 53 15 / 30%);
+  --mm-color-danger: var(--mm-palette-red-500);
+  --mm-color-danger-hover: var(--mm-palette-red-400);
+  --mm-color-danger-subtle: rgb(127 29 29 / 30%);
+  --mm-color-focus-ring: rgb(96 165 250 / 60%);
+  --mm-color-overlay: rgb(0 0 0 / 60%);
 }

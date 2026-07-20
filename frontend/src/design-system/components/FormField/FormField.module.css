@@ -17,29 +17,29 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--mm-space-1);
 }
 
 .label {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
+  font-family: var(--mm-font-sans);
+  font-size: var(--mm-font-size-sm);
+  font-weight: var(--mm-font-weight-bold);
+  color: var(--mm-color-text);
 }
 
 .required {
-  font-weight: var(--font-weight-regular);
-  color: var(--color-text-secondary);
+  font-weight: var(--mm-font-weight-normal);
+  color: var(--mm-color-text-muted);
 }
 
 .helper {
   margin: 0;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  font-size: var(--mm-font-size-xs);
+  color: var(--mm-color-text-muted);
 }
 
 .error {
   margin: 0;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-error);
+  font-size: var(--mm-font-size-xs);
+  color: var(--mm-color-danger);
 }

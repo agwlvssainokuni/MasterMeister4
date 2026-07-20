@@ -20,9 +20,9 @@
 
 body {
   margin: 0;
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-base);
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-body);
+  font-family: var(--mm-font-sans);
+  font-size: var(--mm-font-size-md);
+  line-height: var(--mm-line-height-normal);
+  color: var(--mm-color-text);
+  background-color: var(--mm-color-bg);
 }
