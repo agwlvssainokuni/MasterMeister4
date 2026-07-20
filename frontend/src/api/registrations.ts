@@ -15,7 +15,7 @@
  */
 
 import { apiFetch } from './http'
-import type { Language } from '../design-system/i18n'
+import type { Language } from '../i18n'
 
 export function startRegistration(email: string, language: Language): Promise<void> {
   return apiFetch<void>('/api/registrations', { method: 'POST', body: { email, language } })

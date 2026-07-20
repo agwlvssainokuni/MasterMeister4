@@ -49,8 +49,8 @@ src/
 ├── design-system/     # UNIT-01で構築した共通デザインシステム
 │   ├── tokens/         # デザイントークン、セルフホストフォント
 │   ├── theme/           # ダークモード（ThemeProvider）
-│   ├── i18n/             # 多言語対応（react-i18next、common/design-system名前空間）
 │   └── components/    # 共通UIコンポーネント一式
+├── i18n/                 # 多言語対応（react-i18next、common/design-system名前空間。アプリ全体で使う横断的インフラのためdesign-system/の外に配置）
 ├── auth/                # 認証状態管理（AuthContext）、トークン保管（sessionStorage）、JWTデコード
 ├── api/                  # バックエンドAPIクライアント（apiFetch、リフレッシュ自動再試行）
 ├── pages/               # UNIT-02で構築した画面（ログイン、ユーザ登録、ユーザ管理、トップ）

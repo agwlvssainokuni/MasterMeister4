@@ -28,7 +28,9 @@
 
 ## i18nリソース追加
 
-`design-system/i18n/locales/{ja,en}/common.json`に`auth`・`registration`・`users`・`home`（`home.card.*` 8キー含む）を追加。
+`i18n/locales/{ja,en}/common.json`に`auth`・`registration`・`users`・`home`（`home.card.*` 8キー含む）を追加。名前空間は増やさず、UNIT-01から続く`common`名前空間内でキーをプレフィックス（`auth.*`等）で分ける運用とした（名前空間・ファイルを機能ごとに分割するほどの規模ではなく、分割は「どのファイルに追加するか」を都度判断するコストを増やすだけと判断）。
+
+あわせて、`frontend/src/design-system/i18n/`を`frontend/src/design-system/`の外（`frontend/src/i18n/`、`design-system/`と同階層）へ移動した。UNIT-01時点ではi18n初期化・翻訳リソースは`design-system/`配下に置かれていたが、UNIT-02で`common`名前空間に画面固有の文言（`auth`/`registration`/`users`/`home`）が乗るようになり、実態として「UNIT-01のデザインシステム専用」ではなくアプリ全体が使う横断的なインフラになったため、本ユニットで新設した`auth/`・`api/`と同じ階層に揃えた。参照している6ファイル（`main.tsx`、`test/setup.ts`、`api/http.ts`・`api/registrations.ts`、`pages/RegisterStep1Page.tsx`・`RegisterStep2Page.tsx`、および`design-system/components/LanguageSwitcher.tsx`・そのテスト）のimportパスを追従済み。
 
 ## UNIT-01由来の不整合の修正
 

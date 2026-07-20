@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import i18n from '../design-system/i18n'
+import i18n from '../i18n'
 import { clearTokens, getAccessToken, getRefreshToken, setTokens } from '../auth/tokenStorage'
 
 // business-rules.md BR-API-01。統一エラーレスポンス形式 { code, message }。

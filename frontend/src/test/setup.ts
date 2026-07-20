@@ -17,7 +17,7 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { afterEach } from 'vitest'
-import i18n from '../design-system/i18n'
+import i18n from '../i18n'
 
 // globals:falseのため、テストごとのDOM自動クリーンアップを明示的に登録する。
 afterEach(() => {

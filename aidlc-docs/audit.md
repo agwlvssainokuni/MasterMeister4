@@ -1023,3 +1023,35 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 18 Step 18.1〜18.2完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - i18nファイル配置のレビュー・移動
+**Timestamp**: 2026-07-21T02:03:00Z
+**User Input**: "i18n のファイルの配置はそこで良いのだっけ？"
+**AI Response**: "Section 13で追加した`auth`/`registration`/`users`/`home`の翻訳キーが、UNIT-01が用意した`design-system/i18n/`配下の`common`名前空間にそのまま追加されている点を指摘。明示的な設計決定ではなく実装時の成り行きであることを説明し、UNIT-03以降も同じ場所に積み上がる懸念から、UNIT-02の画面固有文言を`design-system/`の外の名前空間へ分離する案を提示。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、レビュー対応
+
+---
+
+## UNIT-02 Code Generation Part 2 - i18n名前空間分割の要否についての再検討
+**Timestamp**: 2026-07-21T02:04:30Z
+**User Input**: "design-system とそれ以外でi18nファイルを分ける意義はある？一箇所にまとまってた方が良くない？"
+**AI Response**: "前回提示した名前空間・ファイル分割の提案を撤回。`common.json`内で`auth.*`/`registration.*`/`users.*`/`home.*`とキーをプレフィックスで分けている時点で「汎用語彙」と「画面固有文言」の区別は既についており、ファイル・名前空間まで分割すると追加のたびに置き場所を判断するコストが増えるだけと判断。1ファイルに集約する現状の名前空間構成を維持する方針に修正。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、レビュー対応
+
+---
+
+## UNIT-02 Code Generation Part 2 - i18nディレクトリの物理配置変更
+**Timestamp**: 2026-07-21T02:05:30Z
+**User Input**: "一ファイルにするとして、どこに置くのが適切？"
+**AI Response**: "ファイル分割は不要という前提のまま、物理的な配置（ディレクトリ）についてのみ再検討。`design-system/i18n/`を参照している箇所を洗い出したところ6ファイル（`main.tsx`、`test/setup.ts`、`api/http.ts`・`api/registrations.ts`、`pages/RegisterStep1Page.tsx`・`RegisterStep2Page.tsx`）に限定されており移動コストが小さいことを確認。i18nは実質的にアプリ全体で使う横断的インフラであり、本ユニットで新設した`auth/`・`api/`と同じ理由で`design-system/`の外（`frontend/src/i18n/`、`design-system/`と同階層）へ移動することを提案。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、レビュー対応
+
+---
+
+## UNIT-02 Code Generation Part 2 - i18nディレクトリ移動の実施
+**Timestamp**: 2026-07-21T02:06:00Z
+**User Input**: "OK"
+**AI Response**: "`git mv frontend/src/design-system/i18n frontend/src/i18n`でディレクトリを移動。importパスの追従漏れが2箇所（`design-system/components/LanguageSwitcher.tsx`・そのテスト。文字列一致検索`design-system/i18n`ではヒットしない相対パス`../i18n`だったため、`npm run build`の型エラーで発覚し追加修正）を含め、計8ファイルのimportパスを`../i18n`/`../../i18n`へ修正。`npx tsc --noEmit`・`npm test`（105件成功）・`npm run lint`・`npm run build`ですべて成功することを確認。`aidlc-docs/construction/unit-01/code/component-inventory.md`（UNIT-01時点の記載に取り消し線＋訂正注記を追加）、`aidlc-docs/construction/unit-02/code/frontend-summary.md`（移動の経緯を追記）、`frontend/README.md`（ディレクトリ構成図を更新）を修正。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、レビュー対応完了
+
+---

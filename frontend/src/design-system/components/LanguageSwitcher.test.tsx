@@ -17,7 +17,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it } from 'vitest'
-import i18n from '../i18n'
+import i18n from '../../i18n'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 describe('LanguageSwitcher', () => {

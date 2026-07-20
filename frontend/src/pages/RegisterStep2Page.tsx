@@ -30,7 +30,7 @@ import {
 } from '../design-system/components'
 import { completeRegistration } from '../api/registrations'
 import { ApiError } from '../api/http'
-import type { Language } from '../design-system/i18n'
+import type { Language } from '../i18n'
 
 const formStyle = { display: 'flex', flexDirection: 'column' as const, gap: 'var(--mm-space-3)' }
 

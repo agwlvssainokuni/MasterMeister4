@@ -9,7 +9,7 @@
 | `tokens/tokens.css` | 2層デザイントークン（プリミティブ`--mm-palette-*` / セマンティック`--mm-color-*`等）、ライト/ダーク |
 | `tokens/fonts.ts` | `@fontsource`によるNoto Sans JP・Noto Sans Monoのセルフホスト |
 | `theme/ThemeProvider.tsx` | ダークモード（light/dark/system） |
-| `i18n/index.ts`, `i18n/locales/{ja,en}/{common,design-system}.json` | react-i18next初期化、2名前空間 |
+| ~~`i18n/index.ts`, `i18n/locales/{ja,en}/{common,design-system}.json`~~ | react-i18next初期化、2名前空間。**訂正（UNIT-02にて）**: `common`名前空間にUNIT-02以降の画面固有文言も蓄積される運用となったため、`frontend/src/design-system/i18n/`から`frontend/src/i18n/`（`design-system/`と同階層）へ移動。詳細は`aidlc-docs/construction/unit-02/code/frontend-summary.md`参照 |
 | `ErrorBoundary.tsx` | 描画エラー時の汎用フォールバック（コンソール出力のみ） |
 
 ## コンポーネント（`components/`配下）

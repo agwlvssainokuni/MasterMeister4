@@ -15,8 +15,8 @@
  */
 
 import { useTranslation } from 'react-i18next'
-import { changeLanguage } from '../i18n'
-import type { Language } from '../i18n'
+import { changeLanguage } from '../../i18n'
+import type { Language } from '../../i18n'
 import styles from './HeaderControl.module.css'
 
 export function LanguageSwitcher() {
