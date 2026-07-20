@@ -879,3 +879,11 @@
 **Context**: CONSTRUCTION - UNIT-02 NFR Design、成果物生成
 
 ---
+
+## UNIT-02 NFR Design - レビュー指摘2点の反映（RegistrationRateState未定義、レート制限値未確定）
+**Timestamp**: 2026-07-20T22:00:00Z
+**User Input**: "確認しておいた方が良い事項はありますか？" → (2点の指摘と推奨を提示) → "OK"
+**AI Response**: "推奨どおり反映。(1) domain-entities.mdに新規§5「RegistrationRateState」（email主キー、requestCount、windowStartAt、LoginAttemptStateと同様のパターン）を追加し、AuditLogEntry以降を§6・§7に繰り下げ（§5.1→§6.1参照箇所もdomain-entities.md・business-rules.mdで更新）。(2) business-rules.mdに新規BR-REG-07（登録開始エンドポイントのレート制限、デフォルト1時間あたり3回、LoginAttemptGuardの5回/15分より緩め）を追加。logical-components.mdのRegistrationRateGuard説明にBR-REG-07とデフォルト値への参照を追記。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Design、レビュー指摘の反映
+
+---
