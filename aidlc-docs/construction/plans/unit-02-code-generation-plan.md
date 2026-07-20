@@ -87,33 +87,33 @@
 
 ### 9. Security Configuration
 
-- [ ] Step 9.1: `SecurityConfig`（`cherry.mastermeister.common.security`）を作成する（`SecurityFilterChain`。`/api/**`以外は`permitAll()`とする（SPA配信のため、ページレベル認可はクライアント側のAuthContextが担う）。`/api/**`配下は従来どおりnfr-design-patterns.md §3.6のURLパターンマッチング: `/api/auth/**`・`/api/registrations/**`を`permitAll()`、`/api/admin/**`を`hasRole('ADMIN')`、その他の`/api/**`を`authenticated()`とする）
-- [ ] Step 9.2: `JwtDecoder`/`JwtEncoder` Beanを作成する（HS256、`AppProperties.Jwt`（Step 1.5で作成）から鍵・有効期限を取得。鍵長検証は`AppProperties.Jwt`のコンパクトコンストラクタで実施済みのため、Bean定義側では追加検証しない）
-- [ ] Step 9.3: `JwtAuthenticationConverter`を作成する（JWTクレーム→ロール変換）
-- [ ] Step 9.4: HTTPセキュリティヘッダ設定を作成する（Spring Securityデフォルト + CSP明示、nfr-design-patterns.md §3.2）
-- [ ] Step 9.5: CORS設定を作成する（許可オリジンの明示列挙）
-- [ ] Step 9.6: SPAフォールバックルーティングを実装する（`WebMvcConfigurer`の`addResourceHandlers`にPathResourceResolverを拡張し、リクエストパスが実在する静的リソースに一致すればそれを返却、`/api/**`はコントローラへスルー（`addResourceHandlers`の対象外とする）、それ以外は`/index.html`にフォールバックする。React Routerのクライアントサイドルート（`/`, `/login`, `/register`, `/users`等）がリロード・直接アクセスされた場合も正しく配信されることをStep 18.2の手動確認で検証する）
+- [x] Step 9.1: `SecurityConfig`（`cherry.mastermeister.common.security`）を作成する（`SecurityFilterChain`。`/api/**`以外は`permitAll()`とする（SPA配信のため、ページレベル認可はクライアント側のAuthContextが担う）。`/api/**`配下は従来どおりnfr-design-patterns.md §3.6のURLパターンマッチング: `/api/auth/**`・`/api/registrations/**`を`permitAll()`、`/api/admin/**`を`hasRole('ADMIN')`、その他の`/api/**`を`authenticated()`とする）
+- [x] Step 9.2: `JwtDecoder`/`JwtEncoder` Beanを作成する（HS256、`AppProperties.Jwt`（Step 1.5で作成）から鍵・有効期限を取得。鍵長検証は`AppProperties.Jwt`のコンパクトコンストラクタで実施済みのため、Bean定義側では追加検証しない）
+- [x] Step 9.3: `JwtAuthenticationConverter`を作成する（JWTクレーム→ロール変換）
+- [x] Step 9.4: HTTPセキュリティヘッダ設定を作成する（Spring Securityデフォルト + CSP明示、nfr-design-patterns.md §3.2）
+- [x] Step 9.5: CORS設定を作成する（許可オリジンの明示列挙）
+- [x] Step 9.6: SPAフォールバックルーティングを実装する（`WebMvcConfigurer`の`addResourceHandlers`にPathResourceResolverを拡張し、リクエストパスが実在する静的リソースに一致すればそれを返却、`/api/**`はコントローラへスルー（`addResourceHandlers`の対象外とする）、それ以外は`/index.html`にフォールバックする。React Routerのクライアントサイドルート（`/`, `/login`, `/register`, `/users`等）がリロード・直接アクセスされた場合も正しく配信されることをStep 18.2の手動確認で検証する）
 
 ### 10. API Layer Generation
 
-- [ ] Step 10.1: `GlobalExceptionHandler`（`cherry.mastermeister.common`）を作成する（`@RestControllerAdvice`、BR-API-01形式への変換、nfr-design-patterns.md §3.5）
-- [ ] Step 10.2: `ApiErrorResponse` DTOを作成する（`code`, `message`）
-- [ ] Step 10.3: リクエストDTOを作成する（Bean Validationアノテーション付与）: `RegistrationStartRequest`, `RegistrationCompleteRequest`, `LoginRequest`, `RefreshRequest`
-- [ ] Step 10.4: `RegistrationController`（`cherry.mastermeister.registration`）を作成する（`POST /api/registrations`, `POST /api/registrations/{token}/complete`）
-- [ ] Step 10.5: `AuthController`（`cherry.mastermeister.auth`）を作成する（`POST /api/auth/login`, `POST /api/auth/refresh`, `POST /api/auth/logout`）
-- [ ] Step 10.6: `AdminUserController`（`cherry.mastermeister.registration`）を作成する（`GET /api/admin/users`, `POST /api/admin/users/{id}/approve`, `.../reject`, `.../disable`, `.../enable`。frontend-components.md §4準拠）
-- [ ] Step 10.7: OpenAPI/Swagger UI自動生成を設定する（`springdoc-openapi-starter-webmvc-ui`依存追加、NFR §7.12 API仕様書）
+- [x] Step 10.1: `GlobalExceptionHandler`（`cherry.mastermeister.common`）を作成する（`@RestControllerAdvice`、BR-API-01形式への変換、nfr-design-patterns.md §3.5）
+- [x] Step 10.2: `ApiErrorResponse` DTOを作成する（`code`, `message`）
+- [x] Step 10.3: リクエストDTOを作成する（Bean Validationアノテーション付与）: `RegistrationStartRequest`, `RegistrationCompleteRequest`, `LoginRequest`, `RefreshRequest`
+- [x] Step 10.4: `RegistrationController`（`cherry.mastermeister.registration`）を作成する（`POST /api/registrations`, `POST /api/registrations/{token}/complete`）
+- [x] Step 10.5: `AuthController`（`cherry.mastermeister.auth`）を作成する（`POST /api/auth/login`, `POST /api/auth/refresh`, `POST /api/auth/logout`）
+- [x] Step 10.6: `AdminUserController`（`cherry.mastermeister.registration`）を作成する（`GET /api/admin/users`, `POST /api/admin/users/{id}/approve`, `.../reject`, `.../disable`, `.../enable`。frontend-components.md §4準拠）
+- [x] Step 10.7: OpenAPI/Swagger UI自動生成を設定する（`springdoc-openapi-starter-webmvc-ui`依存追加、NFR §7.12 API仕様書）
 
 ### 11. API Layer Unit Testing
 
-- [ ] Step 11.1: `@WebMvcTest`で`RegistrationController`のテストを作成する（正常系・トークン無効・パスワードポリシー違反・レート制限）
-- [ ] Step 11.2: `@WebMvcTest`で`AuthController`のテストを作成する（ログイン成功・失敗・ロック中、リフレッシュ正常・再利用検知）
-- [ ] Step 11.3: `@WebMvcTest`で`AdminUserController`のテストを作成する（管理者ロールチェック、各ステータス遷移操作）
-- [ ] Step 11.4: `SecurityConfig`の統合テストを作成する（`/api/admin/**`が非ADMINで403、未認証で401等）
+- [x] Step 11.1: `@WebMvcTest`で`RegistrationController`のテストを作成する（正常系・トークン無効・パスワードポリシー違反・レート制限）
+- [x] Step 11.2: `@WebMvcTest`で`AuthController`のテストを作成する（ログイン成功・失敗・ロック中、リフレッシュ正常・再利用検知）
+- [x] Step 11.3: `@WebMvcTest`で`AdminUserController`のテストを作成する（管理者ロールチェック、各ステータス遷移操作）
+- [x] Step 11.4: `SecurityConfig`の統合テストを作成する（`/api/admin/**`が非ADMINで403、未認証で401等）
 
 ### 12. API Layer Summary
 
-- [ ] Step 12.1: `aidlc-docs/construction/unit-02/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
+- [x] Step 12.1: `aidlc-docs/construction/unit-02/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
 
 ### 13. Frontend Components Generation
 

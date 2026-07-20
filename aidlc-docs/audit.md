@@ -967,3 +967,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 7〜8完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 9〜12完了（Security/API Layer）
+**Timestamp**: 2026-07-21T00:40:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Section 9: SecurityConfig（PasswordEncoder, JwtEncoder/Decoder, JwtAuthenticationConverter, SecurityFilterChain, CORS, CSP）とSpaWebConfig（WebMvcConfigurerのリソースハンドラでSPAフォールバック）を作成。実装中にMacAlgorithmがorg.springframework.security.oauth2.jwtではなくoauth2.jose.jwsパッケージに移動していたことを発見し修正。Section 10: GlobalExceptionHandler（MessageSource経由の多言語エラーメッセージ解決）、ApiErrorResponse、4リクエストDTO、UserSummaryResponse、RegistrationController、AuthController、AdminUserController、OpenApiConfigを作成。Section 11: 4テストクラス・19テストケースを作成。実行時、Spring Boot 4.1で@WebMvcTest/@AutoConfigureMockMvcがspring-boot-starter-webmvc-testモジュールへ移動、@MockBeanが廃止され@MockitoBeanに置き換わっていたことを発見し対応。さらに@AuthenticationPrincipalの引数リゾルバは@EnableWebSecurity（SecurityConfig）のインポートが必要で、かつSecurityMockMvcRequestPostProcessors.jwt()はaddFilters=falseでは機能しないため、AdminUserControllerTestのみSecurityConfigをインポートしADMIN権限のJWTで実フィルタチェーンを通す方式に修正。全19テスト成功を確認。Section 12: api-layer-summary.mdを作成。計画チェックリストSection 9〜12を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 9〜12完了
+
+---
