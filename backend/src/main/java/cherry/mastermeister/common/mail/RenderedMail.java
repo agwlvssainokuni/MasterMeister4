@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.audit.entity;
+package cherry.mastermeister.common.mail;
 
 /**
- * domain-entities.md §6.1。UNIT-02で追加する9種別。他ユニットが追加する種別は
- * 各ユニットのFunctional Designで定義し、本enumに追記する。
+ * business-rules.md BR-MAIL-03。{@code subject}は本文（HTML）内の{@code <title>}要素から抽出したもの。
  */
-public enum AuditEventType {
-    LOGIN,
-    LOGOUT,
-    LOGIN_FAILURE,
-    REGISTRATION_REQUESTED,
-    REGISTRATION_COMPLETED,
-    USER_APPROVED,
-    USER_REJECTED,
-    USER_DISABLED,
-    USER_ENABLED,
-    TOKEN_REUSE_DETECTED
+public record RenderedMail(String subject, String htmlBody) {
 }

@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.audit.entity;
+package cherry.mastermeister.common.exception;
+
+import org.springframework.http.HttpStatus;
 
 /**
- * domain-entities.md §6.1。UNIT-02で追加する9種別。他ユニットが追加する種別は
- * 各ユニットのFunctional Designで定義し、本enumに追記する。
+ * BR-REG-03・BR-REG-04。パスワード不一致・ユーザ不存在・未承認/却下/無効化のいずれも、
+ * メールアドレス列挙攻撃対策のため同一のコード・メッセージとする。
  */
-public enum AuditEventType {
-    LOGIN,
-    LOGOUT,
-    LOGIN_FAILURE,
-    REGISTRATION_REQUESTED,
-    REGISTRATION_COMPLETED,
-    USER_APPROVED,
-    USER_REJECTED,
-    USER_DISABLED,
-    USER_ENABLED,
-    TOKEN_REUSE_DETECTED
+public class AuthenticationFailedException extends ApiException {
+
+    public AuthenticationFailedException() {
+        super("AUTH_INVALID_CREDENTIALS", HttpStatus.UNAUTHORIZED);
+    }
 }

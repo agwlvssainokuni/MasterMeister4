@@ -26,7 +26,7 @@ LoginPage (PublicLayout)
 
 ### API連携
 - `POST /api/auth/login` `{ email, password }` → 成功時`{ accessToken, refreshToken }`。成功時はトークンを保存し、トップ画面（`/`、§5参照）へ遷移
-- エラーレスポンス（BR-API-01形式）の`code`に応じて表示メッセージを出し分ける（例: `AUTH_INVALID_CREDENTIALS`→通常の認証失敗メッセージ、`AUTH_ACCOUNT_LOCKED`→ロック中メッセージ、`AUTH_ACCOUNT_NOT_APPROVED`→承認待ち/却下済みメッセージ）
+- エラーレスポンス（BR-API-01形式）の`code`に応じて表示メッセージを出し分ける: `AUTH_INVALID_CREDENTIALS`→認証失敗メッセージ（パスワード不一致・ユーザ不存在・未承認/却下/無効化のいずれも同一のコード・メッセージとする。BR-REG-03によりステータスを理由に別コードを返すとメールアドレス列挙攻撃対策が骨抜きになるため。Code Generation時のレビューで修正）、`AUTH_ACCOUNT_LOCKED`→ロック中メッセージ（BR-LOGIN-01の失敗カウントは存在しないメールアドレスに対しても同様に記録されるため、列挙攻撃には利用できない）
 
 ---
 

@@ -14,21 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.audit.entity;
+package cherry.mastermeister.auth;
 
-/**
- * domain-entities.md §6.1。UNIT-02で追加する9種別。他ユニットが追加する種別は
- * 各ユニットのFunctional Designで定義し、本enumに追記する。
- */
-public enum AuditEventType {
-    LOGIN,
-    LOGOUT,
-    LOGIN_FAILURE,
-    REGISTRATION_REQUESTED,
-    REGISTRATION_COMPLETED,
-    USER_APPROVED,
-    USER_REJECTED,
-    USER_DISABLED,
-    USER_ENABLED,
-    TOKEN_REUSE_DETECTED
+public record IssuedRefreshToken(Long userId, String rawToken) {
 }

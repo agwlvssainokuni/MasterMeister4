@@ -943,3 +943,19 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 2〜5完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 6実装中、BR-REG-03とfrontend-components.mdの矛盾を発見
+**Timestamp**: 2026-07-20T23:58:00Z
+**User Input**: "確認したい"文脈（AuthenticationService実装前のレビュー） → "OK"
+**AI Response**: "AuthenticationServiceの例外設計を検討中、BR-REG-03（未承認/却下/無効化ユーザのログイン拒否時は認証情報不備時と同一メッセージとする、メールアドレス列挙攻撃対策）と、frontend-components.md §1（AUTH_ACCOUNT_NOT_APPROVEDを別エラーコードとして列挙）が矛盾していることを発見。AUTH_ACCOUNT_NOT_APPROVEDを別コードで返すとパスワード正誤に関わらずアカウントの存在・ステータスが判明してしまう問題を指摘。一方AUTH_ACCOUNT_LOCKEDはLoginAttemptGuardが存在しないメールアドレスに対しても同様に失敗カウントを記録するため列挙攻撃には利用できず、区別して良いと判断。BR-REG-03を厳格に適用しAUTH_ACCOUNT_NOT_APPROVEDを廃止、AUTH_INVALID_CREDENTIALSに統合する方針で承認を得て、frontend-components.md §1を修正。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 6実装中の設計矛盾修正
+
+---
+
+## UNIT-02 Code Generation Part 2 - Section 6完了、Section 7一部完了
+**Timestamp**: 2026-07-21T00:15:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Section 6: TokenGenerator, PasswordBreachChecker（HIBP k-Anonymity API、RestClient、3秒タイムアウト、フェイルオープン）, MailTemplateRenderer（BR-MAIL-03件名抽出）, EmailNotificationService, メールテンプレート6ファイル, RegistrationRateGuard, UserRegistrationService（登録・承認・却下・却下取消・無効化・再有効化の全フロー）, AdminBootstrapService, LoginAttemptGuard, AuthenticationService, RefreshTokenService, AuditEventPublisher, AuditLogServiceを作成。実装中にRefreshTokenService.rotate()の再利用検知で発行すべきAuditEventTypeが未定義だったため`TOKEN_REUSE_DETECTED`を追加（domain-entities.md §6/§6.1, business-rules.md BR-AUDIT-02, business-logic-model.md §6を更新）。ApiException（BR-API-01基底クラス、code+HttpStatus、メッセージはNFR-7.3に基づきGlobalExceptionHandlerがMessageSource経由で多言語解決する設計とし、ハードコード文言は持たせない）と6種の具象例外クラスを作成し、messages_ja/en.propertiesにerror.<code>キーを追加。Section 7: MailTemplateRenderer（件名抽出の境界値: 改行、属性付きtitle、title欠落、空title、HTMLエンティティデコード）、TokenGenerator、PasswordBreachChecker（MockRestServiceServerでHIBP応答をモック）、RegistrationRateGuard、LoginAttemptGuardのテストを作成、全て成功。:backend:compileJavaで全体のコンパイルも確認。計画チェックリストSection 6を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 6完了・Section 7進行中
+
+---

@@ -58,19 +58,19 @@
 
 ### 6. Business Logic Generation
 
-- [ ] Step 6.1: `TokenGenerator`（`cherry.mastermeister.common.security`）を作成する（ランダムトークン生成・ハッシュ化の共通ユーティリティ、BR-REG-02）
-- [ ] Step 6.2: `PasswordBreachChecker`（`cherry.mastermeister.registration`）を作成する（HIBP等API呼び出し、タイムアウト3秒、フェイルオープン、BR-PWD-02）
-- [ ] Step 6.3: `MailTemplateRenderer`（`cherry.mastermeister.common.mail`）を作成する（`cherry-mustache-core`のラップ、言語別テンプレート解決、BR-MAIL-03の件名抽出ロジック: 改行除去は抽出専用コピーに適用、非貪欲マッチ抽出、トリム、HTMLエンティティデコード、未検出/空時は例外送出）
-- [ ] Step 6.4: `EmailNotificationService`（COMP-06、`cherry.mastermeister.registration`）を作成する（登録確認・承認結果・却下結果メール送信、`MailTemplateRenderer`・`JavaMailSender`利用、送信失敗時フェイルオープン）
-- [ ] Step 6.5: メールテンプレートファイルを作成する（`backend/src/main/resources/mail-templates/{ja,en}/registration-confirmation.html`, `approval-result.html`, `rejection-result.html`。各`<title>`要素に件名を含む）
-- [ ] Step 6.6: `RegistrationRateGuard`（`cherry.mastermeister.registration`）を作成する（BR-REG-07、デフォルト1時間3回）
-- [ ] Step 6.7: `UserRegistrationService`（COMP-01、`cherry.mastermeister.registration`）を作成する（business-logic-model.md §1〜3の登録・承認・却下・却下取消・無効化・再有効化フローを実装。`createApprovedAccount()`含む）
-- [ ] Step 6.8: `AdminBootstrapService`（COMP-02、`cherry.mastermeister.registration`）を作成する（`ApplicationRunner`、`AppProperties.AdminBootstrap`経由での初期管理者作成、business-logic-model.md §4）
-- [ ] Step 6.9: `LoginAttemptGuard`（COMP-05、`cherry.mastermeister.auth`）を作成する（BR-LOGIN-01〜03）
-- [ ] Step 6.10: `AuthenticationService`（COMP-03、`cherry.mastermeister.auth`）を作成する（ログイン・ログアウト・アクセストークン発行、`JwtEncoder`利用、business-logic-model.md §5）
-- [ ] Step 6.11: `RefreshTokenService`（COMP-04、`cherry.mastermeister.auth`）を作成する（ローテーション・再利用検知、`TokenGenerator`共用、business-logic-model.md §6。無効化時の`ADMIN_DISABLED`一括失効メソッドも含む）
-- [ ] Step 6.12: `AuditEventPublisher`（COMP-19、`cherry.mastermeister.audit`）を作成する
-- [ ] Step 6.13: `AuditLogService`（COMP-18、記録機能のみ、`cherry.mastermeister.audit`）を作成する（`@TransactionalEventListener(phase=AFTER_COMMIT)` + `@Transactional(propagation=REQUIRES_NEW)`、BR-AUDIT-01）
+- [x] Step 6.1: `TokenGenerator`（`cherry.mastermeister.common.security`）を作成する（ランダムトークン生成・ハッシュ化の共通ユーティリティ、BR-REG-02）
+- [x] Step 6.2: `PasswordBreachChecker`（`cherry.mastermeister.registration`）を作成する（HIBP等API呼び出し、タイムアウト3秒、フェイルオープン、BR-PWD-02）
+- [x] Step 6.3: `MailTemplateRenderer`（`cherry.mastermeister.common.mail`）を作成する（`cherry-mustache-core`のラップ、言語別テンプレート解決、BR-MAIL-03の件名抽出ロジック: 改行除去は抽出専用コピーに適用、非貪欲マッチ抽出、トリム、HTMLエンティティデコード、未検出/空時は例外送出）
+- [x] Step 6.4: `EmailNotificationService`（COMP-06、`cherry.mastermeister.registration`）を作成する（登録確認・承認結果・却下結果メール送信、`MailTemplateRenderer`・`JavaMailSender`利用、送信失敗時フェイルオープン）
+- [x] Step 6.5: メールテンプレートファイルを作成する（`backend/src/main/resources/mail-templates/{ja,en}/registration-confirmation.html`, `approval-result.html`, `rejection-result.html`。各`<title>`要素に件名を含む）
+- [x] Step 6.6: `RegistrationRateGuard`（`cherry.mastermeister.registration`）を作成する（BR-REG-07、デフォルト1時間3回）
+- [x] Step 6.7: `UserRegistrationService`（COMP-01、`cherry.mastermeister.registration`）を作成する（business-logic-model.md §1〜3の登録・承認・却下・却下取消・無効化・再有効化フローを実装。`createApprovedAccount()`含む）
+- [x] Step 6.8: `AdminBootstrapService`（COMP-02、`cherry.mastermeister.registration`）を作成する（`ApplicationRunner`、`AppProperties.AdminBootstrap`経由での初期管理者作成、business-logic-model.md §4）
+- [x] Step 6.9: `LoginAttemptGuard`（COMP-05、`cherry.mastermeister.auth`）を作成する（BR-LOGIN-01〜03）
+- [x] Step 6.10: `AuthenticationService`（COMP-03、`cherry.mastermeister.auth`）を作成する（ログイン・ログアウト・アクセストークン発行、`JwtEncoder`利用、business-logic-model.md §5）
+- [x] Step 6.11: `RefreshTokenService`（COMP-04、`cherry.mastermeister.auth`）を作成する（ローテーション・再利用検知、`TokenGenerator`共用、business-logic-model.md §6。無効化時の`ADMIN_DISABLED`一括失効メソッドも含む）
+- [x] Step 6.12: `AuditEventPublisher`（COMP-19、`cherry.mastermeister.audit`）を作成する
+- [x] Step 6.13: `AuditLogService`（COMP-18、記録機能のみ、`cherry.mastermeister.audit`）を作成する（`@TransactionalEventListener(phase=AFTER_COMMIT)` + `@Transactional(propagation=REQUIRES_NEW)`、BR-AUDIT-01）
 
 ### 7. Business Logic Unit Testing
 

@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.audit.entity;
+package cherry.mastermeister.common.exception;
+
+import org.springframework.http.HttpStatus;
 
 /**
- * domain-entities.md §6.1。UNIT-02で追加する9種別。他ユニットが追加する種別は
- * 各ユニットのFunctional Designで定義し、本enumに追記する。
+ * BR-REG-01。承認/却下/無効化/再有効化を、遷移元として許容されないステータスのUserに対して行おうとした場合。
  */
-public enum AuditEventType {
-    LOGIN,
-    LOGOUT,
-    LOGIN_FAILURE,
-    REGISTRATION_REQUESTED,
-    REGISTRATION_COMPLETED,
-    USER_APPROVED,
-    USER_REJECTED,
-    USER_DISABLED,
-    USER_ENABLED,
-    TOKEN_REUSE_DETECTED
+public class InvalidUserStateTransitionException extends ApiException {
+
+    public InvalidUserStateTransitionException() {
+        super("USER_STATE_TRANSITION_INVALID", HttpStatus.CONFLICT);
+    }
 }
