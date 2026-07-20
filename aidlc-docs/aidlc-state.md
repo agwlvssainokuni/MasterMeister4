@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation Part 2（セクション1完了、セクション2着手前）
-- **Next Stage**: セクション2（デザイントークン・プロバイダ）へ
+- **Current Stage**: UNIT-01 デザインシステム基盤 - Code Generation Part 2（セクション2完了）
+- **Next Stage**: セクション3（基本部品・フォーム）へ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-01)

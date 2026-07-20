@@ -15,6 +15,10 @@
  */
 
 import '@testing-library/jest-dom/vitest'
+import i18n from '../design-system/i18n'
+
+// jsdomのnavigator.languageはen-USになるため、テストでは日本語表示に固定する。
+void i18n.changeLanguage('ja')
 
 // jsdom does not implement matchMedia; ThemeProvider's system-theme detection needs it.
 if (!window.matchMedia) {

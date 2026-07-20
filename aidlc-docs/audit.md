@@ -599,3 +599,11 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション1完了
 
 ---
+
+## UNIT-01 Code Generation Part 2 - セクション2完了（デザイントークン・プロバイダ）
+**Timestamp**: 2026-07-20T18:03:00Z
+**User Input**: "進めてください。"
+**AI Response**: "reference/design-system/tokens/tokens.css、theme/ThemeProvider.tsx、i18n/index.tsを基に、frontend/src/design-system/配下へtokens.css（2層トークン、NFR-8.1のタブレットブレークポイント変数を追加）、tokens/fonts.ts（@fontsource/noto-sans-jp・noto-sans-mono、font-display: swap確認済み）、theme/ThemeProvider.tsx（light/dark/system、localStorage鍵はmastermeister.theme）、i18n/index.ts（common/design-system名前空間、localStorage鍵はmastermeister.lang）、i18n/locales/{ja,en}/{common,design-system}.json、ErrorBoundary.tsx（コンソール出力のみ）を作成。main.tsxに全プロバイダを配線。tsconfig.app.jsonにresolveJsonModuleを追加。test/setup.tsにi18n日本語固定処理を追加。npm run buildが型エラーなく成功することを確認。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション2完了
+
+---

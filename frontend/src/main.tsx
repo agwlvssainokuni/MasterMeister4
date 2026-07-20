@@ -14,13 +14,24 @@
  * limitations under the License.
  */
 
-import { StrictMode } from 'react'
+import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
+import './design-system/tokens/fonts.ts'
+import './design-system/tokens/tokens.css'
+import './design-system/i18n'
+import { ThemeProvider } from './design-system/theme/ThemeProvider.tsx'
+import { ErrorBoundary } from './design-system/ErrorBoundary.tsx'
 import './index.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ErrorBoundary>
+      <ThemeProvider>
+        <Suspense fallback={null}>
+          <App />
+        </Suspense>
+      </ThemeProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

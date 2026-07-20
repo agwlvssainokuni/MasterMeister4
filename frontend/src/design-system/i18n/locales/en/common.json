@@ -1,0 +1,30 @@
+{
+  "state": {
+    "required": "Required",
+    "empty": "No data",
+    "loading": "Loading...",
+    "error": "Something went wrong"
+  },
+  "action": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "search": "Search",
+    "clear": "Clear",
+    "copy": "Copy",
+    "approve": "Approve",
+    "reject": "Reject",
+    "login": "Log in",
+    "logout": "Log out"
+  },
+  "alert": {
+    "info": "Info",
+    "success": "Success",
+    "warning": "Warning",
+    "danger": "Error"
+  }
+}

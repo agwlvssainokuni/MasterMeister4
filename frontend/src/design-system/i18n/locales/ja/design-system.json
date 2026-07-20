@@ -1,0 +1,21 @@
+{
+  "app": {
+    "name": "MasterMeister"
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "users": "ユーザ管理",
+    "connections": "RDBMS接続設定",
+    "accessControl": "アクセス制御",
+    "masterData": "マスタメンテナンス",
+    "savedQueries": "保存クエリ",
+    "queryBuilder": "クエリビルダー",
+    "queryHistory": "クエリ実行履歴",
+    "auditLog": "監査ログ"
+  },
+  "theme": {
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム"
+  }
+}

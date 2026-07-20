@@ -1,0 +1,21 @@
+{
+  "app": {
+    "name": "MasterMeister"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "User Management",
+    "connections": "RDBMS Connections",
+    "accessControl": "Access Control",
+    "masterData": "Master Data",
+    "savedQueries": "Saved Queries",
+    "queryBuilder": "Query Builder",
+    "queryHistory": "Query History",
+    "auditLog": "Audit Log"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  }
+}

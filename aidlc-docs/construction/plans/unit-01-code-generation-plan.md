@@ -65,11 +65,11 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 
 ### 2. Frontend Components Generation - デザイントークン・プロバイダ
 
-- [ ] Step 2.1: デザイントークン（2層: プリミティブ`--mm-palette-*` + セマンティック`--mm-color-*`/`--mm-font-*`/`--mm-space-*`等、ライト/ダーク両対応）をCSSとして作成する
-- [ ] Step 2.2: セルフホストフォント（本文用・SQL/コード表示用等幅フォント）を`@fontsource`経由で導入し、`font-display: swap`を設定する
-- [ ] Step 2.3: `ThemeProvider`を作成する（light/dark/system、`data-theme`属性切り替え、`localStorage`、`matchMedia`）
-- [ ] Step 2.4: i18n初期化（react-i18next、`common`/`design-system`名前空間、日本語・英語リソース、`navigator.language`検出、`localStorage`保存）を作成する
-- [ ] Step 2.5: `ErrorBoundary`を作成する（コンソール出力のみ、汎用フォールバックUI）
+- [x] Step 2.1: デザイントークン（2層: プリミティブ`--mm-palette-*` + セマンティック`--mm-color-*`/`--mm-font-*`/`--mm-space-*`等、ライト/ダーク両対応）をCSSとして作成する
+- [x] Step 2.2: セルフホストフォント（本文用・SQL/コード表示用等幅フォント）を`@fontsource`経由で導入し、`font-display: swap`を設定する
+- [x] Step 2.3: `ThemeProvider`を作成する（light/dark/system、`data-theme`属性切り替え、`localStorage`、`matchMedia`）
+- [x] Step 2.4: i18n初期化（react-i18next、`common`/`design-system`名前空間、日本語・英語リソース、`navigator.language`検出、`localStorage`保存）を作成する
+- [x] Step 2.5: `ErrorBoundary`を作成する（コンソール出力のみ、汎用フォールバックUI）
 
 ### 3. Frontend Components Generation - 基本部品・フォーム
 
