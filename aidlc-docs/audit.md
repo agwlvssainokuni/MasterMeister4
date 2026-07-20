@@ -111,3 +111,11 @@
 **Context**: INCEPTION - User Stories (Part 1 Planning, Steps 2-7)
 
 ---
+
+## User Stories - Plan Questions Answered (Recommendations Applied)
+**Timestamp**: 2026-07-20T10:50:00Z
+**User Input**: "推奨で反映。"
+**AI Response**: "Filled story-generation-plan.md answers: Q1=A (2 personas: general user/admin), Q2=B (group related FRs per story), Q3=A (Feature-Based x Epic-Based, 9 epics per requirements.md §5.0-5.8), Q4=A (Given-When-Then acceptance criteria), Q5=A (annotate PBT-candidate stories). All answers are unambiguous letter choices — no follow-up clarification needed. Logging plan approval prompt and presenting to user."
+**Context**: INCEPTION - User Stories (Steps 8-12)
+
+---
