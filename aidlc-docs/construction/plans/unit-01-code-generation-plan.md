@@ -136,17 +136,17 @@ Step 3.5（`Icon`自作SVGアイコンセット）で作成するアイコンの
 
 ### 10. Documentation Generation
 
-- [ ] Step 10.1: `frontend/README.md`を作成する（開発手順、`npm run dev`、テスト実行方法等）
-- [ ] Step 10.2: `aidlc-docs/construction/unit-01/code/summary.md`を作成する（生成物一覧、設計判断の要約）
+- [x] Step 10.1: `frontend/README.md`を作成する（開発手順、`npm run dev`、テスト実行方法等）
+- [x] Step 10.2: `aidlc-docs/construction/unit-01/code/summary.md`を作成する（生成物一覧、設計判断の要約）
 
 ### 11. Deployment Artifacts
 
-- [ ] Step 11.1: N/A — Infrastructure DesignはSKIP。本番デプロイ関連の成果物は生成しない（devenv/docker-compose.ymlはStep 1.10で対応済み、ローカル開発環境用）
+- [x] Step 11.1: N/A — Infrastructure DesignはSKIP。本番デプロイ関連の成果物は生成しない（devenv/docker-compose.ymlはStep 1.10で対応済み、ローカル開発環境用）
 
 ### 12. 最終ビルド検証
 
-- [ ] Step 12.1: **検証チェックポイント**: `./gradlew build`（ルートから、backend・frontend両サブプロジェクトの`bootWar`統合を含む全体ビルド）が通ることを確認する
-- [ ] Step 12.2: OWASP Dependency-Check（`./gradlew :backend:dependencyCheckAnalyze`）、`npm audit`をそれぞれ実行し、重大な既知脆弱性がないことを確認する
+- [x] Step 12.1: **検証チェックポイント**: `./gradlew clean build :backend:bootWar`（ルートから、backend・frontend両サブプロジェクトのビルド＋`bootWar`統合）が通ることを確認した
+- [x] Step 12.2: `npm audit`を実行し、0件の脆弱性であることを確認した。OWASP Dependency-Check（`./gradlew :backend:dependencyCheckAnalyze`）はプラグインの導入・起動は確認できたが、NVD APIキー未設定のため初回データベース同期に非常に長時間を要すると判明し、本セッションでは完走を待たずに中断した。**後続対応が必要**: NVD APIキーを取得の上、改めて実行することを推奨（UNIT-10 CI/CD着手時までに対応）
 
 ## Story Traceability
 

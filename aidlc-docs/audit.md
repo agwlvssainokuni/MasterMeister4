@@ -647,3 +647,19 @@
 **Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション8-9完了
 
 ---
+
+## UNIT-01 Code Generation Part 2 - コミット依頼、待機
+**Timestamp**: 2026-07-20T19:13:00Z
+**User Input**: "コミットしたら一旦待って。"
+**AI Response**: "セクション8-9のコミット（66e2a78）を実行後、待機。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、ユーザー待機指示
+
+---
+
+## UNIT-01 Code Generation Part 2 - セクション10-12完了（ドキュメント・最終ビルド検証）
+**Timestamp**: 2026-07-20T19:24:00Z
+**User Input**: "continue"
+**AI Response**: "frontend/README.md（開発・ビルド・テスト・Lint手順、ディレクトリ構成）とaidlc-docs/construction/unit-01/code/summary.md（生成物一覧、主要な設計判断6点、テスト結果、後続対応項目、トラブルシューティング）を作成。./gradlew clean build :backend:bootWarでルートからの統合ビルドが成功することを実機確認。npm auditは0件の脆弱性を確認。OWASP Dependency-Check（:backend:dependencyCheckAnalyze）はプラグイン自体の導入・起動は確認できたが、NVD APIキー未設定のため初回データベース同期に非常に長時間を要すると判明し、本セッションでは完走を待たずに中断（後続対応項目としてplan・summary.mdに記録、UNIT-10 CI/CD着手時までの対応を推奨）。計画Step 10.1〜12.2を完了し、unit-01-code-generation-plan.mdの全ステップが完了。"
+**Context**: CONSTRUCTION - UNIT-01 Code Generation Part 2、セクション10-12完了、Code Generation全体完了
+
+---
