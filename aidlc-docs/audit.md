@@ -855,3 +855,27 @@
 **Context**: CONSTRUCTION - UNIT-02 NFR Design、計画提示
 
 ---
+
+## UNIT-02 NFR Design - 推奨提示・回答受領
+**Timestamp**: 2026-07-20T21:55:00Z
+**User Input**: "推奨は？" → "推奨どおりで。"
+**AI Response**: "全8問にAI推奨（Q1=A, Q2=A, Q3=A, Q4=B, Q5=A, Q6=A, Q7=A, Q8=A）を理由付きで提示（Q4のみBを推奨: H2 CIPHER機能は鍵管理の複雑さを増すため、ホスト/ディスク暗号化に委ねる）。ユーザーが推奨どおりで確定したため、unit-02-nfr-design-plan.mdに全問記入。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Design、推奨提示・回答受領
+
+---
+
+## UNIT-02 NFR Design - Q1誤解の訂正、トークン保管方式の再決定
+**Timestamp**: 2026-07-20T22:10:00Z
+**User Input**: "Q1誤解してました。" → (誤解の内容を確認) → "リフレッシュトークンはレスポンスボディで返却。クライアント側はセッションストアに保管。" → (CSRF対策finding撤回、アクセストークンの保管先について確認: メモリ推奨) → "アクセストークンもリフレッシュトークンと同じ扱いとします。両方ともsessionStorageとします。"
+**AI Response**: "Q1の回答をAからB（訂正版）に修正: アクセストークン・リフレッシュトークンともにレスポンスボディで返却し、クライアント側は両方とも`sessionStorage`に保管する。Cookie不使用のためCSRF対策finding（Cookie配信を前提としていた）を撤回。XSS対策（CSP等）がトークン保護の主たる防御層になる旨を記録。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Design、Q1回答の訂正
+
+---
+
+## UNIT-02 NFR Design - SECURITY-01例外の文書化承認、成果物生成
+**Timestamp**: 2026-07-20T22:15:00Z
+**User Input**: "OKです。"
+**AI Response**: "requirements.md §7.4にNFR-4.8（SECURITY-01からの文書化された例外: 内部DBのアプリ層暗号化は行わず、ホスト・ディスク暗号化に委ねる。通信経路暗号化は組み込みH2のためネットワーク経由アクセスがなく対象外）を追加し、NFR-4.7もUNIT-02での最終決定（sessionStorage方式）を反映するよう更新。§10拡張機能設定サマリにもNFR-4.8を追記。unit-02-nfr-design-plan.mdの計画チェックリストStep A〜Cを完了。aidlc-docs/construction/unit-02/nfr-design/nfr-design-patterns.md（Resilience: HIBPフェイルオープン・メール送信フェイルオープン、Performance、Security: トークン保管方式・HTTPヘッダ・入力バリデーション・内部DB暗号化例外・グローバル例外ハンドラ・SecurityFilterChain構成）とlogical-components.md（SecurityConfig, 各Service, GlobalExceptionHandler, MailTemplateRenderer, Flywayマイグレーション構成等）を作成。frontend-components.md §7を、NFR Designで確定したトークン保管方式（sessionStorage）を反映するよう更新。"
+**Context**: CONSTRUCTION - UNIT-02 NFR Design、成果物生成
+
+---
