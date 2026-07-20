@@ -735,3 +735,27 @@
 **Context**: CONSTRUCTION - UNIT-02 Functional Design、ユーザステータス遷移の訂正
 
 ---
+
+## UNIT-02 Functional Design - §4/§5画面の統合可否の確認
+**Timestamp**: 2026-07-20T20:50:00Z
+**User Input**: "私の勘違いでした。承認待ちユーザ一覧は4.の方で、5.は汎用のユーザ一覧ですね。ところで、これらを分ける必要ってありますか？"
+**AI Response**: "統合を推奨する旨を回答（DataTable・ConfirmDialog・一覧取得ロジックがほぼ同一で、2画面分割はUNIT-01の仮決めナビ項目をそのまま踏襲しただけであり、UNIT-02設計時点での再検討結果ではないため）。1画面「ユーザ管理」（`/users`、FilterBar初期値PENDING）への統合案を提示し、承認を依頼。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、画面統合の提案
+
+---
+
+## UNIT-02 Functional Design - 画面統合の承認、トップ画面新設の提案
+**Timestamp**: 2026-07-20T20:52:00Z
+**User Input**: "ユーザ管理に統合する方針を承認します。そうするとダッシュボードの意味合いが希薄になります。そもそも本アプリでダッシュボードに相当する機能は不要だったかもしれません。その代わりに、現在のところ「ログインして最初に表示されるトップ画面」が未定義と認識していて、このトップ画面として再検討する方針は妥当でしょうか？この場合、本アプリの機能説明とリンクを兼ねたカードを配置するのでどうかなと思います。"
+**AI Response**: "妥当と回答。旧ダッシュボードは管理者専用（承認待ち一覧）であり、実は一般ユーザのログイン後の着地点が最初から未定義だった潜在的なギャップを、統合が機に発見した旨を指摘。トップ画面案（ルート`/`、SideNavと同じ8機能のカード一覧、アイコン・機能名・説明・リンク、未実装ユニットは「準備中」表示でSideNavの既存プレースホルダーパターンを踏襲、ロール別出し分けは行わない）を提示し承認を依頼。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、トップ画面新設の提案
+
+---
+
+## UNIT-02 Functional Design - 画面統合・トップ画面新設の反映
+**Timestamp**: 2026-07-20T20:56:00Z
+**User Input**: "OK"
+**AI Response**: "提案どおり反映。frontend-components.md §4/§5（旧: 管理者ダッシュボード/ユーザ管理）を1画面「ユーザ管理画面」に統合（PENDING/APPROVED/REJECTED/DISABLED全ステータス対応、行アクションをステータス別に出し分け、confirmTarget型に'approve'|'reject'|'disable'|'enable'を統合）。新規§5「トップ画面（ホーム、`/`）」を追加（FeatureCard新設コンポーネント、Cardをベースに構築、静的カード定義、API連携なし）。business-logic-model.md §2/§2.1/§3の画面参照を「ユーザ管理画面」に統一。business-rules.mdの「管理者ダッシュボードとは別の」という記述を統合後の表現に修正。ログイン成功時の遷移先を`/dashboard`から`/`に修正。波及効果として、UNIT-01のfrontend-components.md（ナビ項目表からダッシュボード行を削除、§3.3モックへの訂正注記を追加）、requirements.md（FR-0.4画面リスト、FR-1.4の文言を「管理者ダッシュボード」→「ユーザ管理画面」に修正）、stories.md（STORY-0.3, STORY-1.4の受け入れ基準）、unit-of-work.md（UNIT-01責務の代表画面リスト）を整合させて更新。initial-request.md・requirement-verification-clarification-questions.mdは原始入力・過去の質問記録のため変更対象外とした。"
+**Context**: CONSTRUCTION - UNIT-02 Functional Design、画面統合・トップ画面新設の反映
+
+---

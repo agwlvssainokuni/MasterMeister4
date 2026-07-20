@@ -28,7 +28,7 @@
 
 ## 2. 管理者承認ワークフロー（FR-1.4〜FR-1.7）
 
-1. 管理者ダッシュボードが、`PENDING`ステータスのユーザ一覧を取得する（`GET /api/admin/users?status=PENDING`）
+1. 「ユーザ管理」画面（frontend-components.md §4参照。初期表示は`PENDING`フィルタ）が、`PENDING`ステータスのユーザ一覧を取得する（`GET /api/admin/users?status=PENDING`）
 2. 管理者が個別ユーザに対し承認または却下を選択する
 3. **承認時**（`POST /api/admin/users/{id}/approve`）: UserステータスをPENDING→APPROVEDに遷移させる。ログイン可能となる
 4. **却下時**（`POST /api/admin/users/{id}/reject`）: UserステータスをPENDING→REJECTEDに遷移させる。同一メールアドレスでの新規登録（再登録）は許可しない（BR-REG-06訂正版）
@@ -36,7 +36,7 @@
 6. AuditEventPublisher経由で「管理者によるアカウント承認／却下」イベントを発行する
 
 ### 2.1 却下の取り消し（訂正版、BR-REG-01）
-1. 「ユーザ管理」画面（frontend-components.md §5参照）で、管理者が`REJECTED`ステータスのユーザに対し承認を選択する
+1. 同じ「ユーザ管理」画面で、管理者がフィルタを`REJECTED`に切り替え、対象ユーザに対し承認を選択する
 2. 上記3.と同一の`POST /api/admin/users/{id}/approve`エンドポイントを呼び出す（遷移元がPENDINGかREJECTEDかで処理を分けない）。UserステータスをREJECTED→APPROVEDに遷移させる
 3. 上記5.・6.と同様、承認結果通知メールを送信し、`USER_APPROVED`イベントを発行する（却下の取り消しを示す区別は行わない。承認という行為として一貫させる）
 
@@ -44,7 +44,7 @@
 
 ## 3. 管理者によるアカウント無効化・再有効化（Q1=B、BR-REG-01）
 
-1. 「ユーザ管理」画面（承認待ちに限らず全ステータスのユーザを対象とする。frontend-components.md参照）から、管理者が対象ユーザに対し無効化または再有効化を選択する
+1. 同じ「ユーザ管理」画面（承認待ちに限らず全ステータスのユーザを対象とする。§2の画面と同一。frontend-components.md §4参照。レビュー指摘を受け1画面に統合）から、管理者が対象ユーザに対し無効化または再有効化を選択する
 2. **無効化時**（`POST /api/admin/users/{id}/disable`）: `APPROVED`ステータスのユーザのみを対象とし、UserステータスをAPPROVED→DISABLEDに遷移させる。以降、当該ユーザはログイン不可となる。既に発行済みのリフレッシュトークンも無効化する（不正利用防止のため、無効化時点でセッションを即座に無効にする）
 3. **再有効化時**（`POST /api/admin/users/{id}/enable`）: `DISABLED`ステータスのユーザのみを対象とし、UserステータスをDISABLED→APPROVEDに遷移させる。ログイン再開可能となる
 4. AuditEventPublisher経由で「管理者によるアカウント無効化／再有効化」イベント（`USER_DISABLED` / `USER_ENABLED`）を発行する（BR-AUDIT-02）
