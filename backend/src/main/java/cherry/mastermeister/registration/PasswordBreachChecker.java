@@ -18,6 +18,7 @@ package cherry.mastermeister.registration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -42,6 +43,7 @@ public class PasswordBreachChecker {
 
     private final RestClient restClient;
 
+    @Autowired
     public PasswordBreachChecker(RestClient.Builder restClientBuilder) {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout(TIMEOUT_MILLIS);

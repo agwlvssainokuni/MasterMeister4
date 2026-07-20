@@ -148,8 +148,8 @@
 
 ### 18. 最終ビルド検証
 
-- [ ] Step 18.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功）、`./gradlew :backend:test`、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する
-- [ ] Step 18.2: `./gradlew :backend:bootWar`で統合WARを生成し、`java -jar`起動・MailPit経由でのメール送受信確認・登録〜承認〜ログインの一連の手動確認を行う
+- [x] Step 18.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功）、`./gradlew :backend:test`、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する
+- [x] Step 18.2: `./gradlew :backend:bootWar`で統合WARを生成し、`java -jar`起動・MailPit経由でのメール送受信確認・登録〜承認〜ログインの一連の手動確認を行う
 - [ ] Step 18.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`, `:cherry-mustache-core:dependencyCheckAnalyze`）・`npm audit`を実行する
 
 ---

@@ -1015,3 +1015,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 17完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 18 Step 18.1〜18.2完了（最終ビルド検証・統合WAR起動確認）
+**Timestamp**: 2026-07-21T02:00:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Step 18.1: `./gradlew :backend:build`（backend 105テスト全成功）、`npm test`（frontend 105テスト全成功）、`npm run build`をすべて確認。Step 18.2: `./gradlew :backend:bootWar`で統合WARを生成し、スクラッチ領域のデータディレクトリを使う隔離環境（MM_APP_DATASOURCE_PATH等をスクラッチパスに向け、リポジトリを汚さないよう配慮）で`java -jar`起動、MailPit（既存devenvコンテナ）経由の登録確認メール・承認結果メール送受信、ユーザ登録→管理者承認→新規ユーザログイン→リフレッシュ→ログアウトの一連のAPIフローをcurlで実施し確認した。この過程で以下3件の実装バグを発見・修正した（いずれもモックベースの単体テストでは実際のSpringコンテナ起動やHTTP暗号化処理を経由しないため検出されていなかった）。\n1. `PasswordBreachChecker`が本番用コンストラクタ・テスト専用コンストラクタの2つを持つが`@Autowired`が無く、Springがコンストラクタを自動選択できず起動時`NoSuchMethodException`で失敗。本番用コンストラクタに`@Autowired`を付与して解決\n2. Spring Boot 4.1では`RestClient.Builder`の自動構成が`spring-boot-starter-web`から独立した`spring-boot-restclient`モジュールへ分離されており、依存追加漏れにより`RestClient.Builder`のBeanが存在せず起動失敗。`backend/build.gradle.kts`に`org.springframework.boot:spring-boot-restclient`を追加\n3. `AuthenticationService.generateAccessToken()`が`JwsHeader`省略の`JwtEncoderParameters.from(claims)`を使用しており、`NimbusJwtEncoder`がデフォルトで試みるRS256とHS256用`ImmutableSecret`のJWKSourceが一致せず`JwtEncodingException: Failed to select a JWK signing key`でログイン・リフレッシュが500エラーになっていた。`JwsHeader.with(MacAlgorithm.HS256).build()`を明示的に渡す形に修正\n\n3件とも修正後に`./gradlew :backend:build`で全テスト成功を再確認し、統合WARでの手動フロー（登録・承認・ログイン・リフレッシュ・ログアウト・ロール別403）を再実施して解消を確認。business-logic-summary.md・api-layer-summary.mdの「実装時に発見・修正した設計ギャップ／トラブルシューティング」に追記し、後続ユニットへの申し送りとした。計画チェックリストStep 18.1〜18.2を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 18 Step 18.1〜18.2完了
+
+---
