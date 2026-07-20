@@ -143,8 +143,8 @@
 
 ### 17. Deployment Artifacts
 
-- [ ] Step 17.1: `devenv/docker-compose.yml`を確認し、UNIT-02で必要な環境変数（MailPit接続先等）が既存のMailPitコンテナ設定と整合していることを確認する（新規追加は不要見込み）
-- [ ] Step 17.2: `.env.example`等、開発時に設定すべき環境変数一覧のドキュメント（application.ymlのコメント、またはbackend/README.md）を整備する
+- [x] Step 17.1: `devenv/docker-compose.yml`を確認し、UNIT-02で必要な環境変数（MailPit接続先等）が既存のMailPitコンテナ設定と整合していることを確認する（新規追加は不要見込み）
+- [x] Step 17.2: `.env.example`等、開発時に設定すべき環境変数一覧のドキュメント（application.ymlのコメント、またはbackend/README.md）を整備する
 
 ### 18. 最終ビルド検証
 

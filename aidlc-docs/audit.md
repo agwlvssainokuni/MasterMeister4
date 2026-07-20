@@ -1007,3 +1007,11 @@
 **Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 16完了
 
 ---
+
+## UNIT-02 Code Generation Part 2 - Section 17完了（Deployment Artifacts）
+**Timestamp**: 2026-07-21T01:42:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "devenv/docker-compose.ymlを確認し、mailpitサービス（SMTP:1025, Web UI:8025）がapplication.ymlのデフォルト値（MM_APP_MAIL_HOST=localhost, MM_APP_MAIL_PORT=1025）とそのまま整合しており、UNIT-02用の新規サービス追加は不要であることを確認（mysql/mariadb/postgresサービスはUNIT-03以降のRDBMS接続機能向けで本ユニットの対象外）。環境変数一覧は前段のSection 16でbackend/README.mdに整備済みのため、別途.env.exampleファイルは作成せず当該READMEを正とする方針とした。計画チェックリストSection 17（Step 17.1〜17.2）を完了にマーク。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation Part 2、Section 17完了
+
+---

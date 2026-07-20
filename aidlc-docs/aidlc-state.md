@@ -50,7 +50,7 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - Code Generation Part 2（実行中、Section 16完了、Section 17着手前）
+- **Current Stage**: UNIT-02 ユーザ登録・認証 - Code Generation Part 2（実行中、Section 17完了、Section 18着手前）
 - **Next Stage**: 全セクション完了後、完了メッセージを提示し承認を得る
 - **Status**: 実施中
 
