@@ -150,7 +150,7 @@
 
 - [x] Step 18.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功）、`./gradlew :backend:test`、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する
 - [x] Step 18.2: `./gradlew :backend:bootWar`で統合WARを生成し、`java -jar`起動・MailPit経由でのメール送受信確認・登録〜承認〜ログインの一連の手動確認を行う
-- [ ] Step 18.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`, `:cherry-mustache-core:dependencyCheckAnalyze`）・`npm audit`を実行する
+- [x] Step 18.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`, `:cherry-mustache-core:dependencyCheckAnalyze`）・`npm audit`を実行する（`npm audit`は0件で完了。OWASP Dependency-CheckはNVD APIキー未設定のためNVDデータ取得が非現実的な時間を要すると判明し、ユーザ判断により本ユニットでは実施見送り。既知の制約として後日APIキー取得後に別途実施する）
 
 ---
 
