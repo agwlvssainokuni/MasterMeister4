@@ -51,6 +51,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -187,9 +188,9 @@ public class SchemaIntrospectionService {
                 String comment = tables.getString("REMARKS");
                 SchemaTable table = new SchemaTable(tableName, tableType, comment);
                 readColumns(metaData, catalog, schemaPattern, tableName, table);
-                readPrimaryKey(metaData, catalog, schemaPattern, tableName, table);
+                Set<String> primaryKeyColumns = readPrimaryKey(metaData, catalog, schemaPattern, tableName, table);
                 readForeignKeys(metaData, catalog, schemaPattern, tableName, table);
-                readIndexes(metaData, catalog, schemaPattern, tableName, table);
+                readIndexes(metaData, catalog, schemaPattern, tableName, table, primaryKeyColumns);
                 snapshot.addTable(table);
             }
         }
@@ -213,8 +214,8 @@ public class SchemaIntrospectionService {
         }
     }
 
-    private void readPrimaryKey(DatabaseMetaData metaData, String catalog, String schemaPattern, String tableName,
-                                 SchemaTable table) throws SQLException {
+    private Set<String> readPrimaryKey(DatabaseMetaData metaData, String catalog, String schemaPattern,
+                                        String tableName, SchemaTable table) throws SQLException {
         Map<String, List<String>> columnsByPkName = new LinkedHashMap<>();
         try (ResultSet pk = metaData.getPrimaryKeys(catalog, schemaPattern, tableName)) {
             while (pk.next()) {
@@ -225,6 +226,9 @@ public class SchemaIntrospectionService {
         }
         columnsByPkName.forEach((pkName, columnNames) -> table.addConstraint(
                 new SchemaConstraint(ConstraintType.PRIMARY_KEY, pkName, columnNames, null, null)));
+        Set<String> primaryKeyColumns = new java.util.LinkedHashSet<>();
+        columnsByPkName.values().forEach(primaryKeyColumns::addAll);
+        return primaryKeyColumns;
     }
 
     private void readForeignKeys(DatabaseMetaData metaData, String catalog, String schemaPattern, String tableName,
@@ -247,7 +251,7 @@ public class SchemaIntrospectionService {
     }
 
     private void readIndexes(DatabaseMetaData metaData, String catalog, String schemaPattern, String tableName,
-                              SchemaTable table) throws SQLException {
+                              SchemaTable table, Set<String> primaryKeyColumns) throws SQLException {
         record IndexAccumulator(boolean unique, List<String> columnNames) {
         }
         Map<String, IndexAccumulator> byIndexName = new LinkedHashMap<>();
@@ -267,9 +271,17 @@ public class SchemaIntrospectionService {
                 acc.columnNames().add(columnName);
             }
         }
-        byIndexName.forEach((indexName, acc) -> table.addConstraint(new SchemaConstraint(
-                acc.unique() ? ConstraintType.UNIQUE : ConstraintType.INDEX, indexName, acc.columnNames(), null,
-                null)));
+        // 主キー自身の自動生成インデックスは、主キー制約(PRIMARY_KEY)としてすでに
+        // readPrimaryKeyで登録済みのため、対象列集合が主キーと完全一致するインデックスは
+        // 重複登録を避けるため除外する
+        byIndexName.forEach((indexName, acc) -> {
+            if (new java.util.LinkedHashSet<>(acc.columnNames()).equals(primaryKeyColumns)) {
+                return;
+            }
+            table.addConstraint(new SchemaConstraint(
+                    acc.unique() ? ConstraintType.UNIQUE : ConstraintType.INDEX, indexName, acc.columnNames(), null,
+                    null));
+        });
     }
 
     private String defaultSchemaFor(DbType dbType) {

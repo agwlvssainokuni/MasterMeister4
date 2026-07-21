@@ -156,6 +156,12 @@ class SchemaIntrospectionServiceTest {
         var unitPriceColumn = products.getColumns().stream()
                 .filter(c -> c.getColumnName().equalsIgnoreCase("unit_price")).findFirst().orElseThrow();
         assertThat(unitPriceColumn.getNormalizedType()).isEqualTo(NormalizedType.NUMBER);
+        // 主キー自身の自動生成インデックスがUNIQUE制約として重複登録されないこと（レビュー指摘の再発防止）
+        assertThat(products.getConstraints())
+                .noneMatch(c -> c.getConstraintType() == ConstraintType.UNIQUE
+                        && c.getColumnNames().equals(List.of("PRODUCT_ID")));
+        assertThat(products.getConstraints()).filteredOn(c -> c.getConstraintType() == ConstraintType.PRIMARY_KEY)
+                .hasSize(1);
 
         verify(auditEventPublisher).publish(argThat(e -> e.eventType() == AuditEventType.SCHEMA_IMPORTED
                 && e.resultStatus() == ResultStatus.SUCCESS));

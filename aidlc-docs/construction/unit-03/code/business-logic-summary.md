@@ -23,6 +23,7 @@
 1. **HikariCPのプール即時疎通確認**: `HikariDataSource`はデフォルトでプール生成時に接続を試行し、失敗すると`PoolInitializationException`を送出する。対象RDBMSが一時的に利用不可でも接続情報自体は登録・キャッシュできるべきという方針（実際の疎通確認はBR-RDBMS-04の接続テストか、実利用時に委ねる）に合わせ、`HikariConfig.setInitializationFailTimeout(-1)`を設定してプール生成時の即時疎通確認を無効化した
 2. **スキーマ未指定時のシステムスキーマ混入**: `DatabaseMetaData.getTables()`にschemaPattern=nullを渡すと、H2/PostgreSQLでは`INFORMATION_SCHEMA`等のシステムスキーマのテーブルまで取得対象に含まれてしまうことが判明（実装・テスト時に発見）。`schemaName`が未指定の場合、方言ごとのデフォルトスキーマ（H2=`PUBLIC`、PostgreSQL=`public`）に解決するよう修正した
 3. **JDBC接続失敗のエラー分類（BR-RDBMS-04）**: SQLState（`08`系=接続不可、`28`系=認証エラー）とメッセージのキーワードマッチを組み合わせたベストエフォート実装とした（JDBCドライバ間でSQLStateの粒度が完全には統一されていないため）
+4. **主キー自動生成インデックスのUNIQUE制約重複登録（Code Generation Complete提示後のレビューで発見）**: MySQL/MariaDBは主キー制約名が常に固定文字列`"PRIMARY"`になる。`DatabaseMetaData.getIndexInfo()`は主キー列に対して自動生成されたインデックスも返すため、`readPrimaryKey()`のPRIMARY_KEY制約と`readIndexes()`のUNIQUE制約とで同一列が二重に登録されていた（実データそのものは誤りではないが冗長）。この重複が、フロントエンドの制約名ベースのReact keyと組み合わさることで、テーブル切替時に別テーブルの同名列へ古い制約バッジが残留する表示不具合（後述）の一因にもなっていたため、`readPrimaryKey()`の戻り値を主キー列集合に変更し、`readIndexes()`側でインデックスの列集合が主キー列集合と完全一致する場合は登録をスキップするよう修正した
 
 ## テスト結果
 

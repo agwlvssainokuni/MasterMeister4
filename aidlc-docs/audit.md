@@ -1287,3 +1287,11 @@
 **Context**: CONSTRUCTION - UNIT-03 Code Generation Complete提示後のレビュー対応（2件目）
 
 ---
+
+## UNIT-03 Code Generation Complete提示 - 付随発見事項の対応（主キー自動インデックスのUNIQUE重複登録）
+**Timestamp**: 2026-07-22T06:00:00Z
+**User Input**: "今回合わせて修正する"（AskUserQuestionでの選択回答）
+**AI Response**: "先の制約バッジ誤表示の調査中に発見した別件（SchemaIntrospectionService.readIndexesが主キー自身の自動生成インデックスをUNIQUE制約として重複登録する件）を修正。readPrimaryKeyの戻り値を主キー列集合(Set<String>)に変更しreadIndexesへ渡し、インデックスの列集合が主キー列集合と完全一致する場合はUNIQUE/INDEX制約としての登録をスキップするよう変更。SchemaIntrospectionServiceTestに再発防止のアサーションを追加（products.PRODUCT_IDに対しUNIQUE制約が重複登録されないこと、PRIMARY_KEY制約が1件のみであること）。実際に稼働中のバックエンドを再ビルド・再起動し、devenvの実MySQL・MariaDB・PostgreSQLそれぞれでスキーマ再取込を実行、products.productsテーブルの制約が想定通り（MySQL/MariaDB: PRIMARY_KEY+FOREIGN_KEY+INDEX、PostgreSQL: PRIMARY_KEY+FOREIGN_KEYのみ、いずれも重複UNIQUEなし）となることを確認。`./gradlew :backend:test`・`:backend:build`成功。"
+**Context**: CONSTRUCTION - UNIT-03 Code Generation Complete提示後のレビュー対応（付随修正）
+
+---

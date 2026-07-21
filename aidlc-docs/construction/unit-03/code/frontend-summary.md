@@ -25,6 +25,11 @@ Functional Design（frontend-components.md）は当初、新規モジュール`f
 
 `i18n/locales/{ja,en}/common.json`に`connections`セクション（画面タイトル・フォームラベル・エラーメッセージ分類文言等、約45キー）を追加。既存の`common`名前空間内でのプレフィックス運用を踏襲。
 
+## Code Generation Complete提示後のレビューで発見・修正した不具合
+
+- **テーブル一覧の行がクリックできない**: `SchemaDetailPage.tsx`にテーブル選択の導線がなく、常に先頭テーブルのカラムしか閲覧できなかった。共通コンポーネント`design-system/components/DataTable.tsx`に後方互換な`onRowClick`プロパティ（クリック・Enter/Space操作対応）を追加し配線した
+- **テーブル切替時、別テーブルの同名列に前テーブルの制約バッジが残留する**: MySQL/MariaDBは主キー制約名が常に固定文字列`"PRIMARY"`になるため、`categories`テーブル（`category_id`がPK）から`products`テーブル（`category_id`はFK）へ切り替えた際、Reactが列名ベースの`rowKey`とバッジの`key={constraint.constraintName}`により「同一要素」と誤認し、切替前のPRIMARY_KEYバッジを再利用してしまうkey衝突バグだった。稼働中のバックエンドへdevenvの実MySQLで取り込んだスキーマをcurlで取得し、データ自体は正しいことを確認した上でフロントエンド側の問題と特定。カラム一覧の`DataTable`に`key={selectedTable.tableName}`を追加してテーブル切替時に確実に作り直し、制約バッジの`key`も`${constraintType}-${constraintName}`に変更して重複を解消した
+
 ## 既存テストへの影響
 
 `HomePage.test.tsx`が「準備中」バッジ数を7件とハードコード検証していたが、`connections`の活性化により6件に変化するため更新した（実装済みカードとして`feature-card-connections`の存在・クリック時の遷移も追加検証）。
@@ -36,7 +41,7 @@ Vitest + React Testing Library。
 | ファイル | テスト数 | 主な検証内容 |
 |---|---|---|
 | `RdbmsConnectionListPage.test.tsx` | 7 | 一覧表示・未取込バッジ、フォームのデフォルトポート自動入力・`schemaName`欄の出し分け、登録、フォーム内接続テスト（モーダルを閉じない）、削除確認ダイアログ、スキーマ取込、一覧取得失敗時のエラー表示 |
-| `SchemaDetailPage.test.tsx` | 2 | 取込済み時のテーブル・カラム・制約表示、未取込時（`SCHEMA_NOT_IMPORTED`）の案内表示 |
+| `SchemaDetailPage.test.tsx` | 4 | 取込済み時のテーブル・カラム・制約表示、テーブル行クリックによる選択切替、テーブル切替時に前テーブルの制約バッジが残留しないこと（MySQL等の"PRIMARY"名重複を再現）、未取込時（`SCHEMA_NOT_IMPORTED`）の案内表示 |
 | `rdbmsConnections.test.ts` | 8 | 各APIクライアント関数が正しいHTTPメソッド・パス・ボディで`apiFetch`を呼ぶこと |
 | `HomePage.test.tsx`（更新） | 3 | 実装済みカード数変化の追従、`connections`カードのクリック遷移 |
 
