@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - Code Generation（Part 1計画提示・承認待ち）
-- **Next Stage**: 計画承認後、Part 2実装に着手
+- **Current Stage**: UNIT-03 RDBMSセットアップ - Code Generation（Part 2実装中、Section 1から着手）
+- **Next Stage**: 全セクション完了後、完了メッセージを提示し承認を得る
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
