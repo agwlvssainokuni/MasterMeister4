@@ -26,15 +26,17 @@ RdbmsConnectionListPage (AppShell)
 ```
 
 ### 1.1 接続登録・編集フォーム（Modal内）
-- TextInput（displayName、表示名、required）
+- TextInput（displayName、表示名、required。他の接続と重複していても許容する。BR-RDBMS-02）
 - Select（dbType、`MYSQL`/`MARIADB`/`POSTGRESQL`/`H2`、required。選択変更時、§1.2のデフォルトポート番号を`port`フィールドに自動入力する（レビュー指摘の反映）
 - TextInput（host、required）
 - TextInput（port、type=number、required、1〜65535。dbType選択時にデフォルト値が入るが、手動での上書きも可能）
 - TextInput（databaseName、required）
-- TextInput（schemaName、任意。`dbType === 'POSTGRESQL'`の場合のみ表示）
+- TextInput（schemaName、任意。`dbType`が`POSTGRESQL`または`H2`の場合のみ表示（レビュー指摘の反映、両方言ともスキーマの概念を持つため）
 - TextInput（username、required）
-- TextInput（password、type=password。編集時は空欄可＝変更しない場合は既存値を保持）
+- TextInput（password、type=password。編集時は空欄可＝変更しない場合は既存値を保持。APIは既存パスワードを返さないため、編集フォーム表示時点でも常に空欄から始まる。BR-RDBMS-12）
 - TextInput（additionalParams、「追加パラメータ」、任意。プレースホルダーでJDBCクエリパラメータの入力例（例: `useSSL=false&serverTimezone=UTC`）を示す。BR-RDBMS-10）
+- Button（「接続テスト」、フォーム下部。入力中の値でBR-RDBMS-11の未保存テストエンドポイントを呼び出す。結果はフォーム内にAlertで表示し、モーダルは閉じない）
+- Button（type=submit、「登録」/「更新」）
 
 ### 1.2 dbType選択時のデフォルトポート自動入力（レビュー指摘の反映）
 Selectで`dbType`を選択した時点で、`port`フィールドに以下のデフォルト値を自動入力する（クライアント側のみの利便性機能。BR-RDBMS-01のバリデーション自体は特定のポート番号を強制しない）。
@@ -47,6 +49,9 @@ Selectで`dbType`を選択した時点で、`port`フィールドに以下のデ
 | `H2` | 9092（TCPサーバモードのデフォルト） |
 
 新規登録時（`port`が未入力の場合）にのみ自動入力する。編集時に既存の`port`値がある場合、`dbType`を変更しても既存の値を上書きしない（管理者が意図的に設定した値を尊重する）。
+
+### 1.3 フォーム内接続テストの挙動（レビュー指摘の反映、BR-RDBMS-11）
+フォーム内「接続テスト」ボタンは、保存済みの接続に対する一覧画面側の「接続テスト」（BR-RDBMS-04、`POST /api/admin/rdbms-connections/{id}/test`）とは異なるAPIエンドポイント（`POST /api/admin/rdbms-connections/test`、接続情報一式をリクエストボディに含める、対象IDなし）を呼び出す。サーバ側は永続化を行わずに疎通確認のみを行う。テスト実行はフォームの入力内容を保存しない（Modalは閉じたままとなり、テスト結果のみをフォーム内Alertに表示する）。
 
 ### State
 - `connections: ConnectionSummary[]`, `loading: boolean`, `errorMessage: string | null`
@@ -62,7 +67,8 @@ Selectで`dbType`を選択した時点で、`port`フィールドに以下のデ
 - `POST /api/admin/rdbms-connections` — 新規登録（BR-RDBMS-01, BR-RDBMS-02）
 - `PUT /api/admin/rdbms-connections/{id}` — 更新（BR-RDBMS-03）
 - `DELETE /api/admin/rdbms-connections/{id}` — 削除（確認ダイアログ経由。BR-RDBMS-09）
-- `POST /api/admin/rdbms-connections/{id}/test` — 接続テスト（BR-RDBMS-04、成功/失敗を`actionResult`に反映）
+- `POST /api/admin/rdbms-connections/{id}/test` — 接続テスト（保存済み接続。BR-RDBMS-04、成功/失敗を`actionResult`に反映）
+- `POST /api/admin/rdbms-connections/test` — 接続テスト（フォーム入力中の未保存の値。BR-RDBMS-11、§1.3参照）
 - `POST /api/admin/rdbms-connections/{id}/schema-refresh` — スキーマ取込（BR-RDBMS-06〜08、成功/失敗を`actionResult`に反映。成功時は一覧の「スキーマ取込状態」列も再取得して更新）
 
 ---

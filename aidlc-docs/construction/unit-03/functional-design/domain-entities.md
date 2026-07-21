@@ -16,7 +16,7 @@ business-rules.mdで定義したルールに対応するドメインエンティ
 | `host` | String | 接続先ホスト名 |
 | `port` | int | 接続先ポート番号（1〜65535） |
 | `databaseName` | String | 接続先データベース名 |
-| `schemaName` | String（nullable） | 接続先スキーマ名（PostgreSQL等、データベースと別にスキーマの概念を持つ方言でのみ使用。MySQL/MariaDB/H2はnull） |
+| `schemaName` | String（nullable） | 接続先スキーマ名（データベースと別にスキーマの概念を持つ方言（PostgreSQL, H2）でのみ使用。レビューによりH2も対象と確認。MySQL/MariaDBはデータベース＝スキーマの単位のためnull） |
 | `username` | String | 接続ユーザ名 |
 | `encryptedPassword` | String | 可逆暗号化されたパスワード（暗号化方式はNFR Design参照） |
 | `additionalParams` | String（nullable） | JDBC URLに付加するクエリパラメータ（BR-RDBMS-10、例: `useSSL=false&serverTimezone=UTC`。生の文字列としてそのままJDBC URLへ付加する） |

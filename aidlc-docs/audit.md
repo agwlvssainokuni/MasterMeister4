@@ -1159,3 +1159,11 @@
 **Context**: CONSTRUCTION - UNIT-03 Functional Design、レビュー対応（Request Changes扱い）
 
 ---
+
+## UNIT-03 Functional Design - 追加確認事項の提起・回答反映
+**Timestamp**: 2026-07-21T01:00:00Z
+**User Input**: "1: 暗号化は不要。2: 新規登録の入力時、接続設定編集時もテスト接続可能とする。3: OK。4: 表示名も重複を許可する。5: H2でも表示する。"
+**AI Response**: "レビューで提起した5点への回答を反映。(1) additionalParamsは平文保存のままとし、business-rules.mdのBR-RDBMS-10に明記。(2) 接続テストを新規登録・編集フォーム入力中の未保存の値に対しても実行可能とするため、専用エンドポイント`POST /api/admin/rdbms-connections/test`（対象IDなし、永続化しない）をBR-RDBMS-11として新設。business-logic-model.md §2・frontend-components.md §1.1/1.3・API連携一覧を更新。(3) パスワードはAPIレスポンスに一切含めない方針をBR-RDBMS-12として明文化（business-logic-model.md §1、business-rules.md）。(4) 表示名の重複も許可する旨をBR-RDBMS-02に追記。(5) schemaName欄をPostgreSQLに加えH2でも表示するよう、domain-entities.md・frontend-components.md §1.1を修正。"
+**Context**: CONSTRUCTION - UNIT-03 Functional Design、追加レビュー対応（Request Changes扱い）
+
+---
