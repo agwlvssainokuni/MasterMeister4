@@ -63,6 +63,8 @@ mm:
       path: ${MM_APP_DATASOURCE_PATH:./data/mastermeister}
     mail:
       from: ${MM_APP_MAIL_FROM:no-reply@mastermeister.example}
+    rdbms:
+      encryption-keys: ${MM_APP_RDBMS_ENCRYPTION_KEYS:}
 
 springdoc:
   swagger-ui:

@@ -34,6 +34,10 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.flywaydb:flyway-core")
     runtimeOnly("net.logstash.logback:logstash-logback-encoder:8.0")
+    // UNIT-03: 対象RDBMS接続用JDBCドライバ(tech-stack-decisions.md §8)
+    runtimeOnly("com.mysql:mysql-connector-j:9.7.0")
+    runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.5.9")
+    runtimeOnly("org.postgresql:postgresql:42.7.13")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat-runtime")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

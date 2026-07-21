@@ -20,9 +20,9 @@
 
 ### 1. Build Configuration
 
-- [ ] Step 1.1: `backend/build.gradle.kts`にJDBCドライバを追加する: `runtimeOnly("com.mysql:mysql-connector-j:...")`, `runtimeOnly("org.mariadb.jdbc:mariadb-java-client:...")`, `runtimeOnly("org.postgresql:postgresql:...")`（バージョンは追加時点の最新安定版を確認）。H2は既存の`runtimeOnly("com.h2database:h2")`を対象RDBMS接続でも共用する（tech-stack-decisions.md §8）
-- [ ] Step 1.2: `backend/src/main/resources/application.yml`に`mm.app.rdbms.encryption-keys`を追加する（`MM_APP_RDBMS_ENCRYPTION_KEYS`環境変数プレースホルダー、必須項目）
-- [ ] Step 1.3: `AppProperties`（`cherry.mastermeister.common.config`）を拡張する。新規ネストrecord`Rdbms(String encryptionKeys)`を追加し、コンストラクタで検証を行う: 最低1件の鍵、`keyId:base64key`形式のパース可否、`keyId`重複なし、各鍵がBase64デコード後32バイト（AES-256）であること（logical-components.md §3、Q3=A fail-fast）。既存の`new AppProperties(...)`呼び出し箇所（テストファイル含む）に引数を追加する
+- [x] Step 1.1: `backend/build.gradle.kts`にJDBCドライバを追加する: `runtimeOnly("com.mysql:mysql-connector-j:...")`, `runtimeOnly("org.mariadb.jdbc:mariadb-java-client:...")`, `runtimeOnly("org.postgresql:postgresql:...")`（バージョンは追加時点の最新安定版を確認）。H2は既存の`runtimeOnly("com.h2database:h2")`を対象RDBMS接続でも共用する（tech-stack-decisions.md §8）— WebSearchで確認の上、mysql-connector-j:9.7.0, mariadb-java-client:3.5.9, postgresql:42.7.13を追加
+- [x] Step 1.2: `backend/src/main/resources/application.yml`に`mm.app.rdbms.encryption-keys`を追加する（`MM_APP_RDBMS_ENCRYPTION_KEYS`環境変数プレースホルダー、必須項目）
+- [x] Step 1.3: `AppProperties`（`cherry.mastermeister.common.config`）を拡張する。新規ネストrecord`Rdbms(String encryptionKeys)`を追加し、コンストラクタで検証を行う: 最低1件の鍵、`keyId:base64key`形式のパース可否、`keyId`重複なし、各鍵がBase64デコード後32バイト（AES-256）であること（logical-components.md §3、Q3=A fail-fast）。既存の`new AppProperties(...)`呼び出し箇所（テストファイル含む）に引数を追加する — `parsedEncryptionKeys()`でパース結果（`List<EncryptionKey>`）を都度取得する設計とした（単一環境変数からのSpring標準プロパティバインディングを維持するため、フィールド自体はStringのまま保持）。5件のテストファイルに`new AppProperties.Rdbms("1:...")`を追加、`./gradlew :backend:compileJava :backend:compileTestJava`で成功確認
 
 ### 2. Database Migration Scripts
 

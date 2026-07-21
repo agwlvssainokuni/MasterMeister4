@@ -20,6 +20,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
 import java.util.Objects;
 
 @ConfigurationProperties(prefix = "mm.app")
@@ -31,7 +34,8 @@ public record AppProperties(
         AdminBootstrap adminBootstrap,
         Frontend frontend,
         Datasource datasource,
-        Mail mail
+        Mail mail,
+        Rdbms rdbms
 ) {
 
     public AppProperties {
@@ -43,6 +47,7 @@ public record AppProperties(
         Objects.requireNonNull(frontend, "mm.app.frontend must be configured");
         Objects.requireNonNull(datasource, "mm.app.datasource must be configured");
         Objects.requireNonNull(mail, "mm.app.mail must be configured");
+        Objects.requireNonNull(rdbms, "mm.app.rdbms must be configured");
     }
 
     public record Jwt(String secret, Duration accessTokenExpiry, Duration refreshTokenExpiry) {
@@ -127,6 +132,78 @@ public record AppProperties(
             if (from == null || from.isBlank()) {
                 throw new IllegalArgumentException("mm.app.mail.from must not be blank");
             }
+        }
+    }
+
+    /**
+     * 接続パスワードの可逆暗号化に使う鍵の世代一覧(nfr-requirements/tech-stack-decisions.md §1、
+     * Q1=B鍵ローテーション対応)。{@code encryptionKeys}は{@code keyId:base64key}形式のエントリを
+     * カンマ区切りで並べた生の設定値(単一の環境変数からSpringの通常のプロパティバインディングで
+     * 受け取るため、あえてStringのまま保持しparsedEncryptionKeys()で都度パースする)。
+     */
+    public record Rdbms(String encryptionKeys) {
+
+        private static final int AES_256_KEY_BYTES = 32;
+
+        public Rdbms {
+            if (encryptionKeys == null || encryptionKeys.isBlank()) {
+                throw new IllegalArgumentException("mm.app.rdbms.encryption-keys must not be blank");
+            }
+            // fail-fast: 起動時に一度パースし、不正フォーマット・鍵長不正・keyId重複を検出する
+            parseEncryptionKeys(encryptionKeys);
+        }
+
+        public List<EncryptionKey> parsedEncryptionKeys() {
+            return parseEncryptionKeys(encryptionKeys);
+        }
+
+        private static List<EncryptionKey> parseEncryptionKeys(String raw) {
+            List<EncryptionKey> entries = Arrays.stream(raw.split(","))
+                    .map(String::trim)
+                    .filter(entry -> !entry.isEmpty())
+                    .map(Rdbms::parseEntry)
+                    .toList();
+            if (entries.isEmpty()) {
+                throw new IllegalArgumentException("mm.app.rdbms.encryption-keys must have at least one key");
+            }
+            long distinctKeyIds = entries.stream().map(EncryptionKey::keyId).distinct().count();
+            if (distinctKeyIds != entries.size()) {
+                throw new IllegalArgumentException("mm.app.rdbms.encryption-keys must not contain duplicate keyId");
+            }
+            return entries;
+        }
+
+        private static EncryptionKey parseEntry(String entry) {
+            String[] parts = entry.split(":", 2);
+            if (parts.length != 2) {
+                throw new IllegalArgumentException(
+                        "mm.app.rdbms.encryption-keys entry must be in 'keyId:base64key' format: " + entry);
+            }
+            int keyId;
+            try {
+                keyId = Integer.parseInt(parts[0].trim());
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(
+                        "mm.app.rdbms.encryption-keys keyId must be an integer: " + parts[0], e);
+            }
+            if (keyId <= 0) {
+                throw new IllegalArgumentException("mm.app.rdbms.encryption-keys keyId must be positive: " + keyId);
+            }
+            byte[] key;
+            try {
+                key = Base64.getDecoder().decode(parts[1].trim());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(
+                        "mm.app.rdbms.encryption-keys key must be valid Base64 for keyId=" + keyId, e);
+            }
+            if (key.length != AES_256_KEY_BYTES) {
+                throw new IllegalArgumentException(
+                        "mm.app.rdbms.encryption-keys key must decode to 32 bytes (AES-256) for keyId=" + keyId);
+            }
+            return new EncryptionKey(keyId, key);
+        }
+
+        public record EncryptionKey(int keyId, byte[] key) {
         }
     }
 }
