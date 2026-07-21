@@ -124,6 +124,8 @@ export function SchemaDetailPage() {
             columns={tableColumns}
             rows={schema.tables}
             rowKey={(table) => table.tableName}
+            selectedKeys={selectedTableName ? new Set([selectedTableName]) : undefined}
+            onRowClick={(table) => setSelectedTableName(table.tableName)}
             emptyState={<EmptyState message={t('state.empty')} />}
           />
           {selectedTable ? (

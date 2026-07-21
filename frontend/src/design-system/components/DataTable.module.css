@@ -97,6 +97,15 @@
   background: var(--mm-color-primary-subtle);
 }
 
+.rowClickable {
+  cursor: pointer;
+}
+
+.rowClickable:focus-visible {
+  outline: none;
+  box-shadow: inset var(--mm-focus-ring);
+}
+
 .rowAdded {
   background: var(--mm-color-success-subtle);
 }

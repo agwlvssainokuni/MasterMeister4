@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { ReactNode } from 'react'
+import type { KeyboardEvent, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Checkbox } from './Choice'
 import { EmptyState } from './Display'
@@ -51,6 +51,8 @@ export interface DataTableProps<Row> {
   cellStates?: Readonly<Record<string, Readonly<Record<string, CellState>>>>
   /** 行状態（新規/削除予定）の指定: rowKey → 状態 */
   rowStates?: Readonly<Record<string, 'added' | 'removed'>>
+  /** 指定時、行をクリック（またはEnter/Space押下）可能にする */
+  onRowClick?: (row: Row) => void
 }
 
 // 列定義・簡易表示のみ実装（UNIT-01のスコープ）。ソート・選択のロジックは
@@ -69,6 +71,7 @@ export function DataTable<Row>({
   onSelectionChange,
   cellStates,
   rowStates,
+  onRowClick,
 }: DataTableProps<Row>) {
   const { t } = useTranslation()
   const allKeys = rows.map(rowKey)
@@ -163,11 +166,26 @@ export function DataTable<Row>({
               rowState === 'added' ? styles.rowAdded : null,
               rowState === 'removed' ? styles.rowRemoved : null,
               selected.has(key) ? styles.rowSelected : null,
+              onRowClick ? styles.rowClickable : null,
             ]
               .filter(Boolean)
               .join(' ')
+            const onKeyDown = (event: KeyboardEvent<HTMLTableRowElement>) => {
+              if (event.key !== 'Enter' && event.key !== ' ') {
+                return
+              }
+              event.preventDefault()
+              onRowClick?.(row)
+            }
             return (
-              <tr key={key} className={rowClass || undefined}>
+              <tr
+                key={key}
+                className={rowClass || undefined}
+                onClick={onRowClick ? () => onRowClick(row) : undefined}
+                onKeyDown={onRowClick ? onKeyDown : undefined}
+                role={onRowClick ? 'button' : undefined}
+                tabIndex={onRowClick ? 0 : undefined}
+              >
                 {selectable ? (
                   <td className={styles.checkboxCell}>
                     <Checkbox

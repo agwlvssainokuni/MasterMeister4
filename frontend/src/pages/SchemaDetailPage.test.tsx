@@ -15,6 +15,7 @@
  */
 
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ThemeProvider } from '../design-system/theme/ThemeProvider'
@@ -89,6 +90,31 @@ const sampleSnapshot: SchemaSnapshotDetail = {
   ],
 }
 
+const multiTableSnapshot: SchemaSnapshotDetail = {
+  connectionId: 1,
+  importedAt: '2026-01-05T00:00:00Z',
+  tables: [
+    ...sampleSnapshot.tables,
+    {
+      tableName: 'categories',
+      tableType: 'TABLE',
+      comment: null,
+      columns: [
+        {
+          columnName: 'category_name',
+          ordinalPosition: 1,
+          comment: null,
+          nativeType: 'VARCHAR',
+          normalizedType: 'STRING',
+          nullable: false,
+          defaultValue: null,
+        },
+      ],
+      constraints: [],
+    },
+  ],
+}
+
 describe('SchemaDetailPage', () => {
   afterEach(() => {
     vi.resetAllMocks()
@@ -103,6 +129,20 @@ describe('SchemaDetailPage', () => {
     expect(screen.getByText('PRIMARY_KEY')).toBeInTheDocument()
     expect(screen.getByText('FOREIGN_KEY')).toBeInTheDocument()
     expect(connectionsApi.getSchema).toHaveBeenCalledWith(1)
+  })
+
+  it('テーブル一覧の行をクリックすると、選択テーブルのカラム一覧に切り替わる', async () => {
+    vi.mocked(connectionsApi.getSchema).mockResolvedValueOnce(multiTableSnapshot)
+    const user = userEvent.setup()
+    renderSchemaDetailPage()
+
+    expect(await screen.findByText('product_id')).toBeInTheDocument()
+    expect(screen.queryByText('category_name')).not.toBeInTheDocument()
+
+    await user.click(screen.getByText('categories'))
+
+    expect(await screen.findByText('category_name')).toBeInTheDocument()
+    expect(screen.queryByText('product_id')).not.toBeInTheDocument()
   })
 
   it('スキーマ未取込の場合、案内メッセージと一覧への戻り導線を表示する', async () => {
