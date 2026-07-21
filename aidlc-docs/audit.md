@@ -1215,3 +1215,11 @@
 **Context**: CONSTRUCTION - UNIT-03 NFR Design、成果物生成
 
 ---
+
+## UNIT-03 NFR Design - レビュー対応: タイムアウト時のスレッド中断・同時更新リスク・鍵重複検証
+**Timestamp**: 2026-07-21T01:50:00Z
+**User Input**: "全て推奨で。"
+**AI Response**: "3点を反映。(1) CompletableFuture.orTimeout()はバックグラウンドのJDBC呼び出し自体を中断しないため、HikariCPプール枠を専有し続けるリスクを指摘。タイムアウト検知時に実行中のConnectionを明示的にclose()して強制中断する処理を追加（nfr-design-patterns.md §1.1、logical-components.md SchemaIntrospectionService）。(2) 接続情報更新中の同時実行競合について、管理者少人数運用のため明示的な排他制御は導入せずリスク許容とする判断を明記（nfr-design-patterns.md §1.4、新設）。(3) AppProperties.Rdbmsのコンストラクタ検証にkeyId重複チェックを追加（logical-components.md §3）。"
+**Context**: CONSTRUCTION - UNIT-03 NFR Design、レビュー対応（Request Changes扱い）
+
+---
