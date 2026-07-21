@@ -1175,3 +1175,11 @@
 **Context**: CONSTRUCTION - UNIT-03 Functional Design 完了、NFR Requirements開始
 
 ---
+
+## UNIT-03 NFR Requirements - 計画作成
+**Timestamp**: 2026-07-21T01:10:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Security Baseline拡張の全15ルールを評価: 該当するもの（SECURITY-01, 03, 05, 06, 08, 09, 10, 11, 12, 15）と、UNIT-02で対応済み・再決定不要のもの、N/A（SECURITY-02, 04, 07, 13, 14、理由付きで判定）を整理。Property-Based Testing拡張はFunctional Designで対象プロパティなしと判断済みのためN/A。aidlc-docs/construction/plans/unit-03-nfr-requirements-plan.mdを作成し、9問を出題: 接続パスワード暗号化のアルゴリズム・鍵管理(Q1)、対象RDBMSとのTLS利用方針(Q2)、スキーマ取込のタイムアウト設定(Q3)、バリデーション実装方式(Q4)、動的DataSource/コネクションプール管理方式(Q5)、接続数・スキーマ規模の前提(Q6)、対象RDBMS用DBユーザの最小権限ガイダンス要否(Q7)、JDBCドライバ追加とDependency-Check対象確認(Q8)、接続失敗時のアラート機構要否(Q9)。aidlc-state.mdのCurrent Statusを更新。"
+**Context**: CONSTRUCTION - UNIT-03 NFR Requirements、計画提示
+
+---
