@@ -130,6 +130,8 @@
     "schemaRefreshFailure": "スキーマ取込に失敗しました",
     "schemaDetailTitle": "スキーマ詳細",
     "importedAt": "取込日時",
+    "tableListCaption": "テーブル一覧",
+    "columnListCaption": "カラム一覧",
     "tableName": "テーブル名",
     "tableType": "種別",
     "comment": "コメント",

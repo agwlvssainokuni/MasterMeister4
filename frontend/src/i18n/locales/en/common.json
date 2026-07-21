@@ -130,6 +130,8 @@
     "schemaRefreshFailure": "Schema import failed",
     "schemaDetailTitle": "Schema Detail",
     "importedAt": "Imported At",
+    "tableListCaption": "Tables",
+    "columnListCaption": "Columns",
     "tableName": "Table Name",
     "tableType": "Type",
     "comment": "Comment",

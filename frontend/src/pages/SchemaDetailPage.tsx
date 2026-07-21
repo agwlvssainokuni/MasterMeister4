@@ -23,6 +23,7 @@ import { AuthenticatedLayout } from './AuthenticatedLayout'
 import { getSchema } from '../api/rdbmsConnections'
 import type { SchemaColumnDetail, SchemaSnapshotDetail, SchemaTableDetail } from '../api/rdbmsConnections'
 import { ApiError } from '../api/http'
+import styles from './SchemaDetailPage.module.css'
 
 // frontend-components.md §2。取込済みのテーブル・カラム・制約情報を確認する読取専用画面。
 export function SchemaDetailPage() {
@@ -123,6 +124,7 @@ export function SchemaDetailPage() {
           <p>
             {t('connections.importedAt')}: {new Date(schema.importedAt).toLocaleString()}
           </p>
+          <h2 className={styles.sectionTitle}>{t('connections.tableListCaption')}</h2>
           <DataTable
             columns={tableColumns}
             rows={schema.tables}
@@ -132,13 +134,16 @@ export function SchemaDetailPage() {
             emptyState={<EmptyState message={t('state.empty')} />}
           />
           {selectedTable ? (
-            <DataTable
-              key={selectedTable.tableName}
-              columns={columnColumns}
-              rows={selectedTable.columns}
-              rowKey={(c) => c.columnName}
-              emptyState={<EmptyState message={t('state.empty')} />}
-            />
+            <>
+              <h2 className={styles.sectionTitle}>{t('connections.columnListCaption')}</h2>
+              <DataTable
+                key={selectedTable.tableName}
+                columns={columnColumns}
+                rows={selectedTable.columns}
+                rowKey={(c) => c.columnName}
+                emptyState={<EmptyState message={t('state.empty')} />}
+              />
+            </>
           ) : null}
         </>
       ) : null}
