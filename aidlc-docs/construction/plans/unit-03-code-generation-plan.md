@@ -26,24 +26,24 @@
 
 ### 2. Database Migration Scripts
 
-- [ ] Step 2.1: `backend/src/main/resources/db/migration/V7__create_rdbms_connection_table.sql`を作成する（domain-entities.md §1、`encryption_key_id`列を含む）
-- [ ] Step 2.2: `V8__create_schema_snapshot_table.sql`を作成する（domain-entities.md §2、`connection_id`を主キー兼外部キーとする）
-- [ ] Step 2.3: `V9__create_schema_table_table.sql`を作成する（domain-entities.md §2.1）
-- [ ] Step 2.4: `V10__create_schema_column_table.sql`を作成する（domain-entities.md §2.2）
-- [ ] Step 2.5: `V11__create_schema_constraint_table.sql`を作成する（domain-entities.md §2.3、`column_names`/`referenced_columns`は複数値のためカンマ区切り文字列または別テーブルのいずれかで表現する。Code Generation時点でシンプルなカンマ区切り文字列カラムとして実装する）
-- [ ] Step 2.6: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`CONNECTION_REGISTERED`, `CONNECTION_UPDATED`, `CONNECTION_DELETED`, `SCHEMA_IMPORTED`を追加する（domain-entities.md §3。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
-- [ ] Step 2.7: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する
+- [x] Step 2.1: `backend/src/main/resources/db/migration/V7__create_rdbms_connection_table.sql`を作成する（domain-entities.md §1、`encryption_key_id`列を含む）
+- [x] Step 2.2: `V8__create_schema_snapshot_table.sql`を作成する（domain-entities.md §2、`connection_id`を主キー兼外部キーとする）
+- [x] Step 2.3: `V9__create_schema_table_table.sql`を作成する（domain-entities.md §2.1）
+- [x] Step 2.4: `V10__create_schema_column_table.sql`を作成する（domain-entities.md §2.2）
+- [x] Step 2.5: `V11__create_schema_constraint_table.sql`を作成する（domain-entities.md §2.3、`column_names`/`referenced_columns`は複数値のためカンマ区切り文字列または別テーブルのいずれかで表現する。Code Generation時点でシンプルなカンマ区切り文字列カラムとして実装する）
+- [x] Step 2.6: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`CONNECTION_REGISTERED`, `CONNECTION_UPDATED`, `CONNECTION_DELETED`, `SCHEMA_IMPORTED`を追加する（domain-entities.md §3。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
+- [x] Step 2.7: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する
 
 ### 3. Repository Layer Generation
 
-- [ ] Step 3.1: enumを作成する: `DbType`, `TableType`, `NormalizedType`, `ConstraintType`（`cherry.mastermeister.rdbmsconnection.entity`）
-- [ ] Step 3.2: JPAエンティティを作成する: `RdbmsConnection`, `SchemaSnapshot`, `SchemaTable`, `SchemaColumn`, `SchemaConstraint`（`cherry.mastermeister.rdbmsconnection.entity`、domain-entities.md §1〜2.3の属性を反映。`SchemaSnapshot`→`SchemaTable`→`SchemaColumn`/`SchemaConstraint`は`cascade=ALL, orphanRemoval=true`の`@OneToMany`で全置換（BR-RDBMS-08）を表現する）
-- [ ] Step 3.3: Spring Data JPAリポジトリを作成する: `RdbmsConnectionRepository`, `SchemaSnapshotRepository`（`cherry.mastermeister.rdbmsconnection.repository`）
-- [ ] Step 3.4: **検証チェックポイント**: `@DataJpaTest`で基本CRUD・カスケード削除・全置換（既存スナップショット削除→新規保存）を検証するテストを作成する
+- [x] Step 3.1: enumを作成する: `DbType`, `TableType`, `NormalizedType`, `ConstraintType`（`cherry.mastermeister.rdbmsconnection.entity`）
+- [x] Step 3.2: JPAエンティティを作成する: `RdbmsConnection`, `SchemaSnapshot`, `SchemaTable`, `SchemaColumn`, `SchemaConstraint`（`cherry.mastermeister.rdbmsconnection.entity`、domain-entities.md §1〜2.3の属性を反映。`SchemaSnapshot`→`SchemaTable`→`SchemaColumn`/`SchemaConstraint`は`cascade=ALL, orphanRemoval=true`の`@OneToMany`で全置換（BR-RDBMS-08）を表現する）
+- [x] Step 3.3: Spring Data JPAリポジトリを作成する: `RdbmsConnectionRepository`, `SchemaSnapshotRepository`（`cherry.mastermeister.rdbmsconnection.repository`）
+- [x] Step 3.4: **検証チェックポイント**: `@DataJpaTest`で基本CRUD・カスケード削除・全置換（既存スナップショット削除→新規保存）を検証するテストを作成する — DB側のON DELETE CASCADEによる削除がHibernateの第一階層キャッシュに反映されない問題を`TestEntityManager.clear()`で解消。7テスト全件成功
 
 ### 4. Repository Layer Summary
 
-- [ ] Step 4.1: `aidlc-docs/construction/unit-03/code/repository-layer-summary.md`を作成する（エンティティ・リポジトリ・マイグレーション一覧、テスト結果）
+- [x] Step 4.1: `aidlc-docs/construction/unit-03/code/repository-layer-summary.md`を作成する（エンティティ・リポジトリ・マイグレーション一覧、テスト結果）
 
 ### 5. Business Logic Generation
 

@@ -19,6 +19,8 @@ package cherry.mastermeister.audit.entity;
 /**
  * domain-entities.md §6.1。UNIT-02で追加する9種別。他ユニットが追加する種別は
  * 各ユニットのFunctional Designで定義し、本enumに追記する。
+ * UNIT-03: CONNECTION_REGISTERED/CONNECTION_UPDATED/CONNECTION_DELETED/SCHEMA_IMPORTEDを追加
+ * （unit-03/functional-design/domain-entities.md §3）。
  */
 public enum AuditEventType {
     LOGIN,
@@ -30,5 +32,9 @@ public enum AuditEventType {
     USER_REJECTED,
     USER_DISABLED,
     USER_ENABLED,
-    TOKEN_REUSE_DETECTED
+    TOKEN_REUSE_DETECTED,
+    CONNECTION_REGISTERED,
+    CONNECTION_UPDATED,
+    CONNECTION_DELETED,
+    SCHEMA_IMPORTED
 }
