@@ -1271,3 +1271,19 @@
 **Context**: CONSTRUCTION - UNIT-03 Code Generation Part 2、全セクション完了
 
 ---
+
+## UNIT-03 Code Generation Complete提示 - レビュー指摘・修正
+**Timestamp**: 2026-07-22T00:00:00Z
+**User Input**: "スキーマ詳細の画面で、テーブルを選択することができない。"
+**AI Response**: "Code Generation Complete提示後のレビューで発見された不具合。原因調査の結果、`SchemaDetailPage.tsx`はテーブル一覧DataTableの行クリックに対する処理を持っておらず、`DataTable`コンポーネント自体にも行クリックをハンドリングする手段（`onRowClick`相当）が存在しなかったため、初期表示された最初のテーブル以外を選択する手段がないことを確認。修正として、`design-system/components/DataTable.tsx`に既存利用箇所と後方互換な`onRowClick`プロパティ（クリック・Enter/Space操作対応、`role=button`・`tabIndex`付与）を追加し、`DataTable.module.css`に`rowClickable`スタイルを追加。`SchemaDetailPage.tsx`側で`onRowClick`と`selectedKeys`（選択行ハイライト、既存の`rowSelected`スタイルを流用）を配線。再発防止のため`SchemaDetailPage.test.tsx`に複数テーブル間の行クリック切り替えを検証するテストを追加。`npm run build`・関連vitest・oxlintで確認し（既存のThemeProviderテスト失敗は本修正と無関係な既存事象と確認済み）、ユーザー承認の上でコミット（02539bb）。"
+**Context**: CONSTRUCTION - UNIT-03 Code Generation Complete提示後のレビュー対応
+
+---
+
+## UNIT-03 Code Generation Complete提示 - レビュー指摘・修正（2件目：制約バッジ誤表示）
+**Timestamp**: 2026-07-22T05:50:00Z
+**User Input**: "スキーマ詳細の画面で、productsテーブルのcategory_idにPRIMARY KEYマークがついてしまっている。"
+**AI Response**: "実際に稼働中のバックエンド（devenvの実MySQL接続、id=1）へcurlでアクセスしAPI応答の生データを確認したところ、products.category_idの制約データ自体はFOREIGN_KEY/INDEXのみで正しく、PRIMARY_KEYは含まれていないことを確認。原因はフロントエンドのReact key衝突と判明: MySQL/MariaDBは主キー制約名が常に固定文字列'PRIMARY'になり（かつ主キー自身の自動インデックスがUNIQUE制約としても別途登録されるため同一テーブル内でも'PRIMARY'が重複）、SchemaDetailPage.tsxの制約バッジが`key={constraint.constraintName}`のみを使用し、かつテーブル切替用DataTableの列一覧が`rowKey={(c) => c.columnName}`のみで区別されていたため、categories→products切替時に同名列'category_id'の行をReactが再利用し、切替前のPRIMARY_KEYバッジが残留する不具合を確認。jsdom+RTLで実データを再現し、修正後にテストが通ることを確認した。修正: (1) SchemaDetailPage.tsxのカラム一覧DataTableに`key={selectedTable.tableName}`を追加しテーブル切替時に確実に作り直されるようにした、(2) 制約バッジのkeyを`${constraintType}-${constraintName}`に変更し同一テーブル内の重複も解消、(3) SchemaDetailPage.test.tsxに実データ相当の回帰テストを追加。調査中に発見した別件（SchemaIntrospectionService.readIndexesが主キー自身の自動インデックスをUNIQUE制約として重複登録する件）はユーザー確認の上、合わせて修正する方針とした。"
+**Context**: CONSTRUCTION - UNIT-03 Code Generation Complete提示後のレビュー対応（2件目）
+
+---

@@ -79,7 +79,10 @@ export function SchemaDetailPage() {
     table.constraints
       .filter((constraint) => constraint.columnNames.includes(column.columnName))
       .map((constraint) => (
-        <Badge key={constraint.constraintName} tone={constraint.constraintType === 'PRIMARY_KEY' ? 'success' : 'neutral'}>
+        <Badge
+          key={`${constraint.constraintType}-${constraint.constraintName}`}
+          tone={constraint.constraintType === 'PRIMARY_KEY' ? 'success' : 'neutral'}
+        >
           {constraint.constraintType}
         </Badge>
       ))
@@ -130,6 +133,7 @@ export function SchemaDetailPage() {
           />
           {selectedTable ? (
             <DataTable
+              key={selectedTable.tableName}
               columns={columnColumns}
               rows={selectedTable.columns}
               rowKey={(c) => c.columnName}

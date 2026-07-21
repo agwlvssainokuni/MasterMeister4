@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -143,6 +143,86 @@ describe('SchemaDetailPage', () => {
 
     expect(await screen.findByText('category_name')).toBeInTheDocument()
     expect(screen.queryByText('product_id')).not.toBeInTheDocument()
+  })
+
+  it('テーブル切替後、別テーブルで同名だった列に前テーブルの制約バッジが残留しない（MySQL等でPRIMARY_KEY制約名が常に"PRIMARY"になる実データを再現）', async () => {
+    const snapshotWithSharedColumnName: SchemaSnapshotDetail = {
+      connectionId: 1,
+      importedAt: '2026-01-05T00:00:00Z',
+      tables: [
+        {
+          tableName: 'categories',
+          tableType: 'TABLE',
+          comment: null,
+          columns: [
+            {
+              columnName: 'category_id',
+              ordinalPosition: 1,
+              comment: null,
+              nativeType: 'int',
+              normalizedType: 'NUMBER',
+              nullable: false,
+              defaultValue: null,
+            },
+          ],
+          constraints: [
+            {
+              constraintType: 'PRIMARY_KEY',
+              constraintName: 'PRIMARY',
+              columnNames: ['category_id'],
+              referencedTable: null,
+              referencedColumns: [],
+            },
+          ],
+        },
+        {
+          tableName: 'products',
+          tableType: 'TABLE',
+          comment: null,
+          columns: [
+            {
+              columnName: 'product_id',
+              ordinalPosition: 1,
+              comment: null,
+              nativeType: 'int',
+              normalizedType: 'NUMBER',
+              nullable: false,
+              defaultValue: null,
+            },
+            {
+              columnName: 'category_id',
+              ordinalPosition: 2,
+              comment: null,
+              nativeType: 'int',
+              normalizedType: 'NUMBER',
+              nullable: false,
+              defaultValue: null,
+            },
+          ],
+          constraints: [
+            {
+              constraintType: 'FOREIGN_KEY',
+              constraintName: 'products_ibfk_1',
+              columnNames: ['category_id'],
+              referencedTable: 'categories',
+              referencedColumns: ['category_id'],
+            },
+          ],
+        },
+      ],
+    }
+    vi.mocked(connectionsApi.getSchema).mockResolvedValueOnce(snapshotWithSharedColumnName)
+    const user = userEvent.setup()
+    renderSchemaDetailPage()
+
+    expect(await screen.findByText('PRIMARY_KEY')).toBeInTheDocument()
+
+    await user.click(screen.getByText('products'))
+    expect(await screen.findByText('FOREIGN_KEY')).toBeInTheDocument()
+
+    const categoryIdRow = screen.getByText('category_id').closest('tr')
+    expect(categoryIdRow).not.toBeNull()
+    expect(within(categoryIdRow as HTMLElement).queryByText('PRIMARY_KEY')).not.toBeInTheDocument()
   })
 
   it('スキーマ未取込の場合、案内メッセージと一覧への戻り導線を表示する', async () => {
