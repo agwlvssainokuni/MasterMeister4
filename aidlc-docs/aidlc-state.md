@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-02 ユーザ登録・認証 - Code Generation Part 2（Section 18完了、全18セクション完了。完了メッセージ提示・承認待ち）
-- **Next Stage**: 全セクション完了後、完了メッセージを提示し承認を得る
+- **Current Stage**: UNIT-03 RDBMSセットアップ - ステージ判定（Functional Design/NFR Requirements/NFR Design/Infrastructure DesignのEXECUTE/SKIP判定）
+- **Next Stage**: ステージ判定の承認後、Functional Design（EXECUTE想定）に着手
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -59,7 +59,14 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-20T21:46:00Z。Spring Security OAuth2 Resource Server、HS256、BCrypt、登録エンドポイントのレート制限、jqwik（NFR-5.2最終確定）、SLF4J+Logback、内部DBアクセス方式（Spring Data JPA、Flyway、H2ファイルベース永続化）を決定）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-20T22:11:00Z。認証トークンはsessionStorage保管に確定、HTTPヘッダ・入力バリデーション・グローバル例外ハンドラ・SecurityFilterChain構成、内部DB暗号化の文書化された例外（NFR-4.8）、レジリエンス方針を決定。RegistrationRateStateエンティティとレート制限値(BR-REG-07)を追加）
 - [x] Infrastructure Design — SKIP（メール送信・JWT鍵管理は設定レベルで対応可能）
-- [ ] Code Generation — IN PROGRESS
+- [x] Code Generation — COMPLETED（承認 2026-07-21T00:15:00Z。全18セクション完了。承認前レビュー対応: CORS設定削除、EmailNotificationServiceの責務分離とMailDeliveryService新設・Fromアドレス欠落修正、devenv整備、frontend.base-urlデフォルト修正）
+
+## Current Unit - Stage Progress (UNIT-03)
+- [ ] Functional Design — EXECUTE（提案、承認待ち）
+- [ ] NFR Requirements — EXECUTE（提案、承認待ち）
+- [ ] NFR Design — EXECUTE（提案、承認待ち）
+- [ ] Infrastructure Design — SKIP（提案、承認待ち。devenvのDBコンテナは整備済みのため）
+- [ ] Code Generation — 未着手
 
 ## Current Unit - Stage Progress (UNIT-01)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T14:20:00Z。グランドデザイン・代表画面モックのコンポーネント構造設計のため）
@@ -70,8 +77,8 @@
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
-- [ ] UNIT-02 ユーザ登録・認証 — IN PROGRESS
-- [ ] UNIT-03 RDBMSセットアップ
+- [x] UNIT-02 ユーザ登録・認証 — COMPLETED（承認 2026-07-21T00:15:00Z）
+- [ ] UNIT-03 RDBMSセットアップ — IN PROGRESS
 - [ ] UNIT-04 アクセス制御
 - [ ] UNIT-05 マスタメンテナンス
 - [ ] UNIT-06 クエリ保存・実行

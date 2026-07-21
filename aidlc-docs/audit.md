@@ -1111,3 +1111,19 @@
 **Context**: 開発環境設定の見直し
 
 ---
+
+## UNIT-02 Code Generation Complete - 承認
+**Timestamp**: 2026-07-21T00:15:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-02（ユーザ登録・認証）のCode Generationを完了として承認を記録。承認までに反映したレビュー対応: CORS設定の削除（Viteプロキシにより不要と判明）、EmailNotificationServiceの責務分離（MailDeliveryService新設）とメールFromアドレス欠落の修正、devenvのvolume永続化・イメージLTS更新・動作確認用サンプルDB構築、mm.app.frontend.base-urlのデフォルト値修正。aidlc-state.mdのCurrent Unit Progress・Current Unit - Stage Progress (UNIT-02)・Current Statusを更新し、UNIT-02を全体COMPLETEDとして記録。UNIT-03（RDBMSセットアップ）のPer-Unit Loopに着手。"
+**Context**: CONSTRUCTION - UNIT-02 Code Generation（Part 2）完了・承認、UNIT-03へ移行
+
+---
+
+## CONSTRUCTION - UNIT-03ステージ判定
+**Timestamp**: 2026-07-21T00:20:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "UNIT-03（RDBMSセットアップ、FR-2.1/FR-2.2、COMP-07 RdbmsConnectionService/COMP-08 SchemaIntrospectionService/COMP-09 RdbmsDialectStrategy）の4条件付きステージを判定。Functional Design=EXECUTE（接続情報・スキーマメタデータの新規データモデル、方言吸収ロジックの業務ルール定義が必要）。NFR Requirements=EXECUTE（対象RDBMS接続パスワードの暗号化保存というUNIT-02のNFR-4.8例外とは別の新規セキュリティ課題、JDBCドライバ・動的DataSource構成の技術選定、大規模スキーマ取込時の性能考慮が必要）。NFR Design=EXECUTE（NFR Requirementsの決定を設計へ反映するため）。Infrastructure Design=SKIP（devenvのMySQL/MariaDB/PostgreSQLコンテナは本セッションで既に整備済みであり、対象RDBMS接続は実行時のデータ設定であってデプロイインフラ設計ではないため）。判定内容を提示し承認を依頼。"
+**Context**: CONSTRUCTION - UNIT-03 ステージ判定
+
+---
