@@ -53,7 +53,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AdminUserController.class)
 @Import(SecurityConfig.class)
 @EnableConfigurationProperties(cherry.mastermeister.common.config.AppProperties.class)
-@TestPropertySource(properties = "mm.app.jwt.secret=test-secret-key-at-least-32-bytes-long-for-hs256")
+@TestPropertySource(properties = {
+        "mm.app.jwt.secret=test-secret-key-at-least-32-bytes-long-for-hs256",
+        "mm.app.rdbms.encryption-keys=1:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE="
+})
 class AdminUserControllerTest {
 
     @Autowired

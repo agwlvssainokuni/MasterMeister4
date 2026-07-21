@@ -55,14 +55,14 @@
 
 ### 6. Business Logic Unit Testing
 
-- [ ] Step 6.1: `ConnectionCredentialCipherTest`を作成する（暗号化・復号往復、複数世代の鍵での復号、`keyId`不明時のエラー）
-- [ ] Step 6.2: `RdbmsDialectStrategyTest`を作成する（4方言の`buildJdbcUrl()`出力形式、`requiresSchemaSwitch()`の真偽、`resolveDialect()`のファクトリ挙動）
-- [ ] Step 6.3: `RdbmsConnectionServiceTest`を作成する（Mockito。登録・更新・削除・DataSourceキャッシュのライフサイクル（更新/削除時の`close()`呼び出し）、BR-RDBMS-01〜02・09の境界値）
-- [ ] Step 6.4: `SchemaIntrospectionServiceTest`を作成する（正常系の全置換、一部テーブル読取失敗時のオールオアナッシング、タイムアウト時のConnection強制close確認）
+- [x] Step 6.1: `ConnectionCredentialCipherTest`を作成する（暗号化・復号往復、複数世代の鍵での復号、`keyId`不明時のエラー）
+- [x] Step 6.2: `RdbmsDialectStrategyTest`を作成する（4方言の`buildJdbcUrl()`出力形式、`requiresSchemaSwitch()`の真偽、`resolveDialect()`のファクトリ挙動）
+- [x] Step 6.3: `RdbmsConnectionServiceTest`を作成する（Mockito。登録・更新・削除・DataSourceキャッシュのライフサイクル（更新/削除時の`close()`呼び出し）、BR-RDBMS-01〜02・09の境界値） — `HikariDataSource`がプール生成時に即座の疎通確認を行い失敗する問題を発見、`initializationFailTimeout(-1)`を設定し解消（実運用上も、対象RDBMSが一時的に利用不可でも接続情報自体は登録・キャッシュできる望ましい挙動）
+- [x] Step 6.4: `SchemaIntrospectionServiceTest`を作成する（正常系の全置換、一部テーブル読取失敗時のオールオアナッシング、タイムアウト時のConnection強制close確認） — 対象RDBMS役として実際にH2 TCPサーバを起動し、本物のJDBC接続・DatabaseMetaData読取で検証（モックでは検証しきれないため）。schemaName未指定時にH2/PostgreSQLでINFORMATION_SCHEMA等のシステムスキーマまで対象に含まれてしまう問題を発見し、方言ごとのデフォルトスキーマ（H2=PUBLIC, PostgreSQL=public）へ解決するよう修正
 
 ### 7. Business Logic Summary
 
-- [ ] Step 7.1: `aidlc-docs/construction/unit-03/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、Part 1計画からの実装時判断（暗号鍵設定のパース方式等）、テスト結果）
+- [x] Step 7.1: `aidlc-docs/construction/unit-03/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、Part 1計画からの実装時判断（暗号鍵設定のパース方式等）、テスト結果）
 
 ### 8. API Layer Generation
 

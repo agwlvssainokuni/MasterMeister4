@@ -159,6 +159,10 @@ public class RdbmsConnectionService {
         config.setMaximumPoolSize(HIKARI_MAX_POOL_SIZE);
         config.setMinimumIdle(HIKARI_MIN_IDLE);
         config.setConnectionTimeout(HIKARI_CONNECTION_TIMEOUT_MS);
+        // プール生成時に即座の疎通確認を行わない(負値でスキップ)。対象RDBMSが一時的に
+        // 利用不可でも接続情報自体は登録・キャッシュでき、実際の疎通確認はBR-RDBMS-04の
+        // 接続テスト、または実利用時のgetConnection()呼び出し時に委ねる
+        config.setInitializationFailTimeout(-1);
         return new HikariDataSource(config);
     }
 

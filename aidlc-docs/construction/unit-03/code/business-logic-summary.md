@@ -1,0 +1,38 @@
+# UNIT-03 RDBMSセットアップ - Business Logic Summary
+
+`unit-03-code-generation-plan.md` Section 5〜7の実行結果サマリ。
+
+## 作成したコンポーネント（`backend/src/main/java/cherry/mastermeister/rdbmsconnection/`）
+
+| コンポーネント | パッケージ | 対応 |
+|---|---|---|
+| `ConnectionCredentialCipher` | `rdbmsconnection` | AES-256-GCM暗号化・復号、鍵ローテーション（`AppProperties.Rdbms`、SECURITY-01・12） |
+| `RdbmsDialectStrategy`（インターフェース） | `rdbmsconnection.dialect` | `requiresSchemaSwitch()`, `applySchemaSwitch()`, `buildJdbcUrl()` |
+| `MySqlDialectStrategy`, `MariaDbDialectStrategy`, `PostgresDialectStrategy`, `H2DialectStrategy` | `rdbmsconnection.dialect` | COMP-09。方言ごとのJDBC URL構築（`&`区切り or H2のみ`;`区切り）、スキーマ切替 |
+| `RdbmsDialectStrategyResolver` | `rdbmsconnection.dialect` | component-methods.mdの`resolveDialect()`ファクトリメソッドを、Spring DI経由で実装 |
+| `RdbmsConnectionService`（COMP-07） | `rdbmsconnection` | business-logic-model.md §1・§2・§4。登録・更新・削除・接続テスト（保存済み/未保存）・`getDataSource()`（HikariCP DataSourceキャッシュ） |
+| `SchemaIntrospectionService`（COMP-08） | `rdbmsconnection` | business-logic-model.md §3。JDBC `DatabaseMetaData`によるスキーマ取込、タイムアウト制御、全置換 |
+| `ConnectionErrorCategory`, `ConnectionTestOutcome` | `rdbmsconnection` | BR-RDBMS-04のエラー分類結果 |
+
+## APIエラー例外（`common.exception`、BR-API-01）
+
+`RdbmsConnectionNotFoundException`（404）、`SchemaImportFailedException`（502）、`SchemaNotImportedException`（404）。`messages_ja/en.properties`に対応するメッセージキーを追加した。
+
+## 実装時に発見・修正した設計ギャップ
+
+1. **HikariCPのプール即時疎通確認**: `HikariDataSource`はデフォルトでプール生成時に接続を試行し、失敗すると`PoolInitializationException`を送出する。対象RDBMSが一時的に利用不可でも接続情報自体は登録・キャッシュできるべきという方針（実際の疎通確認はBR-RDBMS-04の接続テストか、実利用時に委ねる）に合わせ、`HikariConfig.setInitializationFailTimeout(-1)`を設定してプール生成時の即時疎通確認を無効化した
+2. **スキーマ未指定時のシステムスキーマ混入**: `DatabaseMetaData.getTables()`にschemaPattern=nullを渡すと、H2/PostgreSQLでは`INFORMATION_SCHEMA`等のシステムスキーマのテーブルまで取得対象に含まれてしまうことが判明（実装・テスト時に発見）。`schemaName`が未指定の場合、方言ごとのデフォルトスキーマ（H2=`PUBLIC`、PostgreSQL=`public`）に解決するよう修正した
+3. **JDBC接続失敗のエラー分類（BR-RDBMS-04）**: SQLState（`08`系=接続不可、`28`系=認証エラー）とメッセージのキーワードマッチを組み合わせたベストエフォート実装とした（JDBCドライバ間でSQLStateの粒度が完全には統一されていないため）
+
+## テスト結果
+
+Mockitoベースのユニットテスト（`RdbmsConnectionServiceTest`）に加え、`SchemaIntrospectionServiceTest`は対象RDBMS役として実際にH2をTCPサーバモードで起動し、本物のJDBC接続・`DatabaseMetaData`読取を通じて検証した（モックだけでは`ResultSet`の複雑な相互作用を検証しきれないため）。
+
+| クラス | テスト数 | 主な検証内容 |
+|---|---|---|
+| `ConnectionCredentialCipherTest` | 4 | 暗号化・復号往復、鍵ローテーション後も旧鍵での復号が可能、未知の`keyId`でのエラー |
+| `RdbmsDialectStrategyTest` | 6 | 4方言の`buildJdbcUrl()`出力形式（`&`区切り/`;`区切り）、`requiresSchemaSwitch()`、`RdbmsDialectStrategyResolver`の解決・未登録時のエラー |
+| `RdbmsConnectionServiceTest` | 12 | 登録・更新（パスワード変更あり/なし）・削除、DataSourceキャッシュの生成・エビクション、BR-RDBMS-04エラー分類（`classify()`） |
+| `SchemaIntrospectionServiceTest` | 3 | 実H2 TCPサーバに対するテーブル/カラム/PK/FK取込、全置換（再取込での置き換え）、対象RDBMS到達不能時の`SchemaImportFailedException`送出と旧スナップショット保持 |
+
+いずれも`./gradlew :backend:test`で全件成功（既存UNIT-01/02テスト含め全137件超）。

@@ -46,6 +46,9 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("net.jqwik:jqwik:1.9.1")
+    // UNIT-03: SchemaIntrospectionServiceTestで対象RDBMS役のH2 TCPサーバを起動するため
+    // (org.h2.tools.Server)、テストコンパイル時にも明示的に依存を追加する
+    testImplementation("com.h2database:h2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

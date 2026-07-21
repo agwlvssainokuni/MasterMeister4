@@ -173,7 +173,10 @@ public class SchemaIntrospectionService {
         DatabaseMetaData metaData = jdbcConnection.getMetaData();
         boolean catalogBased = connection.getDbType() == DbType.MYSQL || connection.getDbType() == DbType.MARIADB;
         String catalog = catalogBased ? connection.getDatabaseName() : null;
-        String schemaPattern = catalogBased ? null : connection.getSchemaName();
+        // schemaName未指定時、nullのままだと方言によってはINFORMATION_SCHEMA等の
+        // システムスキーマまで対象に含まれてしまうため、方言ごとのデフォルトスキーマに解決する
+        String schemaPattern = catalogBased ? null
+                : Optional.ofNullable(connection.getSchemaName()).orElseGet(() -> defaultSchemaFor(connection.getDbType()));
 
         SchemaSnapshot snapshot = new SchemaSnapshot(connection.getId(), Instant.now());
         try (ResultSet tables = metaData.getTables(catalog, schemaPattern, "%", new String[]{"TABLE", "VIEW"})) {
@@ -267,6 +270,14 @@ public class SchemaIntrospectionService {
         byIndexName.forEach((indexName, acc) -> table.addConstraint(new SchemaConstraint(
                 acc.unique() ? ConstraintType.UNIQUE : ConstraintType.INDEX, indexName, acc.columnNames(), null,
                 null)));
+    }
+
+    private String defaultSchemaFor(DbType dbType) {
+        return switch (dbType) {
+            case POSTGRESQL -> "public";
+            case H2 -> "PUBLIC";
+            case MYSQL, MARIADB -> null;
+        };
     }
 
     private NormalizedType normalize(int jdbcType) {
