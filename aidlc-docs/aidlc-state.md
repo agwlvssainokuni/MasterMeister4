@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - NFR Design（成果物生成完了、完了メッセージ提示・承認待ち）
-- **Next Stage**: 承認後、Infrastructure Design（SKIP判定済み）を経てCode Generationに着手
+- **Current Stage**: UNIT-03 RDBMSセットアップ - Code Generation（Part 1 Planning着手）
+- **Next Stage**: Code Generation計画作成・承認後、Part 2実装
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -64,7 +64,7 @@
 ## Current Unit - Stage Progress (UNIT-03)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-21T01:05:00Z。business-logic-model.md, business-rules.md（BR-RDBMS-01〜12）, domain-entities.md, frontend-components.mdを作成。レビューで反映: JDBC URL追加パラメータ(additionalParams)、DBMS選択時のデフォルトポート自動入力、未保存値に対する接続テスト、パスワード非公開方針、表示名重複許可、H2のschemaName欄表示）
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-21T01:25:00Z。AES-256-GCM+鍵ローテーション、TLSデフォルト無効、Bean Validation、HikariCP動的DataSourceキャッシュ、JDBCドライバ4種、DBユーザ最小権限のREADME注記を決定）
-- [ ] NFR Design — EXECUTE（着手中）
+- [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-21T02:00:00Z。CompletableFuture.orTimeoutによるタイムアウト制御・タイムアウト時のConnection強制中断、ConnectionCredentialCipher新設、RdbmsConnectionService内部DataSourceキャッシュ、AppProperties.Rdbms（鍵世代管理・keyId重複検証）、RdbmsDialectStrategyへのbuildJdbcUrl追加（方言別URL構築の一元化）を決定）
 - [x] Infrastructure Design — SKIP（承認 2026-07-21T00:25:00Z。devenvのDBコンテナは整備済みのため）
 - [ ] Code Generation — 未着手
 
