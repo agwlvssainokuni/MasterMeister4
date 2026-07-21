@@ -47,11 +47,11 @@
 
 ### 5. Business Logic Generation
 
-- [ ] Step 5.1: `ConnectionCredentialCipher`（`cherry.mastermeister.rdbmsconnection`）を作成する（AES-256-GCM、`AppProperties.Rdbms`から鍵一覧をロード、`encrypt()`/`decrypt(keyId)`、logical-components.md §1）
-- [ ] Step 5.2: `RdbmsDialectStrategy`インターフェースと実装群（`MySqlDialectStrategy`, `MariaDbDialectStrategy`, `PostgresDialectStrategy`, `H2DialectStrategy`）を作成する（`cherry.mastermeister.rdbmsconnection.dialect`。`requiresSchemaSwitch()`, `applySchemaSwitch()`, `resolveDialect()`, `buildJdbcUrl()`をnfr-design/logical-components.md §1のとおり実装。ポート番号のデフォルト値定数（3306/3306/5432/9092）もここに保持し、後述のAPIレスポンスまたはフロントエンドの静的定義のいずれかから参照できるようにする）
-- [ ] Step 5.3: `RdbmsConnectionService`（COMP-07、`cherry.mastermeister.rdbmsconnection`）を作成する（登録・更新・削除・接続テスト（保存済み/未保存）・`getDataSource()`内部DataSourceキャッシュ（`ConcurrentHashMap`、HikariCP `maximumPoolSize=5`/`minimumIdle=0`/`connectionTimeout=5000`）、business-logic-model.md §1・§2・§4、BR-RDBMS-01〜05・09〜12）
-- [ ] Step 5.4: `SchemaIntrospectionService`（COMP-08、`cherry.mastermeister.rdbmsconnection`）を作成する（`CompletableFuture.orTimeout(60秒)`によるタイムアウト制御、タイムアウト時のConnection強制close、JDBC `DatabaseMetaData`によるテーブル/カラム/制約読取、オールオアナッシング・全置換、business-logic-model.md §3、BR-RDBMS-06〜08）
-- [ ] Step 5.5: `RdbmsConnectionService`・`SchemaIntrospectionService`から`AuditEventPublisher`（UNIT-02既存）経由で`CONNECTION_REGISTERED`/`CONNECTION_UPDATED`/`CONNECTION_DELETED`/`SCHEMA_IMPORTED`イベントを発行する処理を組み込む（domain-entities.md §3のuserId/targetResource/detail対応表のとおり）
+- [x] Step 5.1: `ConnectionCredentialCipher`（`cherry.mastermeister.rdbmsconnection`）を作成する（AES-256-GCM、`AppProperties.Rdbms`から鍵一覧をロード、`encrypt()`/`decrypt(keyId)`、logical-components.md §1）
+- [x] Step 5.2: `RdbmsDialectStrategy`インターフェースと実装群（`MySqlDialectStrategy`, `MariaDbDialectStrategy`, `PostgresDialectStrategy`, `H2DialectStrategy`）を作成する（`cherry.mastermeister.rdbmsconnection.dialect`。`requiresSchemaSwitch()`, `applySchemaSwitch()`, `resolveDialect()`, `buildJdbcUrl()`をnfr-design/logical-components.md §1のとおり実装） — `resolveDialect()`はSpring DI経由で4実装を受け取る専用コンポーネント`RdbmsDialectStrategyResolver`として実装（実装判断）。デフォルトポート定数はフロントエンド側の静的定義として持たせる方針とし、バックエンドのインターフェースには追加しなかった（承認済みcomponent-methods.mdの4メソッドに厳密に従う）
+- [x] Step 5.3: `RdbmsConnectionService`（COMP-07、`cherry.mastermeister.rdbmsconnection`）を作成する（登録・更新・削除・接続テスト（保存済み/未保存）・`getDataSource()`内部DataSourceキャッシュ（`ConcurrentHashMap`、HikariCP `maximumPoolSize=5`/`minimumIdle=0`/`connectionTimeout=5000`）、business-logic-model.md §1・§2・§4、BR-RDBMS-01〜05・09〜12） — 接続失敗のエラー分類（BR-RDBMS-04）はSQLState（`08`=CONNECTION_UNREACHABLE、`28`=AUTH_ERROR）＋メッセージのキーワードマッチによるベストエフォート実装
+- [x] Step 5.4: `SchemaIntrospectionService`（COMP-08、`cherry.mastermeister.rdbmsconnection`）を作成する（`CompletableFuture.orTimeout(60秒)`によるタイムアウト制御、タイムアウト時のConnection強制close、JDBC `DatabaseMetaData`によるテーブル/カラム/制約読取、オールオアナッシング・全置換、business-logic-model.md §3、BR-RDBMS-06〜08） — 非同期実行には仮想スレッド（`Executors.newVirtualThreadPerTaskExecutor()`）を使用（Java 25、スレッドプール枯渇・シャットダウン時のリーク懸念を回避）
+- [x] Step 5.5: `RdbmsConnectionService`・`SchemaIntrospectionService`から`AuditEventPublisher`（UNIT-02既存）経由で`CONNECTION_REGISTERED`/`CONNECTION_UPDATED`/`CONNECTION_DELETED`/`SCHEMA_IMPORTED`イベントを発行する処理を組み込む（domain-entities.md §3のuserId/targetResource/detail対応表のとおり） — 各Service内に組み込み済み（個別ステップとしての追加実装は不要だった）
 
 ### 6. Business Logic Unit Testing
 
