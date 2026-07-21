@@ -1,19 +1,20 @@
 # MasterMeister backend
 
-Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を構築した。
+Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を、UNIT-03（RDBMSセットアップ）で対象RDBMS接続の登録・管理とスキーマ取込の基盤を構築した。
 
 ## 起動
 
-開発用にMailPit（メール送信確認用SMTPサーバ）を起動しておく（`../devenv/docker-compose.yml`）。
+開発用にMailPit（メール送信確認用SMTPサーバ）、および対象RDBMS接続の動作確認用にMySQL/MariaDB/PostgreSQLを起動しておく（`../devenv/docker-compose.yml`）。
 
 ```bash
-docker compose -f ../devenv/docker-compose.yml up -d mailpit
+docker compose -f ../devenv/docker-compose.yml up -d
 ```
 
-JWT署名鍵は必須（デフォルト空文字のため未設定だと起動時に`AppProperties`のコンストラクタ検証で失敗する。32バイト以上の任意の文字列を指定する）。
+JWT署名鍵・RDBMS接続パスワード暗号鍵はいずれも必須（デフォルト空文字のため未設定だと起動時に`AppProperties`のコンストラクタ検証で失敗する）。
 
 ```bash
 export MM_APP_JWT_SECRET="$(openssl rand -base64 32)"
+export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 ./gradlew :backend:bootRun
 ```
 
@@ -43,11 +44,19 @@ export MM_APP_JWT_SECRET="$(openssl rand -base64 32)"
 | `MM_APP_MAIL_USERNAME` / `MM_APP_MAIL_PASSWORD` | (空) | 送信メールサーバの認証情報 |
 | `MM_APP_MAIL_SMTP_AUTH` / `MM_APP_MAIL_SMTP_STARTTLS` | `false` / `false` | 送信メールサーバのSMTP認証・STARTTLS |
 | `MM_APP_MAIL_FROM` | `no-reply@mastermeister.example` | 送信メールのFromアドレス |
+| `MM_APP_RDBMS_ENCRYPTION_KEYS` | (空・必須) | 対象RDBMS接続パスワードの暗号鍵（AES-256-GCM）。`keyId:base64key`形式、複数世代をカンマ区切りで指定可能（鍵ローテーション対応。最大の`keyId`が新規暗号化に使われる現在鍵となり、全世代の鍵が復号に使用可能）。各鍵はBase64デコード後32バイト（AES-256）である必要がある。生成例: `openssl rand -base64 32` |
 | `SERVER_PORT` | `8080` | Webサーバのポート |
 
 ## Flywayマイグレーション
 
 `src/main/resources/db/migration/V{n}__{description}.sql`に追加する。`ddl-auto: validate`のためJPAエンティティ側のスキーマ変更は必ずマイグレーションスクリプトを伴わせること。既存の適用済みスクリプトは変更しない（新しいバージョンを追加する）。
+
+## 対象RDBMS接続（UNIT-03）
+
+管理者ダッシュボードの「RDBMS接続設定」画面（`/connections`）から、マスタメンテナンス対象のRDBMS接続を登録・管理する。対応するJDBCドライバはMySQL（`com.mysql:mysql-connector-j`）、MariaDB（`org.mariadb.jdbc:mariadb-java-client`）、PostgreSQL（`org.postgresql:postgresql`）、H2（`com.h2database:h2`、内部DB用と共用）を同梱済み。
+
+- **対象RDBMS接続に使用するDBユーザは、最小権限（本アプリの用途に必要な範囲のみ）で作成することを推奨する**（読取専用のマスタメンテナンスであれば`SELECT`権限のみのユーザを用意する等）。DBユーザの権限設定自体はRDBMS側の運用管理であり、本アプリは指定された認証情報でそのまま接続を試みるのみでアプリケーション側での権限チェック・強制は行わない
+- TLS接続はデフォルトで無効。有効化する場合は接続情報の「追加パラメータ」欄に、対象RDBMSの実際のTLS構成に応じたJDBCパラメータ（例: MySQL/MariaDBは`useSSL=true`、PostgreSQLは`sslmode=require`）を指定する
 
 ## API仕様書（OpenAPI/Swagger UI）
 
@@ -68,4 +77,4 @@ export MM_APP_JWT_SECRET="$(openssl rand -base64 32)"
 - `backend`: 本モジュール（アプリケーション本体）
 - `cherry-mustache-core`: メールテンプレートレンダリングに使用する自作Mustacheエンジン（独立したGradleサブプロジェクト。パッケージ名は`cherry.mustache`のまま維持）
 
-詳細は`aidlc-docs/construction/unit-02/code/{repository-layer-summary,business-logic-summary,api-layer-summary}.md`を参照。
+詳細は`aidlc-docs/construction/unit-0{2,3}/code/{repository-layer-summary,business-logic-summary,api-layer-summary}.md`を参照。

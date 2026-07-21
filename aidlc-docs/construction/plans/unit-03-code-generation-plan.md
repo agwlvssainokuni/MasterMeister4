@@ -97,12 +97,12 @@
 
 ### 14. Documentation Generation
 
-- [ ] Step 14.1: `backend/README.md`を更新する（`MM_APP_RDBMS_ENCRYPTION_KEYS`環境変数、JDBCドライバ追加、対象RDBMS接続用DBユーザの最小権限推奨に関する注記、NFR-03-07）
-- [ ] Step 14.2: `frontend/README.md`を更新する（新規ページ・ルーティングの追記、必要であれば）
+- [x] Step 14.1: `backend/README.md`を更新する（`MM_APP_RDBMS_ENCRYPTION_KEYS`環境変数、JDBCドライバ追加、対象RDBMS接続用DBユーザの最小権限推奨に関する注記、NFR-03-07）
+- [x] Step 14.2: `frontend/README.md`を更新する（新規ページ・ルーティングの追記、必要であれば）
 
 ### 15. Deployment Artifacts
 
-- [ ] Step 15.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に必要な対象RDBMS（MySQL/MariaDB/PostgreSQL）が既存構成（本セッション冒頭で整備済み）でそのまま利用できることを確認する（新規追加は不要見込み）
+- [x] Step 15.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に必要な対象RDBMS（MySQL/MariaDB/PostgreSQL）が既存構成（本セッション冒頭で整備済み）でそのまま利用できることを確認する（新規追加は不要見込み） — 確認の結果、追加変更不要
 
 ### 16. 最終ビルド検証
 
