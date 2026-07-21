@@ -27,13 +27,26 @@ RdbmsConnectionListPage (AppShell)
 
 ### 1.1 接続登録・編集フォーム（Modal内）
 - TextInput（displayName、表示名、required）
-- Select（dbType、`MYSQL`/`MARIADB`/`POSTGRESQL`/`H2`、required）
+- Select（dbType、`MYSQL`/`MARIADB`/`POSTGRESQL`/`H2`、required。選択変更時、§1.2のデフォルトポート番号を`port`フィールドに自動入力する（レビュー指摘の反映）
 - TextInput（host、required）
-- TextInput（port、type=number、required、1〜65535）
+- TextInput（port、type=number、required、1〜65535。dbType選択時にデフォルト値が入るが、手動での上書きも可能）
 - TextInput（databaseName、required）
 - TextInput（schemaName、任意。`dbType === 'POSTGRESQL'`の場合のみ表示）
 - TextInput（username、required）
 - TextInput（password、type=password。編集時は空欄可＝変更しない場合は既存値を保持）
+- TextInput（additionalParams、「追加パラメータ」、任意。プレースホルダーでJDBCクエリパラメータの入力例（例: `useSSL=false&serverTimezone=UTC`）を示す。BR-RDBMS-10）
+
+### 1.2 dbType選択時のデフォルトポート自動入力（レビュー指摘の反映）
+Selectで`dbType`を選択した時点で、`port`フィールドに以下のデフォルト値を自動入力する（クライアント側のみの利便性機能。BR-RDBMS-01のバリデーション自体は特定のポート番号を強制しない）。
+
+| dbType | デフォルトport |
+|---|---|
+| `MYSQL` | 3306 |
+| `MARIADB` | 3306 |
+| `POSTGRESQL` | 5432 |
+| `H2` | 9092（TCPサーバモードのデフォルト） |
+
+新規登録時（`port`が未入力の場合）にのみ自動入力する。編集時に既存の`port`値がある場合、`dbType`を変更しても既存の値を上書きしない（管理者が意図的に設定した値を尊重する）。
 
 ### State
 - `connections: ConnectionSummary[]`, `loading: boolean`, `errorMessage: string | null`

@@ -1151,3 +1151,11 @@
 **Context**: CONSTRUCTION - UNIT-03 Functional Design、成果物生成
 
 ---
+
+## UNIT-03 Functional Design - レビュー対応: JDBC URL追加パラメータ、デフォルトポート自動入力
+**Timestamp**: 2026-07-21T00:50:00Z
+**User Input**: "DB接続設定には、JDBC URLのクエリパラメータも設定できるべき。あと、DB接続設定画面では、DBMSを選択したらデフォルトのポート番号が入力されて欲しい。"
+**AI Response**: "2点を反映。(1) RdbmsConnectionに`additionalParams`（JDBC URLに付加する生のクエリ文字列、任意項目）を追加し、BR-RDBMS-10として新規業務ルールを定義（domain-entities.md, business-rules.md, business-logic-model.md §1を更新）。(2) frontend-components.mdの接続登録・編集フォームに、dbType選択時のデフォルトポート自動入力仕様を追加（MySQL/MariaDB=3306, PostgreSQL=5432, H2=9092（TCPサーバモード）。クライアント側のみの利便性機能であり、BR-RDBMS-01のポート番号バリデーション自体は特定値を強制しない。新規登録時のみ自動入力し、編集時の既存値は上書きしない）。"
+**Context**: CONSTRUCTION - UNIT-03 Functional Design、レビュー対応（Request Changes扱い）
+
+---

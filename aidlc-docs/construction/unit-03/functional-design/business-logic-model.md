@@ -8,7 +8,7 @@
 
 ## 1. 接続情報の登録・更新（FR-2.1）
 
-1. 管理者が接続情報（表示名、DB種別`dbType`、host、port、databaseName、schemaName（任意）、username、password）を入力し登録する（`POST /api/admin/rdbms-connections`）
+1. 管理者が接続情報（表示名、DB種別`dbType`、host、port、databaseName、schemaName（任意）、username、password、additionalParams（任意、JDBC URLに付加するクエリパラメータ。BR-RDBMS-10）を入力し登録する（`POST /api/admin/rdbms-connections`）
 2. RdbmsConnectionServiceは形式チェックのみ行う（必須項目の入力有無、portが1〜65535の整数であること等）。実際にRDBMSへ接続できるかどうかの確認はここでは行わない（Q1=B、BR-RDBMS-01）
 3. パスワードは可逆暗号化して保存する（requirements.md §4の既存決定。アルゴリズム・鍵管理はNFR Requirements/NFR Designで確定）
 4. 独立した接続IDを新規発行する。host/port/databaseNameの組み合わせが既存の接続と重複していても登録を拒否しない（Q5=A、BR-RDBMS-02）
