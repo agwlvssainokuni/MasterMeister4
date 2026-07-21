@@ -20,9 +20,9 @@ import { AuthenticatedLayout } from './AuthenticatedLayout'
 import { FeatureCard } from './FeatureCard'
 import styles from './HomePage.module.css'
 
-// frontend-components.md §5。SideNavの8項目に対応するカードグリッド。UNIT-02で
-// 実装済みの「ユーザ管理」のみ活性、他ユニットは「準備中」の非活性カードとする。
-const IMPLEMENTED_KEYS = new Set(['users'])
+// frontend-components.md §5。SideNavの8項目に対応するカードグリッド。UNIT-02/03で
+// 実装済みの「ユーザ管理」「RDBMS接続設定」のみ活性、他ユニットは「準備中」の非活性カードとする。
+const IMPLEMENTED_KEYS = new Set(['users', 'connections'])
 
 export function HomePage() {
   const { t } = useTranslation(['common', 'design-system'])

@@ -23,6 +23,8 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterStep1Page } from './pages/RegisterStep1Page'
 import { RegisterStep2Page } from './pages/RegisterStep2Page'
 import { UserManagementPage } from './pages/UserManagementPage'
+import { RdbmsConnectionListPage } from './pages/RdbmsConnectionListPage'
+import { SchemaDetailPage } from './pages/SchemaDetailPage'
 
 // devビルド限定ルート（/mock/*）。lazy()呼び出し自体をimport.meta.env.DEVの
 // 三項演算子内に置くことで、本番ビルド時（DEV=falseへ静的に置換される）に
@@ -52,6 +54,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <UserManagementPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/connections"
+            element={
+              <ProtectedRoute>
+                <RdbmsConnectionListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/connections/:id/schema"
+            element={
+              <ProtectedRoute>
+                <SchemaDetailPage />
               </ProtectedRoute>
             }
           />

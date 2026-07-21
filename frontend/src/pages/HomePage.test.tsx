@@ -30,6 +30,7 @@ function renderHomePage() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/users" element={<p>ユーザ管理画面</p>} />
+            <Route path="/connections" element={<p>RDBMS接続設定画面</p>} />
           </Routes>
         </AuthProvider>
       </MemoryRouter>
@@ -38,24 +39,33 @@ function renderHomePage() {
 }
 
 describe('HomePage', () => {
-  it('SideNavの8項目に対応するカードを表示し、実装済みは「ユーザ管理」のみとする', () => {
+  it('SideNavの8項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」とする', () => {
     renderHomePage()
     // NAV_ROUTESの全項目のタイトルが表示される（SideNav側にも同名の項目があるため、
     // カード側は実装済みカードのdata-testidで、非活性カードはgetAllByTextで確認する）
     expect(within(screen.getByTestId('feature-card-users')).getByText('ユーザ管理')).toBeInTheDocument()
-    expect(screen.getAllByText('RDBMS接続設定').length).toBeGreaterThan(0)
+    expect(
+      within(screen.getByTestId('feature-card-connections')).getByText('RDBMS接続設定'),
+    ).toBeInTheDocument()
     expect(screen.getAllByText('監査ログ').length).toBeGreaterThan(0)
 
-    // 未実装カードは「準備中」バッジを持つ
-    expect(screen.getAllByText('準備中')).toHaveLength(7)
+    // 未実装カードは「準備中」バッジを持つ（UNIT-03でconnectionsが実装済みになった分、7→6に変化）
+    expect(screen.getAllByText('準備中')).toHaveLength(6)
 
     // 実装済みカードのみクリック可能なボタンとして描画される
     expect(screen.getByTestId('feature-card-users')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-connections')).toBeInTheDocument()
   })
 
   it('実装済みカードをクリックすると対応するページへ遷移する', async () => {
     renderHomePage()
     await userEvent.click(screen.getByTestId('feature-card-users'))
     expect(await screen.findByText('ユーザ管理画面')).toBeInTheDocument()
+  })
+
+  it('RDBMS接続設定カードをクリックすると対応するページへ遷移する', async () => {
+    renderHomePage()
+    await userEvent.click(screen.getByTestId('feature-card-connections'))
+    expect(await screen.findByText('RDBMS接続設定画面')).toBeInTheDocument()
   })
 })

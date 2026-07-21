@@ -80,20 +80,20 @@
 
 ### 11. Frontend Components Generation
 
-- [ ] Step 11.1: APIクライアント（`frontend/src/api/rdbmsConnections.ts`）を作成する（一覧・登録・更新・削除・接続テスト（保存済み/未保存）・スキーマ取込・スキーマ取得の各関数、`http.ts`共通ラッパー利用）
-- [ ] Step 11.2: `RdbmsConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1、一覧・登録編集フォームModal・削除確認・接続テスト/スキーマ取込アクション、`dbType`選択時のデフォルトポート自動入力・方言別`additionalParams`ヘルプテキスト出し分け）
-- [ ] Step 11.3: `SchemaDetailPage`（`frontend/src/pages/`）を作成する（frontend-components.md §2、テーブル一覧・カラム一覧の2段DataTable）
-- [ ] Step 11.4: `App.tsx`のルーティングに`/connections`（`RdbmsConnectionListPage`、`ProtectedRoute`配下）・`/connections/:id/schema`（`SchemaDetailPage`、同）を追加する
-- [ ] Step 11.5: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'connections'`を追加する（frontend-components.md §3訂正版）
+- [x] Step 11.1: APIクライアント（`frontend/src/api/rdbmsConnections.ts`）を作成する（一覧・登録・更新・削除・接続テスト（保存済み/未保存）・スキーマ取込・スキーマ取得の各関数、`http.ts`共通ラッパー利用）
+- [x] Step 11.2: `RdbmsConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1、一覧・登録編集フォームModal・削除確認・接続テスト/スキーマ取込アクション、`dbType`選択時のデフォルトポート自動入力・方言別`additionalParams`ヘルプテキスト出し分け）
+- [x] Step 11.3: `SchemaDetailPage`（`frontend/src/pages/`）を作成する（frontend-components.md §2、テーブル一覧・カラム一覧の2段DataTable）
+- [x] Step 11.4: `App.tsx`のルーティングに`/connections`（`RdbmsConnectionListPage`、`ProtectedRoute`配下）・`/connections/:id/schema`（`SchemaDetailPage`、同）を追加する
+- [x] Step 11.5: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'connections'`を追加する（frontend-components.md §3訂正版） — 既存の`HomePage.test.tsx`（準備中バッジ数のハードコード検証）が7→6件に変化するため更新が必要だった
 
 ### 12. Frontend Components Unit Testing
 
-- [ ] Step 12.1: `RdbmsConnectionListPage`・`SchemaDetailPage`のテストを作成する（Vitest + RTL、フォーム操作・バリデーション・API呼び出しモック・デフォルトポート自動入力）
-- [ ] Step 12.2: `rdbmsConnections.ts`（APIクライアント）のテストを作成する
+- [x] Step 12.1: `RdbmsConnectionListPage`・`SchemaDetailPage`のテストを作成する（Vitest + RTL、フォーム操作・バリデーション・API呼び出しモック・デフォルトポート自動入力）
+- [x] Step 12.2: `rdbmsConnections.ts`（APIクライアント）のテストを作成する
 
 ### 13. Frontend Components Summary
 
-- [ ] Step 13.1: `aidlc-docs/construction/unit-03/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
+- [x] Step 13.1: `aidlc-docs/construction/unit-03/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
 
 ### 14. Documentation Generation
 
