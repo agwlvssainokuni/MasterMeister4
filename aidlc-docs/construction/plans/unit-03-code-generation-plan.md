@@ -66,17 +66,17 @@
 
 ### 8. API Layer Generation
 
-- [ ] Step 8.1: DTOを作成する（`cherry.mastermeister.rdbmsconnection.dto`）: `RdbmsConnectionRequest`（Bean Validation付与）, `ConnectionTestRequest`, `RdbmsConnectionResponse`, `RdbmsConnectionSummaryResponse`（パスワード非公開、BR-RDBMS-12）, `ConnectionTestResult`, `SchemaSnapshotResponse`/`SchemaTableResponse`/`SchemaColumnResponse`/`SchemaConstraintResponse`
-- [ ] Step 8.2: `RdbmsConnectionController`（`cherry.mastermeister.rdbmsconnection.api`）を作成する（`GET/POST/PUT/DELETE /api/admin/rdbms-connections[/{id}]`, `POST /api/admin/rdbms-connections/{id}/test`, `POST /api/admin/rdbms-connections/test`, `POST /api/admin/rdbms-connections/{id}/schema-refresh`, `GET /api/admin/rdbms-connections/{id}/schema`。既存の`SecurityConfig`の`/api/admin/**`パターンに含まれるため追加のセキュリティ設定は不要）
-- [ ] Step 8.3: OpenAPI/Swagger UIへの反映を確認する（既存の`springdoc-openapi-starter-webmvc-ui`により自動生成されることを確認するのみ、追加実装不要）
+- [x] Step 8.1: DTOを作成する（`cherry.mastermeister.rdbmsconnection.dto`）: `RdbmsConnectionRequest`（Bean Validation付与）, `ConnectionTestRequest`, `RdbmsConnectionResponse`（一覧・詳細共用、パスワード非公開、BR-RDBMS-12）, `ConnectionTestResult`, `SchemaSnapshotResponse`/`SchemaTableResponse`/`SchemaColumnResponse`/`SchemaConstraintResponse` — `RdbmsConnectionSummaryResponse`は別型として設けず、一覧・詳細を`RdbmsConnectionResponse`単一のDTOで共用する実装判断とした（フィールドがほぼ同一のため）
+- [x] Step 8.2: `RdbmsConnectionController`（`cherry.mastermeister.rdbmsconnection.api`）を作成する（`GET/POST/PUT/DELETE /api/admin/rdbms-connections[/{id}]`, `POST /api/admin/rdbms-connections/{id}/test`, `POST /api/admin/rdbms-connections/test`, `POST /api/admin/rdbms-connections/{id}/schema-refresh`, `GET /api/admin/rdbms-connections/{id}/schema`。既存の`SecurityConfig`の`/api/admin/**`パターンに含まれるため追加のセキュリティ設定は不要）
+- [x] Step 8.3: OpenAPI/Swagger UIへの反映を確認する（既存の`springdoc-openapi-starter-webmvc-ui`により自動生成されることを確認するのみ、追加実装不要）
 
 ### 9. API Layer Unit Testing
 
-- [ ] Step 9.1: `@WebMvcTest`で`RdbmsConnectionController`のテストを作成する（管理者ロールチェック（非ADMIN/未認証で403/401）、バリデーションエラー、レスポンスにパスワードが含まれないことの確認、接続テスト・スキーマ取込のエラー分類レスポンス）
+- [x] Step 9.1: `@WebMvcTest`で`RdbmsConnectionController`のテストを作成する（管理者ロールチェック（非ADMIN/未認証で403/401）、バリデーションエラー、レスポンスにパスワードが含まれないことの確認、接続テスト・スキーマ取込のエラー分類レスポンス）
 
 ### 10. API Layer Summary
 
-- [ ] Step 10.1: `aidlc-docs/construction/unit-03/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
+- [x] Step 10.1: `aidlc-docs/construction/unit-03/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
 
 ### 11. Frontend Components Generation
 
