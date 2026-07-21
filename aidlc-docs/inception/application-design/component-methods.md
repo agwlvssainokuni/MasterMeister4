@@ -45,6 +45,7 @@
 - `requiresSchemaSwitch(): boolean`
 - `applySchemaSwitch(connection: Connection, schema: String): void`
 - `resolveDialect(dbType: DbType): RdbmsDialectStrategy` — ファクトリメソッド
+- `buildJdbcUrl(host: String, port: int, databaseName: String, schemaName: String, additionalParams: String): String` — 訂正（UNIT-03 NFR Designにて追加）。JDBC URLのスキーム（`jdbc:mysql:`/`jdbc:mariadb:`/`jdbc:postgresql:`/`jdbc:h2:tcp:`）・パラメータ区切り文字（`?`＋`&`、H2のみ`;`）が方言ごとに異なるため、URL構築自体を方言吸収の責務に含める
 
 ## COMP-10: AccessControlService
 - `setPermission(principal: Principal, resource: ResourcePath, primary: PrimaryPermission, auxiliary: Set<AuxiliaryPermission>): void`

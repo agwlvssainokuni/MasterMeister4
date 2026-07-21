@@ -1223,3 +1223,11 @@
 **Context**: CONSTRUCTION - UNIT-03 NFR Design、レビュー対応（Request Changes扱い）
 
 ---
+
+## UNIT-03 NFR Design - レビュー対応: JDBC URL構築の方言別責務化
+**Timestamp**: 2026-07-21T01:55:00Z
+**User Input**: "1: 推奨の通りとする。2: 承知した。"
+**AI Response**: "JDBC URLのスキーム・パラメータ区切り文字（MySQL/MariaDB/PostgreSQLは`?`＋`&`、H2は`;`）が方言ごとに異なる問題を解消するため、`RdbmsDialectStrategy`に`buildJdbcUrl(host, port, databaseName, schemaName, additionalParams): String`を追加。INCEPTION承認済みのaidlc-docs/inception/application-design/component-methods.md（COMP-09）に訂正注記を追加（既存の訂正パターンに準拠）。unit-03/nfr-design/logical-components.md（各実装クラスのURL形式）・nfr-design-patterns.md §3.6（新設）を更新。承認済みのFunctional Design artifact frontend-components.mdの「追加パラメータ」欄について、プレースホルダーを選択中のdbTypeに応じて出し分ける旨の訂正注記を追加。H2のdatabaseName意味論の違い（TCPサーバのベースディレクトリからの相対パス）は実装時の認識事項として承知（対応不要）。"
+**Context**: CONSTRUCTION - UNIT-03 NFR Design、レビュー対応（Request Changes扱い）
+
+---

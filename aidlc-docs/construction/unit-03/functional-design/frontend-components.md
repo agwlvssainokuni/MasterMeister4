@@ -34,7 +34,7 @@ RdbmsConnectionListPage (AppShell)
 - TextInput（schemaName、任意。`dbType`が`POSTGRESQL`または`H2`の場合のみ表示（レビュー指摘の反映、両方言ともスキーマの概念を持つため）
 - TextInput（username、required）
 - TextInput（password、type=password。編集時は空欄可＝変更しない場合は既存値を保持。APIは既存パスワードを返さないため、編集フォーム表示時点でも常に空欄から始まる。BR-RDBMS-12）
-- TextInput（additionalParams、「追加パラメータ」、任意。プレースホルダーでJDBCクエリパラメータの入力例（例: `useSSL=false&serverTimezone=UTC`）を示す。BR-RDBMS-10）
+- TextInput（additionalParams、「追加パラメータ」、任意。~~プレースホルダーでJDBCクエリパラメータの入力例（例: `useSSL=false&serverTimezone=UTC`）を示す~~ 訂正（UNIT-03 NFR Designにて）: JDBC URLのパラメータ区切り文字は方言ごとに異なる（MySQL/MariaDB/PostgreSQLは`&`区切り、H2は`;`区切り）ため、プレースホルダー・ヘルプテキストは選択中の`dbType`に応じた記法例を出し分ける（`MYSQL`/`MARIADB`/`POSTGRESQL`選択時: `useSSL=false&serverTimezone=UTC`、`H2`選択時: `TRACE_LEVEL_FILE=0;IFEXISTS=TRUE`等）。BR-RDBMS-10）
 - Button（「接続テスト」、フォーム下部。入力中の値でBR-RDBMS-11の未保存テストエンドポイントを呼び出す。結果はフォーム内にAlertで表示し、モーダルは閉じない）
 - Button（type=submit、「登録」/「更新」）
 

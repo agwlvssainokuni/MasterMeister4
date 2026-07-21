@@ -57,6 +57,10 @@
 - アプリケーション側でTLSを強制する実装は行わない。`additionalParams`（BR-RDBMS-10）で管理者が指定した値をそのままJDBC URLへ付加する
 - `backend/README.md`に、本番運用では対象RDBMSの実際のTLS構成に応じて`additionalParams`（例: `useSSL=true`, `sslmode=require`）を設定することを推奨する旨を記載する（SECURITY-09）
 
+### 3.6 JDBC URL構築の方言別責務化（レビュー指摘の反映）
+- JDBC URLのスキーム・パラメータ区切り文字（MySQL/MariaDB/PostgreSQLは`?`＋`&`、H2は`;`）は方言ごとに異なるため、URL構築自体を`RdbmsDialectStrategy.buildJdbcUrl(...)`に集約する（logical-components.md §1参照、component-methods.mdへの訂正を反映）
+- フロントエンドの「追加パラメータ」入力欄のヘルプテキスト・プレースホルダーは、選択中の`dbType`に応じた記法例を表示する（Functional Design frontend-components.mdへの訂正を反映）
+
 ### 3.5 入力バリデーション（Q4=A、tech-stack-decisions.md §4の継続適用、SECURITY-05）
 - 接続登録・更新・接続テスト（未保存値）のリクエストDTOにBean Validationアノテーション（`@NotBlank`, `@Min`/`@Max`（port）等）を付与し、コントローラで`@Valid`を用いる
 - バリデーション違反時はUNIT-02で確立済みのBR-API-01形式のエラーレスポンスに変換する（既存のグローバル例外ハンドラをそのまま利用、追加実装不要）
