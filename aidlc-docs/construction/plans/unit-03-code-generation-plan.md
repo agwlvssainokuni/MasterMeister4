@@ -106,9 +106,9 @@
 
 ### 16. 最終ビルド検証
 
-- [ ] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功）、`./gradlew :backend:test`、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する
-- [ ] Step 16.2: `./gradlew :backend:bootWar`で統合WARを生成し、`java -jar`起動。devenvのMySQL/MariaDB/PostgreSQL（サンプルデータ投入済み）それぞれへの接続登録・接続テスト・スキーマ取込を行い、`categories`/`products`テーブルの構造が正しく取り込まれることをスキーマ詳細画面で確認する
-- [ ] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）を実行する（UNIT-02同様、NVD APIキー未設定の場合は既知の制約として記録し実施見送りとする）
+- [x] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功）、`./gradlew :backend:test`、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する — 全件成功
+- [x] Step 16.2: `./gradlew :backend:bootWar`で統合WARを生成し、`java -jar`起動。devenvのMySQL/MariaDB/PostgreSQL（サンプルデータ投入済み）それぞれへの接続登録・接続テスト・スキーマ取込をcurlで実行し、`categories`/`products`テーブルの構造（型・PK・FK・正規化型を含む）が正しく取り込まれることを`GET /schema`のレスポンスで確認した。この検証中に`LazyInitializationException`（`GET /schema`で発生）を発見・修正（repository-layer-summary.md参照）。フロントエンドは`npm run dev`を起動しビルド・型チェック・全123件のコンポーネントテスト（実際のDOM操作・API呼び出しモックを伴う）は成功させたが、ブラウザでの対話的なクリック確認は本セッションの環境ではブラウザ自動化ツールが利用できず実施できなかった（既知の制約として明記）
+- [x] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）を実行する（UNIT-02同様、NVD APIキー未設定の場合は既知の制約として記録し実施見送りとする） — UNIT-02と同じ制約により本ユニットでも実施見送り
 
 ---
 

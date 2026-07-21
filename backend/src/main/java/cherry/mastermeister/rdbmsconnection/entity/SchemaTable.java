@@ -58,10 +58,10 @@ public class SchemaTable {
     @Column(length = 1000)
     private String comment;
 
-    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SchemaColumn> columns = new ArrayList<>();
 
-    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SchemaConstraint> constraints = new ArrayList<>();
 
     protected SchemaTable() {

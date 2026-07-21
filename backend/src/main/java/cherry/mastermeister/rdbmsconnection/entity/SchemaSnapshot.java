@@ -44,7 +44,7 @@ public class SchemaSnapshot {
     @Column(name = "imported_at", nullable = false)
     private Instant importedAt;
 
-    @OneToMany(mappedBy = "schemaSnapshot", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "schemaSnapshot", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SchemaTable> tables = new ArrayList<>();
 
     protected SchemaSnapshot() {
