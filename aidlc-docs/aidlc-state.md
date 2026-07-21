@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - Functional Design（成果物生成完了、完了メッセージ提示・承認待ち）
-- **Next Stage**: 承認後、NFR Requirementsに着手
+- **Current Stage**: UNIT-03 RDBMSセットアップ - NFR Requirements（着手）
+- **Next Stage**: NFR Requirements計画作成・質問提示
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -62,8 +62,8 @@
 - [x] Code Generation — COMPLETED（承認 2026-07-21T00:15:00Z。全18セクション完了。承認前レビュー対応: CORS設定削除、EmailNotificationServiceの責務分離とMailDeliveryService新設・Fromアドレス欠落修正、devenv整備、frontend.base-urlデフォルト修正）
 
 ## Current Unit - Stage Progress (UNIT-03)
-- [ ] Functional Design — EXECUTE、承認 2026-07-21T00:25:00Z、着手中
-- [ ] NFR Requirements — EXECUTE（判定承認済み、未着手）
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-21T01:05:00Z。business-logic-model.md, business-rules.md（BR-RDBMS-01〜12）, domain-entities.md, frontend-components.mdを作成。レビューで反映: JDBC URL追加パラメータ(additionalParams)、DBMS選択時のデフォルトポート自動入力、未保存値に対する接続テスト、パスワード非公開方針、表示名重複許可、H2のschemaName欄表示）
+- [ ] NFR Requirements — EXECUTE（着手中）
 - [ ] NFR Design — EXECUTE（判定承認済み、未着手）
 - [x] Infrastructure Design — SKIP（承認 2026-07-21T00:25:00Z。devenvのDBコンテナは整備済みのため）
 - [ ] Code Generation — 未着手

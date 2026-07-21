@@ -1167,3 +1167,11 @@
 **Context**: CONSTRUCTION - UNIT-03 Functional Design、追加レビュー対応（Request Changes扱い）
 
 ---
+
+## UNIT-03 Functional Design - 承認、NFR Requirementsへ
+**Timestamp**: 2026-07-21T01:05:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-03のFunctional Designを承認として記録。unit-03-functional-design-plan.mdのStep Hを完了に更新。aidlc-state.mdのCurrent Unit - Stage Progress (UNIT-03)を更新（Functional Design完了、NFR Requirements着手）。NFR Requirementsに着手。"
+**Context**: CONSTRUCTION - UNIT-03 Functional Design 完了、NFR Requirements開始
+
+---

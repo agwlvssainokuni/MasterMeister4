@@ -17,7 +17,7 @@
 - [x] Step E: `business-rules.md`（バリデーション、重複・削除・再取込時の方針）を作成する
 - [x] Step F: フロントエンドスコープが「含める」の場合、`frontend-components.md`を作成する — Q9=Aのため作成（`rdbms-connection/`モジュール新設）
 - [x] Step G: PBT対象プロパティの識別（Property-Based Testing拡張、該当あれば記載） — business-logic-model.md §7に記載。本ユニットはPBT対象プロパティなしと判断
-- [ ] Step H: 完了メッセージを提示し、承認を得る
+- [x] Step H: 完了メッセージを提示し、承認を得る — 承認済み（2026-07-21T01:05:00Z。2回のレビュー対応: JDBC URL追加パラメータ・デフォルトポート自動入力／未保存値の接続テスト・パスワード非公開・表示名重複許可・H2スキーマ欄、を経て承認）
 
 ## 質問
 
