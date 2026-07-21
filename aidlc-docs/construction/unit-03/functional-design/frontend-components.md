@@ -1,12 +1,12 @@
 # UNIT-03 RDBMSセットアップ - Frontend Components
 
-`unit-03-functional-design-plan.md`のQ9=A（新規フロントエンドモジュール`rdbms-connection/`を新設）に基づく。UNIT-01で構築した`design-system`コンポーネント（`AppShell`, `PageHeader`, `DataTable`, `Modal`, `ConfirmDialog`, `EmptyState`, `Alert`, `Badge`, `TextInput`, `Select`, `Button`）を利用し、`frontend/src/rdbms-connection/`配下に新規実装する（機能エピック単位のモジュール構成、unit-of-work.md準拠）。
+`unit-03-functional-design-plan.md`のQ9=A（~~新規フロントエンドモジュール`rdbms-connection/`を新設~~ 訂正（UNIT-03 Code Generationにて）: UNIT-02のCode Generationで実際に採用された規約は、機能エピック単位のディレクトリ分割ではなくフラットな`frontend/src/pages/`（画面）・`frontend/src/api/`（APIクライアント）構成だった（unit-of-work.mdの「機能エピック単位のモジュール構成」は構想時点の記述であり、UNIT-02実装時に単純化された）。本ユニットも既存の実装済みコードとの一貫性を優先し、`frontend/src/pages/`・`frontend/src/api/`配下に実装する）に基づく。UNIT-01で構築した`design-system`コンポーネント（`AppShell`, `PageHeader`, `DataTable`, `Modal`, `ConfirmDialog`, `EmptyState`, `Alert`, `Badge`, `TextInput`, `Select`, `Button`）を利用する。
 
-UNIT-01のナビゲーション項目「RDBMS接続設定」（`aidlc-docs/construction/unit-01/functional-design/frontend-components.md` §1.3）に対応する画面を本ユニットで実装する。
+UNIT-01のナビゲーション項目「RDBMS接続設定」（`aidlc-docs/construction/unit-01/functional-design/frontend-components.md` §1.3、design-system/components/navigation.tsの`NAV_ROUTES`で`key: 'connections'`, `path: '/connections'`として既に予約済み）に対応する画面を本ユニットで実装する。画面パスは以下`/rdbms-connections`ではなく、この既存予約済みパス`/connections`を使用する（訂正、UNIT-03 Code Generationにて）。
 
 ---
 
-## 1. RDBMS接続一覧・管理画面（`/rdbms-connections`、`AppShell`）
+## 1. RDBMS接続一覧・管理画面（`/connections`、`AppShell`）
 
 ### コンポーネント構造
 ```
@@ -73,7 +73,7 @@ Selectで`dbType`を選択した時点で、`port`フィールドに以下のデ
 
 ---
 
-## 2. スキーマ詳細画面（`/rdbms-connections/{id}/schema`、`AppShell`）
+## 2. スキーマ詳細画面（`/connections/{id}/schema`、`AppShell`）
 
 取込済みのテーブル・カラム・制約情報を確認する読取専用画面。unit-of-work.mdの動作確認方針（各ユニット完了時にユニット単体の手動確認を行う）を踏まえ、スキーマ取込結果を目視確認できるようにする。
 
@@ -99,7 +99,7 @@ SchemaDetailPage (AppShell)
 
 ## 3. トップ画面のFeatureCard更新
 
-UNIT-02で新設したトップ画面（`aidlc-docs/construction/unit-02/functional-design/frontend-components.md` §5）の「RDBMS接続設定」カードを、`implemented: false`（準備中バッジ）から`implemented: true`に変更し、`/rdbms-connections`へのリンクとして活性化する。
+UNIT-02で新設したトップ画面（`aidlc-docs/construction/unit-02/functional-design/frontend-components.md` §5）の「RDBMS接続設定」カードを活性化する。実装は`HomePage.tsx`の`IMPLEMENTED_KEYS`（`Set<string>`）に`'connections'`を追加する形で行う（UNIT-02 Code Generationで実際に採用された実装方式。`/connections`へのリンクとして活性化する）。
 
 ---
 

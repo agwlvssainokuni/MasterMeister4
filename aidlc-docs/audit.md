@@ -1239,3 +1239,19 @@
 **Context**: CONSTRUCTION - UNIT-03 NFR Design 完了、Code Generation開始
 
 ---
+
+## UNIT-03 Code Generation - Part 1準備、フロントエンド構成の訂正発見
+**Timestamp**: 2026-07-21T02:05:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "Code Generation計画作成のため既存フロントエンド構造（frontend/src/）を確認したところ、2点の不整合を発見。(1) unit-03/functional-design/frontend-components.mdは「新規フロントエンドモジュールrdbms-connection/を新設」としていたが、UNIT-02のCode Generationで実際に採用されたのはフラットなfrontend/src/pages/・frontend/src/api/構成であり、機能エピック単位のディレクトリ分割ではなかった。(2) 画面パスを`/rdbms-connections`としていたが、UNIT-01由来のdesign-system/components/navigation.tsのNAV_ROUTESで`key: 'connections'`, `path: '/connections'`が既に予約済み（i18nラベルもja/en共に設定済み）であり、これと異なるパスを新設すると重複・不整合が生じる。両者ともfrontend-components.mdに訂正注記を追加し、実装はfrontend/src/pages/RdbmsConnectionListPage.tsx・SchemaDetailPage.tsx、ルートは`/connections`・`/connections/{id}/schema`、HomePageのIMPLEMENTED_KEYSへの`'connections'`追加、という既存の実コードに整合する形で計画する。"
+**Context**: CONSTRUCTION - UNIT-03 Code Generation、Part 1計画前の実装状況確認
+
+---
+
+## UNIT-03 Code Generation - Part 1計画作成、承認依頼
+**Timestamp**: 2026-07-21T02:10:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "aidlc-docs/construction/plans/unit-03-code-generation-plan.mdを作成。16セクション・番号付きステップで構成: Build Configuration（JDBCドライバ・AppProperties.Rdbms拡張）、Database Migration Scripts（V7〜V11、AuditEventType拡張）、Repository Layer（生成・テスト・サマリ）、Business Logic（ConnectionCredentialCipher・RdbmsDialectStrategy実装群・RdbmsConnectionService・SchemaIntrospectionService・監査ログ連携、生成・テスト・サマリ）、API Layer（DTO・Controller、生成・テスト・サマリ）、Frontend Components（frontend/src/pages/への実装、`/connections`ルート、HomePage活性化、生成・テスト・サマリ）、Documentation Generation、Deployment Artifacts、最終ビルド検証。フロントエンド構成・パスの訂正事項（frontend-components.mdの`rdbms-connection/`モジュール・`/rdbms-connections`パスの想定を、既存実装済みコードの規約（`frontend/src/pages/`、`/connections`）に合わせて修正した旨）を計画冒頭に明記。ユーザーに計画の承認を依頼。"
+**Context**: CONSTRUCTION - UNIT-03 Code Generation Part 1、計画提示・承認依頼
+
+---
