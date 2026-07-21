@@ -1295,3 +1295,11 @@
 **Context**: CONSTRUCTION - UNIT-03 Code Generation Complete提示後のレビュー対応（付随修正）
 
 ---
+
+## UNIT-03 Code Generation Complete提示 - レビュー指摘・修正（3件目：キャプション追加）
+**Timestamp**: 2026-07-22T06:05:00Z
+**User Input**: "スキーマ詳細の画面で、テーブル一覧とカラム一覧にそれぞれキャプションが欲しいかな。"
+**AI Response**: "SchemaDetailPage.tsxのテーブル一覧・カラム一覧それぞれの直前にh2見出し（`connections.tableListCaption`＝「テーブル一覧」、`connections.columnListCaption`＝「カラム一覧」、英語は\"Tables\"/\"Columns\"）を追加。スタイルはSchemaDetailPage.module.cssを新設しPageHeaderのタイトルより一段小さいフォントサイズ・中間の太さのトークンを使用。i18nリソース（ja/en common.json）にキーを追加。ビルド・既存テスト・lintすべて成功を確認しコミット（f3e8d02）。"
+**Context**: CONSTRUCTION - UNIT-03 Code Generation Complete提示後のレビュー対応（3件目）
+
+---
