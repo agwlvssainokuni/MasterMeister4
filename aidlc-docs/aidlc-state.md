@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - Functional Design（Part 1 Planning: 計画・質問作成中）
-- **Next Stage**: 計画への回答受領後、Functional Design成果物を生成
+- **Current Stage**: UNIT-03 RDBMSセットアップ - Functional Design（成果物生成完了、完了メッセージ提示・承認待ち）
+- **Next Stage**: 承認後、NFR Requirementsに着手
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
