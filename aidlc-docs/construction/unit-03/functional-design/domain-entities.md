@@ -18,7 +18,8 @@ business-rules.mdで定義したルールに対応するドメインエンティ
 | `databaseName` | String | 接続先データベース名 |
 | `schemaName` | String（nullable） | 接続先スキーマ名（データベースと別にスキーマの概念を持つ方言（PostgreSQL, H2）でのみ使用。レビューによりH2も対象と確認。MySQL/MariaDBはデータベース＝スキーマの単位のためnull） |
 | `username` | String | 接続ユーザ名 |
-| `encryptedPassword` | String | 可逆暗号化されたパスワード（暗号化方式はNFR Design参照） |
+| `encryptedPassword` | String | 可逆暗号化されたパスワード（AES-256-GCM。IV・認証タグを含む形式。詳細はnfr-design/logical-components.md参照） |
+| `encryptionKeyId` | int | パスワード暗号化に使用した鍵の世代（NFR Design、鍵ローテーション対応のため追加。nfr-requirements/tech-stack-decisions.md §1参照） |
 | `additionalParams` | String（nullable） | JDBC URLに付加するクエリパラメータ（BR-RDBMS-10、例: `useSSL=false&serverTimezone=UTC`。生の文字列としてそのままJDBC URLへ付加する） |
 | `createdAt` | Instant | 登録日時 |
 | `updatedAt` | Instant | 直近更新日時 |
