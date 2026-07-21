@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - NFR Requirements（成果物生成完了、完了メッセージ提示・承認待ち）
-- **Next Stage**: 承認後、NFR Designに着手
+- **Current Stage**: UNIT-03 RDBMSセットアップ - NFR Design（着手）
+- **Next Stage**: NFR Design計画作成・質問提示
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -63,8 +63,8 @@
 
 ## Current Unit - Stage Progress (UNIT-03)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-21T01:05:00Z。business-logic-model.md, business-rules.md（BR-RDBMS-01〜12）, domain-entities.md, frontend-components.mdを作成。レビューで反映: JDBC URL追加パラメータ(additionalParams)、DBMS選択時のデフォルトポート自動入力、未保存値に対する接続テスト、パスワード非公開方針、表示名重複許可、H2のschemaName欄表示）
-- [ ] NFR Requirements — EXECUTE（着手中）
-- [ ] NFR Design — EXECUTE（判定承認済み、未着手）
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-21T01:25:00Z。AES-256-GCM+鍵ローテーション、TLSデフォルト無効、Bean Validation、HikariCP動的DataSourceキャッシュ、JDBCドライバ4種、DBユーザ最小権限のREADME注記を決定）
+- [ ] NFR Design — EXECUTE（着手中）
 - [x] Infrastructure Design — SKIP（承認 2026-07-21T00:25:00Z。devenvのDBコンテナは整備済みのため）
 - [ ] Code Generation — 未着手
 
