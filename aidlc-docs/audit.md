@@ -1127,3 +1127,19 @@
 **Context**: CONSTRUCTION - UNIT-03 ステージ判定
 
 ---
+
+## CONSTRUCTION - UNIT-03ステージ判定 承認
+**Timestamp**: 2026-07-21T00:25:00Z
+**User Input**: "承認します。"
+**AI Response**: "UNIT-03のステージ判定（Functional Design=EXECUTE、NFR Requirements=EXECUTE、NFR Design=EXECUTE、Infrastructure Design=SKIP）を承認として記録。aidlc-state.mdのCurrent Unit - Stage Progress (UNIT-03)を更新。Functional Designに着手（Step 1: unit-of-work.md・unit-of-work-story-map.mdよりSTORY-2.1/2.2の対応要件・受け入れ基準を確認）。"
+**Context**: CONSTRUCTION - UNIT-03 ステージ判定、承認、Functional Design開始
+
+---
+
+## UNIT-03 Functional Design - 計画作成
+**Timestamp**: 2026-07-21T00:30:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "aidlc-docs/construction/plans/unit-03-functional-design-plan.mdを作成。requirements.md §4の既存決定（接続パスワードは可逆暗号化して内部DBに保存）を前提として明記。9問を出題: 接続テストの扱い(Q1)、スキーマ再取込の反映方式(Q2)、保持する制約情報の範囲(Q3)、型情報の保持方式(Q4)、同一物理RDBMSへの複数接続登録可否(Q5)、接続削除機能の本ユニットでの扱い(Q6)、接続失敗時のエラーメッセージ方針(Q7)、スキーマ取込部分失敗時の挙動(Q8)、フロントエンドスコープ（unit-of-work.mdのUNIT-03対応コンポーネント欄がバックエンドのみでフロントエンドモジュール一覧にも専用モジュールがない一方、STORY-2.1/2.2の受け入れ基準は管理者ダッシュボードでの操作を前提としている点のギャップ）(Q9)。aidlc-state.mdのCurrent Statusを更新。"
+**Context**: CONSTRUCTION - UNIT-03 Functional Design、計画提示
+
+---

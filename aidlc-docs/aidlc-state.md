@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - ステージ判定（Functional Design/NFR Requirements/NFR Design/Infrastructure DesignのEXECUTE/SKIP判定）
-- **Next Stage**: ステージ判定の承認後、Functional Design（EXECUTE想定）に着手
+- **Current Stage**: UNIT-03 RDBMSセットアップ - Functional Design（Part 1 Planning: 計画・質問作成中）
+- **Next Stage**: 計画への回答受領後、Functional Design成果物を生成
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -62,10 +62,10 @@
 - [x] Code Generation — COMPLETED（承認 2026-07-21T00:15:00Z。全18セクション完了。承認前レビュー対応: CORS設定削除、EmailNotificationServiceの責務分離とMailDeliveryService新設・Fromアドレス欠落修正、devenv整備、frontend.base-urlデフォルト修正）
 
 ## Current Unit - Stage Progress (UNIT-03)
-- [ ] Functional Design — EXECUTE（提案、承認待ち）
-- [ ] NFR Requirements — EXECUTE（提案、承認待ち）
-- [ ] NFR Design — EXECUTE（提案、承認待ち）
-- [ ] Infrastructure Design — SKIP（提案、承認待ち。devenvのDBコンテナは整備済みのため）
+- [ ] Functional Design — EXECUTE、承認 2026-07-21T00:25:00Z、着手中
+- [ ] NFR Requirements — EXECUTE（判定承認済み、未着手）
+- [ ] NFR Design — EXECUTE（判定承認済み、未着手）
+- [x] Infrastructure Design — SKIP（承認 2026-07-21T00:25:00Z。devenvのDBコンテナは整備済みのため）
 - [ ] Code Generation — 未着手
 
 ## Current Unit - Stage Progress (UNIT-01)
