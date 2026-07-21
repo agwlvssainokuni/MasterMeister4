@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - NFR Requirements（計画・質問提示済み、回答待ち）
-- **Next Stage**: 回答受領後、NFR Requirements成果物を生成
+- **Current Stage**: UNIT-03 RDBMSセットアップ - NFR Requirements（成果物生成完了、完了メッセージ提示・承認待ち）
+- **Next Stage**: 承認後、NFR Designに着手
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
