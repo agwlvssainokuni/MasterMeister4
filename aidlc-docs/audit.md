@@ -1327,3 +1327,19 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design Part 1、計画提示・回答依頼
 
 ---
+
+## UNIT-04 Functional Design - 回答収集・曖昧性確認
+**Timestamp**: 2026-07-22T06:35:00Z
+**User Input**: "Q1=A, Q2=A, Q3=A, Q4=A, Q5=A(誤解のないよう例をたくさんあげて確認して欲しい), Q6=A, Q7=A, Q8=A(権限設定画面の構成は議論する必要があると思っています), Q9=A, Q10=A"
+**AI Response**: "10問すべてA回答として記録。Q5は具体例5ケース（ユーザ個別設定の階層粗さに関わらずグループより優先されること等）を提示しAskUserQuestionで理解の一致を確認（確認済み）。Q8は権限設定画面のレイアウト案2種（プリンシパル主体のツリー型／リソース主体のマトリクス型、それぞれASCIIモックアップ付き）を提示。ユーザーから「DB接続は画面遷移前に選択済みとし、画面内では切替不可」という補足を受けモックアップを修正し再提示、「プリンシパル主体（ツリー型）」を選択。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、曖昧性解消
+
+---
+
+## UNIT-04 Functional Design - アーティファクト作成完了
+**Timestamp**: 2026-07-22T06:50:00Z
+**User Input**: (N/A - AI-initiated step、承認済み回答に基づくアーティファクト作成)
+**AI Response**: "business-logic-model.md（権限設定・実効権限判定・YAML入出力・グループ管理の4フロー、PBT-01/02/03対象プロパティの識別）、domain-entities.md（AccessPermission: 単一エンティティ+nullable列で階層表現、UNIT-03のSchemaTable/Columnへは名前で独立参照しFK化しない設計判断を明記、Group/GroupMembership、AuditLogEntry拡張8種）、business-rules.md（BR-ACCESS-01〜12、Q5の確認済み具体例5ケースを収録）、frontend-components.md（グループ管理画面`/access-control`、権限設定画面`/connections/{id}/permissions`のプリンシパル主体ツリーUI、RdbmsConnectionListPageへの導線追加、HomePage活性化）を作成。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、完了メッセージ提示・承認依頼
+
+---

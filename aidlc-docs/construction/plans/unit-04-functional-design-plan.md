@@ -17,12 +17,12 @@
 
 ## 計画チェックリスト
 
-- [ ] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `business-logic-model.md`（権限設定・実効権限判定・YAML入出力・グループ管理の各フロー、PBT対象プロパティの識別）を作成する
-- [ ] Step D: `domain-entities.md`（AccessPermission, Group, GroupMembership等）を作成する
-- [ ] Step E: `business-rules.md`（BR-ACCESS-XX、階層優先順位・合成・作成削除可否・重複検出等の詳細規則）を作成する
-- [ ] Step F: `frontend-components.md`（権限設定画面・グループ管理画面）を作成する
+- [x] Step A: 質問への回答を収集する
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— Q5（レベル別優先判定）・Q8（画面構成）について追加確認を実施、解消済み
+- [x] Step C: `business-logic-model.md`（権限設定・実効権限判定・YAML入出力・グループ管理の各フロー、PBT対象プロパティの識別）を作成する
+- [x] Step D: `domain-entities.md`（AccessPermission, Group, GroupMembership等）を作成する
+- [x] Step E: `business-rules.md`（BR-ACCESS-XX、階層優先順位・合成・作成削除可否・重複検出等の詳細規則）を作成する
+- [x] Step F: `frontend-components.md`（権限設定画面・グループ管理画面）を作成する
 - [ ] Step G: 完了メッセージを提示し、承認を得る
 
 ## 質問
@@ -116,6 +116,11 @@ B) 1画面にタブで両方を統合する
 C) Other（[Answer]: の後に内容を記述）
 
 [Answer]: A（ただし権限設定画面の構成自体は別途議論したい）
+
+**追加確認・決定事項（チャットでの議論により確定）**:
+- DB接続は権限設定画面への遷移前（例: 接続一覧画面からの導線）で選択済みとし、画面内でのDB接続切替は行わない（UNIT-03の`/connections/:id/schema`と同様のルーティング方針）
+- 権限設定画面の基本構造は「プリンシパル主体（ツリー型）」を採用: プリンシパル（ユーザ/グループ）を選択すると、スキーマ→テーブル→カラムの階層ツリーが展開され、各ノードで主権限・補助権限を直接編集する
+- Q5（レベル別優先判定ロジック）はケース1〜5の具体例を提示し、ユーザ自身の粗い階層設定でもグループの細かい階層設定より優先されることを確認済み
 
 ### Question 9（Frontend Components）
 権限設定画面でのYAML入出力のUIは？
