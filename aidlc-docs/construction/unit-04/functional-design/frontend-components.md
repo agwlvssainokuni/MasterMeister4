@@ -106,8 +106,8 @@ AccessPermissionTreePage (AppShell)
 ### API連携
 - `GET /api/admin/rdbms-connections/{id}/schema` — ツリー構造（テーブル・カラム一覧）取得（UNIT-03既存API流用）
 - `GET /api/admin/permissions/{connectionId}?principalType=&principalId=` — 選択中プリンシパルの明示設定一覧取得（新規`PermissionController`、`permission`パッケージ）
-- `PUT /api/admin/permissions/{connectionId}` — 権限設定（アップサート。BR-ACCESS-01、`PERMISSION_CHANGED`）
-- `DELETE /api/admin/permissions/{connectionId}` — 権限設定の解除（未設定に戻す。`PERMISSION_CHANGED`）
+- `PUT /api/admin/permissions/{connectionId}` — 権限設定（アップサート。BR-ACCESS-01、`PERMISSION_CHANGED`）。リクエストボディに対象キー（`principalType`, `principalId`, `schemaName`, `tableName`（任意）, `columnName`（任意））と設定値（`primaryPermission`, `createPermission`, `deletePermission`）を含める
+- `DELETE /api/admin/permissions/{connectionId}` — 権限設定の解除（未設定に戻す＝当該キーの`AccessPermission`行1件のみを削除。`PERMISSION_CHANGED`）。DELETEはリクエストボディを持たない設計とするため、対象キー（`principalType`, `principalId`, `schemaName`, `tableName`（任意）, `columnName`（任意））はクエリパラメータで指定する（例: `?principalType=USER&principalId=42&schemaName=public&tableName=products&columnName=category_id`）。`connectionId`のみでは対象行を特定できないため、これらのクエリパラメータは必須（`tableName`/`columnName`は対象階層に応じて省略可）
 - `GET /api/admin/permissions/{connectionId}/export` — YAMLエクスポート（`PERMISSION_YAML_EXPORTED`）
 - `POST /api/admin/permissions/{connectionId}/import` — YAMLインポート（`PERMISSION_YAML_IMPORTED`）
 

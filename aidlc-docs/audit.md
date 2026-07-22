@@ -1391,3 +1391,11 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design、パッケージ構成訂正（INCEPTION Application Designへの遡及修正）
 
 ---
+
+## UNIT-04 Functional Design - DELETE APIの対象特定不備を修正
+**Timestamp**: 2026-07-23T07:35:00Z
+**User Input**: "APIの DELETE /api/admin/permissions/{connectionId} について。これで権限設定を解除する範囲は？"
+**AI Response**: "`connectionId`のみでは、どのプリンシパル・どのリソース（スキーマ／テーブル／カラム）の`AccessPermission`行を削除するのか特定できない欠陥を確認。ツリーUIで1セルを「未設定」に戻す操作のはずが、誤実装されると「接続に紐づく全権限設定を削除」という破壊的操作になりかねない。原因はPUT（ボディに対象キーを含む想定）とDELETE（一般にボディを持たない）の非対称性を考慮し忘れていたこと。修正: DELETEの対象キー（`principalType`, `principalId`, `schemaName`, `tableName`任意, `columnName`任意）をクエリパラメータで指定する仕様に変更し、frontend-components.mdのAPI記述を具体化した。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、DELETE API仕様の不備修正
+
+---
