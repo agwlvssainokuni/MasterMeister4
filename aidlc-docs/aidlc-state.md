@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-03 RDBMSセットアップ - Code Generation（Part 2完了、全16セクション完了。完了メッセージ提示後にレビュー指摘3件（スキーマ詳細画面のテーブル選択不可、テーブル切替時の制約バッジ残留＋付随する主キー自動インデックスのUNIQUE重複登録、テーブル一覧・カラム一覧のキャプション追加）を修正済み。再度、完了メッセージ提示・承認待ち）
-- **Next Stage**: 全セクション完了後、完了メッセージを提示し承認を得る
+- **Current Stage**: UNIT-04 アクセス制御 - ステージ判定（Functional Design/NFR Requirements/NFR Design/Infrastructure Designの要否を判定）
+- **Next Stage**: UNIT-04の各ステージ判定結果に基づき実行
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -61,12 +61,19 @@
 - [x] Infrastructure Design — SKIP（メール送信・JWT鍵管理は設定レベルで対応可能）
 - [x] Code Generation — COMPLETED（承認 2026-07-21T00:15:00Z。全18セクション完了。承認前レビュー対応: CORS設定削除、EmailNotificationServiceの責務分離とMailDeliveryService新設・Fromアドレス欠落修正、devenv整備、frontend.base-urlデフォルト修正）
 
+## Current Unit - Stage Progress (UNIT-04)
+- [ ] Functional Design — 判定中
+- [ ] NFR Requirements — 判定中
+- [ ] NFR Design — 判定中
+- [ ] Infrastructure Design — 判定中
+- [ ] Code Generation — 未着手
+
 ## Current Unit - Stage Progress (UNIT-03)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-21T01:05:00Z。business-logic-model.md, business-rules.md（BR-RDBMS-01〜12）, domain-entities.md, frontend-components.mdを作成。レビューで反映: JDBC URL追加パラメータ(additionalParams)、DBMS選択時のデフォルトポート自動入力、未保存値に対する接続テスト、パスワード非公開方針、表示名重複許可、H2のschemaName欄表示）
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-21T01:25:00Z。AES-256-GCM+鍵ローテーション、TLSデフォルト無効、Bean Validation、HikariCP動的DataSourceキャッシュ、JDBCドライバ4種、DBユーザ最小権限のREADME注記を決定）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-21T02:00:00Z。CompletableFuture.orTimeoutによるタイムアウト制御・タイムアウト時のConnection強制中断、ConnectionCredentialCipher新設、RdbmsConnectionService内部DataSourceキャッシュ、AppProperties.Rdbms（鍵世代管理・keyId重複検証）、RdbmsDialectStrategyへのbuildJdbcUrl追加（方言別URL構築の一元化）を決定）
 - [x] Infrastructure Design — SKIP（承認 2026-07-21T00:25:00Z。devenvのDBコンテナは整備済みのため）
-- [ ] Code Generation — 未着手
+- [x] Code Generation — COMPLETED（承認 2026-07-22T06:10:00Z。全16セクション完了。承認前レビュー対応: スキーマ詳細画面のテーブル選択不可を修正（DataTableにonRowClick追加）、テーブル切替時の制約バッジ残留を修正（React key衝突、DataTableへのkey付与＋バッジkeyの一意化）、付随して主キー自動生成インデックスのUNIQUE制約重複登録を修正、テーブル一覧・カラム一覧へのキャプション追加）
 
 ## Current Unit - Stage Progress (UNIT-01)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T14:20:00Z。グランドデザイン・代表画面モックのコンポーネント構造設計のため）
@@ -78,8 +85,8 @@
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
 - [x] UNIT-02 ユーザ登録・認証 — COMPLETED（承認 2026-07-21T00:15:00Z）
-- [ ] UNIT-03 RDBMSセットアップ — IN PROGRESS
-- [ ] UNIT-04 アクセス制御
+- [x] UNIT-03 RDBMSセットアップ — COMPLETED（承認 2026-07-22T06:10:00Z）
+- [ ] UNIT-04 アクセス制御 — IN PROGRESS
 - [ ] UNIT-05 マスタメンテナンス
 - [ ] UNIT-06 クエリ保存・実行
 - [ ] UNIT-07 クエリビルダー
