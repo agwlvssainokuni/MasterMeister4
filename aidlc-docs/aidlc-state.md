@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - ステージ判定（Functional Design/NFR Requirements/NFR Design/Infrastructure Designの要否を判定）
-- **Next Stage**: UNIT-04の各ステージ判定結果に基づき実行
+- **Current Stage**: UNIT-04 アクセス制御 - Functional Design（Part 1: 計画・質問提示、回答待ち）
+- **Next Stage**: 回答収集後、曖昧性確認 → Functional Designアーティファクト作成
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -62,10 +62,10 @@
 - [x] Code Generation — COMPLETED（承認 2026-07-21T00:15:00Z。全18セクション完了。承認前レビュー対応: CORS設定削除、EmailNotificationServiceの責務分離とMailDeliveryService新設・Fromアドレス欠落修正、devenv整備、frontend.base-urlデフォルト修正）
 
 ## Current Unit - Stage Progress (UNIT-04)
-- [ ] Functional Design — 判定中
-- [ ] NFR Requirements — 判定中
-- [ ] NFR Design — 判定中
-- [ ] Infrastructure Design — 判定中
+- [ ] Functional Design — EXECUTE、Part 1（質問提示・回答待ち）
+- [ ] NFR Requirements — EXECUTE予定
+- [ ] NFR Design — EXECUTE予定
+- [ ] Infrastructure Design — SKIP（承認 2026-07-22T06:15:00Z。新規インフラ不要）
 - [ ] Code Generation — 未着手
 
 ## Current Unit - Stage Progress (UNIT-03)

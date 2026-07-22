@@ -1311,3 +1311,19 @@
 **Context**: CONSTRUCTION - UNIT-03完了、UNIT-04着手準備
 
 ---
+
+## UNIT-04 ステージ判定
+**Timestamp**: 2026-07-22T06:15:00Z
+**User Input**: "承認します。"
+**AI Response**: "UNIT-04（アクセス制御）のステージ判定を提示: Functional Design/NFR Requirements/NFR Design=EXECUTE（PBT対象ロジック・キャッシュ無効化設計等の複雑性のため）、Infrastructure Design=SKIP（新規インフラ不要）。承認を得て、Functional Design計画の作成に着手。"
+**Context**: CONSTRUCTION - UNIT-04ステージ判定承認
+
+---
+
+## UNIT-04 Functional Design Part 1 - 計画提示
+**Timestamp**: 2026-07-22T06:20:00Z
+**User Input**: (N/A - AI-initiated step、計画Part 1の作成)
+**AI Response**: "aidlc-docs/construction/plans/unit-04-functional-design-plan.mdを作成。requirements.md §5.2（FR-2.3〜FR-2.15）に多くの規則が既に確定済みのため、残る設計上の曖昧点（権限エンティティ構造、UNIT-03のスキーマ全置換とのFK関係の注意点、プリンシパル表現、デフォルト権限値、個別設定とグループ合成の優先判定粒度、YAMLでのプリンシパル識別方式、監査ログ粒度、フロントエンド画面構成、YAML入出力UI、スキーマ未取込時の画面挙動）に絞った10問の質問を作成しユーザーに提示。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design Part 1、計画提示・回答依頼
+
+---
