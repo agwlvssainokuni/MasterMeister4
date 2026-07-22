@@ -1383,3 +1383,11 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design、権限設定APIパス最終決定
 
 ---
+
+## UNIT-04 Functional Design - パッケージ構成をgroup/permissionの2パッケージに分割
+**Timestamp**: 2026-07-23T07:25:00Z
+**User Input**: "パッケージ名もpermissionかな。"
+**AI Response**: "既存のパッケージ名（registration, auth, rdbmsconnection, audit）がいずれも単数形のドメイン名であり、UNIT-02が単一エピックを`registration`/`auth`の2パッケージに分割していた前例を確認。INCEPTION時点の`unit-of-work.md`でUNIT-04に仮決めされていた単一パッケージ`cherry.mastermeister.accesscontrol`（機能・エピック名）を撤回し、`group`（Group, GroupMembership, GroupController）と`permission`（AccessPermission, AccessControlService, EffectivePermissionResolver, PermissionYamlService, PermissionController）の2パッケージに分割する方針を提案、ユーザーが承認。`unit-of-work.md`のユニット→パッケージ対応表に訂正注記（取消線）を追加し、`unit-04/functional-design/frontend-components.md`のパッケージ構成説明を更新。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、パッケージ構成訂正（INCEPTION Application Designへの遡及修正）
+
+---

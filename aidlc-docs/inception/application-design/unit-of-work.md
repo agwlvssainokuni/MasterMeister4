@@ -102,7 +102,7 @@
 | UNIT-02（ユーザ登録・認証） | `cherry.mastermeister.registration`, `cherry.mastermeister.auth` |
 | UNIT-02（監査ログ基盤） | `cherry.mastermeister.audit` |
 | UNIT-03（RDBMSセットアップ） | `cherry.mastermeister.rdbmsconnection` |
-| UNIT-04（アクセス制御） | `cherry.mastermeister.accesscontrol` |
+| UNIT-04（アクセス制御） | ~~`cherry.mastermeister.accesscontrol`~~ 訂正（UNIT-04 Functional Designにて）: UNIT-02（ユーザ登録・認証）が`registration`/`auth`の2パッケージに分割された前例に倣い、`cherry.mastermeister.group`（グループ管理）・`cherry.mastermeister.permission`（権限設定・実効権限判定・YAML入出力）の2パッケージに分割 |
 | UNIT-05（マスタメンテナンス） | `cherry.mastermeister.masterdata` |
 | UNIT-06（クエリ保存・実行） | `cherry.mastermeister.query` |
 | UNIT-07（クエリビルダー） | `cherry.mastermeister.querybuilder` |
