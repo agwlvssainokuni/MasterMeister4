@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - NFR Design（Part 1: 計画・質問提示、回答待ち）
-- **Next Stage**: 回答収集後、NFR Designアーティファクト作成
+- **Current Stage**: UNIT-04 アクセス制御 - NFR Design（アーティファクト作成完了、完了メッセージ提示・承認待ち）
+- **Next Stage**: 承認後、Infrastructure Design判定へ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
