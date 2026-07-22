@@ -1359,3 +1359,11 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design、UNIT-03遡及修正完了
 
 ---
+
+## UNIT-04 Functional Design - グループ管理画面のナビパス訂正
+**Timestamp**: 2026-07-23T07:00:00Z
+**User Input**: "グループ管理画面のパスが/access-controlなのは不自然。" ／ "ユーザ管理画面のパスを確認。" ／ "シンプルな疑問。ユーザ管理画面が/usersならばグループ管理画面は/groupsではないだろうか。" ／ "はい、その通りで進める" ／ "キー名も修正。"
+**AI Response**: "既存実装（`/users`→UserManagementPage、`/connections`→RdbmsConnectionListPage）を確認し、「ナビ項目＝管理対象エンティティ名のパスに直接対応する単一画面」という確立された規約を特定。UNIT-01が仮予約した「アクセス制御」（`key: 'accessControl'`, `path: '/access-control'`）はこの規約に反し機能名（エピック名）をパスにしていたと判明。`design-system/components/navigation.ts`の該当エントリを`key: 'groups'`, `labelKey: 'nav.groups'`, `path: '/groups'`に変更。i18nリソース（`design-system.json`の`nav.accessControl`→`nav.groups`＝「グループ管理」/"Group Management"、`common.json`の`home.card.accessControl`→`home.card.groups`、説明文もグループ管理に即した内容に更新）、`PermissionsMock.tsx`の`useDefaultNavItems('accessControl')`→`'groups'`も追従。UNIT-01/UNIT-02/UNIT-04のFunctional Designドキュメントに訂正注記を追加。フロントエンドのビルド・テスト・lintすべて成功を確認。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、ナビゲーション訂正
+
+---

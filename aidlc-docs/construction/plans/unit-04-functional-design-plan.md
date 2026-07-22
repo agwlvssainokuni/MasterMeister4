@@ -24,6 +24,7 @@
 - [x] Step E: `business-rules.md`（BR-ACCESS-XX、階層優先順位・合成・作成削除可否・重複検出等の詳細規則）を作成する
 - [x] Step F: `frontend-components.md`（権限設定画面・グループ管理画面）を作成する
 - [x] Step F追記: レビュー指摘「一つのDB接続にスキーマが一つが前提になっている？」を受け、UNIT-03を遡及修正（1接続=1スキーマ前提を撤回し、1接続内に複数スキーマが存在しうる前提に変更。`RdbmsConnection.schemaName`廃止・`SchemaTable.schemaName`追加・`SchemaIntrospectionService`のスキーマ自動検出化）。UNIT-04側のドキュメントも「スキーマ＝接続全体」という簡略化を撤回し、実際のスキーマ単位の3階層（スキーマ／テーブル／カラム）に修正した
+- [x] Step F追記2: レビュー指摘「グループ管理画面のパスが/access-controlなのは不自然」を受け、UNIT-01で仮予約したナビ項目「アクセス制御」（`key: 'accessControl'`, `path: '/access-control'`）を、既存の「ナビ項目＝管理対象エンティティ名のパスに直接対応する単一画面」という規約（`/users`→ユーザ管理、`/connections`→RDBMS接続管理）に合わせ、「グループ管理」（`key: 'groups'`, `path: '/groups'`）に訂正した（内部キー・パス・表示ラベル・i18nキーすべてを変更）
 - [ ] Step G: 完了メッセージを提示し、承認を得る
 
 ## 質問

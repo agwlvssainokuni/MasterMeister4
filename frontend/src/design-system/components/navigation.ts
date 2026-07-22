@@ -24,7 +24,7 @@ import type { NavItem } from './AppShell'
 export const NAV_ROUTES = [
   { key: 'users', labelKey: 'nav.users', path: '/users' },
   { key: 'connections', labelKey: 'nav.connections', path: '/connections' },
-  { key: 'accessControl', labelKey: 'nav.accessControl', path: '/access-control' },
+  { key: 'groups', labelKey: 'nav.groups', path: '/groups' },
   { key: 'masterData', labelKey: 'nav.masterData', path: '/master-data' },
   { key: 'savedQueries', labelKey: 'nav.savedQueries', path: '/saved-queries' },
   { key: 'queryBuilder', labelKey: 'nav.queryBuilder', path: '/query-builder' },

@@ -150,7 +150,7 @@
     "card": {
       "users": "ユーザの承認・無効化・再有効化を行います",
       "connections": "対象RDBMSの接続情報を登録・管理します",
-      "accessControl": "アクセス権限・ユーザグループを設定します",
+      "groups": "ユーザグループを作成・管理します",
       "masterData": "マスタデータの参照・編集を行います",
       "savedQueries": "名前付きで保存したクエリを管理します",
       "queryBuilder": "タブUIでSQLを組み立てます",

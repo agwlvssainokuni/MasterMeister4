@@ -5,7 +5,7 @@
   "nav": {
     "users": "User Management",
     "connections": "RDBMS Connections",
-    "accessControl": "Access Control",
+    "groups": "Group Management",
     "masterData": "Master Data",
     "savedQueries": "Saved Queries",
     "queryBuilder": "Query Builder",

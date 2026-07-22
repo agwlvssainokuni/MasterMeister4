@@ -150,7 +150,7 @@
     "card": {
       "users": "Approve, disable, and re-enable user accounts",
       "connections": "Register and manage target RDBMS connections",
-      "accessControl": "Configure access permissions and user groups",
+      "groups": "Create and manage user groups",
       "masterData": "View and edit master data",
       "savedQueries": "Manage named saved queries",
       "queryBuilder": "Build SQL using the tabbed builder UI",

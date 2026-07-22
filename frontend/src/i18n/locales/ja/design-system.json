@@ -5,7 +5,7 @@
   "nav": {
     "users": "ユーザ管理",
     "connections": "RDBMS接続設定",
-    "accessControl": "アクセス制御",
+    "groups": "グループ管理",
     "masterData": "マスタメンテナンス",
     "savedQueries": "保存クエリ",
     "queryBuilder": "クエリビルダー",

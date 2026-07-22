@@ -40,7 +40,7 @@ import type { SamplePermission } from '../data/sample'
 function PermissionsMockInner() {
   const { t } = useTranslation('design-system')
   const { showToast } = useToast()
-  const navItems = useDefaultNavItems('accessControl')
+  const navItems = useDefaultNavItems('groups')
   const [editing, setEditing] = useState<SamplePermission | null>(null)
   const [rows, setRows] = useState<readonly SamplePermission[]>(samplePermissions)
 
