@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - NFR Requirements（着手）
-- **Next Stage**: NFR Requirements計画・質問提示
+- **Current Stage**: UNIT-04 アクセス制御 - NFR Requirements（Part 1: 計画・質問提示、回答待ち）
+- **Next Stage**: 回答収集後、NFR Requirementsアーティファクト作成
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)

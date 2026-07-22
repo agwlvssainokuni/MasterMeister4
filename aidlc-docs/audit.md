@@ -1407,3 +1407,11 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design完了、NFR Requirements着手準備
 
 ---
+
+## UNIT-04 NFR Requirements - 計画・質問提示
+**Timestamp**: 2026-07-23T07:45:00Z
+**User Input**: (N/A - AI-initiated step、計画作成)
+**AI Response**: "aidlc-docs/construction/plans/unit-04-nfr-requirements-plan.mdを作成。Security Baseline該当ルール評価（15ルール）、PBT拡張（N/A、jqwikで確定済み）を記載し、9問の質問（Caffeineキャッシュのサイズ/TTL、キャッシュ実装方式（Spring Cache抽象化 vs 直接管理）、キャッシュ無効化粒度、EffectivePermissionResolverのREST API公開要否、YAML処理ライブラリ、並行編集時の競合方針、規模想定、バリデーション実装方式、YAML importのサイズ上限・アラート要否）を作成しユーザーに提示。"
+**Context**: CONSTRUCTION - UNIT-04 NFR Requirements、計画提示・回答依頼
+
+---
