@@ -1439,3 +1439,11 @@
 **Context**: CONSTRUCTION - UNIT-04 NFR Requirements完了、NFR Design着手準備
 
 ---
+
+## UNIT-04 NFR Design - 計画・質問提示
+**Timestamp**: 2026-07-23T08:05:00Z
+**User Input**: (N/A - AI-initiated step、計画作成)
+**AI Response**: "aidlc-docs/construction/plans/unit-04-nfr-design-plan.mdを作成。8問の質問（AccessPermissionの一意制約とNULL値の扱い（複合UNIQUE INDEXの落とし穴）、グループ削除時のAccessPermissionカスケード削除実装箇所、キャッシュ無効化の呼び出し箇所、YAML importのファイル受け渡し方式・サイズ上限実装、管理者専用エンドポイントのアクセス制御、AccessPermissionのインデックス設計、YAML importの検証順序、UNIT-03のSchemaIntrospectionServiceへのキャッシュ無効化追加方針）を作成しユーザーに提示。"
+**Context**: CONSTRUCTION - UNIT-04 NFR Design、計画提示・回答依頼
+
+---
