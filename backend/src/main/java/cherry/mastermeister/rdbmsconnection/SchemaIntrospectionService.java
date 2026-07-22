@@ -153,16 +153,13 @@ public class SchemaIntrospectionService {
     private SchemaSnapshot introspect(RdbmsConnection connection, AtomicReference<Connection> activeRef) {
         RdbmsDialectStrategy dialect = dialectStrategyResolver.resolve(connection.getDbType());
         String jdbcUrl = dialect.buildJdbcUrl(connection.getHost(), connection.getPort(),
-                connection.getDatabaseName(), connection.getSchemaName(), connection.getAdditionalParams());
+                connection.getDatabaseName(), connection.getAdditionalParams());
         String password = connectionCredentialCipher.decrypt(connection.getEncryptedPassword(),
                 connection.getEncryptionKeyId());
 
         try (Connection jdbcConnection = DriverManager.getConnection(jdbcUrl, connection.getUsername(), password)) {
             activeRef.set(jdbcConnection);
-            if (connection.getSchemaName() != null && dialect.requiresSchemaSwitch()) {
-                dialect.applySchemaSwitch(jdbcConnection, connection.getSchemaName());
-            }
-            return readSchema(jdbcConnection, connection);
+            return readSchema(jdbcConnection, connection, dialect);
         } catch (SQLException e) {
             throw new RuntimeException("Schema introspection failed for connectionId=" + connection.getId(), e);
         } finally {
@@ -170,31 +167,57 @@ public class SchemaIntrospectionService {
         }
     }
 
-    private SchemaSnapshot readSchema(Connection jdbcConnection, RdbmsConnection connection) throws SQLException {
+    /**
+     * 1接続内に複数スキーマが存在しうる前提（UNIT-04 Functional Designにて訂正）に基づき、
+     * 対象となるスキーマ一覧を求めた上で、スキーマごとにテーブル・カラム・制約を読み取る。
+     * JDBCのDatabaseMetaData取得はschemaPattern引数で直接絞り込めるため、事前のセッション
+     * スキーマ切替（{@code applySchemaSwitch}）は不要。
+     */
+    private SchemaSnapshot readSchema(Connection jdbcConnection, RdbmsConnection connection,
+                                       RdbmsDialectStrategy dialect) throws SQLException {
         DatabaseMetaData metaData = jdbcConnection.getMetaData();
         boolean catalogBased = connection.getDbType() == DbType.MYSQL || connection.getDbType() == DbType.MARIADB;
         String catalog = catalogBased ? connection.getDatabaseName() : null;
-        // schemaName未指定時、nullのままだと方言によってはINFORMATION_SCHEMA等の
-        // システムスキーマまで対象に含まれてしまうため、方言ごとのデフォルトスキーマに解決する
-        String schemaPattern = catalogBased ? null
-                : Optional.ofNullable(connection.getSchemaName()).orElseGet(() -> defaultSchemaFor(connection.getDbType()));
+        List<String> schemaNames = catalogBased
+                ? List.of(connection.getDatabaseName())
+                : listSchemas(metaData, dialect);
 
         SchemaSnapshot snapshot = new SchemaSnapshot(connection.getId(), Instant.now());
-        try (ResultSet tables = metaData.getTables(catalog, schemaPattern, "%", new String[]{"TABLE", "VIEW"})) {
-            while (tables.next()) {
-                String tableName = tables.getString("TABLE_NAME");
-                TableType tableType = "VIEW".equalsIgnoreCase(tables.getString("TABLE_TYPE"))
-                        ? TableType.VIEW : TableType.TABLE;
-                String comment = tables.getString("REMARKS");
-                SchemaTable table = new SchemaTable(tableName, tableType, comment);
-                readColumns(metaData, catalog, schemaPattern, tableName, table);
-                Set<String> primaryKeyColumns = readPrimaryKey(metaData, catalog, schemaPattern, tableName, table);
-                readForeignKeys(metaData, catalog, schemaPattern, tableName, table);
-                readIndexes(metaData, catalog, schemaPattern, tableName, table, primaryKeyColumns);
-                snapshot.addTable(table);
+        for (String schemaName : schemaNames) {
+            String schemaPattern = catalogBased ? null : schemaName;
+            try (ResultSet tables = metaData.getTables(catalog, schemaPattern, "%", new String[]{"TABLE", "VIEW"})) {
+                while (tables.next()) {
+                    String tableName = tables.getString("TABLE_NAME");
+                    TableType tableType = "VIEW".equalsIgnoreCase(tables.getString("TABLE_TYPE"))
+                            ? TableType.VIEW : TableType.TABLE;
+                    String comment = tables.getString("REMARKS");
+                    SchemaTable table = new SchemaTable(schemaName, tableName, tableType, comment);
+                    readColumns(metaData, catalog, schemaPattern, tableName, table);
+                    Set<String> primaryKeyColumns = readPrimaryKey(metaData, catalog, schemaPattern, tableName, table);
+                    readForeignKeys(metaData, catalog, schemaPattern, tableName, table);
+                    readIndexes(metaData, catalog, schemaPattern, tableName, table, primaryKeyColumns);
+                    snapshot.addTable(table);
+                }
             }
         }
         return snapshot;
+    }
+
+    /**
+     * 対象接続内の、システムスキーマを除いた全スキーマ一覧を取得する（UNIT-04 Functional Design
+     * にて追加）。catalogベースの方言（MySQL/MariaDB）では呼び出さない。
+     */
+    private List<String> listSchemas(DatabaseMetaData metaData, RdbmsDialectStrategy dialect) throws SQLException {
+        List<String> schemaNames = new java.util.ArrayList<>();
+        try (ResultSet schemas = metaData.getSchemas()) {
+            while (schemas.next()) {
+                String schemaName = schemas.getString("TABLE_SCHEM");
+                if (!dialect.isSystemSchema(schemaName)) {
+                    schemaNames.add(schemaName);
+                }
+            }
+        }
+        return schemaNames;
     }
 
     private void readColumns(DatabaseMetaData metaData, String catalog, String schemaPattern, String tableName,
@@ -282,14 +305,6 @@ public class SchemaIntrospectionService {
                     acc.unique() ? ConstraintType.UNIQUE : ConstraintType.INDEX, indexName, acc.columnNames(), null,
                     null));
         });
-    }
-
-    private String defaultSchemaFor(DbType dbType) {
-        return switch (dbType) {
-            case POSTGRESQL -> "public";
-            case H2 -> "PUBLIC";
-            case MYSQL, MARIADB -> null;
-        };
     }
 
     private NormalizedType normalize(int jdbcType) {

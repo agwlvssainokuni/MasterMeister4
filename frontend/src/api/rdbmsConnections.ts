@@ -29,7 +29,6 @@ export interface RdbmsConnectionSummary {
   host: string
   port: number
   databaseName: string
-  schemaName: string | null
   username: string
   additionalParams: string | null
   schemaImportedAt: string | null
@@ -43,7 +42,6 @@ export interface RdbmsConnectionInput {
   host: string
   port: number
   databaseName: string
-  schemaName?: string | null
   username: string
   password?: string
   additionalParams?: string | null
@@ -73,6 +71,7 @@ export interface SchemaColumnDetail {
 }
 
 export interface SchemaTableDetail {
+  schemaName: string
   tableName: string
   tableType: TableType
   comment: string | null

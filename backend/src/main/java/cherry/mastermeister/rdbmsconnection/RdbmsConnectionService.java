@@ -87,11 +87,11 @@ public class RdbmsConnectionService {
      */
     @Transactional
     public RdbmsConnection registerConnection(String displayName, DbType dbType, String host, int port,
-                                               String databaseName, String schemaName, String username,
+                                               String databaseName, String username,
                                                String rawPassword, String additionalParams, Long registeredBy) {
         Instant now = Instant.now();
         ConnectionCredentialCipher.EncryptedCredential encrypted = connectionCredentialCipher.encrypt(rawPassword);
-        RdbmsConnection connection = new RdbmsConnection(displayName, dbType, host, port, databaseName, schemaName,
+        RdbmsConnection connection = new RdbmsConnection(displayName, dbType, host, port, databaseName,
                 username, encrypted.encryptedValue(), encrypted.keyId(), additionalParams, now, now);
         RdbmsConnection saved = rdbmsConnectionRepository.save(connection);
         auditEventPublisher.publish(new AuditEvent(now, registeredBy, saved.getId(),
@@ -104,7 +104,7 @@ public class RdbmsConnectionService {
      */
     @Transactional
     public RdbmsConnection updateConnection(Long connectionId, String displayName, DbType dbType, String host,
-                                             int port, String databaseName, String schemaName, String username,
+                                             int port, String databaseName, String username,
                                              String rawPassword, String additionalParams, Long updatedBy) {
         RdbmsConnection connection = findOrThrow(connectionId);
         String encryptedPassword = connection.getEncryptedPassword();
@@ -115,7 +115,7 @@ public class RdbmsConnectionService {
             encryptedPassword = encrypted.encryptedValue();
             encryptionKeyId = encrypted.keyId();
         }
-        connection.update(displayName, dbType, host, port, databaseName, schemaName, username, encryptedPassword,
+        connection.update(displayName, dbType, host, port, databaseName, username, encryptedPassword,
                 encryptionKeyId, additionalParams, Instant.now());
         evictDataSource(connectionId);
         auditEventPublisher.publish(new AuditEvent(Instant.now(), updatedBy, connectionId,
@@ -148,7 +148,7 @@ public class RdbmsConnectionService {
     private HikariDataSource buildDataSource(RdbmsConnection connection) {
         RdbmsDialectStrategy dialect = dialectStrategyResolver.resolve(connection.getDbType());
         String jdbcUrl = dialect.buildJdbcUrl(connection.getHost(), connection.getPort(),
-                connection.getDatabaseName(), connection.getSchemaName(), connection.getAdditionalParams());
+                connection.getDatabaseName(), connection.getAdditionalParams());
         String password = connectionCredentialCipher.decrypt(connection.getEncryptedPassword(),
                 connection.getEncryptionKeyId());
 
@@ -182,7 +182,7 @@ public class RdbmsConnectionService {
         String password = connectionCredentialCipher.decrypt(connection.getEncryptedPassword(),
                 connection.getEncryptionKeyId());
         return testConnectionInternal(connection.getDbType(), connection.getHost(), connection.getPort(),
-                connection.getDatabaseName(), connection.getSchemaName(), connection.getUsername(), password,
+                connection.getDatabaseName(), connection.getUsername(), password,
                 connection.getAdditionalParams());
     }
 
@@ -190,17 +190,17 @@ public class RdbmsConnectionService {
      * BR-RDBMS-11。フォーム入力中の未保存の値に対する接続テスト。永続化は行わない。
      */
     public ConnectionTestOutcome testConnectionUnsaved(DbType dbType, String host, int port, String databaseName,
-                                                        String schemaName, String username, String rawPassword,
+                                                        String username, String rawPassword,
                                                         String additionalParams) {
-        return testConnectionInternal(dbType, host, port, databaseName, schemaName, username, rawPassword,
+        return testConnectionInternal(dbType, host, port, databaseName, username, rawPassword,
                 additionalParams);
     }
 
     private ConnectionTestOutcome testConnectionInternal(DbType dbType, String host, int port, String databaseName,
-                                                          String schemaName, String username, String password,
+                                                          String username, String password,
                                                           String additionalParams) {
         RdbmsDialectStrategy dialect = dialectStrategyResolver.resolve(dbType);
-        String jdbcUrl = dialect.buildJdbcUrl(host, port, databaseName, schemaName, additionalParams);
+        String jdbcUrl = dialect.buildJdbcUrl(host, port, databaseName, additionalParams);
         DriverManager.setLoginTimeout(TEST_CONNECTION_LOGIN_TIMEOUT_SECONDS);
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             return ConnectionTestOutcome.ofSuccess();

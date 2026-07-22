@@ -30,6 +30,9 @@ import java.time.Instant;
 /**
  * domain-entities.md §1。host/port/databaseNameの重複は許容する（BR-RDBMS-02）ため
  * 一意制約は設けない。
+ * ~~schemaName（単一固定値）を保持~~ 訂正（UNIT-04 Functional Designにて）: 1接続内に
+ * 複数スキーマが存在しうる（PostgreSQL/H2）という前提に合わせ、schemaNameフィールドは廃止。
+ * スキーマ一覧は取込時に自動検出する（{@code SchemaIntrospectionService}）。
  */
 @Entity
 @Table(name = "rdbms_connection")
@@ -55,9 +58,6 @@ public class RdbmsConnection {
     @Column(name = "database_name", nullable = false)
     private String databaseName;
 
-    @Column(name = "schema_name")
-    private String schemaName;
-
     @Column(nullable = false)
     private String username;
 
@@ -81,14 +81,13 @@ public class RdbmsConnection {
     }
 
     public RdbmsConnection(String displayName, DbType dbType, String host, int port, String databaseName,
-                            String schemaName, String username, String encryptedPassword, int encryptionKeyId,
+                            String username, String encryptedPassword, int encryptionKeyId,
                             String additionalParams, Instant createdAt, Instant updatedAt) {
         this.displayName = displayName;
         this.dbType = dbType;
         this.host = host;
         this.port = port;
         this.databaseName = databaseName;
-        this.schemaName = schemaName;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
         this.encryptionKeyId = encryptionKeyId;
@@ -121,10 +120,6 @@ public class RdbmsConnection {
         return databaseName;
     }
 
-    public String getSchemaName() {
-        return schemaName;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -154,14 +149,13 @@ public class RdbmsConnection {
      * 呼び出し元が既存値のまま渡す（BR-RDBMS-12、空欄送信時は既存値を保持する処理はService層が担う）。
      */
     public void update(String displayName, DbType dbType, String host, int port, String databaseName,
-                        String schemaName, String username, String encryptedPassword, int encryptionKeyId,
+                        String username, String encryptedPassword, int encryptionKeyId,
                         String additionalParams, Instant updatedAt) {
         this.displayName = displayName;
         this.dbType = dbType;
         this.host = host;
         this.port = port;
         this.databaseName = databaseName;
-        this.schemaName = schemaName;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
         this.encryptionKeyId = encryptionKeyId;

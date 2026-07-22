@@ -32,9 +32,9 @@ class RdbmsDialectStrategyTest {
 
         assertThat(strategy.dbType()).isEqualTo(DbType.MYSQL);
         assertThat(strategy.requiresSchemaSwitch()).isFalse();
-        assertThat(strategy.buildJdbcUrl("localhost", 3306, "mastermeister", null, null))
+        assertThat(strategy.buildJdbcUrl("localhost", 3306, "mastermeister", null))
                 .isEqualTo("jdbc:mysql://localhost:3306/mastermeister");
-        assertThat(strategy.buildJdbcUrl("localhost", 3306, "mastermeister", null, "useSSL=false&serverTimezone=UTC"))
+        assertThat(strategy.buildJdbcUrl("localhost", 3306, "mastermeister", "useSSL=false&serverTimezone=UTC"))
                 .isEqualTo("jdbc:mysql://localhost:3306/mastermeister?useSSL=false&serverTimezone=UTC");
         assertThatThrownBy(() -> strategy.applySchemaSwitch(null, "any"))
                 .isInstanceOf(UnsupportedOperationException.class);
@@ -46,7 +46,7 @@ class RdbmsDialectStrategyTest {
 
         assertThat(strategy.dbType()).isEqualTo(DbType.MARIADB);
         assertThat(strategy.requiresSchemaSwitch()).isFalse();
-        assertThat(strategy.buildJdbcUrl("localhost", 3307, "mastermeister", null, "useSSL=false"))
+        assertThat(strategy.buildJdbcUrl("localhost", 3307, "mastermeister", "useSSL=false"))
                 .isEqualTo("jdbc:mariadb://localhost:3307/mastermeister?useSSL=false");
     }
 
@@ -56,9 +56,12 @@ class RdbmsDialectStrategyTest {
 
         assertThat(strategy.dbType()).isEqualTo(DbType.POSTGRESQL);
         assertThat(strategy.requiresSchemaSwitch()).isTrue();
-        // schemaNameはURLに含めない（applySchemaSwitch経由でSET search_pathを適用する）
-        assertThat(strategy.buildJdbcUrl("localhost", 5432, "mastermeister", "public", "sslmode=require"))
+        assertThat(strategy.buildJdbcUrl("localhost", 5432, "mastermeister", "sslmode=require"))
                 .isEqualTo("jdbc:postgresql://localhost:5432/mastermeister?sslmode=require");
+        assertThat(strategy.isSystemSchema("information_schema")).isTrue();
+        assertThat(strategy.isSystemSchema("pg_catalog")).isTrue();
+        assertThat(strategy.isSystemSchema("pg_toast")).isTrue();
+        assertThat(strategy.isSystemSchema("public")).isFalse();
     }
 
     @Test
@@ -67,10 +70,12 @@ class RdbmsDialectStrategyTest {
 
         assertThat(strategy.dbType()).isEqualTo(DbType.H2);
         assertThat(strategy.requiresSchemaSwitch()).isTrue();
-        assertThat(strategy.buildJdbcUrl("localhost", 9092, "mem:testdb", null, "DB_CLOSE_DELAY=-1"))
+        assertThat(strategy.buildJdbcUrl("localhost", 9092, "mem:testdb", "DB_CLOSE_DELAY=-1"))
                 .isEqualTo("jdbc:h2:tcp://localhost:9092/mem:testdb;DB_CLOSE_DELAY=-1");
-        assertThat(strategy.buildJdbcUrl("localhost", 9092, "mem:testdb", null, null))
+        assertThat(strategy.buildJdbcUrl("localhost", 9092, "mem:testdb", null))
                 .isEqualTo("jdbc:h2:tcp://localhost:9092/mem:testdb");
+        assertThat(strategy.isSystemSchema("INFORMATION_SCHEMA")).isTrue();
+        assertThat(strategy.isSystemSchema("PUBLIC")).isFalse();
     }
 
     @Test

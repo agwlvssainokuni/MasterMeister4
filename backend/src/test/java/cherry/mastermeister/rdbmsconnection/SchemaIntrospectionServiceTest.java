@@ -123,7 +123,7 @@ class SchemaIntrospectionServiceTest {
         Instant now = Instant.now();
         var encrypted = cipher.encrypt("");
         RdbmsConnection connection = new RdbmsConnection("動作確認用", DbType.H2, "localhost", h2Port, "mem:" + dbName,
-                null, "sa", encrypted.encryptedValue(), encrypted.keyId(), "DB_CLOSE_DELAY=-1", now, now);
+                "sa", encrypted.encryptedValue(), encrypted.keyId(), "DB_CLOSE_DELAY=-1", now, now);
         return rdbmsConnectionRepository.saveAndFlush(connection).getId();
     }
 
@@ -168,6 +168,36 @@ class SchemaIntrospectionServiceTest {
     }
 
     @Test
+    void refreshSchema_capturesMultipleSchemasWithinOneConnection_excludingSystemSchemas() throws SQLException {
+        // UNIT-04 Functional Designにて訂正: 1接続内に複数スキーマが存在しうる前提のため、
+        // PostgreSQL/H2ではシステムスキーマを除く全スキーマを自動検出して取り込む
+        createSampleSchema("introspect4");
+        try (Connection connection = DriverManager.getConnection(targetJdbcUrl("introspect4"), "sa", "");
+             Statement statement = connection.createStatement()) {
+            statement.execute("CREATE SCHEMA extra_schema");
+            statement.execute("CREATE TABLE extra_schema.orders (order_id INT PRIMARY KEY)");
+        }
+        ConnectionCredentialCipher cipher = realCipher();
+        Long connectionId = persistTargetConnection("introspect4", cipher);
+        SchemaIntrospectionService service = new SchemaIntrospectionService(rdbmsConnectionRepository,
+                schemaSnapshotRepository, cipher, new RdbmsDialectStrategyResolver(List.of(new H2DialectStrategy())),
+                mock(AuditEventPublisher.class));
+
+        SchemaSnapshot snapshot = service.refreshSchema(connectionId, 1L);
+
+        assertThat(snapshot.getTables()).hasSize(3);
+        assertThat(snapshot.getTables()).extracting(SchemaTable::getSchemaName)
+                .containsExactlyInAnyOrder("PUBLIC", "PUBLIC", "EXTRA_SCHEMA");
+        SchemaTable orders = snapshot.getTables().stream()
+                .filter(t -> t.getTableName().equalsIgnoreCase("orders"))
+                .findFirst().orElseThrow();
+        assertThat(orders.getSchemaName()).isEqualTo("EXTRA_SCHEMA");
+        // システムスキーマ(INFORMATION_SCHEMA)は取込対象に含まれないこと
+        assertThat(snapshot.getTables()).extracting(SchemaTable::getSchemaName)
+                .noneMatch(schemaName -> schemaName.equalsIgnoreCase("INFORMATION_SCHEMA"));
+    }
+
+    @Test
     void refreshSchema_replacesExistingSnapshot_perBrRdbms08() throws SQLException {
         createSampleSchema("introspect2");
         ConnectionCredentialCipher cipher = realCipher();
@@ -206,7 +236,7 @@ class SchemaIntrospectionServiceTest {
         // 接続先を存在しないポートに書き換えて再取込を試み、失敗することを確認する(BR-RDBMS-07)
         RdbmsConnection connection = rdbmsConnectionRepository.findById(connectionId).orElseThrow();
         connection.update(connection.getDisplayName(), DbType.H2, "localhost", 1, connection.getDatabaseName(),
-                null, "sa", connection.getEncryptedPassword(), connection.getEncryptionKeyId(),
+                "sa", connection.getEncryptedPassword(), connection.getEncryptionKeyId(),
                 "DB_CLOSE_DELAY=-1", Instant.now());
         rdbmsConnectionRepository.saveAndFlush(connection);
         entityManager.clear();

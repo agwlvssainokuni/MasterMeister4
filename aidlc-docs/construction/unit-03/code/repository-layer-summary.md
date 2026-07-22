@@ -11,9 +11,9 @@
 
 | ファイル | 内容 |
 |---|---|
-| `V7__create_rdbms_connection_table.sql` | `rdbms_connection`テーブル。`encryption_key_id`列を持つ（鍵ローテーション対応）。host/port/database_name/display_nameいずれも一意制約なし（BR-RDBMS-02、レビューにより表示名も対象と確認） |
+| `V7__create_rdbms_connection_table.sql` | `rdbms_connection`テーブル。`encryption_key_id`列を持つ（鍵ローテーション対応）。host/port/database_name/display_nameいずれも一意制約なし（BR-RDBMS-02、レビューにより表示名も対象と確認）。~~`schema_name`列を持つ~~ 訂正（UNIT-04 Functional Designにて）: `schema_name`列は削除。1接続内に複数スキーマが存在しうる前提のため（未リリースのためマイグレーションファイルを直接修正し、バージョン番号は追加していない） |
 | `V8__create_schema_snapshot_table.sql` | `schema_snapshot`テーブル。`connection_id`を主キー兼外部キー（`rdbms_connection.id`、`ON DELETE CASCADE`）とする |
-| `V9__create_schema_table_table.sql` | `schema_table`テーブル。`schema_snapshot.connection_id`への外部キー（`ON DELETE CASCADE`） |
+| `V9__create_schema_table_table.sql` | `schema_table`テーブル。`schema_snapshot.connection_id`への外部キー（`ON DELETE CASCADE`）。訂正（UNIT-04 Functional Designにて）: `schema_name`列を追加（1接続内の複数スキーマを区別するため。マイグレーションファイルを直接修正） |
 | `V10__create_schema_column_table.sql` | `schema_column`テーブル。`native_type`/`normalized_type`の両方を保持（Q4=B） |
 | `V11__create_schema_constraint_table.sql` | `schema_constraint`テーブル。`column_names`/`referenced_columns`はカンマ区切り文字列として保持（複合キー対応、シンプルさ優先の実装判断） |
 
@@ -41,3 +41,4 @@
 
 - **DB側カスケード削除とHibernate第一階層キャッシュの不整合**: `rdbms_connection`削除時のFK `ON DELETE CASCADE`はDBレベルで機能するが、同一テスト内で先に`schemaSnapshotRepository`経由でロード・管理状態にしていた`SchemaSnapshot`エンティティは、Hibernateの第一階層キャッシュにより削除後も「存在する」ものとして返ってしまう（JPAの`remove()`を経由しないDBレベルの削除はセッションに反映されないため）。`spring-boot-jpa-test`モジュールが提供する`org.springframework.boot.jpa.test.autoconfigure.TestEntityManager`（Spring Boot 4.1でのパッケージ移動、`spring-boot-starter-data-jpa-test`とは別モジュール）を導入し、削除後に`entityManager.clear()`で永続化コンテキストを明示的にクリアすることで解消した
 - **`GET /api/admin/rdbms-connections/{id}/schema`のLazyInitializationException（Section 16の実DB手動検証で発見）**: `SchemaSnapshot.tables`・`SchemaTable.columns`・`SchemaTable.constraints`を`FetchType.LAZY`としていたが、`spring.jpa.open-in-view: false`のため`SchemaIntrospectionService.getSchema()`の`@Transactional`スコープを抜けた時点でHibernateセッションが閉じ、Controller層でのDTO変換（`SchemaSnapshotResponse.from()`）時に`LazyInitializationException`が発生していた。ユニットテスト（Mockito・`@DataJpaTest`）では検出できず、`./gradlew :backend:bootWar`で起動した実プロセスに対しdevenvの実MySQL/MariaDB/PostgreSQLへ接続登録・スキーマ取込を行い、その後スキーマ詳細を取得するところまで通して検証して初めて発見した。スキーマスナップショットは常に全体を一括で参照する用途しかない（部分参照のユースケースがない）ため、3箇所とも`FetchType.EAGER`に変更して解消した
+- **1接続内の複数スキーマ対応（UNIT-04 Functional Designにて訂正）**: UNIT-04のアクセス権限モデル検討中に、`RdbmsConnection.schemaName`（単一固定値）が元々の要件（`initial-request.md` §5.7「対象接続内でユーザがアクセス権限を持つスキーマの一覧」）に対して狭すぎるスコープだったと判明。`schemaName`列を`rdbms_connection`から削除し`schema_name`列を`schema_table`へ追加（未リリースのためV7/V9マイグレーションを直接修正）。`SchemaIntrospectionService`はPostgreSQL/H2について`DatabaseMetaData.getSchemas()`でシステムスキーマ（`information_schema`/`pg_catalog`等）を除く全スキーマを自動検出し、スキーマごとにテーブルを読み取るループ構造に書き換えた。devenvのPostgreSQLへ`sales`スキーマを一時的に追加作成し、`public`と`sales`両方のテーブルがスキーマ名付きで正しく取り込まれることを実際に確認した（確認後にスキーマは削除・後片付け済み）

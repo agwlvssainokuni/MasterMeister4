@@ -6,7 +6,7 @@ business-rules.mdで定義したルールに対応するドメインエンティ
 
 ## 1. AccessPermission（BR-ACCESS-01〜03）
 
-あるプリンシパル（ユーザまたはグループ）が、ある接続の、あるリソース階層（接続全体／テーブル／カラム）に対して持つ、明示的な権限設定。エントリが存在すること自体が「明示的に設定されている」ことを意味し、存在しない場合は「未設定」（グループ合成またはデフォルト値`NONE`に委ねる、Q4=A・BR-ACCESS-03）を表す。
+あるプリンシパル（ユーザまたはグループ）が、ある接続の、あるリソース階層（スキーマ／テーブル／カラム）に対して持つ、明示的な権限設定。エントリが存在すること自体が「明示的に設定されている」ことを意味し、存在しない場合は「未設定」（グループ合成またはデフォルト値`NONE`に委ねる、Q4=A・BR-ACCESS-03）を表す。
 
 | 属性 | 型 | 説明 |
 |---|---|---|
@@ -14,17 +14,18 @@ business-rules.mdで定義したルールに対応するドメインエンティ
 | `connectionId` | ConnectionId | 対象接続（`RdbmsConnection`、UNIT-03） |
 | `principalType` | PrincipalType | `USER`/`GROUP`（Q3=A） |
 | `principalId` | Long | `principalType=USER`なら`User.id`、`GROUP`なら`Group.id` |
-| `tableName` | String（nullable） | 対象テーブル名。`null`の場合は接続全体（スキーマ階層相当、§前提参照）に対する設定 |
-| `columnName` | String（nullable） | 対象カラム名。`null`の場合はテーブル階層（または`tableName`もnullなら接続全体）に対する設定。設定する場合`tableName`も必須 |
+| `schemaName` | String | 対象スキーマ名（UNIT-03の`SchemaTable.schemaName`と同じ値域。MySQL/MariaDBは常に接続のdatabaseNameと同値、PostgreSQL/H2は実際のスキーマ名） |
+| `tableName` | String（nullable） | 対象テーブル名。`null`の場合はスキーマ階層に対する設定 |
+| `columnName` | String（nullable） | 対象カラム名。`null`の場合はテーブル階層（または`tableName`もnullならスキーマ階層）に対する設定。設定する場合`tableName`も必須 |
 | `primaryPermission` | PrimaryPermission | `NONE`/`READ`/`UPDATE` |
 | `createPermission` | boolean | `CREATE`補助権限。`columnName`が設定されている行では常に`false`（カラム階層には設定不可、FR-2.5） |
 | `deletePermission` | boolean | `DELETE`補助権限。`columnName`が設定されている行では常に`false`（同上） |
 | `updatedAt` | Instant | 直近更新日時 |
 | `updatedBy` | Long | 更新した管理者のUserId |
 
-**一意制約**: (`connectionId`, `principalType`, `principalId`, `tableName`, `columnName`)の組み合わせで一意（同一キーへの再設定はupsert、業務ロジック側で保証）。
+**一意制約**: (`connectionId`, `principalType`, `principalId`, `schemaName`, `tableName`, `columnName`)の組み合わせで一意（同一キーへの再設定はupsert、業務ロジック側で保証）。
 
-**リソース対象の保持方式（Q2=A）**: `tableName`/`columnName`はUNIT-03の`SchemaTable`/`SchemaColumn`への外部キーではなく、名前の文字列として独立して保持する。スキーマ再取込（UNIT-03のBR-RDBMS-08、全置換）があっても権限設定はそのまま保持される。再取込後に対象テーブル／カラムが存在しなくなっていた場合、実効権限判定時にそのリソース自体が参照されないため実害はない（対象が存在しなければ操作自体が成立しないため）。
+**リソース対象の保持方式（Q2=A）**: `schemaName`/`tableName`/`columnName`はUNIT-03の`SchemaTable`/`SchemaColumn`への外部キーではなく、名前の文字列として独立して保持する。スキーマ再取込（UNIT-03のBR-RDBMS-08、全置換）があっても権限設定はそのまま保持される。再取込後に対象スキーマ／テーブル／カラムが存在しなくなっていた場合、実効権限判定時にそのリソース自体が参照されないため実害はない（対象が存在しなければ操作自体が成立しないため）。
 
 ---
 
@@ -90,6 +91,7 @@ erDiagram
         ConnectionId connectionId
         PrincipalType principalType
         Long principalId
+        string schemaName
         string tableName
         string columnName
         PrimaryPermission primaryPermission

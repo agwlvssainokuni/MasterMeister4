@@ -31,7 +31,7 @@ RdbmsConnectionListPage (AppShell)
 - TextInput（host、required）
 - TextInput（port、type=number、required、1〜65535。dbType選択時にデフォルト値が入るが、手動での上書きも可能）
 - TextInput（databaseName、required）
-- TextInput（schemaName、任意。`dbType`が`POSTGRESQL`または`H2`の場合のみ表示（レビュー指摘の反映、両方言ともスキーマの概念を持つため）
+- ~~TextInput（schemaName、任意。`dbType`が`POSTGRESQL`または`H2`の場合のみ表示）~~ 訂正（UNIT-04 Functional Designにて）: 削除。1接続内に複数スキーマが存在しうる前提に変更したため、登録時にスキーマ名を指定する意味がなくなった。スキーマ一覧はスキーマ取込時に自動検出し、スキーマ詳細画面（§2）でテーブルごとに表示する
 - TextInput（username、required）
 - TextInput（password、type=password。編集時は空欄可＝変更しない場合は既存値を保持。APIは既存パスワードを返さないため、編集フォーム表示時点でも常に空欄から始まる。BR-RDBMS-12）
 - TextInput（additionalParams、「追加パラメータ」、任意。~~プレースホルダーでJDBCクエリパラメータの入力例（例: `useSSL=false&serverTimezone=UTC`）を示す~~ 訂正（UNIT-03 NFR Designにて）: JDBC URLのパラメータ区切り文字は方言ごとに異なる（MySQL/MariaDB/PostgreSQLは`&`区切り、H2は`;`区切り）ため、プレースホルダー・ヘルプテキストは選択中の`dbType`に応じた記法例を出し分ける（`MYSQL`/`MARIADB`/`POSTGRESQL`選択時: `useSSL=false&serverTimezone=UTC`、`H2`選択時: `TRACE_LEVEL_FILE=0;IFEXISTS=TRUE`等）。BR-RDBMS-10）
@@ -81,7 +81,7 @@ Selectで`dbType`を選択した時点で、`port`フィールドに以下のデ
 ```
 SchemaDetailPage (AppShell)
 └ PageHeader（タイトル: 接続の表示名＋「スキーマ詳細」、取込日時を表示）
-  ├ DataTable（テーブル一覧: テーブル名, 種別（TABLE/VIEW、Badge表示）, コメント, カラム数）
+  ├ DataTable（テーブル一覧: ~~テーブル名~~ スキーマ名, テーブル名, 種別（TABLE/VIEW、Badge表示）, コメント, カラム数。訂正（UNIT-04 Functional Designにて）: 1接続内に複数スキーマが存在しうる前提のため、スキーマ名列を追加。同名テーブルがスキーマをまたいで存在しうるため、行の選択キーは「スキーマ名+テーブル名」の複合キーとする）
   │  └ 行クリックで選択状態にし、下部のカラム一覧を対象テーブルのものに切り替える
   ├ DataTable（選択中テーブルのカラム一覧: カラム名, 型（nativeType）, 正規化型（normalizedType、Badge表示）, NULL許容, 制約（PK/FK/UNIQUE/INDEXをBadgeで列挙））
   └ EmptyState（スキーマ未取込の場合。「スキーマ取込」導線（§1一覧画面へのリンク）を表示）
@@ -90,7 +90,7 @@ SchemaDetailPage (AppShell)
 ### State
 - `connectionId`（ルートパラメータ）
 - `schema: SchemaSnapshotDetail | null`, `loading: boolean`, `errorMessage: string | null`
-- `selectedTableName: string | null`（初期表示は一覧先頭のテーブル）
+- `selectedTableKey: string | null`（`` `${schemaName}.${tableName}` ``の複合キー。初期表示は一覧先頭のテーブル。訂正: UNIT-04 Functional Designにて`selectedTableName`から変更）
 
 ### API連携
 - `GET /api/admin/rdbms-connections/{id}/schema` — スキーマスナップショット全体を取得（テーブル・カラム・制約を含む）

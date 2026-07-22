@@ -1343,3 +1343,19 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design、完了メッセージ提示・承認依頼
 
 ---
+
+## UNIT-04 Functional Design - レビュー指摘によるUNIT-03遡及修正（1接続=1スキーマ前提の撤回）
+**Timestamp**: 2026-07-23T06:15:00Z
+**User Input**: "一つのDB接続にスキーマが一つが前提になっている？"
+**AI Response**: "指摘の通り、UNIT-03の実装（`RdbmsConnection.schemaName`を単一固定値として保持、`SchemaSnapshot`も1スキーマ分のみ取込）と、元の要件（`initial-request.md` §5.7・requirements.md FR-7.5「実行時スキーマ指定、対象接続内でユーザがアクセス権限を持つスキーマの一覧から選択」）との間に矛盾があることを確認。PostgreSQL/H2は技術的に1つの物理接続で複数スキーマにアクセス可能（`RdbmsDialectStrategy.applySchemaSwitch()`が方言別にschemaNameを引数に取る設計もこれを見据えたもの）。2つの選択肢（UNIT-03の現状を正とする／元の想定通り1接続内に複数スキーマとして修正する）を提示し、ユーザーは後者を選択。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、UNIT-03前提の再検討
+
+---
+
+## UNIT-04 Functional Design - UNIT-03遡及修正の実施
+**Timestamp**: 2026-07-23T06:20:00Z
+**User Input**: "はい、この方針で進める"
+**AI Response**: "UNIT-03を遡及修正。バックエンド: `RdbmsConnection.schemaName`（単一固定値）を廃止、`SchemaTable`に`schemaName`属性を追加。`SchemaIntrospectionService.readSchema()`をスキーマ一覧取得→スキーマごとにテーブル読取のループ構造に書き換え（PostgreSQL/H2は`DatabaseMetaData.getSchemas()`でシステムスキーマを除く全スキーマを自動検出、MySQL/MariaDBは従来通り1件）。スキーマ取込時の`applySchemaSwitch()`呼び出しは不要と判明し削除（UNIT-06のクエリ実行時専用に変更）。`RdbmsDialectStrategy.buildJdbcUrl()`からschemaName引数を削除、`isSystemSchema()`を追加。V7/V9マイグレーションを直接修正（未リリースのため新規バージョン番号は追加せず）。関連するバックエンドテスト（RdbmsConnectionServiceTest, RdbmsConnectionControllerTest, RdbmsDialectStrategyTest, RdbmsConnectionRepositoryTest, SchemaSnapshotRepositoryTest, SchemaIntrospectionServiceTest）を更新し、複数スキーマ自動検出の新規テストを追加。フロントエンド: `RdbmsConnectionListPage.tsx`から`schemaName`入力欄を削除、`SchemaDetailPage.tsx`にスキーマ名列を追加し行選択キーを`` `${schemaName}.${tableName}` ``の複合キーに変更（同名テーブルが別スキーマに存在しうるため）。devenvの実PostgreSQLへ`sales`スキーマを一時追加し、`public`/`sales`両スキーマのテーブルが正しく取り込まれることを実際に確認（確認後に削除・後片付け済み）。UNIT-03のfunctional-design/nfr-design/codeサマリに取消線+訂正注記を追加。UNIT-04のfunctional-design全4ファイルも「スキーマ＝接続全体」の簡略化を撤回し、実際の3階層（スキーマ／テーブル／カラム）に修正。バックエンド・フロントエンドとも全テスト・ビルド成功を確認。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、UNIT-03遡及修正完了
+
+---

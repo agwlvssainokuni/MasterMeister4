@@ -71,7 +71,7 @@ class RdbmsConnectionServiceTest {
 
     private RdbmsConnection existingConnection() {
         Instant now = Instant.now();
-        return new RdbmsConnection("接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", null, "root",
+        return new RdbmsConnection("接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", "root",
                 "encrypted-v1", 1, null, now, now);
     }
 
@@ -81,7 +81,7 @@ class RdbmsConnectionServiceTest {
                 .thenReturn(new ConnectionCredentialCipher.EncryptedCredential("encrypted", 3));
         when(rdbmsConnectionRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        RdbmsConnection saved = service.registerConnection("表示名", DbType.POSTGRESQL, "host", 5432, "db", "public",
+        RdbmsConnection saved = service.registerConnection("表示名", DbType.POSTGRESQL, "host", 5432, "db",
                 "user", "s3cr3t", "sslmode=require", 100L);
 
         assertThat(saved.getEncryptedPassword()).isEqualTo("encrypted");
@@ -96,7 +96,7 @@ class RdbmsConnectionServiceTest {
                 .thenReturn(new ConnectionCredentialCipher.EncryptedCredential("encrypted", 1));
         when(rdbmsConnectionRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        service.registerConnection("同じ名前", DbType.MYSQL, "host", 3306, "db", null, "user", "pw", null, 1L);
+        service.registerConnection("同じ名前", DbType.MYSQL, "host", 3306, "db", "user", "pw", null, 1L);
 
         verify(rdbmsConnectionRepository, never()).findAll();
     }
@@ -106,7 +106,7 @@ class RdbmsConnectionServiceTest {
         RdbmsConnection connection = existingConnection();
         when(rdbmsConnectionRepository.findById(1L)).thenReturn(Optional.of(connection));
 
-        service.updateConnection(1L, "新表示名", DbType.MYSQL, "newhost", 3306, "db", null, "user", "", null, 200L);
+        service.updateConnection(1L, "新表示名", DbType.MYSQL, "newhost", 3306, "db", "user", "", null, 200L);
 
         assertThat(connection.getEncryptedPassword()).isEqualTo("encrypted-v1");
         assertThat(connection.getEncryptionKeyId()).isEqualTo(1);
@@ -122,7 +122,7 @@ class RdbmsConnectionServiceTest {
         when(connectionCredentialCipher.encrypt("newpass"))
                 .thenReturn(new ConnectionCredentialCipher.EncryptedCredential("encrypted-v2", 2));
 
-        service.updateConnection(1L, "接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", null, "root",
+        service.updateConnection(1L, "接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", "root",
                 "newpass", null, 200L);
 
         assertThat(connection.getEncryptedPassword()).isEqualTo("encrypted-v2");
@@ -135,11 +135,11 @@ class RdbmsConnectionServiceTest {
         when(rdbmsConnectionRepository.findById(1L)).thenReturn(Optional.of(connection));
         RdbmsDialectStrategy dialect = mock(RdbmsDialectStrategy.class);
         when(dialectStrategyResolver.resolve(DbType.MYSQL)).thenReturn(dialect);
-        when(dialect.buildJdbcUrl(any(), anyInt(), any(), any(), any())).thenReturn("jdbc:mysql://localhost:3306/x");
+        when(dialect.buildJdbcUrl(any(), anyInt(), any(), any())).thenReturn("jdbc:mysql://localhost:3306/x");
         when(connectionCredentialCipher.decrypt(any(), anyInt())).thenReturn("pw");
 
         service.getDataSource(1L);
-        service.updateConnection(1L, "接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", null, "root", "",
+        service.updateConnection(1L, "接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", "root", "",
                 null, 200L);
         service.getDataSource(1L);
 
@@ -162,7 +162,7 @@ class RdbmsConnectionServiceTest {
     void updateConnection_throwsNotFound_whenConnectionDoesNotExist() {
         when(rdbmsConnectionRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> service.updateConnection(999L, "x", DbType.MYSQL, "h", 1, "d", null, "u", "p", null,
+        assertThatThrownBy(() -> service.updateConnection(999L, "x", DbType.MYSQL, "h", 1, "d", "u", "p", null,
                 1L)).isInstanceOf(RdbmsConnectionNotFoundException.class);
     }
 
@@ -172,7 +172,7 @@ class RdbmsConnectionServiceTest {
         when(rdbmsConnectionRepository.findById(1L)).thenReturn(Optional.of(connection));
         RdbmsDialectStrategy dialect = mock(RdbmsDialectStrategy.class);
         when(dialectStrategyResolver.resolve(DbType.MYSQL)).thenReturn(dialect);
-        when(dialect.buildJdbcUrl(any(), anyInt(), any(), any(), any())).thenReturn("jdbc:mysql://localhost:3306/x");
+        when(dialect.buildJdbcUrl(any(), anyInt(), any(), any())).thenReturn("jdbc:mysql://localhost:3306/x");
         when(connectionCredentialCipher.decrypt(any(), anyInt())).thenReturn("pw");
 
         DataSource first = service.getDataSource(1L);

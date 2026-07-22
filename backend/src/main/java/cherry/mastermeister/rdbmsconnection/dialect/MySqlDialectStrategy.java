@@ -41,8 +41,7 @@ public class MySqlDialectStrategy implements RdbmsDialectStrategy {
     }
 
     @Override
-    public String buildJdbcUrl(String host, int port, String databaseName, String schemaName,
-                                String additionalParams) {
+    public String buildJdbcUrl(String host, int port, String databaseName, String additionalParams) {
         String base = "jdbc:mysql://" + host + ":" + port + "/" + databaseName;
         return (additionalParams == null || additionalParams.isBlank()) ? base : base + "?" + additionalParams;
     }

@@ -38,6 +38,10 @@ public interface RdbmsDialectStrategy {
 
     /**
      * スキーマ切替を適用する。{@link #requiresSchemaSwitch()}が{@code false}の方言では呼び出さない。
+     * ~~スキーマ取込（イントロスペクション）時にも使用~~ 訂正（UNIT-04 Functional Designにて）:
+     * JDBCのDatabaseMetaData取得はschemaPattern引数で直接絞り込めるため、取込時にセッションの
+     * スキーマを切り替える必要はないと判明。本メソッドはUNIT-06（クエリ実行時の対象スキーマ指定、
+     * FR-7.5）専用とする。
      */
     void applySchemaSwitch(Connection connection, String schema) throws SQLException;
 
@@ -45,6 +49,17 @@ public interface RdbmsDialectStrategy {
      * JDBC URLを構築する（レビュー指摘の反映、nfr-design/logical-components.md §1、
      * component-methods.md訂正）。スキーム・パラメータ区切り文字は方言ごとに異なるため、
      * URL構築自体を本メソッドに集約する。
+     * ~~schemaNameを引数に取る~~ 訂正（UNIT-04 Functional Designにて）: 1接続内に複数スキーマが
+     * 存在しうる前提に変更したため、接続確立時点で単一のschemaNameを指定する意味がなくなり削除。
      */
-    String buildJdbcUrl(String host, int port, String databaseName, String schemaName, String additionalParams);
+    String buildJdbcUrl(String host, int port, String databaseName, String additionalParams);
+
+    /**
+     * スキーマ一覧取得時、システムスキーマとして除外すべきスキーマ名か（UNIT-04 Functional Design
+     * にて追加。1接続内の複数スキーマ自動検出のため）。スキーマの概念を持たない方言
+     * （MySQL/MariaDB、catalogベース）では使用しない。
+     */
+    default boolean isSystemSchema(String schemaName) {
+        return false;
+    }
 }

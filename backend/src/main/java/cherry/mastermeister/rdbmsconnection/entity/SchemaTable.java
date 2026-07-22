@@ -35,6 +35,9 @@ import java.util.List;
 
 /**
  * domain-entities.md §2.1。SchemaSnapshotに属するテーブル/ビュー。
+ * schemaName: 1接続内に複数スキーマが存在しうる（UNIT-04 Functional Designにて、PostgreSQL/H2）
+ * ため、どのスキーマに属するテーブルかを区別する属性を追加（訂正）。MySQL/MariaDBは
+ * データベース＝スキーマの単位のため、常にdatabaseNameと同値を設定する。
  */
 @Entity
 @Table(name = "schema_table")
@@ -47,6 +50,9 @@ public class SchemaTable {
     @ManyToOne
     @JoinColumn(name = "connection_id", nullable = false)
     private SchemaSnapshot schemaSnapshot;
+
+    @Column(name = "schema_name", nullable = false)
+    private String schemaName;
 
     @Column(name = "table_name", nullable = false)
     private String tableName;
@@ -68,7 +74,8 @@ public class SchemaTable {
         // JPA
     }
 
-    public SchemaTable(String tableName, TableType tableType, String comment) {
+    public SchemaTable(String schemaName, String tableName, TableType tableType, String comment) {
+        this.schemaName = schemaName;
         this.tableName = tableName;
         this.tableType = tableType;
         this.comment = comment;
@@ -76,6 +83,10 @@ public class SchemaTable {
 
     public Long getId() {
         return id;
+    }
+
+    public String getSchemaName() {
+        return schemaName;
     }
 
     public String getTableName() {

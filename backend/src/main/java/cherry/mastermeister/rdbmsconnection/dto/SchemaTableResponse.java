@@ -22,6 +22,7 @@ import cherry.mastermeister.rdbmsconnection.entity.TableType;
 import java.util.List;
 
 public record SchemaTableResponse(
+        String schemaName,
         String tableName,
         TableType tableType,
         String comment,
@@ -30,8 +31,8 @@ public record SchemaTableResponse(
 ) {
 
     public static SchemaTableResponse from(SchemaTable table) {
-        return new SchemaTableResponse(table.getTableName(), table.getTableType(), table.getComment(),
-                table.getColumns().stream().map(SchemaColumnResponse::from).toList(),
+        return new SchemaTableResponse(table.getSchemaName(), table.getTableName(), table.getTableType(),
+                table.getComment(), table.getColumns().stream().map(SchemaColumnResponse::from).toList(),
                 table.getConstraints().stream().map(SchemaConstraintResponse::from).toList());
     }
 }

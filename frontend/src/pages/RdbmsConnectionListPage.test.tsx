@@ -32,7 +32,6 @@ const mysqlConnection: RdbmsConnectionSummary = {
   host: 'localhost',
   port: 3306,
   databaseName: 'mastermeister',
-  schemaName: null,
   username: 'root',
   additionalParams: null,
   schemaImportedAt: null,
@@ -62,8 +61,6 @@ describe('RdbmsConnectionListPage', () => {
     await userEvent.selectOptions(screen.getByTestId('connections-form-db-type'), 'POSTGRESQL')
 
     expect(screen.getByTestId('connections-form-port')).toHaveValue(5432)
-    // POSTGRESQLはschemaName欄が表示される
-    expect(screen.getByTestId('connections-form-schema-name')).toBeInTheDocument()
   })
 
   it('登録フォーム送信でregisterConnectionを呼び、一覧を再取得する', async () => {

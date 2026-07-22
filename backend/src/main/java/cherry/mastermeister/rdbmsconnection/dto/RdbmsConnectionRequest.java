@@ -33,7 +33,6 @@ public record RdbmsConnectionRequest(
         @NotBlank String host,
         @Min(1) @Max(65535) int port,
         @NotBlank String databaseName,
-        String schemaName,
         @NotBlank String username,
         String password,
         String additionalParams

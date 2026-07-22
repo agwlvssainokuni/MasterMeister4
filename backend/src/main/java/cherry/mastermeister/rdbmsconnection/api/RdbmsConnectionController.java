@@ -70,7 +70,7 @@ public class RdbmsConnectionController {
     public ResponseEntity<RdbmsConnectionResponse> register(@Valid @RequestBody RdbmsConnectionRequest request,
                                                               @AuthenticationPrincipal Jwt principal) {
         RdbmsConnection connection = rdbmsConnectionService.registerConnection(request.displayName(),
-                request.dbType(), request.host(), request.port(), request.databaseName(), request.schemaName(),
+                request.dbType(), request.host(), request.port(), request.databaseName(),
                 request.username(), request.password(), request.additionalParams(), currentUserId(principal));
         return ResponseEntity.ok(toResponse(connection));
     }
@@ -80,7 +80,7 @@ public class RdbmsConnectionController {
                                                             @Valid @RequestBody RdbmsConnectionRequest request,
                                                             @AuthenticationPrincipal Jwt principal) {
         RdbmsConnection connection = rdbmsConnectionService.updateConnection(id, request.displayName(),
-                request.dbType(), request.host(), request.port(), request.databaseName(), request.schemaName(),
+                request.dbType(), request.host(), request.port(), request.databaseName(),
                 request.username(), request.password(), request.additionalParams(), currentUserId(principal));
         return ResponseEntity.ok(toResponse(connection));
     }
@@ -99,7 +99,7 @@ public class RdbmsConnectionController {
     @PostMapping("/test")
     public ResponseEntity<ConnectionTestResult> testUnsaved(@Valid @RequestBody ConnectionTestRequest request) {
         var outcome = rdbmsConnectionService.testConnectionUnsaved(request.dbType(), request.host(), request.port(),
-                request.databaseName(), request.schemaName(), request.username(), request.password(),
+                request.databaseName(), request.username(), request.password(),
                 request.additionalParams());
         return ResponseEntity.ok(ConnectionTestResult.from(outcome));
     }

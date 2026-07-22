@@ -16,7 +16,7 @@ business-rules.mdで定義したルールに対応するドメインエンティ
 | `host` | String | 接続先ホスト名 |
 | `port` | int | 接続先ポート番号（1〜65535） |
 | `databaseName` | String | 接続先データベース名 |
-| `schemaName` | String（nullable） | 接続先スキーマ名（データベースと別にスキーマの概念を持つ方言（PostgreSQL, H2）でのみ使用。レビューによりH2も対象と確認。MySQL/MariaDBはデータベース＝スキーマの単位のためnull） |
+| ~~`schemaName`~~ | ~~String（nullable）~~ | ~~接続先スキーマ名（データベースと別にスキーマの概念を持つ方言（PostgreSQL, H2）でのみ使用。レビューによりH2も対象と確認。MySQL/MariaDBはデータベース＝スキーマの単位のためnull）~~ 訂正（UNIT-04 Functional Designにて）: 1接続内に複数スキーマが存在しうる前提（PostgreSQL/H2、`SET search_path`等で切替可能）に変更したため、単一固定値としての`schemaName`は廃止。スキーマ一覧は取込時に自動検出する（§2.1参照） |
 | `username` | String | 接続ユーザ名 |
 | `encryptedPassword` | String | 可逆暗号化されたパスワード（AES-256-GCM。IV・認証タグを含む形式。詳細はnfr-design/logical-components.md参照） |
 | `encryptionKeyId` | int | パスワード暗号化に使用した鍵の世代（NFR Design、鍵ローテーション対応のため追加。nfr-requirements/tech-stack-decisions.md §1参照） |
@@ -45,6 +45,7 @@ business-rules.mdで定義したルールに対応するドメインエンティ
 |---|---|---|
 | `id` | SchemaTableId | 一意識別子 |
 | `connectionId` | ConnectionId | 所属するSchemaSnapshot（外部キー） |
+| `schemaName` | String | 所属スキーマ名（追加、UNIT-04 Functional Designにて訂正）。1接続内に複数スキーマが存在しうる前提のため、どのスキーマに属するテーブルかを区別する。MySQL/MariaDBは常に接続のdatabaseNameと同値、PostgreSQL/H2は取込時に自動検出した実際のスキーマ名 |
 | `tableName` | String | 物理名 |
 | `tableType` | TableType | `TABLE`/`VIEW` |
 | `comment` | String（nullable） | コメント |
@@ -102,6 +103,8 @@ UNIT-02で定義したAuditLogEntry（`aidlc-docs/construction/unit-02/functiona
 
 ## エンティティ関連図
 
+（UNIT-04 Functional Designでの訂正を反映した最新状態。`RDBMS_CONNECTION.schemaName`を廃止し`SCHEMA_TABLE.schemaName`を追加）
+
 ```mermaid
 erDiagram
     RDBMS_CONNECTION ||--o| SCHEMA_SNAPSHOT : "取込済みなら1件持つ"
@@ -116,7 +119,6 @@ erDiagram
         string host
         int port
         string databaseName
-        string schemaName
         string username
         string encryptedPassword
     }
@@ -127,6 +129,7 @@ erDiagram
     SCHEMA_TABLE {
         SchemaTableId id
         ConnectionId connectionId
+        string schemaName
         string tableName
         TableType tableType
         string comment

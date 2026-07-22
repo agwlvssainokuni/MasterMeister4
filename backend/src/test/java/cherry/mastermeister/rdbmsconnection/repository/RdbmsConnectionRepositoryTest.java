@@ -35,7 +35,7 @@ class RdbmsConnectionRepositoryTest {
     private RdbmsConnection newConnection(String displayName) {
         Instant now = Instant.now();
         return new RdbmsConnection(displayName, DbType.MYSQL, "localhost", 3306, "mastermeister",
-                null, "root", "encrypted", 1, null, now, now);
+                "root", "encrypted", 1, null, now, now);
     }
 
     @Test
@@ -59,7 +59,7 @@ class RdbmsConnectionRepositoryTest {
         RdbmsConnection saved = rdbmsConnectionRepository.saveAndFlush(newConnection("接続"));
         Instant updatedAt = Instant.now().plusSeconds(60);
 
-        saved.update("更新後", DbType.POSTGRESQL, "otherhost", 5432, "otherdb", "public", "user2",
+        saved.update("更新後", DbType.POSTGRESQL, "otherhost", 5432, "otherdb", "user2",
                 "encrypted2", 2, "sslmode=require", updatedAt);
         rdbmsConnectionRepository.saveAndFlush(saved);
 

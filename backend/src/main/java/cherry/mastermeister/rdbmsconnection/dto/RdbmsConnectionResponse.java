@@ -32,7 +32,6 @@ public record RdbmsConnectionResponse(
         String host,
         int port,
         String databaseName,
-        String schemaName,
         String username,
         String additionalParams,
         Instant schemaImportedAt,
@@ -43,7 +42,7 @@ public record RdbmsConnectionResponse(
     public static RdbmsConnectionResponse from(RdbmsConnection connection, Instant schemaImportedAt) {
         return new RdbmsConnectionResponse(connection.getId(), connection.getDisplayName(), connection.getDbType(),
                 connection.getHost(), connection.getPort(), connection.getDatabaseName(),
-                connection.getSchemaName(), connection.getUsername(), connection.getAdditionalParams(),
+                connection.getUsername(), connection.getAdditionalParams(),
                 schemaImportedAt, connection.getCreatedAt(), connection.getUpdatedAt());
     }
 }

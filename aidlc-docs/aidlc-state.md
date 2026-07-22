@@ -50,7 +50,7 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - Functional Design（アーティファクト作成完了、完了メッセージ提示・承認待ち）
+- **Current Stage**: UNIT-04 アクセス制御 - Functional Design（レビュー指摘によりUNIT-03を遡及修正（1接続=1スキーマ前提を撤回）、UNIT-04アーティファクトも3階層構造に修正済み。完了メッセージ再提示・承認待ち）
 - **Next Stage**: 承認後、NFR Requirementsへ
 - **Status**: 実施中
 

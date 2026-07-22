@@ -8,7 +8,7 @@
 
 ## 1. 接続情報の登録・更新（FR-2.1）
 
-1. 管理者が接続情報（表示名、DB種別`dbType`、host、port、databaseName、schemaName（任意）、username、password、additionalParams（任意、JDBC URLに付加するクエリパラメータ。BR-RDBMS-10）を入力し登録する（`POST /api/admin/rdbms-connections`）
+1. 管理者が接続情報（表示名、DB種別`dbType`、host、port、databaseName、~~schemaName（任意）、~~username、password、additionalParams（任意、JDBC URLに付加するクエリパラメータ。BR-RDBMS-10）を入力し登録する（`POST /api/admin/rdbms-connections`）。訂正（UNIT-04 Functional Designにて）: `schemaName`は登録項目から削除。1接続内に複数スキーマが存在しうる前提に変更したため、スキーマ一覧はスキーマ取込時に自動検出する（§3参照）
 2. RdbmsConnectionServiceは形式チェックのみ行う（必須項目の入力有無、portが1〜65535の整数であること等）。実際にRDBMSへ接続できるかどうかの確認はここでは行わない（Q1=B、BR-RDBMS-01）
 3. パスワードは可逆暗号化して保存する（requirements.md §4の既存決定。アルゴリズム・鍵管理はNFR Requirements/NFR Designで確定）
 4. 独立した接続IDを新規発行する。host/port/databaseNameの組み合わせが既存の接続と重複していても登録を拒否しない（Q5=A、BR-RDBMS-02）
@@ -35,8 +35,8 @@
 
 1. 管理者がスキーマ更新操作を実行する（`POST /api/admin/rdbms-connections/{id}/schema-refresh`）
 2. SchemaIntrospectionServiceは対象接続の`dbType`から`RdbmsDialectStrategy`を解決する（`RdbmsDialectStrategy.resolveDialect(dbType)`）
-3. 方言が要求する場合、スキーマ切替を適用する（`requiresSchemaSwitch()` / `applySchemaSwitch()`）。例: PostgreSQLでは`search_path`等でスキーマを切り替える。MySQL/MariaDBは「データベース」がスキーマに相当する単位として扱われるため切替は不要
-4. JDBC `DatabaseMetaData` API等を用いて、テーブル/ビューの物理名・コメント・カラム・制約情報（§5、Q3=C）を読み取る
+3. ~~方言が要求する場合、スキーマ切替を適用する（`requiresSchemaSwitch()` / `applySchemaSwitch()`）。例: PostgreSQLでは`search_path`等でスキーマを切り替える。MySQL/MariaDBは「データベース」がスキーマに相当する単位として扱われるため切替は不要~~ 訂正（UNIT-04 Functional Designにて）: 1接続内に複数スキーマが存在しうる前提に変更したため、取込対象スキーマの一覧を求める（MySQL/MariaDBは接続のdatabaseNameを1件のみ、PostgreSQL/H2はシステムスキーマを除く全スキーマを`DatabaseMetaData.getSchemas()`で自動検出する）。JDBCのメタデータ取得はschemaPattern引数で直接絞り込めるため、事前のセッションスキーマ切替（`applySchemaSwitch`）は不要と判明し行わない
+4. スキーマごとに、JDBC `DatabaseMetaData` API等を用いてテーブル/ビューの物理名・コメント・カラム・制約情報（§5、Q3=C）を読み取り、各テーブルに所属スキーマ名を記録する
 5. 読取の途中で一部テーブル・ビューの読取に失敗した場合、取込処理全体を失敗として扱う（Q8=A、オールオアナッシング、BR-RDBMS-07）。この場合、既存のスキーマスナップショットは変更しない
 6. 全テーブル・ビューの読取に成功した場合、対象接続の既存スキーマスナップショットを削除し、新規取込内容で完全に置き換える（Q2=A、全置換、BR-RDBMS-08）
 7. 取込結果（成功／失敗）を`connectionId`に紐づけてAuditEventPublisher経由で記録する（`SCHEMA_IMPORTED`、`resultStatus`は`SUCCESS`/`FAILURE`。FR-2.2の受け入れ基準どおり、成功・失敗いずれの場合も監査ログに記録する）
@@ -67,7 +67,7 @@
 
 ## 6. 方言吸収の適用範囲（COMP-09、FR-7.5との関係）
 
-本ユニットでは`RdbmsDialectStrategy`インターフェースと4つの実装クラス（`MySqlDialectStrategy`, `MariaDbDialectStrategy`, `PostgresDialectStrategy`, `H2DialectStrategy`）を新設し、主にスキーマ取込時のスキーマ切替（§3手順3）に使用する。実行時スキーマ指定（FR-7.5、クエリ実行時の動的なスキーマ切替）はUNIT-06（クエリ保存・実行）で本格的に利用されるが、インターフェース自体は本ユニットで確定させ、UNIT-06から同一インターフェースを再利用する想定とする。
+本ユニットでは`RdbmsDialectStrategy`インターフェースと4つの実装クラス（`MySqlDialectStrategy`, `MariaDbDialectStrategy`, `PostgresDialectStrategy`, `H2DialectStrategy`）を新設する。~~主にスキーマ取込時のスキーマ切替（§3手順3）に使用する~~ 訂正（UNIT-04 Functional Designにて）: `applySchemaSwitch()`はスキーマ取込では使用しなくなり、実行時スキーマ指定（FR-7.5、クエリ実行時の動的なスキーマ切替）専用となった。UNIT-06（クエリ保存・実行）で本格的に利用されるが、インターフェース自体は本ユニットで確定させ、UNIT-06から同一インターフェースを再利用する想定とする。
 
 ---
 

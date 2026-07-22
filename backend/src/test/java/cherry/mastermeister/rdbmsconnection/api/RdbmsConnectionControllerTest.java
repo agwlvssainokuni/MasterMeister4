@@ -80,7 +80,7 @@ class RdbmsConnectionControllerTest {
 
     private RdbmsConnection sampleConnection() {
         Instant now = Instant.now();
-        return new RdbmsConnection("接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", null, "root",
+        return new RdbmsConnection("接続1", DbType.MYSQL, "localhost", 3306, "mastermeister", "root",
                 "encrypted", 1, null, now, now);
     }
 
@@ -99,7 +99,7 @@ class RdbmsConnectionControllerTest {
 
     @Test
     void register_delegatesToService() throws Exception {
-        when(rdbmsConnectionService.registerConnection(any(), any(), any(), anyInt(), any(), any(), any(), any(),
+        when(rdbmsConnectionService.registerConnection(any(), any(), any(), anyInt(), any(), any(), any(),
                 any(), eq(99L))).thenReturn(sampleConnection());
         when(schemaIntrospectionService.getSchema(any())).thenReturn(Optional.empty());
 
@@ -113,7 +113,7 @@ class RdbmsConnectionControllerTest {
                 .andExpect(status().isOk());
 
         verify(rdbmsConnectionService).registerConnection(eq("接続1"), eq(DbType.MYSQL), eq("localhost"), eq(3306),
-                eq("mastermeister"), any(), eq("root"), eq("s3cr3t"), any(), eq(99L));
+                eq("mastermeister"), eq("root"), eq("s3cr3t"), any(), eq(99L));
     }
 
     @Test
@@ -138,7 +138,7 @@ class RdbmsConnectionControllerTest {
 
     @Test
     void update_returnsNotFound_whenConnectionMissing() throws Exception {
-        when(rdbmsConnectionService.updateConnection(eq(1L), any(), any(), any(), anyInt(), any(), any(), any(),
+        when(rdbmsConnectionService.updateConnection(eq(1L), any(), any(), any(), anyInt(), any(), any(),
                 any(), any(), eq(99L))).thenThrow(new RdbmsConnectionNotFoundException());
         String body = """
                 {"displayName":"接続1","dbType":"MYSQL","host":"localhost","port":3306,
@@ -165,7 +165,7 @@ class RdbmsConnectionControllerTest {
     @Test
     void testUnsaved_delegatesToServiceWithoutPersisting() throws Exception {
         when(rdbmsConnectionService.testConnectionUnsaved(eq(DbType.MYSQL), eq("localhost"), eq(3306),
-                eq("mastermeister"), any(), eq("root"), eq("s3cr3t"), any()))
+                eq("mastermeister"), eq("root"), eq("s3cr3t"), any()))
                 .thenReturn(ConnectionTestOutcome.ofSuccess());
         String body = """
                 {"dbType":"MYSQL","host":"localhost","port":3306,"databaseName":"mastermeister",

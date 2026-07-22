@@ -50,12 +50,12 @@ class SchemaSnapshotRepositoryTest {
     private Long persistConnection() {
         Instant now = Instant.now();
         RdbmsConnection connection = new RdbmsConnection("動作確認用", DbType.MYSQL, "localhost", 3306,
-                "mastermeister", null, "root", "encrypted", 1, null, now, now);
+                "mastermeister", "root", "encrypted", 1, null, now, now);
         return rdbmsConnectionRepository.saveAndFlush(connection).getId();
     }
 
     private SchemaTable sampleTable() {
-        SchemaTable table = new SchemaTable("categories", TableType.TABLE, null);
+        SchemaTable table = new SchemaTable("PUBLIC", "categories", TableType.TABLE, null);
         table.addColumn(new SchemaColumn("category_id", 1, null, "INT", NormalizedType.NUMBER, false, null));
         table.addColumn(new SchemaColumn("category_name", 2, null, "VARCHAR(100)", NormalizedType.STRING, false,
                 null));
@@ -94,7 +94,7 @@ class SchemaSnapshotRepositoryTest {
         entityManager.clear();
 
         SchemaSnapshot replacement = new SchemaSnapshot(connectionId, Instant.now());
-        replacement.addTable(new SchemaTable("products", TableType.TABLE, null));
+        replacement.addTable(new SchemaTable("PUBLIC", "products", TableType.TABLE, null));
         schemaSnapshotRepository.saveAndFlush(replacement);
         entityManager.clear();
 

@@ -47,6 +47,7 @@ const sampleSnapshot: SchemaSnapshotDetail = {
   importedAt: '2026-01-05T00:00:00Z',
   tables: [
     {
+      schemaName: 'PUBLIC',
       tableName: 'products',
       tableType: 'TABLE',
       comment: null,
@@ -96,6 +97,7 @@ const multiTableSnapshot: SchemaSnapshotDetail = {
   tables: [
     ...sampleSnapshot.tables,
     {
+      schemaName: 'PUBLIC',
       tableName: 'categories',
       tableType: 'TABLE',
       comment: null,
@@ -151,6 +153,7 @@ describe('SchemaDetailPage', () => {
       importedAt: '2026-01-05T00:00:00Z',
       tables: [
         {
+          schemaName: 'PUBLIC',
           tableName: 'categories',
           tableType: 'TABLE',
           comment: null,
@@ -176,6 +179,7 @@ describe('SchemaDetailPage', () => {
           ],
         },
         {
+          schemaName: 'PUBLIC',
           tableName: 'products',
           tableType: 'TABLE',
           comment: null,
@@ -223,6 +227,65 @@ describe('SchemaDetailPage', () => {
     const categoryIdRow = screen.getByText('category_id').closest('tr')
     expect(categoryIdRow).not.toBeNull()
     expect(within(categoryIdRow as HTMLElement).queryByText('PRIMARY_KEY')).not.toBeInTheDocument()
+  })
+
+  it('同一接続内に複数スキーマがあり同名テーブルが存在する場合も、スキーマ名を含めて区別して選択できる', async () => {
+    const multiSchemaSnapshot: SchemaSnapshotDetail = {
+      connectionId: 1,
+      importedAt: '2026-01-05T00:00:00Z',
+      tables: [
+        {
+          schemaName: 'PUBLIC',
+          tableName: 'orders',
+          tableType: 'TABLE',
+          comment: null,
+          columns: [
+            {
+              columnName: 'public_order_id',
+              ordinalPosition: 1,
+              comment: null,
+              nativeType: 'INT',
+              normalizedType: 'NUMBER',
+              nullable: false,
+              defaultValue: null,
+            },
+          ],
+          constraints: [],
+        },
+        {
+          schemaName: 'EXTRA_SCHEMA',
+          tableName: 'orders',
+          tableType: 'TABLE',
+          comment: null,
+          columns: [
+            {
+              columnName: 'extra_order_id',
+              ordinalPosition: 1,
+              comment: null,
+              nativeType: 'INT',
+              normalizedType: 'NUMBER',
+              nullable: false,
+              defaultValue: null,
+            },
+          ],
+          constraints: [],
+        },
+      ],
+    }
+    vi.mocked(connectionsApi.getSchema).mockResolvedValueOnce(multiSchemaSnapshot)
+    const user = userEvent.setup()
+    renderSchemaDetailPage()
+
+    expect(await screen.findByText('public_order_id')).toBeInTheDocument()
+    expect(screen.getAllByText('orders')).toHaveLength(2)
+    expect(screen.getByText('EXTRA_SCHEMA')).toBeInTheDocument()
+
+    const extraSchemaRow = screen.getByText('EXTRA_SCHEMA').closest('tr')
+    expect(extraSchemaRow).not.toBeNull()
+    await user.click(within(extraSchemaRow as HTMLElement).getByText('orders'))
+
+    expect(await screen.findByText('extra_order_id')).toBeInTheDocument()
+    expect(screen.queryByText('public_order_id')).not.toBeInTheDocument()
   })
 
   it('スキーマ未取込の場合、案内メッセージと一覧への戻り導線を表示する', async () => {

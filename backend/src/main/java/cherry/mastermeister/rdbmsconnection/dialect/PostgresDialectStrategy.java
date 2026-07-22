@@ -46,10 +46,14 @@ public class PostgresDialectStrategy implements RdbmsDialectStrategy {
     }
 
     @Override
-    public String buildJdbcUrl(String host, int port, String databaseName, String schemaName,
-                                String additionalParams) {
-        // schemaNameはURLに含めず、applySchemaSwitch()（SET search_path）で適用する
+    public String buildJdbcUrl(String host, int port, String databaseName, String additionalParams) {
         String base = "jdbc:postgresql://" + host + ":" + port + "/" + databaseName;
         return (additionalParams == null || additionalParams.isBlank()) ? base : base + "?" + additionalParams;
+    }
+
+    @Override
+    public boolean isSystemSchema(String schemaName) {
+        return schemaName.equals("information_schema") || schemaName.equals("pg_catalog")
+                || schemaName.startsWith("pg_toast") || schemaName.startsWith("pg_temp");
     }
 }

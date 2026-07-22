@@ -25,6 +25,11 @@ import type { SchemaColumnDetail, SchemaSnapshotDetail, SchemaTableDetail } from
 import { ApiError } from '../api/http'
 import styles from './SchemaDetailPage.module.css'
 
+// 複数スキーマにまたがり同名テーブルが存在しうるため、スキーマ名を含めた複合キーで一意に識別する
+function tableKey(table: SchemaTableDetail): string {
+  return `${table.schemaName}.${table.tableName}`
+}
+
 // frontend-components.md §2。取込済みのテーブル・カラム・制約情報を確認する読取専用画面。
 export function SchemaDetailPage() {
   const { t } = useTranslation()
@@ -35,7 +40,7 @@ export function SchemaDetailPage() {
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [notImported, setNotImported] = useState(false)
-  const [selectedTableName, setSelectedTableName] = useState<string | null>(null)
+  const [selectedTableKey, setSelectedTableKey] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -44,7 +49,7 @@ export function SchemaDetailPage() {
     try {
       const result = await getSchema(connectionId)
       setSchema(result)
-      setSelectedTableName(result.tables[0]?.tableName ?? null)
+      setSelectedTableKey(result.tables[0] ? tableKey(result.tables[0]) : null)
     } catch (error) {
       if (error instanceof ApiError && error.code === 'SCHEMA_NOT_IMPORTED') {
         setNotImported(true)
@@ -61,11 +66,12 @@ export function SchemaDetailPage() {
   }, [load])
 
   const selectedTable = useMemo<SchemaTableDetail | null>(
-    () => schema?.tables.find((table) => table.tableName === selectedTableName) ?? null,
-    [schema, selectedTableName],
+    () => schema?.tables.find((table) => tableKey(table) === selectedTableKey) ?? null,
+    [schema, selectedTableKey],
   )
 
   const tableColumns: readonly TableColumn<SchemaTableDetail>[] = [
+    { key: 'schemaName', header: t('connections.schemaName'), render: (table) => table.schemaName },
     { key: 'tableName', header: t('connections.tableName'), render: (table) => table.tableName },
     {
       key: 'tableType',
@@ -128,16 +134,16 @@ export function SchemaDetailPage() {
           <DataTable
             columns={tableColumns}
             rows={schema.tables}
-            rowKey={(table) => table.tableName}
-            selectedKeys={selectedTableName ? new Set([selectedTableName]) : undefined}
-            onRowClick={(table) => setSelectedTableName(table.tableName)}
+            rowKey={(table) => tableKey(table)}
+            selectedKeys={selectedTableKey ? new Set([selectedTableKey]) : undefined}
+            onRowClick={(table) => setSelectedTableKey(tableKey(table))}
             emptyState={<EmptyState message={t('state.empty')} />}
           />
           {selectedTable ? (
             <>
               <h2 className={styles.sectionTitle}>{t('connections.columnListCaption')}</h2>
               <DataTable
-                key={selectedTable.tableName}
+                key={tableKey(selectedTable)}
                 columns={columnColumns}
                 rows={selectedTable.columns}
                 rowKey={(c) => c.columnName}

@@ -59,7 +59,6 @@ interface FormValues {
   host: string
   port: string
   databaseName: string
-  schemaName: string
   username: string
   password: string
   additionalParams: string
@@ -71,14 +70,10 @@ const EMPTY_FORM: FormValues = {
   host: '',
   port: '',
   databaseName: '',
-  schemaName: '',
   username: '',
   password: '',
   additionalParams: '',
 }
-
-// スキーマ(schemaName)を持つ方言のみ入力欄を表示する（frontend-components.md §1.1、レビュー指摘によりH2も対象）
-const DIALECTS_WITH_SCHEMA: DbType[] = ['POSTGRESQL', 'H2']
 
 function toInput(values: FormValues): RdbmsConnectionInput {
   return {
@@ -87,7 +82,6 @@ function toInput(values: FormValues): RdbmsConnectionInput {
     host: values.host,
     port: Number(values.port),
     databaseName: values.databaseName,
-    schemaName: values.schemaName === '' ? null : values.schemaName,
     username: values.username,
     password: values.password === '' ? undefined : values.password,
     additionalParams: values.additionalParams === '' ? null : values.additionalParams,
@@ -160,7 +154,6 @@ export function RdbmsConnectionListPage() {
         host: connection.host,
         port: String(connection.port),
         databaseName: connection.databaseName,
-        schemaName: connection.schemaName ?? '',
         username: connection.username,
         password: '',
         additionalParams: connection.additionalParams ?? '',
@@ -364,7 +357,6 @@ export function RdbmsConnectionListPage() {
     formModal?.values.dbType === 'H2'
       ? t('connections.additionalParamsHelpH2')
       : t('connections.additionalParamsHelpDefault')
-  const showSchemaField = formModal ? DIALECTS_WITH_SCHEMA.includes(formModal.values.dbType) : false
 
   return (
     <AuthenticatedLayout activeNavKey="connections">
@@ -446,15 +438,6 @@ export function RdbmsConnectionListPage() {
                 data-testid="connections-form-database-name"
               />
             </FormField>
-            {showSchemaField ? (
-              <FormField label={t('connections.schemaName')}>
-                <TextInput
-                  value={formModal.values.schemaName}
-                  onChange={(event) => onFormFieldChange('schemaName', event.target.value)}
-                  data-testid="connections-form-schema-name"
-                />
-              </FormField>
-            ) : null}
             <FormField label={t('connections.username')} required>
               <TextInput
                 value={formModal.values.username}
