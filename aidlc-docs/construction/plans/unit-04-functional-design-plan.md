@@ -29,7 +29,7 @@
 - [x] Step F追記4: 権限設定APIについて、ユーザー提案「画面パスを/permissions/{id}、APIを/api/admin/permissions/{id}/*とする」を採用。UNIT-03の`RdbmsConnectionController`配下に追加する案（追記3時点の暫定案）から変更し、`AccessPermission`関連機能（COMP-10〜12）はUNIT-04独自のドメイン（`accesscontrol`パッケージ）でありUNIT-03のモジュール境界と異なること、グループも同様にトップレベル独立リソースとしたこととの一貫性を理由に、権限設定も画面`/permissions/{connectionId}`・API`/api/admin/permissions/{connectionId}/*`・新規`PermissionController`とした
 - [x] Step F追記5: レビュー指摘「パッケージ名もpermissionかな」を受け、`accesscontrol`という機能名の単一パッケージ（`unit-of-work.md`でINCEPTION時点に仮決めしたもの）を撤回。既存の単数形ドメイン名規約と、UNIT-02が`registration`/`auth`の2パッケージに分割した前例に倣い、`group`（Group, GroupMembership, GroupController）・`permission`（AccessPermission, AccessControlService, EffectivePermissionResolver, PermissionYamlService, PermissionController）の2パッケージに分割する方針に訂正。`unit-of-work.md`のユニット→パッケージ対応表にも訂正注記を追加
 - [x] Step F追記6: レビュー指摘「DELETE /api/admin/permissions/{connectionId}で権限設定を解除する範囲は？」を受け、`connectionId`のみでは対象の`AccessPermission`行（プリンシパル×スキーマ×テーブル×カラム）を特定できない欠陥を確認。DELETEはボディを持たない設計とし、対象キー（`principalType`, `principalId`, `schemaName`, `tableName`（任意）, `columnName`（任意））をクエリパラメータで指定する仕様に修正
-- [ ] Step G: 完了メッセージを提示し、承認を得る
+- [x] Step G: 完了メッセージを提示し、承認を得る（承認 2026-07-23T07:40:00Z）
 
 ## 質問
 

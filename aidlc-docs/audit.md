@@ -1399,3 +1399,11 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design、DELETE API仕様の不備修正
 
 ---
+
+## UNIT-04 Functional Design - 承認
+**Timestamp**: 2026-07-23T07:40:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-04（アクセス制御）のFunctional Designを承認として記録（複数回のレビュー指摘: UNIT-03の1接続=1スキーマ前提の遡及修正、ナビパス/access-control→/groups、権限設定APIをRdbmsConnectionController配下からトップレベル独立リソース/permissions/{connectionId}へ変更、パッケージ構成をgroup/permissionの2分割、DELETE APIの対象特定不備修正、を反映した最終状態で完了）。aidlc-state.mdを更新し、NFR Requirementsへ進む。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design完了、NFR Requirements着手準備
+
+---

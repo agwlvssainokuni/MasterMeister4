@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - Functional Design（レビュー指摘によりUNIT-03を遡及修正（1接続=1スキーマ前提を撤回）、UNIT-04アーティファクトも3階層構造に修正済み。さらにナビ項目「アクセス制御」を「グループ管理」（`/groups`）に訂正済み。完了メッセージ再提示・承認待ち）
-- **Next Stage**: 承認後、NFR Requirementsへ
+- **Current Stage**: UNIT-04 アクセス制御 - NFR Requirements（着手）
+- **Next Stage**: NFR Requirements計画・質問提示
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -62,8 +62,8 @@
 - [x] Code Generation — COMPLETED（承認 2026-07-21T00:15:00Z。全18セクション完了。承認前レビュー対応: CORS設定削除、EmailNotificationServiceの責務分離とMailDeliveryService新設・Fromアドレス欠落修正、devenv整備、frontend.base-urlデフォルト修正）
 
 ## Current Unit - Stage Progress (UNIT-04)
-- [ ] Functional Design — EXECUTE、アーティファクト作成完了・承認待ち
-- [ ] NFR Requirements — EXECUTE予定
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-23T07:40:00Z。business-logic-model.md, domain-entities.md, business-rules.md, frontend-components.mdを作成。複数回のレビュー指摘を反映: UNIT-03の1接続=1スキーマ前提の遡及修正（複数スキーマ対応）、ナビパス/access-control→/groups、権限設定APIをトップレベル独立リソース/permissions/{connectionId}へ変更、パッケージ構成をgroup/permissionの2分割（unit-of-work.mdへの遡及修正含む）、DELETE APIの対象特定不備修正）
+- [ ] NFR Requirements — EXECUTE中
 - [ ] NFR Design — EXECUTE予定
 - [ ] Infrastructure Design — SKIP（承認 2026-07-22T06:15:00Z。新規インフラ不要）
 - [ ] Code Generation — 未着手
