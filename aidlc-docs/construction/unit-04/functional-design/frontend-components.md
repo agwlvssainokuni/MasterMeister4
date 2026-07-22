@@ -2,7 +2,9 @@
 
 UNIT-02/UNIT-03で実際に確立した規約（`frontend/src/pages/`・`frontend/src/api/`のフラット構成）に基づき本ユニットも実装する。
 
-**ナビゲーション項目の訂正（レビュー指摘の反映）**: UNIT-01では本ユニット向けのナビ項目を「アクセス制御」（`key: 'accessControl'`, `path: '/access-control'`）として仮予約していたが、`/users`→`UserManagementPage`・`/connections`→`RdbmsConnectionListPage`という既存の「ナビ項目＝管理対象エンティティ名のパスに直接対応する単一画面」という規約に照らすと、このナビ項目が実際に遷移する先はグループ管理画面のみ（権限設定本体は`/connections/{id}/permissions`から独立して到達する）であるため、「アクセス制御」という機能名ではなく管理対象エンティティ「グループ」に合わせたパス・表示名に訂正する。`design-system/components/navigation.ts`の該当エントリを`key: 'groups'`, `labelKey: 'nav.groups'`, `path: '/groups'`に変更し（内部識別子`key`も併せて訂正）、i18nリソース（`design-system.json`の`nav.accessControl`→`nav.groups`＝「グループ管理」、`common.json`の`home.card.accessControl`→`home.card.groups`）を更新した。
+**ナビゲーション項目の訂正（レビュー指摘の反映）**: UNIT-01では本ユニット向けのナビ項目を「アクセス制御」（`key: 'accessControl'`, `path: '/access-control'`）として仮予約していたが、`/users`→`UserManagementPage`・`/connections`→`RdbmsConnectionListPage`という既存の「ナビ項目＝管理対象エンティティ名のパスに直接対応する単一画面」という規約に照らすと、このナビ項目が実際に遷移する先はグループ管理画面のみ（権限設定本体は接続一覧画面経由の`/permissions/{connectionId}`から独立して到達する）であるため、「アクセス制御」という機能名ではなく管理対象エンティティ「グループ」に合わせたパス・表示名に訂正する。`design-system/components/navigation.ts`の該当エントリを`key: 'groups'`, `labelKey: 'nav.groups'`, `path: '/groups'`に変更し（内部識別子`key`も併せて訂正）、i18nリソース（`design-system.json`の`nav.accessControl`→`nav.groups`＝「グループ管理」、`common.json`の`home.card.accessControl`→`home.card.groups`）を更新した。
+
+**バックエンドAPIパス・画面パスの訂正（レビュー指摘の反映）**: 同様の理由で、バックエンドAPIパスも既存の確立された規約（`/api/admin/users`＝UNIT-02、`/api/admin/rdbms-connections`＝UNIT-03。いずれも`/api/admin/{管理対象エンティティ名の複数形}`で、機能・エピック名は含まない）に合わせて訂正する。グループ関連は`/api/admin/groups`（新規`GroupController`）とする。権限設定については、当初UNIT-03の`RdbmsConnectionController`配下（`/api/admin/rdbms-connections/{id}/permissions`）へ追加する案も検討したが、`AccessPermission`関連の機能（COMP-10 AccessControlService, COMP-11 EffectivePermissionResolver, COMP-12 PermissionYamlService）はUNIT-04独自のドメイン（`accesscontrol`パッケージ）であり、UNIT-03の`RdbmsConnectionService`/`SchemaIntrospectionService`とはモジュール境界が異なる（`SchemaSnapshot`が接続に完全従属し接続削除でカスケード消滅するのに対し、`AccessPermission`はより独立したドメイン概念）。またグループもトップレベルの独立リソース（`/groups`）としたこととの一貫性も踏まえ、権限設定も同様にトップレベルの独立リソースとする（画面パス`/permissions/{connectionId}`、API`/api/admin/permissions/{connectionId}/*`、新規`PermissionController`、いずれも`accesscontrol`パッケージ配下）。あわせて、フロントエンドのコンポーネント名も`AccessControlGroupsPage`から`GroupManagementPage`に改める（`UserManagementPage`との命名一貫性のため）。
 
 **設計方針（チャットでの議論により確定）**: 接続の選択は権限設定画面への遷移前（接続一覧画面からの導線）で完了させ、権限設定画面内でのDB接続切替は行わない（UNIT-03の`/connections/{id}/schema`と同じルーティング方針）。権限設定画面の基本構造は「プリンシパル主体（ツリー型）」を採用する: プリンシパル（ユーザ／グループ）を選択すると、リソース階層（スキーマ／テーブル／カラム。1接続内に複数スキーマが存在しうる前提、UNIT-03 Functional Design訂正参照）のツリーが展開され、各ノードで権限を直接編集する。
 
@@ -14,7 +16,7 @@ UNIT-02/UNIT-03で実際に確立した規約（`frontend/src/pages/`・`fronten
 
 ### コンポーネント構造
 ```
-AccessControlGroupsPage (AppShell)
+GroupManagementPage (AppShell)
 └ PageHeader（タイトル「グループ管理」、右上 Button「グループを作成」）
   ├ DataTable（列: グループ名, 所属ユーザ数, アクション）
   │  └ 行ごとのアクション
@@ -43,17 +45,17 @@ AccessControlGroupsPage (AppShell)
 - `confirmDeleteTarget: string | null`（対象groupId）
 
 ### API連携
-- `GET /api/admin/access-control/groups` — 一覧取得（所属ユーザ数を含む）
-- `POST /api/admin/access-control/groups` — 作成（BR-ACCESS-12、`GROUP_CREATED`）
-- `PUT /api/admin/access-control/groups/{id}` — 改名（`GROUP_RENAMED`）
-- `DELETE /api/admin/access-control/groups/{id}` — 削除（確認ダイアログ経由。BR-ACCESS-11、`GROUP_DELETED`）
-- `GET /api/admin/access-control/groups/{id}/members` — 所属ユーザ一覧取得
-- `POST /api/admin/access-control/groups/{id}/members` — ユーザ追加（`GROUP_MEMBER_ADDED`）
-- `DELETE /api/admin/access-control/groups/{id}/members/{userId}` — ユーザ削除（`GROUP_MEMBER_REMOVED`）
+- `GET /api/admin/groups` — 一覧取得（所属ユーザ数を含む）
+- `POST /api/admin/groups` — 作成（BR-ACCESS-12、`GROUP_CREATED`）
+- `PUT /api/admin/groups/{id}` — 改名（`GROUP_RENAMED`）
+- `DELETE /api/admin/groups/{id}` — 削除（確認ダイアログ経由。BR-ACCESS-11、`GROUP_DELETED`）
+- `GET /api/admin/groups/{id}/members` — 所属ユーザ一覧取得
+- `POST /api/admin/groups/{id}/members` — ユーザ追加（`GROUP_MEMBER_ADDED`）
+- `DELETE /api/admin/groups/{id}/members/{userId}` — ユーザ削除（`GROUP_MEMBER_REMOVED`）
 
 ---
 
-## 2. 権限設定画面（`/connections/{id}/permissions`、`AppShell`）
+## 2. 権限設定画面（`/permissions/{connectionId}`、`AppShell`）
 
 ### コンポーネント構造
 ```
@@ -91,7 +93,7 @@ AccessPermissionTreePage (AppShell)
 接続がスキーマ未取込（UNIT-03の`SCHEMA_NOT_IMPORTED`）の場合、ツリー・プリンシパル選択部を表示せず、UNIT-03の`SchemaDetailPage`と同様の案内メッセージ（EmptyState＋「接続一覧へ戻る」導線）を表示する。
 
 ### State
-- `connectionId`（ルートパラメータ）
+- `connectionId`（ルートパラメータ、`/permissions/{connectionId}`）
 - `schema: SchemaSnapshotDetail | null`（UNIT-03のスキーマ取得APIを流用し、ツリー構造の元データとする）
 - `selectedPrincipal: { type: 'USER' | 'GROUP', id: string } | null`
 - `permissions: AccessPermissionEntry[]`（選択中プリンシパルの明示設定一覧。ツリー描画時、各ノードにオーバーレイして「未設定」か否かを判定する）
@@ -101,11 +103,11 @@ AccessPermissionTreePage (AppShell)
 
 ### API連携
 - `GET /api/admin/rdbms-connections/{id}/schema` — ツリー構造（テーブル・カラム一覧）取得（UNIT-03既存API流用）
-- `GET /api/admin/access-control/connections/{id}/permissions?principalType=&principalId=` — 選択中プリンシパルの明示設定一覧取得
-- `PUT /api/admin/access-control/connections/{id}/permissions` — 権限設定（アップサート。BR-ACCESS-01、`PERMISSION_CHANGED`）
-- `DELETE /api/admin/access-control/connections/{id}/permissions` — 権限設定の解除（未設定に戻す。`PERMISSION_CHANGED`）
-- `GET /api/admin/access-control/connections/{id}/permissions/export` — YAMLエクスポート（`PERMISSION_YAML_EXPORTED`）
-- `POST /api/admin/access-control/connections/{id}/permissions/import` — YAMLインポート（`PERMISSION_YAML_IMPORTED`）
+- `GET /api/admin/permissions/{connectionId}?principalType=&principalId=` — 選択中プリンシパルの明示設定一覧取得（新規`PermissionController`、`accesscontrol`パッケージ）
+- `PUT /api/admin/permissions/{connectionId}` — 権限設定（アップサート。BR-ACCESS-01、`PERMISSION_CHANGED`）
+- `DELETE /api/admin/permissions/{connectionId}` — 権限設定の解除（未設定に戻す。`PERMISSION_CHANGED`）
+- `GET /api/admin/permissions/{connectionId}/export` — YAMLエクスポート（`PERMISSION_YAML_EXPORTED`）
+- `POST /api/admin/permissions/{connectionId}/import` — YAMLインポート（`PERMISSION_YAML_IMPORTED`）
 
 **注記**: 上記エンドポイントのパス・リクエスト形式は設計時点の想定であり、確定的な契約はCode Generation段階で定める。
 
@@ -113,7 +115,7 @@ AccessPermissionTreePage (AppShell)
 
 ## 3. RDBMS接続一覧画面への導線追加
 
-UNIT-03で実装済みの`RdbmsConnectionListPage`（`/connections`）の行ごとのアクションに、「権限設定」Link（§2の画面へ遷移、`/connections/{id}/permissions`）を追加する。「スキーマ詳細」Linkと同様、スキーマ取込済みの場合のみ活性化する（未取込の場合も遷移自体は可能とし、遷移先でQ10=Aの案内を表示する構成でもよい。具体的な活性/非活性の挙動はCode Generationで確定する）。
+UNIT-03で実装済みの`RdbmsConnectionListPage`（`/connections`）の行ごとのアクションに、「権限設定」Link（§2の画面へ遷移、`/permissions/{connectionId}`）を追加する。「スキーマ詳細」Linkと同様、スキーマ取込済みの場合のみ活性化する（未取込の場合も遷移自体は可能とし、遷移先でQ10=Aの案内を表示する構成でもよい。具体的な活性/非活性の挙動はCode Generationで確定する）。
 
 ---
 

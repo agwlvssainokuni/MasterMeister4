@@ -1367,3 +1367,19 @@
 **Context**: CONSTRUCTION - UNIT-04 Functional Design、ナビゲーション訂正
 
 ---
+
+## UNIT-04 Functional Design - グループ管理APIパスの訂正
+**Timestamp**: 2026-07-23T07:15:00Z
+**User Input**: "グループ管理のAPIパスも見直し。"
+**AI Response**: "ナビパス訂正と同じ理由で、バックエンドAPIパスも既存の確立された規約（`/api/admin/users`＝UNIT-02、`/api/admin/rdbms-connections`＝UNIT-03、いずれも`/api/admin/{管理対象エンティティ名の複数形}`で機能・エピック名を含まない）に合わせて訂正。`frontend-components.md`のグループ関連API（`GET/POST /api/admin/access-control/groups`等）を`/api/admin/groups`に、権限設定API（`/api/admin/access-control/connections/{id}/permissions`等）を独立プレフィックスとせずUNIT-03で確立済みの`RdbmsConnectionController`配下`/api/admin/rdbms-connections/{id}/permissions`（既存の`/schema`・`/schema-refresh`・`/test`と同列）に統一。あわせてフロントエンドのコンポーネント名も`AccessControlGroupsPage`→`GroupManagementPage`に変更し`UserManagementPage`との命名一貫性を確保。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、APIパス訂正
+
+---
+
+## UNIT-04 Functional Design - 権限設定APIをトップレベル独立リソースに変更
+**Timestamp**: 2026-07-23T07:20:00Z
+**User Input**: "権限設定の方は画面のパスを/permissions/{id}とし、APIを/api/admin/permissions/{id}/*とするのはどうだろうか？" ／ "OK"
+**AI Response**: "提案を採用。`AccessPermission`関連機能（COMP-10 AccessControlService, COMP-11 EffectivePermissionResolver, COMP-12 PermissionYamlService）はUNIT-04独自のドメイン（`accesscontrol`パッケージ）であり、UNIT-03の`RdbmsConnectionService`/`SchemaIntrospectionService`とモジュール境界が異なる（`SchemaSnapshot`が接続に完全従属するのに対し`AccessPermission`はより独立したドメイン概念）こと、グループも同様にトップレベル独立リソース（`/groups`）としたこととの一貫性を理由に妥当と判断。frontend-components.mdを、画面パス`/connections/{id}/permissions`→`/permissions/{connectionId}`、API`/api/admin/rdbms-connections/{id}/permissions`（直前の暫定案）→`/api/admin/permissions/{connectionId}/*`（新規`PermissionController`、`accesscontrol`パッケージ）に修正。"
+**Context**: CONSTRUCTION - UNIT-04 Functional Design、権限設定APIパス最終決定
+
+---
