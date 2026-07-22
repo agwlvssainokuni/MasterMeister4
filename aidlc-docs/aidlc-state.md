@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - NFR Requirements（アーティファクト作成完了、完了メッセージ提示・承認待ち）
-- **Next Stage**: 承認後、NFR Designへ
+- **Current Stage**: UNIT-04 アクセス制御 - NFR Design（着手）
+- **Next Stage**: NFR Design計画・質問提示
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -63,8 +63,8 @@
 
 ## Current Unit - Stage Progress (UNIT-04)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-23T07:40:00Z。business-logic-model.md, domain-entities.md, business-rules.md, frontend-components.mdを作成。複数回のレビュー指摘を反映: UNIT-03の1接続=1スキーマ前提の遡及修正（複数スキーマ対応）、ナビパス/access-control→/groups、権限設定APIをトップレベル独立リソース/permissions/{connectionId}へ変更、パッケージ構成をgroup/permissionの2分割（unit-of-work.mdへの遡及修正含む）、DELETE APIの対象特定不備修正）
-- [ ] NFR Requirements — EXECUTE、アーティファクト作成完了・承認待ち
-- [ ] NFR Design — EXECUTE予定
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-23T08:00:00Z。Caffeineキャッシュ（maximumSize=10,000, expireAfterWrite=30分）、Spring Cache抽象化、無効化は@CacheEvict(allEntries=true)によるキャッシュ全体クリア、EffectivePermissionResolverはUNIT-04時点でAPI非公開、jackson-dataformat-yaml流用、楽観的ロックなし、小〜中規模想定、Bean Validation、YAML importサイズ上限を決定）
+- [ ] NFR Design — EXECUTE中
 - [ ] Infrastructure Design — SKIP（承認 2026-07-22T06:15:00Z。新規インフラ不要）
 - [ ] Code Generation — 未着手
 
