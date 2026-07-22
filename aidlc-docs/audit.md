@@ -1415,3 +1415,19 @@
 **Context**: CONSTRUCTION - UNIT-04 NFR Requirements、計画提示・回答依頼
 
 ---
+
+## UNIT-04 NFR Requirements - 回答収集・Q3の技術的検証
+**Timestamp**: 2026-07-23T07:50:00Z
+**User Input**: "Q1=A, Q2=A, Q3=A(Spring Cache抽象化のアノテーションで表現できるか確認したい), Q4=A, Q5=B, Q6=A, Q7=A, Q8=A, Q9=A."
+**AI Response**: "8問はA/B回答として記録。Q3（キャッシュ無効化粒度＝接続ID単位）について、Spring Cacheの`Cache`インタフェースが「単一キー削除」と「全件クリア」のみを宣言的にサポートし、部分一致による接続ID単位の削除は`@CacheEvict`アノテーションだけでは表現できないことを検証・確認。3つの選択肢（1: 読み取りは@Cacheable・無効化は手続き的にCaffeineのasMap()を直接操作、2: キャッシュキー粒度を接続ID単位に再設計、3: 無効化をallEntries=trueによるキャッシュ全体クリアに変更）を提示し、ユーザーは3を選択（Q3の回答をAからC（Other、allEntries=true）に変更）。"
+**Context**: CONSTRUCTION - UNIT-04 NFR Requirements、Q3技術検証・回答確定
+
+---
+
+## UNIT-04 NFR Requirements - アーティファクト作成完了
+**Timestamp**: 2026-07-23T07:55:00Z
+**User Input**: (N/A - AI-initiated step、承認済み回答に基づくアーティファクト作成)
+**AI Response**: "nfr-requirements.md（Scalability/Availability/Performance/Reliability/Maintainability/Usability各カテゴリ、YAML importサイズ上限、Security Baseline該当ルール15件評価、PBT拡張）、tech-stack-decisions.md（Caffeineキャッシュ設定・Spring Cache抽象化・@CacheEvict(allEntries=true)による無効化・EffectivePermissionResolver非公開・jackson-dataformat-yaml流用・楽観的ロックなし・規模想定・Bean Validation・YAML importサイズ上限の9件の技術決定）を作成。"
+**Context**: CONSTRUCTION - UNIT-04 NFR Requirements、完了メッセージ提示・承認依頼
+
+---
