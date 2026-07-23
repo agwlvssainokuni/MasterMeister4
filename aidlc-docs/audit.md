@@ -1599,3 +1599,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Functional Design Part 1、追加質問Q15〜17提示・回答待ち
 
 ---
+
+## UNIT-05 マスタメンテナンス - Functional Design成果物作成完了
+**Timestamp**: 2026-07-24T09:30:00Z
+**User Input**: "推奨どおり。"
+**AI Response**: "追加質問Q15〜17をAI推奨（全問A）で確定。Q11（画面構成）はQ16の回答を反映し、接続選択→テーブル/ビュー一覧→レコード一覧の3画面構成に訂正。business-logic-model.md（アクセス可能接続/テーブル判定、絞込・SQL手入力の安全な取込、一括反映・オールオアナッシング、監査ログ、PBT対象プロパティ）、domain-entities.md（Q9=Aにより内部DB新規永続化なし、AccessibleConnection/AccessibleTable/RecordColumn/RecordFilterCondition/RawQueryCondition/RecordPage/BatchOperationRequest等の論理モデルとAuditLogEntry拡張）、business-rules.md（BR-MASTER-01〜14）、frontend-components.md（接続選択画面・テーブル/ビュー一覧画面・レコード一覧画面の3画面、新規API名前空間/api/master-data/*、masterdataパッケージ）を作成。requirements.md §6.1「大量データ取得（閾値デフォルト100件）」の要件をQ10の回答に統合し、監査ログは閾値超過時のみ記録する方式に精緻化した。"
+**Context**: CONSTRUCTION - UNIT-05 Functional Design Part、成果物作成完了・完了メッセージ提示前
+
+---
