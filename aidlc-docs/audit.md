@@ -1591,3 +1591,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Functional Design Part 1（計画）、質問提示・回答待ち
 
 ---
+
+## UNIT-05 マスタメンテナンス - Functional Design質問への回答・追加質問
+**Timestamp**: 2026-07-24T09:20:00Z
+**User Input**: "推奨どおり。"
+**AI Response**: "全14問をAI推奨（全問A）で確定。Q6の選択肢A文言に自己矛盾（「UPDATEのみ」と書きつつ括弧内でcreate/update/delete混在と説明）があったため、回答確定に合わせて『作成・更新・削除を1つのバッチに混在させ、行ごとに操作種別を指定』に整文。business-logic-model.md着手のため一般ユーザ向け『アクセス可能な接続』の取得経路を検討したところ、既存`/api/admin/rdbms-connections`が管理者専用でありQ11が接続選択済み前提だったことが判明。追加質問Q15〜17（一般ユーザ向け接続取得API方針、画面構成の3画面化、接続選択画面の表示項目）をunit-05-functional-design-plan.mdに追記し提示、回答待ち。"
+**Context**: CONSTRUCTION - UNIT-05 Functional Design Part 1、追加質問Q15〜17提示・回答待ち
+
+---
