@@ -153,6 +153,7 @@ erDiagram
         string tableName
         TableType tableType
         boolean creatable
+        boolean deletable
     }
     RECORD_COLUMN {
         string columnName

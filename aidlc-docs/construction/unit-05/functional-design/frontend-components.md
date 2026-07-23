@@ -78,6 +78,7 @@ MasterDataRecordListPage (AppShell)
 
 ### 3.2 絞込・SQL手入力の挙動
 - フィルタ条件の変更、SQL手入力の実行はいずれもレコード一覧の再取得をトリガーする（ページは1ページ目に戻す）
+- 構造化フィルタとSQL手入力のWHERE句は併用可能で、AND結合した条件で検索する（BR-MASTER-15）。ORDER BYはSQL手入力側の指定を優先する
 - SQL手入力が構文検証エラーで拒否された場合（BR-MASTER-04）、Alertでエラー内容を表示し、一覧は変更しない
 
 ### State

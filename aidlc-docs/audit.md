@@ -1615,3 +1615,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Functional Design承認前レビュー、deletableフィールド欠落の修正
 
 ---
+
+## UNIT-05 Functional Design - 追加レビュー（ER図のdeletable欠落・フィルタ併用可否）
+**Timestamp**: 2026-07-24T09:45:00Z
+**User Input**: "他に確認した方が良い事項は？" ／ AskUserQuestion回答: "構造化フィルタ（フィルタ条件行）とSQL手入力（WHERE/ORDER BY直接入力）は、同時に併用できますか？"="併用可（AND結合、推奨）"
+**AI Response**: "4ドキュメントを横断的に再点検し2件発見。(1) domain-entities.mdのMermaid ER図（ACCESSIBLE_TABLEブロック）が`creatable`のみで`deletable`が抜けていたため追加。(2) frontend-components.mdの絞込UIが構造化フィルタとSQL手入力を同一画面に併設しているが併用可否が未定義だったため質問。回答（併用可・AND結合）を反映し、business-logic-model.md §3.5（新設）、business-rules.md BR-MASTER-15（新設）、frontend-components.md §3.2を更新。ORDER BYはSQL手入力側優先というルールも明記した。"
+**Context**: CONSTRUCTION - UNIT-05 Functional Design承認前レビュー、ER図修正・フィルタ併用ルール新設
+
+---
