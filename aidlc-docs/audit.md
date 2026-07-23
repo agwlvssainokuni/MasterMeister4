@@ -1525,3 +1525,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 5.1〜5.6完了。GroupService（作成・改名・削除・所属追加削除・カスケード削除順序）、PermissionService（upsert・冪等削除）、EffectivePermissionResolver（個別優先→グループ合成のBR-ACCESS-04〜08判定ロジック、UNIT-03のSchemaIntrospectionService.getSchema()経由での主キー列取得）、PermissionYamlService（検証/DB反映フェーズ分離のYAML入出力）を作成。全mutationメソッドに@CacheEvict、実効権限判定3メソッドに@Cacheableを付与。新規例外5種（GroupNotFoundException等）とエラーメッセージリソースを追加。UNIT-03のrefreshSchema()へ@CacheEvict追加、関連ドキュメントに訂正注記追加。Spring 7でHttpStatus.UNPROCESSABLE_ENTITYが非推奨と判明しUNPROCESSABLE_CONTENTへ置換。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 5完了
+
+---
+
+## UNIT-04 Code Generation - Step 6〜7完了（Business Logic Testing）
+**Timestamp**: 2026-07-23T09:55:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 6.1〜6.6、7.1完了。GroupServiceTest（11）、PermissionServiceTest（5）、EffectivePermissionResolverTest（10、BR-ACCESS-04の確認済み5ケース含む）、PermissionYamlServiceTest（6）をMockitoで作成。テスト作成時にAccessPermissionのコンストラクタで補助権限強制falseが未適用のバグを発見・修正。EffectivePermissionResolverPropertyTest（5プロパティ）・PermissionYamlServicePropertyTest（2プロパティ、簡易インメモリリポジトリによる実際のexport/import往復検証）をjqwikで作成（本ユニットが初のプロパティテスト実際適用）。全プロパティ・全テスト成功。バックエンド全体の回帰テスト197件も全件成功を確認。business-logic-summary.mdを作成。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 6〜7完了

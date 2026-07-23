@@ -90,9 +90,10 @@ public class AccessPermission {
         this.schemaName = schemaName;
         this.tableNameRaw = toSentinel(tableName);
         this.columnNameRaw = toSentinel(columnName);
+        boolean isColumnLevel = columnName != null;
         this.primaryPermission = primaryPermission;
-        this.createPermission = createPermission;
-        this.deletePermission = deletePermission;
+        this.createPermission = isColumnLevel ? false : createPermission;
+        this.deletePermission = isColumnLevel ? false : deletePermission;
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
     }

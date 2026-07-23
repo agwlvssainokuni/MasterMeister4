@@ -56,16 +56,16 @@
 
 ### 6. Business Logic Unit Testing
 
-- [ ] Step 6.1: `GroupServiceTest`を作成する（Mockito。作成・改名・削除時のカスケード順序、重複名エラー、所属追加・削除）
-- [ ] Step 6.2: `PermissionServiceTest`を作成する（upsert・削除、`columnName`設定時の補助権限強制`false`）
-- [ ] Step 6.3: `EffectivePermissionResolverTest`を作成する（BR-ACCESS-04の確認済み具体例5ケースをexample-basedテストで再現、`canCreate`/`canDelete`の境界値）
-- [ ] Step 6.4: `EffectivePermissionResolverPropertyTest`をjqwikで作成する（business-logic-model.md §5.1: 階層優先の不変条件、個別設定優先の不変条件、グループ合成の単調性、作成可否・削除可否判定の同値性）
-- [ ] Step 6.5: `PermissionYamlServiceTest`を作成する（正常系のエクスポート/インポート、プリンシパル未解決・重複エントリでの全体拒否、部分適用が起きないことの確認）
-- [ ] Step 6.6: `PermissionYamlServicePropertyTest`をjqwikで作成する（business-logic-model.md §5.2: ラウンドトリップ特性、重複拒否の原子性）
+- [x] Step 6.1: `GroupServiceTest`を作成する（Mockito。作成・改名・削除時のカスケード順序、重複名エラー、所属追加・削除、所属解除の冪等性）— 11テスト成功
+- [x] Step 6.2: `PermissionServiceTest`を作成する（upsert・削除、`columnName`設定時の補助権限強制`false`）— 実装時に`AccessPermission`のコンストラクタでもカラム階層時の補助権限強制falseが未適用というバグを発見・修正（`updatePermission()`のみ適用されていた）。5テスト成功
+- [x] Step 6.3: `EffectivePermissionResolverTest`を作成する（BR-ACCESS-04の確認済み具体例5ケースをexample-basedテストで再現、`canCreate`/`canDelete`の境界値）— 10テスト成功
+- [x] Step 6.4: `EffectivePermissionResolverPropertyTest`をjqwikで作成する（business-logic-model.md §5.1: 階層優先の不変条件、個別設定優先の不変条件、グループ合成の単調性、作成可否・削除可否判定の同値性）— 本ユニットが実際のjqwikプロパティテスト初適用。5プロパティ全件成功
+- [x] Step 6.5: `PermissionYamlServiceTest`を作成する（正常系のエクスポート/インポート、プリンシパル未解決・重複エントリでの全体拒否、部分適用が起きないことの確認）— 6テスト成功
+- [x] Step 6.6: `PermissionYamlServicePropertyTest`をjqwikで作成する（business-logic-model.md §5.2: ラウンドトリップ特性、重複拒否の原子性）— Mockitoで簡易インメモリリポジトリを構築し実際のexport→import→export往復を検証。2プロパティ全件成功
 
 ### 7. Business Logic Summary
 
-- [ ] Step 7.1: `aidlc-docs/construction/unit-04/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、PBTプロパティ実装内容、テスト結果）
+- [x] Step 7.1: `aidlc-docs/construction/unit-04/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、PBTプロパティ実装内容、テスト結果）
 
 ### 8. API Layer Generation
 
