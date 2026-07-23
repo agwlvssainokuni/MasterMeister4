@@ -32,7 +32,7 @@
 
 **理由**: 権限変更・グループ変更の頻度は低い（Q7の前提規模: 社内ツール、管理者による低頻度の設定変更）ため、無効化範囲が全接続・全ユーザに及んでも実用上の影響は小さいと判断する。
 
-**適用箇所**: `AccessControlService.setPermission()`/グループ作成・改名・削除・所属追加・削除の各メソッド、`SchemaIntrospectionService.refreshSchema()`（UNIT-03、スキーマ再取込時）に`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を付与する。
+**適用箇所**: ~~`AccessControlService`~~ 訂正（UNIT-04 NFR Designにて）: `PermissionService.setPermission()`/グループ作成・改名・削除・所属追加・削除の各メソッド、`SchemaIntrospectionService.refreshSchema()`（UNIT-03、スキーマ再取込時）に`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を付与する。
 
 ---
 

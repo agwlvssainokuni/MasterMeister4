@@ -26,7 +26,7 @@ requirements.mdにHA・DR要件の記載はない。既存方針（NFR-2.x）と
 
 - **NFR-04-06**: グループ作成・権限設定のバリデーションはBean Validation（`jakarta.validation`）で実装し、UNIT-02/03と同じ方式に揃える（Q8=A）。YAML importの内容検証（構造・重複エントリ・プリンシパル解決）はBean Validationでは表現しきれないため、サービス層で個別に実装する
 - **NFR-04-07**: テストフレームワークはNFR-9.1・NFR-5.2のとおりJUnit5 + Mockito + jqwikを踏襲する。本ユニットはbusiness-logic-model.md §5でPBT対象プロパティを識別済み（権限判定・合成ロジック、YAML入出力のラウンドトリップ）
-- **NFR-04-08**: バックエンドパッケージ構成は`group`（Group, GroupMembership, GroupController）・`permission`（AccessPermission, AccessControlService, EffectivePermissionResolver, PermissionYamlService, PermissionController）の2パッケージに分割する（frontend-components.mdでの訂正、既存決定）
+- **NFR-04-08**: バックエンドパッケージ構成は`group`（Group, GroupMembership, GroupController）・`permission`（AccessPermission, ~~AccessControlService~~ 訂正（UNIT-04 NFR Designにて）: PermissionService, EffectivePermissionResolver, PermissionYamlService, PermissionController）の2パッケージに分割する（frontend-components.mdでの訂正、既存決定）
 
 ## 6. Usability — N/A
 

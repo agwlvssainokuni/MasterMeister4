@@ -8,6 +8,7 @@ nfr-requirements.md／tech-stack-decisions.mdの決定事項（Caffeineキャッ
 - [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 全問A（推奨通り）、曖昧な回答なし
 - [x] Step C: `nfr-design-patterns.md`（レジリエンス・パフォーマンス・セキュリティの設計パターン）を作成する
 - [x] Step D: `logical-components.md`（新設する論理コンポーネント、データ設計上の注意点等）を作成する
+- [x] Step D追記: レビュー指摘「AccessControlServiceよりもPermissionServiceかな」を受け、`permission`パッケージ内のクラス名を`AccessControlService`→`PermissionService`に訂正（`GroupService`/`group`パッケージとの命名一貫性のため）。COMP-10のグループ管理責務は`group`パッケージ分割時点で既に`GroupService`へ移っており、`PermissionService`は権限設定CRUDのみを担う。INCEPTION Application Design（components.md, component-methods.md, services.md, component-dependency.md, application-design.md）、UNIT-04 Functional Design（business-logic-model.md, frontend-components.md）、UNIT-04 NFR Requirements（nfr-requirements.md, tech-stack-decisions.md）にも取消線+訂正注記で反映
 - [ ] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
@@ -39,7 +40,7 @@ C) Other（[Answer]: の後に内容を記述）
 ### Question 3（Performance Patterns）
 Caffeineキャッシュ（`effectivePermission`、`@CacheEvict(allEntries=true)`）の無効化呼び出し箇所は？
 
-A) 各mutationメソッド（`AccessControlService`の権限設定・解除、`GroupService`のグループ作成・改名・削除・所属追加・所属削除、`PermissionYamlService.importFromYaml`、UNIT-03の`SchemaIntrospectionService.refreshSchema`）それぞれに個別に`@CacheEvict`アノテーションを付与する
+A) 各mutationメソッド（`PermissionService`の権限設定・解除、`GroupService`のグループ作成・改名・削除・所属追加・所属削除、`PermissionYamlService.importFromYaml`、UNIT-03の`SchemaIntrospectionService.refreshSchema`）それぞれに個別に`@CacheEvict`アノテーションを付与する
 
 B) 共通の無効化用コンポーネントを新設し、各所から明示的に呼び出す（呼び出し漏れを防ぎやすいが、間接的になる）
 

@@ -1455,3 +1455,11 @@
 **Context**: CONSTRUCTION - UNIT-04 NFR Design、完了メッセージ提示・承認依頼
 
 ---
+
+## UNIT-04 NFR Design - レビュー指摘対応（PermissionServiceへの改称）
+**Timestamp**: 2026-07-23T08:25:00Z
+**User Input**: "AccessControlServiceよりもPermissionServiceかな。"
+**AI Response**: "`group`パッケージの`GroupService`との命名一貫性の観点で妥当と判断し採用。`permission`パッケージ内の`AccessControlService`を`PermissionService`に改称。あわせて、`group`パッケージ分割時点でCOMP-10のグループ管理責務は既に`GroupService`へ移っており、`AccessControlService`という名称は権限設定CRUDのみを担うのに実態と乖離していたため、この機会に整合させた。作業中、INCEPTION Application Design時点の`EffectivePermissionResolver.invalidateCache()`という明示的呼び出し設計が、UNIT-04 NFR Designで確定した`@CacheEvict(allEntries=true)`宣言的アノテーション方式と矛盾している点も発見し、あわせて訂正注記を追加。反映範囲: 現行（未承認）のunit-04/nfr-design/{logical-components.md, nfr-design-patterns.md}・unit-04-nfr-design-plan.mdは直接修正。承認済みのUNIT-04 Functional Design（business-logic-model.md, frontend-components.md）・UNIT-04 NFR Requirements（nfr-requirements.md, tech-stack-decisions.md）・INCEPTION Application Design（components.md, component-methods.md, services.md, component-dependency.md, application-design.md）は取消線+訂正注記パターンで反映。"
+**Context**: CONSTRUCTION - UNIT-04 NFR Design、完了メッセージ提示前のレビュー指摘対応
+
+---

@@ -26,7 +26,7 @@
 
 ### 2.1 Caffeineキャッシュの無効化実装（Q3=A、Q8=A、BR-ACCESS-08）
 - 以下の各mutationメソッドに`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を個別に付与する（共通コンポーネントは介さない、宣言的アノテーションのみで完結させる）:
-  - `AccessControlService.setPermission()` / 権限設定の解除メソッド
+  - `PermissionService.setPermission()` / 権限設定の解除メソッド
   - `GroupService`の`createGroup()` / `renameGroup()` / `deleteGroup()` / `addUserToGroup()` / `removeUserFromGroup()`
   - `PermissionYamlService.importFromYaml()`
   - UNIT-03の`SchemaIntrospectionService.refreshSchema()`（Q8=A、UNIT-03完了後の機能追加としてUNIT-03側のクラスに変更を加える。既存の取消線+訂正注記パターンに従い、UNIT-03のnfr-design/code関連ドキュメントに訂正注記を追加する）

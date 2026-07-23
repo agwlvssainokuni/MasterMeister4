@@ -63,9 +63,10 @@
 
 ## 3. アクセス制御ドメイン
 
-### COMP-10: AccessControlService
+### COMP-10: ~~AccessControlService~~
+**訂正（UNIT-04 Functional Design／NFR Designにて）**: UNIT-02の`registration`/`auth`分割前例に倣い、`group`パッケージの`GroupService`（グループ管理責務）と`permission`パッケージの`PermissionService`（主権限/補助権限CRUD責務、`GroupService`との命名一貫性のため`AccessControlService`から改称）の2コンポーネントに分割した（unit-of-work.mdのパッケージ対応表参照）。
 - **目的**: アクセス権限設定・グループ管理
-- **責務**: 主権限/補助権限のCRUD、ユーザグループの作成・改名・削除・所属管理
+- **責務**: 主権限/補助権限のCRUD（`PermissionService`）、ユーザグループの作成・改名・削除・所属管理（`GroupService`）
 - **対応要件**: FR-2.3〜FR-2.5, FR-2.13〜FR-2.15
 
 ### COMP-11: EffectivePermissionResolver

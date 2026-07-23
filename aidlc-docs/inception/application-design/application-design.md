@@ -11,7 +11,7 @@
 
 バックエンドを19のコンポーネントに分解した。stories.mdの10エピックを基本単位としつつ、以下の観点で意図的に分解・統合している。
 
-- **Epic2（RDBMSセットアップ／アクセス制御）**: 責務が明確に異なるため、RDBMS基盤系（RdbmsConnectionService, SchemaIntrospectionService, RdbmsDialectStrategy）とアクセス制御系（AccessControlService, EffectivePermissionResolver, PermissionYamlService）の6コンポーネントに分解
+- **Epic2（RDBMSセットアップ／アクセス制御）**: 責務が明確に異なるため、RDBMS基盤系（RdbmsConnectionService, SchemaIntrospectionService, RdbmsDialectStrategy）とアクセス制御系（~~AccessControlService~~ 訂正（UNIT-04 Functional Design／NFR Designにて）: GroupService, PermissionService, EffectivePermissionResolver, PermissionYamlService）の6コンポーネント（訂正後は7コンポーネント）に分解
 - **Epic1（ユーザ登録）**: 起動時のみ動作するAdminBootstrapServiceと、メール送信を担うEmailNotificationServiceを補助コンポーネントとして分離
 - **Epic3（ユーザ認証）**: トークンローテーション（RefreshTokenService）とログイン試行制限（LoginAttemptGuard）を、責務の異なる補助コンポーネントとして分離
 - **横断的コンポーネント**: EffectivePermissionResolver（実効権限判定、複数ドメインサービスから参照）、RdbmsDialectStrategy（複数RDBMS方言吸収）、AuditEventPublisher/AuditLogService（監査ログ記録）の3系統は、いずれか特定のエピックに属さない横断的コンポーネントとして独立させた

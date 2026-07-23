@@ -2,15 +2,17 @@
 
 `unit-04-functional-design-plan.md`の回答（Q1=A, Q2=A, Q3=A, Q4=A, Q5=A, Q6=A, Q7=A, Q8=A, Q9=A, Q10=A）に基づく。技術非依存を原則とし、Caffeineキャッシュの具体的な設定値等の技術選定はNFR Requirements/NFR Designで扱う。
 
-対応コンポーネント: COMP-10（AccessControlService）, COMP-11（EffectivePermissionResolver）, COMP-12（PermissionYamlService）
+対応コンポーネント: COMP-10（~~AccessControlService~~ 訂正（UNIT-04 NFR Designにて）: `PermissionService`。`GroupService`との命名一貫性のため）, COMP-11（EffectivePermissionResolver）, COMP-12（PermissionYamlService）
 
 **前提（UNIT-03との関係）**: UNIT-03は当初「1接続=1スキーマ」という前提だったが、`initial-request.md` §5.7・FR-7.5（実行時スキーマ指定、対象接続内でユーザがアクセス権限を持つスキーマの一覧から選択）の本来の想定に合わせ、1接続内に複数スキーマが存在しうる前提に訂正した（PostgreSQL/H2はシステムスキーマを除く全スキーマを自動検出。MySQL/MariaDBは「データベース」がスキーマに相当する単位のため常に1件）。そのためFR-2.4の3階層（スキーマ／テーブル／カラム）はそのまま実際のスキーマ単位で表現する。
+
+**訂正（UNIT-04 NFR Designにて）**: 以下、随所に登場する`invalidateCache()`という明示的な呼び出しは、業務ロジック上「このタイミングでキャッシュ無効化が必要」という意図を表す表現であり、実装方式そのものではない。NFR Designで、共通の無効化コンポーネント経由の明示呼び出し（この記法が想定していた方式）ではなく、各mutationメソッド自体への`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`宣言的アノテーション付与に確定した（nfr-design/nfr-design-patterns.md §2.1）。実装上`invalidateCache()`という独立メソッドは存在しない。
 
 ---
 
 ## 1. アクセス権限の設定（FR-2.3〜FR-2.5）
 
-1. 管理者が、ある接続（`connectionId`）に対して、あるプリンシパル（ユーザまたはグループ）・あるリソース（スキーマ／テーブル／カラムの階層。BR-ACCESS-01）に、主権限（`NONE`/`READ`/`UPDATE`）と補助権限（`CREATE`/`DELETE`、スキーマ・テーブル単位のみ設定可能）を設定する（`AccessControlService.setPermission()`）
+1. 管理者が、ある接続（`connectionId`）に対して、あるプリンシパル（ユーザまたはグループ）・あるリソース（スキーマ／テーブル／カラムの階層。BR-ACCESS-01）に、主権限（`NONE`/`READ`/`UPDATE`）と補助権限（`CREATE`/`DELETE`、スキーマ・テーブル単位のみ設定可能）を設定する（~~`AccessControlService.setPermission()`~~ 訂正（UNIT-04 NFR Designにて）: `PermissionService.setPermission()`）
 2. 設定は当該プリンシパル・当該リソースの既存設定を上書きする（同一キーへの再設定はupsert）
 3. 「未設定」に戻す操作（一度設定した権限を解除し、グループ合成結果や既定値に委ねる状態に戻す）も可能とする。未設定に戻すと、当該プリンシパル・当該リソースの`AccessPermission`エントリ自体を削除する（BR-ACCESS-01）
 4. 設定変更のたびに`EffectivePermissionResolver.invalidateCache()`を呼び出し、実効権限キャッシュを無効化する（FR-2.9、§3手順5）

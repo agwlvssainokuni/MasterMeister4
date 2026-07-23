@@ -13,7 +13,7 @@
 | RdbmsConnectionService | AuditEventPublisher |
 | SchemaIntrospectionService | RdbmsDialectStrategy, EffectivePermissionResolver（キャッシュ無効化）, AuditEventPublisher |
 | RdbmsDialectStrategy | （なし、独立戦略実装） |
-| AccessControlService | EffectivePermissionResolver（キャッシュ無効化）, AuditEventPublisher |
+| ~~AccessControlService~~ 訂正（UNIT-04 Functional Design／NFR Designにて）: GroupService／PermissionService（2コンポーネントに分割、命名一貫性のためPermissionServiceに改称） | EffectivePermissionResolver（キャッシュ無効化）, AuditEventPublisher |
 | EffectivePermissionResolver | （なし、内部キャッシュのみ） |
 | PermissionYamlService | EffectivePermissionResolver（キャッシュ無効化）, AuditEventPublisher |
 | MasterDataService | EffectivePermissionResolver, AuditEventPublisher |
@@ -26,7 +26,7 @@
 
 ## データフロー（横断的コンポーネント中心）
 
-- **EffectivePermissionResolver**: SchemaIntrospectionService／AccessControlService／PermissionYamlServiceから「キャッシュ無効化」の呼び出しを受け、MasterDataService／QueryBuilderService／QueryExecutionServiceから「権限判定」の呼び出しを受ける。書き込み側と読み取り側が明確に分離されている
+- **EffectivePermissionResolver**: SchemaIntrospectionService／~~AccessControlService~~ 訂正: GroupService・PermissionService／PermissionYamlServiceから「キャッシュ無効化」の呼び出しを受け、MasterDataService／QueryBuilderService／QueryExecutionServiceから「権限判定」の呼び出しを受ける。書き込み側と読み取り側が明確に分離されている（**訂正（UNIT-04 NFR Designにて）**: 「呼び出し」は概念上の依存関係であり、実装は各書き込み側メソッドへの`@CacheEvict(allEntries=true)`宣言的アノテーションによる）
 - **RdbmsDialectStrategy**: SchemaIntrospectionServiceとQueryExecutionServiceの両方から、対象RDBMSの種別に応じた方言処理を取得するために参照される
 - **AuditEventPublisher / AuditLogService**: ほぼ全てのドメインサービスがイベント発行元となり、AuditLogServiceのみが受信側となる一方向のファンイン構造
 
@@ -50,7 +50,8 @@ flowchart LR
     end
 
     subgraph ACCESS["アクセス制御"]
-        C10["AccessControlService"]
+        C10["PermissionService"]
+        C10B["GroupService"]
         C11["EffectivePermissionResolver"]
         C12["PermissionYamlService"]
     end
@@ -80,6 +81,7 @@ flowchart LR
     C08 --> C09
     C08 --> C11
     C10 --> C11
+    C10B --> C11
     C12 --> C11
     C13 --> C11
     C13 --> C19
@@ -99,6 +101,8 @@ flowchart LR
     style CROSS fill:#FFF9C4,stroke:#F57F17,stroke-width:2px,color:#000
 ```
 
+**訂正（UNIT-04 Functional Design／NFR Designにて）**: `AccessControlService`（C10）は`PermissionService`（`GroupService`との命名一貫性のため改称）と`GroupService`（C10B、新規）に分割された。両者の依存先は変わらない。
+
 ### テキスト代替表現
 
 ```
@@ -111,7 +115,8 @@ RDBMSセットアップドメイン:
   SchemaIntrospectionService -> RdbmsDialectStrategy, EffectivePermissionResolver(invalidate)
 
 アクセス制御ドメイン:
-  AccessControlService -> EffectivePermissionResolver(invalidate)
+  PermissionService -> EffectivePermissionResolver(invalidate)
+  GroupService -> EffectivePermissionResolver(invalidate)
   PermissionYamlService -> EffectivePermissionResolver(invalidate)
 
 マスタメンテナンスドメイン:

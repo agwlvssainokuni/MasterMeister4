@@ -47,16 +47,21 @@
 - `resolveDialect(dbType: DbType): RdbmsDialectStrategy` — ファクトリメソッド
 - `buildJdbcUrl(host: String, port: int, databaseName: String, schemaName: String, additionalParams: String): String` — 訂正（UNIT-03 NFR Designにて追加）。JDBC URLのスキーム（`jdbc:mysql:`/`jdbc:mariadb:`/`jdbc:postgresql:`/`jdbc:h2:tcp:`）・パラメータ区切り文字（`?`＋`&`、H2のみ`;`）が方言ごとに異なるため、URL構築自体を方言吸収の責務に含める
 
-## COMP-10: AccessControlService
-- `setPermission(principal: Principal, resource: ResourcePath, primary: PrimaryPermission, auxiliary: Set<AuxiliaryPermission>): void`
+## COMP-10: ~~AccessControlService~~
+**訂正（UNIT-04 Functional Design／NFR Designにて）**: `GroupService`（`group`パッケージ）と`PermissionService`（`permission`パッケージ、命名一貫性のため`AccessControlService`から改称）に分割。
+
+### GroupService
 - `createGroup(name: String): GroupId` / `renameGroup(groupId: GroupId, name: String): void` / `deleteGroup(groupId: GroupId): void`
 - `addUserToGroup(groupId: GroupId, userId: UserId): void` / `removeUserFromGroup(groupId: GroupId, userId: UserId): void`
+
+### PermissionService
+- `setPermission(principal: Principal, resource: ResourcePath, primary: PrimaryPermission, auxiliary: Set<AuxiliaryPermission>): void`
 
 ## COMP-11: EffectivePermissionResolver
 - `resolvePrimary(userId: UserId, connectionId: ConnectionId, resource: ResourcePath): PrimaryPermission`
 - `canCreate(userId: UserId, connectionId: ConnectionId, table: TablePath): boolean`
 - `canDelete(userId: UserId, connectionId: ConnectionId, table: TablePath): boolean`
-- `invalidateCache(scope: InvalidationScope): void` — 権限変更/グループ変更/スキーマ再取込時に呼び出し
+- ~~`invalidateCache(scope: InvalidationScope): void` — 権限変更/グループ変更/スキーマ再取込時に呼び出し~~ 訂正（UNIT-04 NFR Designにて）: 独立メソッドとしては設けず、`PermissionService`/`GroupService`/`PermissionYamlService`の各mutationメソッドおよびUNIT-03の`SchemaIntrospectionService.refreshSchema()`へ`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を個別付与する宣言的方式に確定（unit-04/nfr-design/nfr-design-patterns.md §2.1）
 
 ## COMP-12: PermissionYamlService
 - `exportToYaml(connectionId: ConnectionId): String`
