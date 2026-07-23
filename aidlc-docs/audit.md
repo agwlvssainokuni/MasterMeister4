@@ -1517,3 +1517,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 3.1〜3.5、4.1完了。PrincipalType/PrimaryPermission enum、AccessPermission（センチネル値変換）、Group/GroupMembershipエンティティ、AccessPermissionRepository/GroupRepository/GroupMembershipRepositoryを作成。@DataJpaTestでの実行時に、MasterMeisterApplicationへ直接@EnableCachingを付与するとテストスライスでCacheManager不在により起動失敗する問題を発見し、common.config.CacheConfig（独立@Configurationクラス）へ切り出して解消（nfr-design/logical-components.mdへ訂正注記追加）。10テスト全件成功。repository-layer-summary.mdを作成。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 3〜4完了
+
+---
+
+## UNIT-04 Code Generation - Step 5完了（Business Logic Generation）
+**Timestamp**: 2026-07-23T09:25:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 5.1〜5.6完了。GroupService（作成・改名・削除・所属追加削除・カスケード削除順序）、PermissionService（upsert・冪等削除）、EffectivePermissionResolver（個別優先→グループ合成のBR-ACCESS-04〜08判定ロジック、UNIT-03のSchemaIntrospectionService.getSchema()経由での主キー列取得）、PermissionYamlService（検証/DB反映フェーズ分離のYAML入出力）を作成。全mutationメソッドに@CacheEvict、実効権限判定3メソッドに@Cacheableを付与。新規例外5種（GroupNotFoundException等）とエラーメッセージリソースを追加。UNIT-03のrefreshSchema()へ@CacheEvict追加、関連ドキュメントに訂正注記追加。Spring 7でHttpStatus.UNPROCESSABLE_ENTITYが非推奨と判明しUNPROCESSABLE_CONTENTへ置換。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 5完了

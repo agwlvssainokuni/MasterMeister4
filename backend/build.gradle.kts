@@ -80,4 +80,3 @@ tasks.bootWar {
 tasks.named("assemble") {
     setDependsOn(emptyList<Any>())
 }
-

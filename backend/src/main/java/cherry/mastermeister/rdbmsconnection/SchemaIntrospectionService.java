@@ -37,6 +37,7 @@ import cherry.mastermeister.rdbmsconnection.repository.RdbmsConnectionRepository
 import cherry.mastermeister.rdbmsconnection.repository.SchemaSnapshotRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,7 +101,10 @@ public class SchemaIntrospectionService {
      * タイムアウト時は実行中のConnectionを強制closeしてバックグラウンドスレッドを中断させる
      * （nfr-design-patterns.md §1.1、レビュー指摘の反映）。全テーブル読取成功時のみ
      * 既存スナップショットを全置換する（オールオアナッシング）。
+     * UNIT-04追記: 主キー構成の変化がcanCreate/canDelete判定に影響するため、実効権限キャッシュも
+     * 無効化する（unit-04/nfr-design-patterns.md §2.1）。
      */
+    @CacheEvict(cacheNames = "effectivePermission", allEntries = true)
     @Transactional
     public SchemaSnapshot refreshSchema(Long connectionId, Long triggeredBy) {
         RdbmsConnection connection = rdbmsConnectionRepository.findById(connectionId)

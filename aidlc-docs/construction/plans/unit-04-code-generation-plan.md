@@ -47,12 +47,12 @@
 
 ### 5. Business Logic Generation
 
-- [ ] Step 5.1: `GroupService`（`cherry.mastermeister.group`）を作成する（`createGroup`/`renameGroup`/`deleteGroup`/`addUserToGroup`/`removeUserFromGroup`/`listGroups`（所属ユーザ数含む）/`listMembers`、business-logic-model.md §4、BR-ACCESS-11。`deleteGroup()`は`@Transactional`とし、`AccessPermissionRepository`経由で`principalType=GROUP`かつ`principalId=`当該グループの行を削除してから`Group`本体を削除する（`GroupMembership`は`@OneToMany`カスケードで削除、nfr-design-patterns.md §1.2）。全mutationメソッドに`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を付与）
-- [ ] Step 5.2: `PermissionService`（`cherry.mastermeister.permission`）を作成する（`setPermission`（upsert）/`unsetPermission`（削除）/`listPermissions(principalType, principalId)`、business-logic-model.md §1、BR-ACCESS-01。両mutationメソッドに`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を付与）
-- [ ] Step 5.3: `EffectivePermissionResolver`（`cherry.mastermeister.permission`）を作成する（`resolvePrimary`/`canCreate`/`canDelete`、business-logic-model.md §2、BR-ACCESS-04〜08。階層優先順位判定・個別設定優先判定・グループ合成（`GroupMembershipRepository`でユーザの所属グループを解決）を実装。`canCreate`/`canDelete`はUNIT-03の`SchemaIntrospectionService.getSchema()`から対象テーブルの主キー列情報を取得して判定。3メソッドに`@Cacheable(cacheNames = "effectivePermission")`を付与）
-- [ ] Step 5.4: `PermissionYamlService`（`cherry.mastermeister.permission`）を作成する（`exportToYaml`/`importFromYaml`、business-logic-model.md §3、BR-ACCESS-09〜10。`jackson-dataformat-yaml`使用。`importFromYaml`は検証フェーズ（プリンシパル解決・重複エントリチェック）とDB反映フェーズを分離し（nfr-design-patterns.md §1.1）、`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を付与）
-- [ ] Step 5.5: `GroupService`・`PermissionService`・`PermissionYamlService`から`AuditEventPublisher`経由で該当イベント（`GROUP_CREATED`等8種、domain-entities.md §4）を発行する処理を組み込む
-- [ ] Step 5.6: UNIT-03の`cherry.mastermeister.rdbmsconnection.SchemaIntrospectionService.refreshSchema()`に`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を追加する（nfr-design-patterns.md §2.1、UNIT-03完了後の機能追加。UNIT-03の関連ドキュメントにも取消線+訂正注記を追加する）
+- [x] Step 5.1: `GroupService`（`cherry.mastermeister.group`）を作成する（`createGroup`/`renameGroup`/`deleteGroup`/`addUserToGroup`/`removeUserFromGroup`/`listGroups`/`listMembers`、business-logic-model.md §4、BR-ACCESS-11。`deleteGroup()`は`@Transactional`とし、`AccessPermissionRepository`経由で`principalType=GROUP`かつ`principalId=`当該グループの行を削除してから`Group`本体を削除する。全mutationメソッドに`@CacheEvict`を付与）— `listMembers`はUser詳細解決のため`registration.repository.UserRepository`を直接注入（実装判断、既存UserRegistrationServiceに単一ID検索の公開APIがなかったため）
+- [x] Step 5.2: `PermissionService`（`cherry.mastermeister.permission`）を作成する（`setPermission`（upsert）/`unsetPermission`（削除、対象なしは冪等no-op）/`listPermissions`、BR-ACCESS-01。両mutationメソッドに`@CacheEvict`を付与）
+- [x] Step 5.3: `EffectivePermissionResolver`（`cherry.mastermeister.permission`）を作成する（`resolvePrimary`/`canCreate`/`canDelete`、BR-ACCESS-04〜08。個別設定優先→グループ合成（より許可的な方）を実装。`canCreate`/`canDelete`はUNIT-03の`SchemaIntrospectionService.getSchema()`から主キー列情報を取得。3メソッドに`@Cacheable`を付与）
+- [x] Step 5.4: `PermissionYamlService`（`cherry.mastermeister.permission`）を作成する（`exportToYaml`/`importFromYaml`、BR-ACCESS-09〜10。`jackson-dataformat-yaml`使用。検証フェーズ（プリンシパル解決・重複エントリチェック）とDB反映フェーズを分離、`@CacheEvict`を付与）
+- [x] Step 5.5: `GroupService`・`PermissionService`・`PermissionYamlService`から`AuditEventPublisher`経由でイベント発行を組み込み済み（各メソッド実装に含む）
+- [x] Step 5.6: UNIT-03の`SchemaIntrospectionService.refreshSchema()`に`@CacheEvict`を追加。UNIT-03の`nfr-design/logical-components.md`・`code/business-logic-summary.md`に追記注記を追加
 
 ### 6. Business Logic Unit Testing
 

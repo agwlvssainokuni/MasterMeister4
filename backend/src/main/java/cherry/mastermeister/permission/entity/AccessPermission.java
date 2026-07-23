@@ -88,8 +88,8 @@ public class AccessPermission {
         this.principalType = principalType;
         this.principalId = principalId;
         this.schemaName = schemaName;
-        this.tableNameRaw = sentinel(tableName);
-        this.columnNameRaw = sentinel(columnName);
+        this.tableNameRaw = toSentinel(tableName);
+        this.columnNameRaw = toSentinel(columnName);
         this.primaryPermission = primaryPermission;
         this.createPermission = createPermission;
         this.deletePermission = deletePermission;
@@ -159,7 +159,10 @@ public class AccessPermission {
         this.updatedBy = updatedBy;
     }
 
-    private static String sentinel(String value) {
+    /**
+     * リポジトリの検索条件構築（upsert対象検索）でも使用するためpublicとする。
+     */
+    public static String toSentinel(String value) {
         return value == null ? "" : value;
     }
 

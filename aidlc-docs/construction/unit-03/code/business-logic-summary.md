@@ -25,6 +25,7 @@
 3. **JDBC接続失敗のエラー分類（BR-RDBMS-04）**: SQLState（`08`系=接続不可、`28`系=認証エラー）とメッセージのキーワードマッチを組み合わせたベストエフォート実装とした（JDBCドライバ間でSQLStateの粒度が完全には統一されていないため）
 4. **主キー自動生成インデックスのUNIQUE制約重複登録（Code Generation Complete提示後のレビューで発見）**: MySQL/MariaDBは主キー制約名が常に固定文字列`"PRIMARY"`になる。`DatabaseMetaData.getIndexInfo()`は主キー列に対して自動生成されたインデックスも返すため、`readPrimaryKey()`のPRIMARY_KEY制約と`readIndexes()`のUNIQUE制約とで同一列が二重に登録されていた（実データそのものは誤りではないが冗長）。この重複が、フロントエンドの制約名ベースのReact keyと組み合わさることで、テーブル切替時に別テーブルの同名列へ古い制約バッジが残留する表示不具合（後述）の一因にもなっていたため、`readPrimaryKey()`の戻り値を主キー列集合に変更し、`readIndexes()`側でインデックスの列集合が主キー列集合と完全一致する場合は登録をスキップするよう修正した
 5. **1接続内の複数スキーマ対応（UNIT-04 Functional Designにて訂正）**: `RdbmsConnection.schemaName`（単一固定値）は、1接続内に複数スキーマが存在しうるという元々の要件（`initial-request.md` §5.7、FR-7.5「対象接続内でユーザがアクセス権限を持つスキーマの一覧」）に対して狭すぎるスコープだったと判明。`schemaName`フィールドを廃止し、`SchemaTable`に`schemaName`属性を追加。`SchemaIntrospectionService`はPostgreSQL/H2について`DatabaseMetaData.getSchemas()`でシステムスキーマを除く全スキーマを自動検出し、スキーマごとにテーブル・カラム・制約を読み取るループ構造に書き換えた（`isSystemSchema()`を`RdbmsDialectStrategy`に追加）。この過程で、スキーマ取込時の`applySchemaSwitch()`呼び出し（セッションのスキーマ切替）はJDBCのメタデータ取得がschemaPattern引数で直接絞り込めるため不要と判明し削除。`applySchemaSwitch()`はUNIT-06（クエリ実行時の対象スキーマ指定）専用のメソッドとなった。実際にdevenvのPostgreSQLへ`sales`スキーマを追加作成した上で動作確認し、`public`/`sales`両スキーマのテーブルが正しくスキーマ名付きで取り込まれることを確認した
+6. **実効権限キャッシュの無効化追加（UNIT-04 Code Generationにて）**: `refreshSchema()`に`@CacheEvict(cacheNames = "effectivePermission", allEntries = true)`を追加した。主キー構成の変化がUNIT-04の`EffectivePermissionResolver.canCreate`/`canDelete`判定に影響するため（BR-ACCESS-08）
 
 ## テスト結果
 
