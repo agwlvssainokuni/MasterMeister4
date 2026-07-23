@@ -115,7 +115,11 @@ public class PermissionYamlService {
             }
         }
 
+        // Hibernateのデフォルトのフラッシュ順序では、同一フラッシュ内でDELETEがINSERTより後に
+        // 実行されるため、削除→即save()の間にflush()を挟まないと、削除前の行が物理的に
+        // 残った状態で同一キーのINSERTが実行され複合UNIQUE制約違反になる（実機検証で発見）。
         accessPermissionRepository.deleteAll(accessPermissionRepository.findAllByConnectionId(connectionId));
+        accessPermissionRepository.flush();
         Instant now = Instant.now();
         for (ResolvedEntry entry : resolved) {
             accessPermissionRepository.save(new AccessPermission(connectionId, entry.principalType(),

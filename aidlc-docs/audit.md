@@ -1557,3 +1557,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 14.1〜14.2、15.1完了。backend/README.mdにUNIT-04概要（グループ管理・権限設定・Caffeineキャッシュ）を追記、frontend/README.mdの冒頭説明・pages構成にUNIT-04の新規画面を追記。devenv/docker-compose.ymlを確認し追加インフラ不要であることを確認（既存mailpit/mysql/mariadb/postgres構成のまま）。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 14〜15完了
+
+---
+
+## UNIT-04 Code Generation - Step 16完了（最終ビルド検証）＝Part 2完了
+**Timestamp**: 2026-07-23T12:00:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 16.1〜16.3完了。バックエンド213件・フロントエンド149件全件成功を確認。devenvの実MySQLに対しjava -jar起動した実アプリへcurlでユーザ登録承認・グループ作成・ユーザ追加・権限設定（3階層）・権限解除・YAMLエクスポート/インポート（正常系・不正系422）・グループ削除カスケードを検証。この過程でYAML再インポート時にHibernateのフラッシュ順序（DELETEがINSERTより後に実行される）に起因する複合UNIQUE制約違反（500エラー）を発見し、deleteAll()直後にflush()を追加して修正。再発防止の統合テスト（PermissionYamlServiceIntegrationTest、実H2使用、修正前に実際に失敗することを確認済み）を追加。OWASP Dependency-CheckはNVD APIキー未設定のため既知の制約として実施見送り。business-logic-summary.mdに追記。unit-04-code-generation-plan.mdの全16セクションが完了し、Code Generation Part 2完了。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2完了

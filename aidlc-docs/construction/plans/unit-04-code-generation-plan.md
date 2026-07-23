@@ -115,9 +115,9 @@
 
 ### 16. 最終ビルド検証
 
-- [ ] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功、jqwikプロパティテスト含む）、`./gradlew :backend:test`、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する
-- [ ] Step 16.2: `./gradlew :backend:bootWar`で統合WARを生成し、`java -jar`起動。devenvの対象RDBMS（スキーマ取込済み接続）に対し、グループ作成・ユーザ追加、権限設定（スキーマ/テーブル/カラム各階層）、YAMLエクスポート/インポート、実効権限判定（個別設定優先・グループ合成）の一連の操作をcurlで実行し、想定どおりの実効権限が算出されることを確認する
-- [ ] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）を実行する（NVD APIキー未設定の場合は既知の制約として記録し実施見送りとする。新規追加のCaffeine依存も対象に含める）
+- [x] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功、jqwikプロパティテスト含む）、`./gradlew :backend:test`、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する — バックエンド213件、フロントエンド149件全件成功
+- [x] Step 16.2: devenvのMySQL（スキーマ取込済み接続）に対し、`java -jar`起動した実アプリへcurlで、ユーザ登録・承認、グループ作成・ユーザ追加、権限設定（スキーマ/テーブル/カラム各階層、upsert）、権限解除（DELETE、対象キー必須の検証含む）、YAMLエクスポート/インポート（全置換・正常系）、不正YAML（未解決プリンシパル）での422全体拒否、グループ削除時のカスケード削除（AccessPermission→GroupMembership→Group）を検証した。**重大な不具合を発見**: YAML再インポート時、Hibernateのデフォルトフラッシュ順序（同一フラッシュ内でDELETEがINSERTより後）により、既存行の削除前に同一キーのINSERTが実行され複合UNIQUE制約違反（500エラー）になっていた。`deleteAll()`直後に`flush()`を追加して解消し、再発防止の`PermissionYamlServiceIntegrationTest`（実H2使用）を追加。なお`EffectivePermissionResolver`自体はNFR Requirements Q4=A（内部Java API、REST非公開）の決定によりcurl経由での直接検証はできないため、単体テスト・プロパティテストでのカバレッジで代替している
+- [x] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）は、UNIT-02/03と同じくNVD APIキー未設定のため実施見送り（既知の制約として記録。新規追加のCaffeine依存も次回実施時の対象に含める）
 
 ---
 

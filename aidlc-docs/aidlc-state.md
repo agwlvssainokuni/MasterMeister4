@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - Code Generation（Part 1承認済み、Part 2生成中）
-- **Next Stage**: Part 2完了後、Build and Testへ
+- **Current Stage**: UNIT-04 アクセス制御 - Code Generation（Part 2完了、完了メッセージ提示・承認待ち）
+- **Next Stage**: 承認後、UNIT-05 マスタメンテナンスへ（または全ユニット完了後のBuild and Test）
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -66,7 +66,7 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-23T08:00:00Z。Caffeineキャッシュ（maximumSize=10,000, expireAfterWrite=30分）、Spring Cache抽象化、無効化は@CacheEvict(allEntries=true)によるキャッシュ全体クリア、EffectivePermissionResolverはUNIT-04時点でAPI非公開、jackson-dataformat-yaml流用、楽観的ロックなし、小〜中規模想定、Bean Validation、YAML importサイズ上限を決定）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-23T08:30:00Z。nfr-design-patterns.md（YAML import検証/DB反映分離、グループ削除カスケード、フェイルクローズ、@CacheEvict配置一覧、AccessPermissionインデックス設計、NULL値センチネル対応、YAML受け渡し方式、管理者エンドポイントアクセス制御）、logical-components.md（group/permissionパッケージ設計、Caffeine設定）を作成。承認前レビュー対応: AccessControlService→PermissionServiceに改称（GroupServiceとの命名一貫性）、EffectivePermissionResolver.invalidateCache()の設計矛盾を@CacheEvict宣言的方式に整合）
 - [x] Infrastructure Design — SKIP（承認 2026-07-22T06:15:00Z。新規インフラ不要）
-- [ ] Code Generation — EXECUTE中（Part 1計画中）
+- [ ] Code Generation — EXECUTE中（Part 2完了、完了メッセージ提示・承認待ち。全16セクション完了。group/permissionパッケージのエンティティ・サービス・API・フロントエンド一式を実装。実機E2E検証でYAML再インポート時の複合UNIQUE制約違反（Hibernateフラッシュ順序起因）を発見・修正、再発防止テスト追加。バックエンド213件・フロントエンド149件全件成功）
 
 ## Current Unit - Stage Progress (UNIT-03)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-21T01:05:00Z。business-logic-model.md, business-rules.md（BR-RDBMS-01〜12）, domain-entities.md, frontend-components.mdを作成。レビューで反映: JDBC URL追加パラメータ(additionalParams)、DBMS選択時のデフォルトポート自動入力、未保存値に対する接続テスト、パスワード非公開方針、表示名重複許可、H2のschemaName欄表示）
