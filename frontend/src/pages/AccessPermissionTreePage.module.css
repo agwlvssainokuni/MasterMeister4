@@ -1,0 +1,51 @@
+/*
+ * Copyright 2026 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * ツリー各行の主権限セレクトの横位置・幅を階層（スキーマ/テーブル/カラム）に関わらず揃えるため、
+ * インデントは第2カラム（ラベル）内のpadding-leftで表現し、行全体はmarginLeftで
+ * 動かさない（レビュー指摘の反映）。第1・第3〜5カラムはすべて固定幅とする。
+ * 第4・5カラム（CREATE/DELETEチェックボックス）をauto幅にすると、カラム行のように
+ * その列に要素が存在しない行では第2カラム（1fr）がその分だけ余分に幅を取ってしまい、
+ * 主権限セレクトの開始位置が他の階層の行とずれてしまう（実装時の指摘により固定幅に変更）。
+ */
+.row {
+  display: grid;
+  grid-template-columns: 24px 280px 140px 100px 100px;
+  align-items: center;
+  column-gap: var(--mm-space-2);
+  padding-block: 2px;
+}
+
+/* ツリーの背景（bodyの--mm-color-bg）と対比させるため--mm-color-surfaceを使う
+   （--mm-color-bgのままだと背景と同色になりhoverが視認できない、レビュー指摘の反映） */
+.row:hover {
+  background: var(--mm-color-surface);
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.indent1 {
+  padding-left: var(--mm-space-5);
+}
+
+.indent2 {
+  padding-left: calc(var(--mm-space-5) * 2);
+}

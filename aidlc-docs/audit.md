@@ -1565,3 +1565,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 16.1〜16.3完了。バックエンド213件・フロントエンド149件全件成功を確認。devenvの実MySQLに対しjava -jar起動した実アプリへcurlでユーザ登録承認・グループ作成・ユーザ追加・権限設定（3階層）・権限解除・YAMLエクスポート/インポート（正常系・不正系422）・グループ削除カスケードを検証。この過程でYAML再インポート時にHibernateのフラッシュ順序（DELETEがINSERTより後に実行される）に起因する複合UNIQUE制約違反（500エラー）を発見し、deleteAll()直後にflush()を追加して修正。再発防止の統合テスト（PermissionYamlServiceIntegrationTest、実H2使用、修正前に実際に失敗することを確認済み）を追加。OWASP Dependency-CheckはNVD APIキー未設定のため既知の制約として実施見送り。business-logic-summary.mdに追記。unit-04-code-generation-plan.mdの全16セクションが完了し、Code Generation Part 2完了。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2完了
+
+---
+
+## UNIT-04 Code Generation完了メッセージ後のレビュー指摘対応（AccessPermissionTreePage UI調整）
+**Timestamp**: 2026-07-23T13:00:00Z
+**User Input**: "権限設定の画面について。ツリー表示はOK。ツリー部分の幅を揃えて、主権限のセレクトボックスの横いちを揃えられないだろうか？" ／ "横位置(X座標)が揃っていない。主権限セレクトのX座標と幅を同じにして欲しいのです。また、カラム行のCREATE, DELETEの部分に、主権限セレクトがはみ出ないように。" ／ "第2カラムと第3カラムを同じ幅にできる？" ／ "第2カラムの幅を2倍に。" ／ "行をhoverする時、どの行かわかるように少し色を変えられる？" ／ "確認の仕方が誤っていました。確かに.row:hoverが適用されています。しかしながら、同じ色のため効いていないように見えているようです。" ／ "OK"
+**AI Response**: "AccessPermissionTreePage.module.cssを新規作成し、ツリー各行をCSS Grid（`.row`）に再構成。インデントはラベルセル内のpadding-left（`.indent1`/`.indent2`）で表現し行全体のmarginLeftは廃止。当初CREATE/DELETEチェックボックス列をauto幅にしたため、その列に要素がないカラム行でラベル列(1fr)が余分に幅を取り主権限セレクトの位置がずれる不具合を修正（全カラムを固定幅化）。第2・第3カラムを同幅(140px)に統一後、第2カラムを280pxへ拡大。行hoverの背景色は当初--mm-color-bg（bodyの背景と同色で視認できない）を指定していたが、--mm-color-surfaceに変更し解消。全て動作確認・テスト成功。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation承認前レビュー、AccessPermissionTreePageのUI調整完了

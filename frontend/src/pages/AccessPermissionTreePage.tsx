@@ -46,6 +46,7 @@ import {
 } from '../api/permissions'
 import type { PermissionEntry, PrimaryPermission, PrincipalType } from '../api/permissions'
 import { ApiError } from '../api/http'
+import styles from './AccessPermissionTreePage.module.css'
 
 function tableKey(schemaName: string, tableName: string): string {
   return `${schemaName}.${tableName}`
@@ -348,7 +349,7 @@ export function AccessPermissionTreePage() {
                 const schemaExpanded = expandedSchemas.has(schemaName)
                 return (
                   <div key={schemaName} style={{ marginBottom: 'var(--mm-space-2)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mm-space-2)' }}>
+                    <div className={styles.row}>
                       <button
                         type="button"
                         onClick={() => toggleSchema(schemaName)}
@@ -357,7 +358,7 @@ export function AccessPermissionTreePage() {
                       >
                         <Icon name={schemaExpanded ? 'chevron-down' : 'chevron-right'} />
                       </button>
-                      <strong>{schemaName}</strong>
+                      <strong className={styles.label}>{schemaName}</strong>
                       <Select
                         value={schemaEntry?.primaryPermission ?? ''}
                         onChange={(event) => void applyPrimaryChange(schemaName, null, null, event.target.value)}
@@ -389,8 +390,8 @@ export function AccessPermissionTreePage() {
                           const tableEntry = findEntry(permissions, schemaName, table.tableName, null)
                           const tableExpanded = expandedTables.has(key)
                           return (
-                            <div key={key} style={{ marginLeft: 'var(--mm-space-5)' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--mm-space-2)' }}>
+                            <div key={key}>
+                              <div className={styles.row}>
                                 <button
                                   type="button"
                                   onClick={() => toggleTable(key)}
@@ -399,7 +400,7 @@ export function AccessPermissionTreePage() {
                                 >
                                   <Icon name={tableExpanded ? 'chevron-down' : 'chevron-right'} />
                                 </button>
-                                <span>{table.tableName}</span>
+                                <span className={`${styles.label} ${styles.indent1}`}>{table.tableName}</span>
                                 <Select
                                   value={tableEntry?.primaryPermission ?? ''}
                                   onChange={(event) =>
@@ -440,16 +441,11 @@ export function AccessPermissionTreePage() {
                                       column.columnName,
                                     )
                                     return (
-                                      <div
-                                        key={column.columnName}
-                                        style={{
-                                          marginLeft: 'var(--mm-space-5)',
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          gap: 'var(--mm-space-2)',
-                                        }}
-                                      >
-                                        <span>{column.columnName}</span>
+                                      <div key={column.columnName} className={styles.row}>
+                                        <span />
+                                        <span className={`${styles.label} ${styles.indent2}`}>
+                                          {column.columnName}
+                                        </span>
                                         <Select
                                           value={columnEntry?.primaryPermission ?? ''}
                                           onChange={(event) =>
