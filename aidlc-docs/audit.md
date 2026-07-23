@@ -1573,3 +1573,13 @@
 **User Input**: "権限設定の画面について。ツリー表示はOK。ツリー部分の幅を揃えて、主権限のセレクトボックスの横いちを揃えられないだろうか？" ／ "横位置(X座標)が揃っていない。主権限セレクトのX座標と幅を同じにして欲しいのです。また、カラム行のCREATE, DELETEの部分に、主権限セレクトがはみ出ないように。" ／ "第2カラムと第3カラムを同じ幅にできる？" ／ "第2カラムの幅を2倍に。" ／ "行をhoverする時、どの行かわかるように少し色を変えられる？" ／ "確認の仕方が誤っていました。確かに.row:hoverが適用されています。しかしながら、同じ色のため効いていないように見えているようです。" ／ "OK"
 **AI Response**: "AccessPermissionTreePage.module.cssを新規作成し、ツリー各行をCSS Grid（`.row`）に再構成。インデントはラベルセル内のpadding-left（`.indent1`/`.indent2`）で表現し行全体のmarginLeftは廃止。当初CREATE/DELETEチェックボックス列をauto幅にしたため、その列に要素がないカラム行でラベル列(1fr)が余分に幅を取り主権限セレクトの位置がずれる不具合を修正（全カラムを固定幅化）。第2・第3カラムを同幅(140px)に統一後、第2カラムを280pxへ拡大。行hoverの背景色は当初--mm-color-bg（bodyの背景と同色で視認できない）を指定していたが、--mm-color-surfaceに変更し解消。全て動作確認・テスト成功。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation承認前レビュー、AccessPermissionTreePageのUI調整完了
+
+---
+
+## UNIT-04 Code Generation - Stage承認（Continue to Next Stage）
+**Timestamp**: 2026-07-24T09:00:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-04（アクセス制御）のCode Generationステージ完了として承認。UNIT-04を完了とし、次はUNIT-05（マスタメンテナンス）のPer-Unit Loop（Functional Designの要否判定）へ進む。aidlc-state.mdを更新。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Stage承認、UNIT-05へ移行
+
+---
