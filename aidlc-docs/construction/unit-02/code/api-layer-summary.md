@@ -31,6 +31,8 @@
 
 `GlobalExceptionHandler`（`common/GlobalExceptionHandler.java`）が`ApiException`・バリデーション例外・未捕捉例外をBR-API-01形式（`{code, message}`）に変換する。`message`は`MessageSource`経由でリクエストの言語設定に応じて解決する。
 
+**追記（UNIT-04 Code Generationにて）**: `PermissionController`で必須クエリパラメータ（`DELETE`の対象キー等）を初めて使用したところ、パラメータ欠落・型不一致時に発生する`MissingServletRequestParameterException`/`MethodArgumentTypeMismatchException`が未捕捉のまま`Exception`ハンドラに落ち500として返る問題を発見した。両例外を`VALIDATION_ERROR`（400）として扱うハンドラを追加した。
+
 OpenAPI/Swagger UIは`springdoc-openapi-starter-webmvc-ui`により`/v3/api-docs`・`/swagger-ui.html`で自動公開される（`common/web/OpenApiConfig.java`でBearer認証スキームを追加）。
 
 ## テスト結果

@@ -69,19 +69,19 @@
 
 ### 8. API Layer Generation
 
-- [ ] Step 8.1: DTOを作成する（`cherry.mastermeister.group.dto`: `GroupRequest`, `GroupResponse`, `GroupMemberRequest`, `GroupMemberResponse`／`cherry.mastermeister.permission.dto`: `PermissionEntryRequest`, `PermissionEntryResponse`, `PermissionImportRequest`（`@Size(max=...)`、tech-stack-decisions.md §9）, `PermissionImportResult`）
-- [ ] Step 8.2: `GroupController`（`cherry.mastermeister.group.api`）を作成する（logical-components.md §1のエンドポイント一覧、既存`SecurityFilterChain`の`/api/admin/**`にそのまま合致）
-- [ ] Step 8.3: `PermissionController`（`cherry.mastermeister.permission.api`）を作成する（logical-components.md §2のエンドポイント一覧。`DELETE`はクエリパラメータで対象キーを指定、frontend-components.md §2の注記のとおり）
-- [ ] Step 8.4: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）
+- [x] Step 8.1: DTOを作成する（`cherry.mastermeister.group.dto`: `GroupRequest`, `GroupResponse`, `GroupMemberRequest`, `GroupMemberResponse`／`cherry.mastermeister.permission.dto`: `PermissionEntryRequest`, `PermissionEntryResponse`, `PermissionImportRequest`（`@Size(max=1_048_576)`、tech-stack-decisions.md §9））— `PermissionImportResult`は作成しなかった（実装判断: 成功時は204 No Content、失敗時は`PermissionYamlImportRejectedException`経由のBR-API-01エラーレスポンスで十分表現できるため、専用DTOはYAGNIと判断）
+- [x] Step 8.2: `GroupController`（`cherry.mastermeister.group.api`）を作成する（logical-components.md §1のエンドポイント一覧、既存`SecurityFilterChain`の`/api/admin/**`にそのまま合致）
+- [x] Step 8.3: `PermissionController`（`cherry.mastermeister.permission.api`）を作成する（logical-components.md §2のエンドポイント一覧。`DELETE`はクエリパラメータで対象キーを指定、frontend-components.md §2の注記のとおり。YAMLエクスポートは`Content-Disposition: attachment`付きでダウンロード応答）
+- [x] Step 8.4: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）
 
 ### 9. API Layer Unit Testing
 
-- [ ] Step 9.1: `@WebMvcTest`で`GroupControllerTest`を作成する（管理者ロールチェック、バリデーションエラー、カスケード削除確認ダイアログ相当の削除エンドポイント動作）
-- [ ] Step 9.2: `@WebMvcTest`で`PermissionControllerTest`を作成する（管理者ロールチェック、`DELETE`のクエリパラメータ必須確認、YAML importのサイズ超過エラー）
+- [x] Step 9.1: `@WebMvcTest`で`GroupControllerTest`を作成する（管理者ロールチェック、バリデーションエラー、削除エンドポイント動作）— 7テスト成功
+- [x] Step 9.2: `@WebMvcTest`で`PermissionControllerTest`を作成する（管理者ロールチェック、`DELETE`のクエリパラメータ必須確認、YAML importのサイズ超過エラー）— 実装時に必須クエリパラメータ欠落（`MissingServletRequestParameterException`）が`GlobalExceptionHandler`で未捕捉のまま500になるバグを発見し、`MissingServletRequestParameterException`/`MethodArgumentTypeMismatchException`をVALIDATION_ERROR(400)として扱うハンドラを追加して解消（UNIT-02のGlobalExceptionHandlerへの機能追加、api-layer-summary.mdに追記注記）。Spring 7で`MockMvcResultMatchers.isUnprocessableEntity()`も非推奨と判明し`isUnprocessableContent()`へ置換。8テスト成功
 
 ### 10. API Layer Summary
 
-- [ ] Step 10.1: `aidlc-docs/construction/unit-04/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
+- [x] Step 10.1: `aidlc-docs/construction/unit-04/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
 
 ### 11. Frontend Components Generation
 

@@ -1533,3 +1533,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 6.1〜6.6、7.1完了。GroupServiceTest（11）、PermissionServiceTest（5）、EffectivePermissionResolverTest（10、BR-ACCESS-04の確認済み5ケース含む）、PermissionYamlServiceTest（6）をMockitoで作成。テスト作成時にAccessPermissionのコンストラクタで補助権限強制falseが未適用のバグを発見・修正。EffectivePermissionResolverPropertyTest（5プロパティ）・PermissionYamlServicePropertyTest（2プロパティ、簡易インメモリリポジトリによる実際のexport/import往復検証）をjqwikで作成（本ユニットが初のプロパティテスト実際適用）。全プロパティ・全テスト成功。バックエンド全体の回帰テスト197件も全件成功を確認。business-logic-summary.mdを作成。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 6〜7完了
+
+---
+
+## UNIT-04 Code Generation - Step 8〜10完了（API Layer）
+**Timestamp**: 2026-07-23T10:20:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 8.1〜8.4、9.1〜9.2、10.1完了。group/permissionパッケージのDTO、GroupController、PermissionController（DELETE解除はクエリパラメータで対象キー指定、YAMLエクスポートはContent-Disposition付きダウンロード応答）を作成。PermissionImportResultは実装せず（成功時204、失敗時は既存のBR-API-01エラーレスポンスで十分と判断、YAGNI）。@WebMvcTestでのテスト作成時に、必須クエリパラメータ欠落時にGlobalExceptionHandlerが未捕捉のまま500を返すバグを発見し、MissingServletRequestParameterException/MethodArgumentTypeMismatchExceptionをVALIDATION_ERROR(400)として扱うハンドラを追加（UNIT-02のGlobalExceptionHandlerへの機能追加）。Spring 7でのHttpStatus.UNPROCESSABLE_ENTITY/MockMvcResultMatchers.isUnprocessableEntity()非推奨も判明し置換。15テスト成功、バックエンド全体の回帰テスト212件も全件成功を確認。api-layer-summary.mdを作成。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 8〜10完了

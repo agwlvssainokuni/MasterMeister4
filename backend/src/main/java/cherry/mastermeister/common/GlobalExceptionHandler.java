@@ -25,8 +25,10 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Locale;
 
@@ -54,6 +56,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleValidationException(MethodArgumentNotValidException e,
                                                                         Locale locale) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(toResponse("VALIDATION_ERROR", null, locale));
+    }
+
+    /**
+     * UNIT-04追記: 必須のクエリパラメータ欠落・型不一致（例: PermissionControllerの対象キー指定）も
+     * BR-API-01のVALIDATION_ERRORとして扱う（従来は未捕捉のままExceptionハンドラに落ち500になっていた）。
+     */
+    @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ApiErrorResponse> handleMissingOrInvalidParameter(Exception e, Locale locale) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(toResponse("VALIDATION_ERROR", null, locale));
     }
 
