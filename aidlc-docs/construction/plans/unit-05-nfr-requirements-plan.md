@@ -28,10 +28,10 @@ business-logic-model.md §7でテスト可能プロパティを識別済み（SQ
 
 ## 計画チェックリスト
 
-- [ ] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
-- [ ] Step D: `tech-stack-decisions.md`（SQL構文検証ライブラリ、動的レコードアクセス方式、監査ログ閾値設定方式等）を作成する
+- [x] Step A: 質問への回答を収集する（全8問、AI推奨どおり全問Aで確定 2026-07-24T10:00:00Z）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 回答に曖昧性なし。Q3（毎回正確なCOUNT）とQ7（中規模テーブル前提）の組み合わせは許容されるトレードオフとして両方の選択肢文言に明記済み
+- [x] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
+- [x] Step D: `tech-stack-decisions.md`（SQL構文検証ライブラリ、動的レコードアクセス方式、監査ログ閾値設定方式等）を作成する
 - [ ] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
@@ -45,7 +45,7 @@ B) 外部ライブラリを使わず、本ユニット専用の簡易な再帰�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 2（Tech Stack Selection・Performance）
 対象RDBMSに対する動的なレコード取得・更新・削除（テーブル構造が実行時まで不明）の実装方式は？
@@ -56,7 +56,7 @@ B) `java.sql.DriverManager`で都度接続を確立する（UNIT-03の`SchemaInt
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 3（Performance、BR-MASTER-10）
 レコード一覧のページング（オフセットベース）における総件数取得（COUNT）は、テーブルサイズに関わらず毎回正確に実行しますか？
@@ -67,7 +67,7 @@ B) COUNTクエリを省略し、「次ページが存在するかどうか」の
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 4（Scalability、BR-MASTER-06〜07）
 一括反映バッチ（1リクエストあたりの作成・更新・削除の合計件数）に上限を設けますか？
@@ -78,7 +78,7 @@ B) 上限を設けない（フロントエンドの表示件数（1ページあ�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 5（Tech Stack Selection、BR-MASTER-12）
 監査ログの「大量データ取得」閾値（デフォルト100件、requirements.md §6.1）の設定方式は？
@@ -89,7 +89,7 @@ B) ハードコードする（設定変更には再ビルドが必要）
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 6（Security Requirements・Reliability、SECURITY-14）
 SQL手入力の構文検証拒否（BR-MASTER-04）が多発した場合や、一括反映の失敗（BR-MASTER-07）が多発した場合に対する専用のアラート機構は設けますか？
@@ -100,7 +100,7 @@ B) 専用のアラート機構（例: 短時間内の拒否回数閾値超過で
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 7（Scalability、前提確認）
 対象RDBMSの1テーブルあたりのレコード件数・カラム数について、設計上の前提規模は？
@@ -111,7 +111,7 @@ B) 小規模（1テーブルあたり数千件程度まで）のみを想定す�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 8（Reliability、BR-MASTER-07）
 一括反映のトランザクション制御において、対象RDBMSへの接続が処理途中で切断された場合の扱いは？
@@ -122,4 +122,4 @@ B) UNIT-03と同様、明示的なタイムアウト制御を導入し、長時�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
