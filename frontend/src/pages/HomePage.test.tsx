@@ -39,7 +39,7 @@ function renderHomePage() {
 }
 
 describe('HomePage', () => {
-  it('SideNavの8項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」とする', () => {
+  it('SideNavの8項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」とする', () => {
     renderHomePage()
     // NAV_ROUTESの全項目のタイトルが表示される（SideNav側にも同名の項目があるため、
     // カード側は実装済みカードのdata-testidで、非活性カードはgetAllByTextで確認する）
@@ -49,8 +49,8 @@ describe('HomePage', () => {
     ).toBeInTheDocument()
     expect(screen.getAllByText('監査ログ').length).toBeGreaterThan(0)
 
-    // 未実装カードは「準備中」バッジを持つ（UNIT-03でconnectionsが実装済みになった分、7→6に変化）
-    expect(screen.getAllByText('準備中')).toHaveLength(6)
+    // 未実装カードは「準備中」バッジを持つ（UNIT-04でgroupsが実装済みになった分、6→5に変化）
+    expect(screen.getAllByText('準備中')).toHaveLength(5)
 
     // 実装済みカードのみクリック可能なボタンとして描画される
     expect(screen.getByTestId('feature-card-users')).toBeInTheDocument()

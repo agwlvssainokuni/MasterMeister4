@@ -20,7 +20,9 @@
     "approve": "Approve",
     "reject": "Reject",
     "login": "Log in",
-    "logout": "Log out"
+    "logout": "Log out",
+    "expand": "Expand",
+    "collapse": "Collapse"
   },
   "alert": {
     "info": "Info",
@@ -142,7 +144,45 @@
     "nullable": "Nullable",
     "constraints": "Constraints",
     "notImported": "Schema has not been imported yet",
-    "backToList": "Back to connection list"
+    "backToList": "Back to connection list",
+    "permissions": "Permissions"
+  },
+  "groups": {
+    "title": "Group Management",
+    "addButton": "Create Group",
+    "name": "Group Name",
+    "memberCount": "Members",
+    "actions": "Actions",
+    "manageMembers": "Manage Members",
+    "empty": "No groups registered",
+    "formTitleCreate": "Create Group",
+    "formTitleRename": "Rename Group",
+    "submitCreate": "Create",
+    "submitRename": "Rename",
+    "confirmDeleteTitle": "Confirm Deletion",
+    "confirmDeleteMessage": "Delete this group? Its members and any permissions assigned to it will also be removed.",
+    "membersTitle": "Members of {{name}}",
+    "addMember": "Add User",
+    "selectUser": "Select a user"
+  },
+  "permissions": {
+    "title": "Permissions",
+    "exportButton": "Export YAML",
+    "importButton": "Import YAML",
+    "importExecute": "Run Import",
+    "importSuccess": "Import succeeded",
+    "principalType": "Principal Type",
+    "principal": "Target",
+    "principalUser": "User",
+    "principalGroup": "Group",
+    "selectPrincipal": "Select",
+    "selectPrincipalPrompt": "Select a user or group",
+    "notSet": "Not set",
+    "none": "NONE",
+    "read": "READ",
+    "update": "UPDATE",
+    "create": "CREATE",
+    "delete": "DELETE"
   },
   "home": {
     "welcome": "Welcome to MasterMeister",

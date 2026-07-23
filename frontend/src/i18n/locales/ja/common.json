@@ -20,7 +20,9 @@
     "approve": "承認",
     "reject": "却下",
     "login": "ログイン",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "expand": "展開",
+    "collapse": "折りたたむ"
   },
   "alert": {
     "info": "情報",
@@ -142,7 +144,45 @@
     "nullable": "NULL許容",
     "constraints": "制約",
     "notImported": "スキーマがまだ取り込まれていません",
-    "backToList": "接続一覧へ戻る"
+    "backToList": "接続一覧へ戻る",
+    "permissions": "権限設定"
+  },
+  "groups": {
+    "title": "グループ管理",
+    "addButton": "グループを作成",
+    "name": "グループ名",
+    "memberCount": "所属ユーザ数",
+    "actions": "アクション",
+    "manageMembers": "所属ユーザを管理",
+    "empty": "登録済みのグループはありません",
+    "formTitleCreate": "グループを作成",
+    "formTitleRename": "グループを改名",
+    "submitCreate": "作成",
+    "submitRename": "改名",
+    "confirmDeleteTitle": "削除確認",
+    "confirmDeleteMessage": "このグループを削除しますか？所属ユーザおよびこのグループに設定された権限もあわせて削除されます。",
+    "membersTitle": "{{name}} の所属ユーザ",
+    "addMember": "ユーザを追加",
+    "selectUser": "ユーザを選択"
+  },
+  "permissions": {
+    "title": "権限設定",
+    "exportButton": "YAMLエクスポート",
+    "importButton": "YAMLインポート",
+    "importExecute": "インポートを実行",
+    "importSuccess": "インポートに成功しました",
+    "principalType": "プリンシパル種別",
+    "principal": "対象",
+    "principalUser": "ユーザ",
+    "principalGroup": "グループ",
+    "selectPrincipal": "選択してください",
+    "selectPrincipalPrompt": "対象のユーザまたはグループを選択してください",
+    "notSet": "未設定",
+    "none": "NONE",
+    "read": "READ",
+    "update": "UPDATE",
+    "create": "CREATE",
+    "delete": "DELETE"
   },
   "home": {
     "welcome": "ようこそ、MasterMeisterへ",

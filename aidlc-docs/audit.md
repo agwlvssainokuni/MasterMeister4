@@ -1541,3 +1541,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 8.1〜8.4、9.1〜9.2、10.1完了。group/permissionパッケージのDTO、GroupController、PermissionController（DELETE解除はクエリパラメータで対象キー指定、YAMLエクスポートはContent-Disposition付きダウンロード応答）を作成。PermissionImportResultは実装せず（成功時204、失敗時は既存のBR-API-01エラーレスポンスで十分と判断、YAGNI）。@WebMvcTestでのテスト作成時に、必須クエリパラメータ欠落時にGlobalExceptionHandlerが未捕捉のまま500を返すバグを発見し、MissingServletRequestParameterException/MethodArgumentTypeMismatchExceptionをVALIDATION_ERROR(400)として扱うハンドラを追加（UNIT-02のGlobalExceptionHandlerへの機能追加）。Spring 7でのHttpStatus.UNPROCESSABLE_ENTITY/MockMvcResultMatchers.isUnprocessableEntity()非推奨も判明し置換。15テスト成功、バックエンド全体の回帰テスト212件も全件成功を確認。api-layer-summary.mdを作成。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 8〜10完了
+
+---
+
+## UNIT-04 Code Generation - Step 11〜13完了（Frontend）
+**Timestamp**: 2026-07-23T11:10:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 11.1〜11.8、12.1〜12.3、13.1完了。APIクライアント（groups.ts、permissions.ts。exportPermissionsはYAML非JSON応答のため直接fetch実装）、GroupManagementPage（一覧・作成/改名フォーム・所属ユーザ管理Modal・削除確認）、AccessPermissionTreePage（プリンシパル選択＋スキーマ/テーブル/カラムのツリー展開UI、行単位即時保存、YAML入出力）を作成。App.tsxルーティング・RdbmsConnectionListPageへの権限設定リンク・HomePageのIMPLEMENTED_KEYS・i18nリソースを更新。コンポーネントテスト9件・APIクライアントテスト14件を作成、既存HomePage.test.tsxを実装済みバッジ数変化に合わせ更新。フロントエンド全体の回帰テスト149件全件成功、tsc --noEmit・npm run build成功を確認。frontend-summary.mdを作成。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 11〜13完了

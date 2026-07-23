@@ -85,24 +85,24 @@
 
 ### 11. Frontend Components Generation
 
-- [ ] Step 11.1: APIクライアント`frontend/src/api/groups.ts`を作成する（一覧・作成・改名・削除・所属ユーザ一覧・追加・削除の各関数、`http.ts`共通ラッパー利用）
-- [ ] Step 11.2: APIクライアント`frontend/src/api/permissions.ts`を作成する（一覧・設定（upsert）・解除・YAMLエクスポート・インポートの各関数）
-- [ ] Step 11.3: `GroupManagementPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1、一覧・作成/改名フォームModal・所属ユーザ管理Modal・削除確認ConfirmDialog）
-- [ ] Step 11.4: `AccessPermissionTreePage`（`frontend/src/pages/`）を作成する（frontend-components.md §2、プリンシパル選択部＋スキーマ／テーブル／カラムのツリー展開UI、行単位即時保存、YAMLエクスポート/インポートModal）
-- [ ] Step 11.5: `App.tsx`のルーティングに`/groups`（`GroupManagementPage`、`ProtectedRoute`配下）・`/permissions/:connectionId`（`AccessPermissionTreePage`、同）を追加する
-- [ ] Step 11.6: `RdbmsConnectionListPage`の行アクションに「権限設定」Linkを追加する（frontend-components.md §3、`/permissions/{connectionId}`へ遷移）
-- [ ] Step 11.7: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'groups'`を追加する（frontend-components.md §4）
-- [ ] Step 11.8: i18nリソース（`common.json`/`design-system.json`の`ja`/`en`）に本ユニットの画面文言を追加する
+- [x] Step 11.1: APIクライアント`frontend/src/api/groups.ts`を作成する（一覧・作成・改名・削除・所属ユーザ一覧・追加・削除の各関数、`http.ts`共通ラッパー利用）
+- [x] Step 11.2: APIクライアント`frontend/src/api/permissions.ts`を作成する（一覧・設定（upsert）・解除・YAMLエクスポート・インポートの各関数）— `exportPermissions`はYAML本文（非JSON）を返すため`apiFetch`を使わず認証ヘッダーのみ再現した直接`fetch`で実装（実装判断）
+- [x] Step 11.3: `GroupManagementPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1、一覧・作成/改名フォームModal・所属ユーザ管理Modal・削除確認ConfirmDialog）
+- [x] Step 11.4: `AccessPermissionTreePage`（`frontend/src/pages/`）を作成する（frontend-components.md §2、プリンシパル選択部＋スキーマ／テーブル／カラムのツリー展開UI、行単位即時保存、YAMLエクスポート/インポートModal）
+- [x] Step 11.5: `App.tsx`のルーティングに`/groups`（`GroupManagementPage`、`ProtectedRoute`配下）・`/permissions/:connectionId`（`AccessPermissionTreePage`、同）を追加する
+- [x] Step 11.6: `RdbmsConnectionListPage`の行アクションに「権限設定」Linkを追加する（frontend-components.md §3、`/permissions/{connectionId}`へ遷移。スキーマ取込済みの場合のみ活性化）
+- [x] Step 11.7: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'groups'`を追加する（frontend-components.md §4）
+- [x] Step 11.8: i18nリソース（`common.json`の`ja`/`en`）に`groups.*`/`permissions.*`/`connections.permissions`/`action.expand`/`action.collapse`を追加する
 
 ### 12. Frontend Components Unit Testing
 
-- [ ] Step 12.1: `GroupManagementPage.test.tsx`・`AccessPermissionTreePage.test.tsx`を作成する（Vitest + RTL、フォーム操作・ツリー展開・即時保存・YAML入出力のAPI呼び出しモック）
-- [ ] Step 12.2: `groups.test.ts`・`permissions.test.ts`（APIクライアント）を作成する
-- [ ] Step 12.3: `RdbmsConnectionListPage.test.tsx`・`HomePage.test.tsx`の更新箇所（権限設定リンク追加、実装済みバッジ数の変化）を反映する
+- [x] Step 12.1: `GroupManagementPage.test.tsx`（4件）・`AccessPermissionTreePage.test.tsx`（5件）を作成する（Vitest + RTL、フォーム操作・ツリー展開・即時保存・YAML入出力のAPI呼び出しモック）
+- [x] Step 12.2: `groups.test.ts`（7件）・`permissions.test.ts`（7件）（APIクライアント）を作成する
+- [x] Step 12.3: `HomePage.test.tsx`の更新箇所（実装済みバッジ数7→6→5の変化）を反映する（`RdbmsConnectionListPage.test.tsx`はリンク追加のみで既存テストへの影響なし）
 
 ### 13. Frontend Components Summary
 
-- [ ] Step 13.1: `aidlc-docs/construction/unit-04/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
+- [x] Step 13.1: `aidlc-docs/construction/unit-04/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
 
 ### 14. Documentation Generation
 

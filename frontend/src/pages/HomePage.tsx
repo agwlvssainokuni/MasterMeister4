@@ -22,7 +22,7 @@ import styles from './HomePage.module.css'
 
 // frontend-components.md §5。SideNavの8項目に対応するカードグリッド。UNIT-02/03で
 // 実装済みの「ユーザ管理」「RDBMS接続設定」のみ活性、他ユニットは「準備中」の非活性カードとする。
-const IMPLEMENTED_KEYS = new Set(['users', 'connections'])
+const IMPLEMENTED_KEYS = new Set(['users', 'connections', 'groups'])
 
 export function HomePage() {
   const { t } = useTranslation(['common', 'design-system'])

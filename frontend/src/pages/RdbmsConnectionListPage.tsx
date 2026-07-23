@@ -332,6 +332,11 @@ export function RdbmsConnectionListPage() {
               {t('connections.schemaDetail')}
             </Link>
           ) : null}{' '}
+          {c.schemaImportedAt ? (
+            <Link to={`/permissions/${c.id}`} data-testid={`connections-permissions-${c.id}`}>
+              {t('connections.permissions')}
+            </Link>
+          ) : null}{' '}
           <Button
             size="sm"
             variant="ghost"
