@@ -31,19 +31,19 @@
 - [x] Step 2.2: `V13__create_group_membership_table.sql`を作成する（domain-entities.md §3、`group_id`外部キー、`(group_id, user_id)`のUNIQUE制約）
 - [x] Step 2.3: `V14__create_access_permission_table.sql`を作成する（domain-entities.md §1。`schema_name`/`table_name`/`column_name`はすべて`NOT NULL`とし「該当階層なし」を空文字列で表現（nfr-design-patterns.md §3.1）。`(connection_id, principal_type, principal_id, schema_name, table_name, column_name)`のUNIQUE制約、`(connection_id, principal_type, principal_id)`・`(connection_id, schema_name, table_name, column_name)`の複合INDEXを追加（nfr-design-patterns.md §2.2）。`connection_id`は`rdbms_connection(id)`へのON DELETE CASCADE外部キーとした（接続削除時に権限設定も削除、実装判断）
 - [x] Step 2.4: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`PERMISSION_CHANGED`, `GROUP_CREATED`, `GROUP_RENAMED`, `GROUP_DELETED`, `GROUP_MEMBER_ADDED`, `GROUP_MEMBER_REMOVED`, `PERMISSION_YAML_EXPORTED`, `PERMISSION_YAML_IMPORTED`を追加する（domain-entities.md §4。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
-- [ ] Step 2.5: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する（Step 3.5で実施）
+- [x] Step 2.5: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する（Step 3.5で実施、10件全件成功）
 
 ### 3. Repository Layer Generation
 
-- [ ] Step 3.1: enumを作成する: `PrincipalType`, `PrimaryPermission`（`cherry.mastermeister.permission.entity`）
-- [ ] Step 3.2: JPAエンティティ`AccessPermission`（`cherry.mastermeister.permission.entity`）を作成する（domain-entities.md §1の属性。`tableName`/`columnName`のgetter/setterで空文字列⇄`null`変換を行う）
-- [ ] Step 3.3: JPAエンティティ`Group`・`GroupMembership`（`cherry.mastermeister.group.entity`）を作成する（domain-entities.md §2〜3。`Group`→`GroupMembership`は`@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)`。`GroupMembership.userId`は`registration`パッケージへの直接依存を避けIDのみ保持）
-- [ ] Step 3.4: Spring Data JPAリポジトリを作成する: `AccessPermissionRepository`（`cherry.mastermeister.permission.repository`、`findByConnectionIdAndPrincipalTypeAndPrincipalId`等）, `GroupRepository`・`GroupMembershipRepository`（`cherry.mastermeister.group.repository`、`findByGroupId`/`findByUserId`等）
-- [ ] Step 3.5: **検証チェックポイント**: `@DataJpaTest`で基本CRUD・一意制約違反・`Group`削除時の`GroupMembership`カスケード削除を検証するテストを作成する
+- [x] Step 3.1: enumを作成する: `PrincipalType`, `PrimaryPermission`（`cherry.mastermeister.permission.entity`）
+- [x] Step 3.2: JPAエンティティ`AccessPermission`（`cherry.mastermeister.permission.entity`）を作成する（domain-entities.md §1の属性。`tableName`/`columnName`のgetter/setterで空文字列⇄`null`変換を行う）
+- [x] Step 3.3: JPAエンティティ`Group`・`GroupMembership`（`cherry.mastermeister.group.entity`）を作成する（domain-entities.md §2〜3。`Group`→`GroupMembership`は`@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)`。`GroupMembership.userId`は`registration`パッケージへの直接依存を避けIDのみ保持）
+- [x] Step 3.4: Spring Data JPAリポジトリを作成する: `AccessPermissionRepository`（`cherry.mastermeister.permission.repository`、`findAllByConnectionIdAndPrincipalTypeAndPrincipalId`等）, `GroupRepository`・`GroupMembershipRepository`（`cherry.mastermeister.group.repository`、`findByName`/`findAllByUserId`等）
+- [x] Step 3.5: **検証チェックポイント**: `@DataJpaTest`で基本CRUD・一意制約違反・`Group`削除時の`GroupMembership`カスケード削除を検証するテストを作成する — 実装時に`@EnableCaching`を`MasterMeisterApplication`に直接付与すると`@DataJpaTest`スライスで`CacheManager`不在により起動失敗する問題を発見し、`common.config.CacheConfig`（独立`@Configuration`クラス）へ切り出して解消。10テスト全件成功
 
 ### 4. Repository Layer Summary
 
-- [ ] Step 4.1: `aidlc-docs/construction/unit-04/code/repository-layer-summary.md`を作成する（エンティティ・リポジトリ・マイグレーション一覧、テスト結果）
+- [x] Step 4.1: `aidlc-docs/construction/unit-04/code/repository-layer-summary.md`を作成する（エンティティ・リポジトリ・マイグレーション一覧、テスト結果）
 
 ### 5. Business Logic Generation
 

@@ -1509,3 +1509,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 2.1〜2.4完了。V12（app_group、V1のapp_user同様H2予約語回避のためテーブル名を訂正）、V13（group_membership）、V14（access_permission、センチネル値方式・複合INDEX3種・rdbms_connectionへのON DELETE CASCADE外部キー）を作成。AuditEventTypeに8種のイベントを追加。Step 2.5（Flyway適用確認）はStep 3.5のRepository層テストで実施予定。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 2完了
+
+---
+
+## UNIT-04 Code Generation - Step 3〜4完了（Repository Layer）
+**Timestamp**: 2026-07-23T09:05:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 3.1〜3.5、4.1完了。PrincipalType/PrimaryPermission enum、AccessPermission（センチネル値変換）、Group/GroupMembershipエンティティ、AccessPermissionRepository/GroupRepository/GroupMembershipRepositoryを作成。@DataJpaTestでの実行時に、MasterMeisterApplicationへ直接@EnableCachingを付与するとテストスライスでCacheManager不在により起動失敗する問題を発見し、common.config.CacheConfig（独立@Configurationクラス）へ切り出して解消（nfr-design/logical-components.mdへ訂正注記追加）。10テスト全件成功。repository-layer-summary.mdを作成。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 3〜4完了

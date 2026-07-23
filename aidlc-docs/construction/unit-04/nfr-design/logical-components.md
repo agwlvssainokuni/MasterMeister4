@@ -99,4 +99,4 @@ spring:
 ```
 
 - `CaffeineCacheManager`はSpring Bootの自動構成（`spring.cache.type: caffeine`）により登録される。個別の`@Bean`定義は不要（tech-stack-decisions.md §1・§2）
-- メインクラスに`@EnableCaching`を付与する
+- ~~メインクラスに`@EnableCaching`を付与する~~ 訂正（Code Generation時に発見）: `@EnableCaching`を`MasterMeisterApplication`に直接付与すると、`@DataJpaTest`等のテストスライスが`CacheAutoConfiguration`を除外する一方でアノテーション自体はルート設定クラスとして読み込まれてしまい、`CacheManager`不在で起動に失敗する。`cherry.mastermeister.common.config.CacheConfig`という独立した`@Configuration`クラスに切り出すことで、テストスライスのコンポーネントスキャン除外対象となり解消した
