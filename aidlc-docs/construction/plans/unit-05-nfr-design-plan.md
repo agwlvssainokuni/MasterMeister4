@@ -4,10 +4,10 @@ nfr-requirements.md／tech-stack-decisions.mdの決定事項（JSqlParserによ�
 
 ## 計画チェックリスト
 
-- [ ] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-design-patterns.md`（レジリエンス・パフォーマンス・セキュリティの設計パターン）を作成する
-- [ ] Step D: `logical-components.md`（新設する論理コンポーネント、データ設計上の注意点等）を作成する
+- [x] Step A: 質問への回答を収集する（全8問、AI推奨どおり全問Aで確定 2026-07-24T10:30:00Z）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
+- [x] Step C: `nfr-design-patterns.md`（レジリエンス・パフォーマンス・セキュリティの設計パターン）を作成する
+- [x] Step D: `logical-components.md`（新設する論理コンポーネント、データ設計上の注意点等）を作成する
 - [ ] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
@@ -23,7 +23,7 @@ B) 権限チェック・制約チェックの両方を、実際にDBへ反映す
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 2（Resilience Patterns、BR-MASTER-07）
 Question 1でA案の場合、バッチ内の一部操作でDB例外（制約違反）が発生した場合、どの操作が失敗したかをどう特定しますか？
@@ -34,7 +34,7 @@ B) バッチ全体を1つのSQL（複数行INSERT等）にまとめて実行し�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 3（Logical Components、BR-MASTER-04）
 JSqlParserによるSQL構文検証が入力を拒否した場合のエラー表現は？
@@ -45,7 +45,7 @@ B) 既存の`MethodArgumentNotValidException`（Bean Validation）に無理に�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 4（Logical Components）
 `RecordColumn.dataTypeCategory`（`NUMERIC`/`DATETIME`/`STRING`/`BOOLEAN`、BR-MASTER-05のフィルタ演算子決定に使用）は、どこでJDBC型情報から導出しますか？
@@ -56,7 +56,7 @@ B) UNIT-03の`SchemaColumn`エンティティ自体に`dataTypeCategory`フィ�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 5（Security Patterns、SECURITY-08）
 新設する一般ユーザ向けAPI（`/api/master-data/**`）のアクセス制御実装は？
@@ -69,7 +69,7 @@ B) `/api/admin/**`と同様、ADMINロール専用とする（一般ユーザが
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 6（Performance Patterns）
 一括反映バッチの件数上限（1,000件、NFR-05-05）・監査ログ閾値（100件、NFR-05-10）の設定値は、どこにどう定義しますか？
@@ -80,7 +80,7 @@ B) `masterdata`パッケージ内に本ユニット専用の設定クラスを�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 7（Logical Components・Resilience Patterns）
 `DataSourceTransactionManager`は、一括反映のリクエストごとに毎回新規生成しますか、それとも`RdbmsConnectionService`の`HikariDataSource`キャッシュと同様に接続ID単位でキャッシュしますか？
@@ -91,7 +91,7 @@ B) `HikariDataSource`と同様、接続ID単位で`DataSourceTransactionManager`
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
 
 ### Question 8（Logical Components）
 `masterdata`パッケージのController構成は？
@@ -102,4 +102,4 @@ B) リソース単位で複数のControllerに分割する（例: `MasterDataCon
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]:
+[Answer]: A
