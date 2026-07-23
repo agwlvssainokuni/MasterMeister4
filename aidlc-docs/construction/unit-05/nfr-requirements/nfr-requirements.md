@@ -19,13 +19,13 @@ requirements.mdにHA・DR要件の記載はない。既存方針（NFR-2.x）と
 
 ## 4. Reliability
 
-- **NFR-05-06**: 一括反映のトランザクション制御において、対象RDBMSへの接続が処理途中で切断された場合はJDBCトランザクションの自動ロールバックに委ねる（Q8=A）。UNIT-03のような明示的なタイムアウト制御（`CompletableFuture.orTimeout`）は導入しない（一括反映は短時間で完結する処理であり、UNIT-03のスキーマ取込のような長時間処理とは性質が異なるため）
+- **NFR-05-06（訂正、レビュー指摘の反映）**: 一括反映（BR-MASTER-07のオールオアナッシング）は、宣言的`@Transactional`（アプリ内部DB用の`PlatformTransactionManager`にバインドされ、実行時に選択される対象RDBMS用`DataSource`の制御には使えない）には頼らず、対象接続ごとに都度生成する`DataSourceTransactionManager`と`TransactionTemplate`により明示的にトランザクションを制御する（Q8=A、詳細はtech-stack-decisions.md §8参照）。接続が処理途中で切断された場合もコミット前であればロールバックとして扱われる。UNIT-03のような明示的なタイムアウト制御（`CompletableFuture.orTimeout`）は導入しない
 - **NFR-05-07**: SQL手入力の構文検証拒否・一括反映の失敗が多発した場合の専用アラート機構は設けない（Q6=A）。UNIT-02のログベースの検知（NFR-4.5）の対象範囲内とする
 
 ## 5. Security
 
 - **NFR-05-08（最重要）**: STORY-4.2のWHERE句・ORDER BY句手入力は、JSqlParserによる構文解析・Visitorパターンでの構文要素検証を経てパラメータ化する（Q1=A、BR-MASTER-04、SECURITY-05）。自前実装によるパーサではなく、実績のある外部ライブラリでSQLインジェクションリスクを低減する
-- **NFR-05-09**: 動的なレコードアクセス（テーブル構造が実行時まで不明）は、既存の`RdbmsConnectionService.getDataSource(connectionId)`（HikariCP、UNIT-03既存）とSpring JdbcTemplate/NamedParameterJdbcTemplateの組み合わせで実装し、バインドパラメータで値を渡す（Q2=A）
+- **NFR-05-09**: 動的なレコードアクセス（テーブル構造が実行時まで不明）は、既存の`RdbmsConnectionService.getDataSource(connectionId)`（HikariCP、UNIT-03既存）と`NamedParameterJdbcTemplate`の組み合わせで実装し、バインドパラメータで値を渡す（Q2=A）。一括反映時は同一`DataSource`に対して`DataSourceTransactionManager`が管理するトランザクションに参加させる（NFR-05-06）
 - **NFR-05-10**: 監査ログの「大量データ取得」閾値（デフォルト100件）は`application.yml`の設定値として持たせ、`AppProperties`経由で参照する（Q5=A、BR-MASTER-12）
 
 ## 6. Maintainability

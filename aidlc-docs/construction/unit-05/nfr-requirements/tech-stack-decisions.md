@@ -16,11 +16,13 @@
 
 ## 2. 動的レコードアクセスの実装方式（Q2=A、NFR-05-09）
 
-**決定**: 既存の`RdbmsConnectionService.getDataSource(connectionId)`（HikariCPでキャッシュ済みのDataSource、UNIT-03既存）を流用し、Spring JdbcTemplate/NamedParameterJdbcTemplateで動的SQLを実行する。
+**決定**: 既存の`RdbmsConnectionService.getDataSource(connectionId)`（HikariCPでキャッシュ済みのDataSource、UNIT-03既存）を流用し、`NamedParameterJdbcTemplate`で動的SQLを実行する。
 
-**理由**: 対象テーブルの構造は実行時まで不明なため、JPAエンティティは使えない。UNIT-03の`SchemaIntrospectionService`は`DriverManager`で都度接続を確立する方式だが（スキーマ取込という低頻度の管理操作のため許容）、本ユニットのレコード取得・更新・削除は一般ユーザによる高頻度の操作であり、`RdbmsConnectionService`が既に提供するHikariCPのコネクションプールを活用する方が効率的である。
+**理由**: 対象テーブルの構造は実行時まで不明なため、JPAエンティティは使えない。UNIT-03の`SchemaIntrospectionService`は`DriverManager`で都度接続を確立する方式だが（スキーマ取込という低頻度の管理操作のため許容）、本ユニットのレコード取得・更新・削除は一般ユーザによる高頻度の操作であり、`RdbmsConnectionService`が既に提供するHikariCPのコネクションプールを活用する方が効率的である。名前付きパラメータ（`:columnName`形式）は、動的に組み立てるカラム名・値の対応が多いレコード取得・一括反映の実装において、位置パラメータ（`?`）より可読性・保守性に優れる。
 
 **依存関係**: 追加不要（`spring-boot-starter-jdbc`は`spring-boot-starter-data-jpa`の推移的依存として既に存在する）
+
+**トランザクション制御との関係（NFR-05-06参照）**: 一括反映（BR-MASTER-07のオールオアナッシング）を実行する`NamedParameterJdbcTemplate`は、そのバッチ専用に生成した`DataSourceTransactionManager(dataSource)`が管理するトランザクション内で使用する。`NamedParameterJdbcTemplate`（内部的に`JdbcTemplate`経由で`DataSourceUtils.getConnection(dataSource)`を呼ぶ）は、同一`dataSource`に対して有効なトランザクション同期が張られている限り、そのトランザクションに参加する（同一コネクション・オートコミット無効化状態で実行される）。レコード一覧取得（読み取りのみ、オールオアナッシングの対象外）はトランザクション制御なしで単純に実行してよい。
 
 ---
 
@@ -66,8 +68,10 @@
 
 ---
 
-## 8. 接続切断時の扱い（Q8=A、NFR-05-06）
+## 8. 一括反映のトランザクション制御方式・接続切断時の扱い（Q8=A、NFR-05-06、レビュー指摘の反映）
 
-**決定**: 一括反映のトランザクション制御において、対象RDBMSへの接続が処理途中で切断された場合はJDBCトランザクションの自動ロールバックに委ねる。UNIT-03のような明示的なタイムアウト制御（`CompletableFuture.orTimeout`）は導入しない。
+**決定（訂正）**: 一括反映（BR-MASTER-07のオールオアナッシング）は、宣言的`@Transactional`には頼らず、対象接続ごとに都度生成した`DataSourceTransactionManager(dataSource)`と`TransactionTemplate`によって明示的にトランザクションを制御する。バッチ内の全操作の権限・制約チェックを通過した場合のみコミットし、1件でも失敗すればロールバックする。接続が処理途中で切断された場合も、コミット前であれば同様にロールバック（またはコミット不能のまま破棄）として扱われる。UNIT-03のような明示的なタイムアウト制御（`CompletableFuture.orTimeout`）は導入しない。
+
+**訂正の経緯（レビュー指摘）**: 当初「JDBCトランザクションの自動ロールバックに委ねる」としていたが、これは前提が誤っていた。Spring Bootの`@Transactional`はデフォルトでアプリ内部DB（H2、JPA）用の`PlatformTransactionManager`にバインドされ、実行時に選択される対象RDBMS用の`DataSource`（`RdbmsConnectionService.getDataSource(connectionId)`）はその管理下に入らない。単純に`@Transactional`を付与しただけでは、`NamedParameterJdbcTemplate`の各操作がトランザクション同期の対象外となり、実質オートコミット状態で1行ずつ即座にコミットされてしまい、オールオアナッシング（FR-4.6）がまったく保証されない欠陥になり得る。対象接続ごとに`DataSourceTransactionManager`を明示的に生成し`TransactionTemplate`でトランザクション境界を制御することで、この問題を回避する。
 
 **理由**: UNIT-03のスキーマ取込は対象RDBMSの規模次第で長時間化しうる処理であるためタイムアウト制御が必要だったが、本ユニットの一括反映は1バッチ最大1,000件（NFR-05-05）という上限のもとで短時間に完結する処理であり、同等の複雑な制御を導入する必要性は低いと判断する。

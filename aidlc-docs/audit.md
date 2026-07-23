@@ -1647,3 +1647,11 @@
 **Context**: CONSTRUCTION - UNIT-05 NFR Requirements Part、成果物作成完了・完了メッセージ提示前
 
 ---
+
+## UNIT-05 NFR Requirements完了メッセージ後のレビュー指摘対応（トランザクション制御方式の欠陥修正）
+**Timestamp**: 2026-07-24T10:15:00Z
+**User Input**: "確認した方が良い事項は？" ／ "OK。ただしNamedParameterJdbcTemplate"
+**AI Response**: "NFR-05-06/tech-stack-decisions.md §8の当初案「JDBCトランザクションの自動ロールバックに委ねる」が、Spring Bootの@Transactionalがデフォルトでアプリ内部DB用のPlatformTransactionManagerにバインドされ、実行時選択の対象RDBMS用DataSourceの制御には使えないという前提誤りに基づいていた欠陥を発見（UNIT-04のHibernateフラッシュ順序バグと同種の、実装時まで気づきにくい類のもの）。対象接続ごとに都度生成するDataSourceTransactionManagerとTransactionTemplateで明示的にトランザクション制御する方式に訂正。ユーザーの指定によりJDBCアクセス手段はNamedParameterJdbcTemplateのまま（プレーンJdbcTemplateではなく）継続する形で、nfr-requirements.md NFR-05-06/NFR-05-09、tech-stack-decisions.md §2・§8を修正した。"
+**Context**: CONSTRUCTION - UNIT-05 NFR Requirements承認前レビュー、トランザクション制御方式の欠陥修正
+
+---
