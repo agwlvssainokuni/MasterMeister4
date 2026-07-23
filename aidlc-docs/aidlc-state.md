@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - Code Generation（Part 1計画作成完了、承認待ち）
-- **Next Stage**: 計画承認後、Part 2生成へ
+- **Current Stage**: UNIT-04 アクセス制御 - Code Generation（Part 1承認済み、Part 2生成中）
+- **Next Stage**: Part 2完了後、Build and Testへ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)

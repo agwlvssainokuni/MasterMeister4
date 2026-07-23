@@ -21,9 +21,9 @@
 
 ### 1. Build Configuration
 
-- [ ] Step 1.1: `backend/build.gradle.kts`に依存関係を追加する: `implementation("com.github.ben-manes.caffeine:caffeine")`, `implementation("org.springframework.boot:spring-boot-starter-cache")`（tech-stack-decisions.md §1・§2）
-- [ ] Step 1.2: `backend/src/main/resources/application.yml`にCaffeineキャッシュ設定を追加する（`spring.cache.type: caffeine`, `spring.cache.cache-names: effectivePermission`, `spring.cache.caffeine.spec: maximumSize=10000,expireAfterWrite=30m`。logical-components.md §5）
-- [ ] Step 1.3: `MasterMeisterApplication`に`@EnableCaching`を付与する
+- [x] Step 1.1: `backend/build.gradle.kts`に依存関係を追加する: `implementation("com.github.ben-manes.caffeine:caffeine")`, `implementation("org.springframework.boot:spring-boot-starter-cache")`（tech-stack-decisions.md §1・§2）— WebSearchでCaffeine最新安定版3.2.4を確認の上、明示バージョン指定で追加
+- [x] Step 1.2: `backend/src/main/resources/application.yml`にCaffeineキャッシュ設定を追加する（`spring.cache.type: caffeine`, `spring.cache.cache-names: effectivePermission`, `spring.cache.caffeine.spec: maximumSize=10000,expireAfterWrite=30m`。logical-components.md §5）
+- [x] Step 1.3: `MasterMeisterApplication`に`@EnableCaching`を付与する
 
 ### 2. Database Migration Scripts
 
