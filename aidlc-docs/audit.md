@@ -1687,3 +1687,11 @@
 **Context**: CONSTRUCTION - UNIT-05 NFR Design承認、Infrastructure Designへ移行
 
 ---
+
+## UNIT-05 Infrastructure Design - SKIP判定
+**Timestamp**: 2026-07-24T10:45:00Z
+**User Input**: "OK"
+**AI Response**: "UNIT-05のInfrastructure DesignはSKIPと判定・承認された。新規インフラ要素（デプロイ環境・クラウドリソース・メッセージング・ネットワーキング）が不要で、JSqlParserはライブラリ依存に過ぎず、既存devenv・HikariCP接続プールをそのまま利用するため。次はCode Generationへ進む。"
+**Context**: CONSTRUCTION - UNIT-05 Infrastructure Design SKIP、Code Generationへ移行
+
+---

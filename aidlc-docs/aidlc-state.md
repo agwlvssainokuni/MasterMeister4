@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - Infrastructure Design判定（SKIP見込み）→ Code Generation計画へ
-- **Next Stage**: Code Generation（Part 1計画→Part 2実装）
+- **Current Stage**: UNIT-05 マスタメンテナンス - Code Generation Part 1（計画作成）
+- **Next Stage**: Code Generation Part 2（実装）
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -86,7 +86,7 @@
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-24T09:50:00Z。business-logic-model.md, business-rules.md（BR-MASTER-01〜15）, domain-entities.md, frontend-components.mdを作成。全17問（Q1〜17）に回答、レビューでdeletableフィールド欠落（AccessibleTable/RecordPage/ER図）とフィルタ併用可否未定義を修正。一般ユーザ向け新規API名前空間`/api/master-data/*`、接続選択→テーブル/ビュー一覧→レコード一覧の3画面構成、内部DB新規永続化なしを決定）
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-24T10:20:00Z。JSqlParserによるSQL手入力の構文検証、既存`RdbmsConnectionService.getDataSource()`＋`NamedParameterJdbcTemplate`による動的レコードアクセス、一括反映バッチ上限1,000件、監査ログ閾値のapplication.yml設定化を決定。レビューで一括反映のトランザクション制御方式の欠陥（@Transactionalが対象RDBMS用DataSourceを制御できない）を発見し、接続ごとの`DataSourceTransactionManager`＋`TransactionTemplate`による明示的制御に修正）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-24T10:40:00Z。全8問に回答。オールオアナッシングの2段階検証手順、JSqlParserのダミーSELECT文embedding構文検証、DataSourceTransactionManagerのリクエストごと生成、/api/master-data/**の新規SecurityFilterChainルール、MasterDataController等の論理コンポーネントを確定）
-- [ ] Infrastructure Design
+- [x] Infrastructure Design — SKIP（承認 2026-07-24T10:45:00Z。新規インフラ不要、JSqlParserはライブラリ依存のみ）
 - [ ] Code Generation
 
 ## Current Unit Progress
