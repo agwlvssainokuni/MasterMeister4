@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - NFR Requirements Part 1（計画）、質問提示・回答待ち
-- **Next Stage**: 回答収集後、NFR要件・技術選定文書の作成・承認 → NFR Design → Infrastructure Design → Code Generation
+- **Current Stage**: UNIT-05 マスタメンテナンス - NFR Designの要否判定待ち
+- **Next Stage**: NFR Design → Infrastructure Design → Code Generation
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -84,7 +84,7 @@
 
 ## Current Unit - Stage Progress (UNIT-05)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-24T09:50:00Z。business-logic-model.md, business-rules.md（BR-MASTER-01〜15）, domain-entities.md, frontend-components.mdを作成。全17問（Q1〜17）に回答、レビューでdeletableフィールド欠落（AccessibleTable/RecordPage/ER図）とフィルタ併用可否未定義を修正。一般ユーザ向け新規API名前空間`/api/master-data/*`、接続選択→テーブル/ビュー一覧→レコード一覧の3画面構成、内部DB新規永続化なしを決定）
-- [ ] NFR Requirements
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-24T10:20:00Z。JSqlParserによるSQL手入力の構文検証、既存`RdbmsConnectionService.getDataSource()`＋`NamedParameterJdbcTemplate`による動的レコードアクセス、一括反映バッチ上限1,000件、監査ログ閾値のapplication.yml設定化を決定。レビューで一括反映のトランザクション制御方式の欠陥（@Transactionalが対象RDBMS用DataSourceを制御できない）を発見し、接続ごとの`DataSourceTransactionManager`＋`TransactionTemplate`による明示的制御に修正）
 - [ ] NFR Design
 - [ ] Infrastructure Design
 - [ ] Code Generation
