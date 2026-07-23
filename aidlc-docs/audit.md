@@ -1631,3 +1631,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Functional Design承認、NFR Requirementsへ移行
 
 ---
+
+## UNIT-05 マスタメンテナンス - NFR Requirements計画作成
+**Timestamp**: 2026-07-24T09:55:00Z
+**User Input**: (N/A - AI-initiated step、NFR Requirements要否判定・計画作成)
+**AI Response**: "UNIT-05はSQL手入力の構文検証（Tech Stack/Security）、動的レコードアクセス方式、ページング・バッチサイズの性能設計等、NFR判断が必要なためEXECUTE判定。unit-05-nfr-requirements-plan.mdを作成。Security Baseline該当ルール評価表、8件の質問（SQL構文検証ライブラリ、動的レコードアクセス方式、COUNT実行方針、バッチサイズ上限、監査ログ閾値設定方式、アラート機構要否、テーブル規模前提、接続切断時の扱い）を提示し回答待ち。"
+**Context**: CONSTRUCTION - UNIT-05 NFR Requirements Part 1（計画）、質問提示・回答待ち
+
+---
