@@ -1549,3 +1549,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 11.1〜11.8、12.1〜12.3、13.1完了。APIクライアント（groups.ts、permissions.ts。exportPermissionsはYAML非JSON応答のため直接fetch実装）、GroupManagementPage（一覧・作成/改名フォーム・所属ユーザ管理Modal・削除確認）、AccessPermissionTreePage（プリンシパル選択＋スキーマ/テーブル/カラムのツリー展開UI、行単位即時保存、YAML入出力）を作成。App.tsxルーティング・RdbmsConnectionListPageへの権限設定リンク・HomePageのIMPLEMENTED_KEYS・i18nリソースを更新。コンポーネントテスト9件・APIクライアントテスト14件を作成、既存HomePage.test.tsxを実装済みバッジ数変化に合わせ更新。フロントエンド全体の回帰テスト149件全件成功、tsc --noEmit・npm run build成功を確認。frontend-summary.mdを作成。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 11〜13完了
+
+---
+
+## UNIT-04 Code Generation - Step 14〜15完了（Documentation・Deployment Artifacts）
+**Timestamp**: 2026-07-23T11:20:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 14.1〜14.2、15.1完了。backend/README.mdにUNIT-04概要（グループ管理・権限設定・Caffeineキャッシュ）を追記、frontend/README.mdの冒頭説明・pages構成にUNIT-04の新規画面を追記。devenv/docker-compose.ymlを確認し追加インフラ不要であることを確認（既存mailpit/mysql/mariadb/postgres構成のまま）。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 14〜15完了

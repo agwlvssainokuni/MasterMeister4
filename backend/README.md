@@ -1,6 +1,6 @@
 # MasterMeister backend
 
-Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を、UNIT-03（RDBMSセットアップ）で対象RDBMS接続の登録・管理とスキーマ取込の基盤を構築した。
+Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を、UNIT-03（RDBMSセットアップ）で対象RDBMS接続の登録・管理とスキーマ取込の基盤を、UNIT-04（アクセス制御）でグループ管理・権限設定・実効権限判定の基盤を構築した。
 
 ## 起動
 
@@ -58,6 +58,10 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 - **対象RDBMS接続に使用するDBユーザは、最小権限（本アプリの用途に必要な範囲のみ）で作成することを推奨する**（読取専用のマスタメンテナンスであれば`SELECT`権限のみのユーザを用意する等）。DBユーザの権限設定自体はRDBMS側の運用管理であり、本アプリは指定された認証情報でそのまま接続を試みるのみでアプリケーション側での権限チェック・強制は行わない
 - TLS接続はデフォルトで無効。有効化する場合は接続情報の「追加パラメータ」欄に、対象RDBMSの実際のTLS構成に応じたJDBCパラメータ（例: MySQL/MariaDBは`useSSL=true`、PostgreSQLは`sslmode=require`）を指定する
 
+## アクセス制御（UNIT-04）
+
+管理者ダッシュボードの「グループ管理」画面（`/groups`）でユーザグループを作成・管理し、各RDBMS接続の「権限設定」画面（`/permissions/{connectionId}`）でユーザ／グループ単位にスキーマ／テーブル／カラム階層の権限（主権限: NONE/READ/UPDATE、補助権限: CREATE/DELETE）を設定する。実効権限の判定結果（`EffectivePermissionResolver`）はCaffeineでインメモリキャッシュし（`spring.cache.*`、`maximumSize=10000, expireAfterWrite=30m`）、権限変更・グループ変更・スキーマ再取込のたびに全体無効化する。追加の環境変数は不要（キャッシュはアプリ内蔵、外部ミドルウェア不要）。
+
 ## API仕様書（OpenAPI/Swagger UI）
 
 起動後、`http://localhost:8080/swagger-ui.html`で確認できる（`springdoc-openapi-starter-webmvc-ui`により自動生成、`/api/admin/**`はBearer認証が必要）。
@@ -77,4 +81,4 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 - `backend`: 本モジュール（アプリケーション本体）
 - `cherry-mustache-core`: メールテンプレートレンダリングに使用する自作Mustacheエンジン（独立したGradleサブプロジェクト。パッケージ名は`cherry.mustache`のまま維持）
 
-詳細は`aidlc-docs/construction/unit-0{2,3}/code/{repository-layer-summary,business-logic-summary,api-layer-summary}.md`を参照。
+詳細は`aidlc-docs/construction/unit-0{2,3,4}/code/{repository-layer-summary,business-logic-summary,api-layer-summary}.md`を参照。

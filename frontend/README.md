@@ -1,6 +1,6 @@
 # MasterMeister frontend
 
-React 19 + TypeScript + Vite製のフロントエンド。UNIT-01（デザインシステム基盤）で構築した共通コンポーネント・グランドデザインは`src/design-system/`配下、UNIT-02（ユーザ登録・認証）で構築したログイン・ユーザ登録・ユーザ管理・トップ画面、UNIT-03（RDBMSセットアップ）で構築したRDBMS接続設定・スキーマ詳細画面は`src/pages/`配下にある。
+React 19 + TypeScript + Vite製のフロントエンド。UNIT-01（デザインシステム基盤）で構築した共通コンポーネント・グランドデザインは`src/design-system/`配下、UNIT-02（ユーザ登録・認証）で構築したログイン・ユーザ登録・ユーザ管理・トップ画面、UNIT-03（RDBMSセットアップ）で構築したRDBMS接続設定・スキーマ詳細画面、UNIT-04（アクセス制御）で構築したグループ管理・権限設定画面は`src/pages/`配下にある。
 
 ## 開発
 
@@ -53,9 +53,9 @@ src/
 ├── i18n/                 # 多言語対応（react-i18next、common/design-system名前空間。アプリ全体で使う横断的インフラのためdesign-system/の外に配置）
 ├── auth/                # 認証状態管理（AuthContext）、トークン保管（sessionStorage）、JWTデコード
 ├── api/                  # バックエンドAPIクライアント（apiFetch、リフレッシュ自動再試行）
-├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）で構築した画面
+├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）・UNIT-04（グループ管理、権限設定）で構築した画面
 ├── mocks/              # devビルド限定のコンポーネントカタログ・代表画面モック
 └── test/                 # テスト共通セットアップ・ヘルパー（renderMock、renderPage）
 ```
 
-詳細は`aidlc-docs/construction/unit-01/code/component-inventory.md`（デザインシステム）・`aidlc-docs/construction/unit-0{2,3}/code/frontend-summary.md`（認証基盤・画面）を参照。
+詳細は`aidlc-docs/construction/unit-01/code/component-inventory.md`（デザインシステム）・`aidlc-docs/construction/unit-0{2,3,4}/code/frontend-summary.md`（認証基盤・画面）を参照。

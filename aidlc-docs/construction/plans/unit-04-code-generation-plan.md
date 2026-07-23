@@ -106,12 +106,12 @@
 
 ### 14. Documentation Generation
 
-- [ ] Step 14.1: `backend/README.md`を更新する（Caffeineキャッシュ依存関係の追記）
-- [ ] Step 14.2: `frontend/README.md`を更新する（新規ページ・ルーティングの追記、必要であれば）
+- [x] Step 14.1: `backend/README.md`を更新する（UNIT-04概要、グループ管理・権限設定・Caffeineキャッシュの説明を追記）
+- [x] Step 14.2: `frontend/README.md`を更新する（UNIT-04の新規画面をpages概要・冒頭説明に追記）
 
 ### 15. Deployment Artifacts
 
-- [ ] Step 15.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラ（新規コンテナ等）が不要であることを確認する（キャッシュはアプリ内蔵のCaffeineのため追加コンポーネント不要見込み）
+- [x] Step 15.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラ（新規コンテナ等）が不要であることを確認する（キャッシュはアプリ内蔵のCaffeineのため追加コンポーネント不要と確認。既存構成（mailpit/mysql/mariadb/postgres）のまま変更なし）
 
 ### 16. 最終ビルド検証
 
