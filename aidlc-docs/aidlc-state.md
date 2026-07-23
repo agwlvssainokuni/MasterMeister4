@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - Functional Design Part 1（計画）、質問提示・回答待ち
-- **Next Stage**: 回答収集後、業務ロジック設計成果物の作成・承認 → NFR Requirements等 → Code Generation
+- **Current Stage**: UNIT-05 マスタメンテナンス - NFR Requirementsの要否判定待ち
+- **Next Stage**: NFR Requirements → NFR Design → Infrastructure Design → Code Generation
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -83,7 +83,7 @@
 - [x] Code Generation — EXECUTE、COMPLETED（承認 2026-07-20T19:26:00Z。Part 1計画承認 → Part 2実装、全12セクション完了）
 
 ## Current Unit - Stage Progress (UNIT-05)
-- [ ] Functional Design — EXECUTE中（Part 1: 計画作成・質問提示、回答待ち）
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-24T09:50:00Z。business-logic-model.md, business-rules.md（BR-MASTER-01〜15）, domain-entities.md, frontend-components.mdを作成。全17問（Q1〜17）に回答、レビューでdeletableフィールド欠落（AccessibleTable/RecordPage/ER図）とフィルタ併用可否未定義を修正。一般ユーザ向け新規API名前空間`/api/master-data/*`、接続選択→テーブル/ビュー一覧→レコード一覧の3画面構成、内部DB新規永続化なしを決定）
 - [ ] NFR Requirements
 - [ ] NFR Design
 - [ ] Infrastructure Design

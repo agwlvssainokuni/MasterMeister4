@@ -1623,3 +1623,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Functional Design承認前レビュー、ER図修正・フィルタ併用ルール新設
 
 ---
+
+## UNIT-05 Functional Design - Stage承認
+**Timestamp**: 2026-07-24T09:50:00Z
+**User Input**: "承認します。"
+**AI Response**: "UNIT-05のFunctional Designを承認として記録。unit-05-functional-design-plan.md Step Gを完了に更新。次はNFR Requirementsの要否判定へ進む。"
+**Context**: CONSTRUCTION - UNIT-05 Functional Design承認、NFR Requirementsへ移行
+
+---

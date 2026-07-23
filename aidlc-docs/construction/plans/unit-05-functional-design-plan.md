@@ -24,7 +24,7 @@
 - [x] Step D: `domain-entities.md`（本ユニットで内部DBに新規永続化するエンティティの要否を判定のうえ作成。Q9=Aにより新規永続化なし、論理モデルとAuditLogEntry拡張のみ）を作成する
 - [x] Step E: `business-rules.md`（BR-MASTER-01〜14、絞込・一括反映・作成削除・主キー無しテーブルの扱い・アクセス可能接続判定等の詳細規則）を作成する
 - [x] Step F: `frontend-components.md`（接続選択・テーブル/ビュー一覧・レコード一覧の3画面構成、`/api/master-data/*`新規API名前空間）を作成する
-- [ ] Step G: 完了メッセージを提示し、承認を得る
+- [x] Step G: 完了メッセージを提示し、承認を得る（レビューでdeletable欠落・フィルタ併用ルール未定義を修正のうえ承認 2026-07-24T09:50:00Z）
 
 ## 質問
 
