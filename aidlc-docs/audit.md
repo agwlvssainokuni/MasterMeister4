@@ -1679,3 +1679,11 @@
 **Context**: CONSTRUCTION - UNIT-05 NFR Design Part、成果物作成完了・完了メッセージ提示前
 
 ---
+
+## UNIT-05 NFR Design - Stage承認
+**Timestamp**: 2026-07-24T10:40:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-05のNFR Designを承認として記録。unit-05-nfr-design-plan.md Step Eを完了に更新。次はInfrastructure Designの要否判定へ進む。"
+**Context**: CONSTRUCTION - UNIT-05 NFR Design承認、Infrastructure Designへ移行
+
+---
