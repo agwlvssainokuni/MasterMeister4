@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-04 アクセス制御 - NFR Design（アーティファクト作成完了、完了メッセージ提示・承認待ち）
-- **Next Stage**: 承認後、Infrastructure Design判定へ
+- **Current Stage**: UNIT-04 アクセス制御 - Code Generation（Part 1計画作成完了、承認待ち）
+- **Next Stage**: 計画承認後、Part 2生成へ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -64,9 +64,9 @@
 ## Current Unit - Stage Progress (UNIT-04)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-23T07:40:00Z。business-logic-model.md, domain-entities.md, business-rules.md, frontend-components.mdを作成。複数回のレビュー指摘を反映: UNIT-03の1接続=1スキーマ前提の遡及修正（複数スキーマ対応）、ナビパス/access-control→/groups、権限設定APIをトップレベル独立リソース/permissions/{connectionId}へ変更、パッケージ構成をgroup/permissionの2分割（unit-of-work.mdへの遡及修正含む）、DELETE APIの対象特定不備修正）
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-23T08:00:00Z。Caffeineキャッシュ（maximumSize=10,000, expireAfterWrite=30分）、Spring Cache抽象化、無効化は@CacheEvict(allEntries=true)によるキャッシュ全体クリア、EffectivePermissionResolverはUNIT-04時点でAPI非公開、jackson-dataformat-yaml流用、楽観的ロックなし、小〜中規模想定、Bean Validation、YAML importサイズ上限を決定）
-- [ ] NFR Design — EXECUTE中
-- [ ] Infrastructure Design — SKIP（承認 2026-07-22T06:15:00Z。新規インフラ不要）
-- [ ] Code Generation — 未着手
+- [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-23T08:30:00Z。nfr-design-patterns.md（YAML import検証/DB反映分離、グループ削除カスケード、フェイルクローズ、@CacheEvict配置一覧、AccessPermissionインデックス設計、NULL値センチネル対応、YAML受け渡し方式、管理者エンドポイントアクセス制御）、logical-components.md（group/permissionパッケージ設計、Caffeine設定）を作成。承認前レビュー対応: AccessControlService→PermissionServiceに改称（GroupServiceとの命名一貫性）、EffectivePermissionResolver.invalidateCache()の設計矛盾を@CacheEvict宣言的方式に整合）
+- [x] Infrastructure Design — SKIP（承認 2026-07-22T06:15:00Z。新規インフラ不要）
+- [ ] Code Generation — EXECUTE中（Part 1計画中）
 
 ## Current Unit - Stage Progress (UNIT-03)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-21T01:05:00Z。business-logic-model.md, business-rules.md（BR-RDBMS-01〜12）, domain-entities.md, frontend-components.mdを作成。レビューで反映: JDBC URL追加パラメータ(additionalParams)、DBMS選択時のデフォルトポート自動入力、未保存値に対する接続テスト、パスワード非公開方針、表示名重複許可、H2のschemaName欄表示）
