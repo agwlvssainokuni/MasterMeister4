@@ -27,11 +27,11 @@
 
 ### 2. Database Migration Scripts
 
-- [ ] Step 2.1: `backend/src/main/resources/db/migration/V12__create_group_table.sql`を作成する（domain-entities.md §2、`name`列にUNIQUE制約）
-- [ ] Step 2.2: `V13__create_group_membership_table.sql`を作成する（domain-entities.md §3、`group_id`外部キー、`(group_id, user_id)`のUNIQUE制約）
-- [ ] Step 2.3: `V14__create_access_permission_table.sql`を作成する（domain-entities.md §1。`schema_name`/`table_name`/`column_name`はすべて`NOT NULL`とし「該当階層なし」を空文字列で表現（nfr-design-patterns.md §3.1）。`(connection_id, principal_type, principal_id, schema_name, table_name, column_name)`のUNIQUE制約、`(connection_id, principal_type, principal_id)`・`(connection_id, schema_name, table_name, column_name)`の複合INDEXを追加（nfr-design-patterns.md §2.2））
-- [ ] Step 2.4: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`PERMISSION_CHANGED`, `GROUP_CREATED`, `GROUP_RENAMED`, `GROUP_DELETED`, `GROUP_MEMBER_ADDED`, `GROUP_MEMBER_REMOVED`, `PERMISSION_YAML_EXPORTED`, `PERMISSION_YAML_IMPORTED`を追加する（domain-entities.md §4。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
-- [ ] Step 2.5: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する
+- [x] Step 2.1: `backend/src/main/resources/db/migration/V12__create_group_table.sql`を作成する（domain-entities.md §2、`name`列にUNIQUE制約）— テーブル名は`V1__create_app_user_table.sql`の前例（H2予約語回避）に倣い`app_group`とした
+- [x] Step 2.2: `V13__create_group_membership_table.sql`を作成する（domain-entities.md §3、`group_id`外部キー、`(group_id, user_id)`のUNIQUE制約）
+- [x] Step 2.3: `V14__create_access_permission_table.sql`を作成する（domain-entities.md §1。`schema_name`/`table_name`/`column_name`はすべて`NOT NULL`とし「該当階層なし」を空文字列で表現（nfr-design-patterns.md §3.1）。`(connection_id, principal_type, principal_id, schema_name, table_name, column_name)`のUNIQUE制約、`(connection_id, principal_type, principal_id)`・`(connection_id, schema_name, table_name, column_name)`の複合INDEXを追加（nfr-design-patterns.md §2.2）。`connection_id`は`rdbms_connection(id)`へのON DELETE CASCADE外部キーとした（接続削除時に権限設定も削除、実装判断）
+- [x] Step 2.4: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`PERMISSION_CHANGED`, `GROUP_CREATED`, `GROUP_RENAMED`, `GROUP_DELETED`, `GROUP_MEMBER_ADDED`, `GROUP_MEMBER_REMOVED`, `PERMISSION_YAML_EXPORTED`, `PERMISSION_YAML_IMPORTED`を追加する（domain-entities.md §4。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
+- [ ] Step 2.5: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する（Step 3.5で実施）
 
 ### 3. Repository Layer Generation
 

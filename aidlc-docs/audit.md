@@ -1501,3 +1501,11 @@
 **User Input**: (N/A - AI-initiated step、計画実行)
 **AI Response**: "Step 1.1〜1.3完了。build.gradle.ktsにCaffeine 3.2.4・spring-boot-starter-cacheを追加、application.ymlにキャッシュ設定を追加、MasterMeisterApplicationに@EnableCachingを付与。"
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 1完了
+
+---
+
+## UNIT-04 Code Generation - Step 2完了（Database Migration Scripts）
+**Timestamp**: 2026-07-23T08:48:00Z
+**User Input**: (N/A - AI-initiated step、計画実行)
+**AI Response**: "Step 2.1〜2.4完了。V12（app_group、V1のapp_user同様H2予約語回避のためテーブル名を訂正）、V13（group_membership）、V14（access_permission、センチネル値方式・複合INDEX3種・rdbms_connectionへのON DELETE CASCADE外部キー）を作成。AuditEventTypeに8種のイベントを追加。Step 2.5（Flyway適用確認）はStep 3.5のRepository層テストで実施予定。"
+**Context**: CONSTRUCTION - UNIT-04 Code Generation Part 2、Step 2完了
