@@ -1583,3 +1583,11 @@
 **Context**: CONSTRUCTION - UNIT-04 Code Generation Stage承認、UNIT-05へ移行
 
 ---
+
+## UNIT-05 マスタメンテナンス - Functional Design計画作成
+**Timestamp**: 2026-07-24T09:10:00Z
+**User Input**: (N/A - AI-initiated step、Functional Design要否判定・計画作成)
+**AI Response**: "UNIT-05はFR-4.5〜4.8の一括反映（オールオアナッシング）・作成削除可否判定・主キー無しテーブルの扱い等、複雑な業務ロジックを含むためFunctional DesignをEXECUTE判定。unit-of-work.md/stories.md/requirements.md §5.4・§5.2を確認し、unit-05-functional-design-plan.mdを作成。14件の質問（対象判定基準、VIEW扱い、主キー無しテーブルの更新可否、SQL手入力の安全な取込方式、絞込演算子、一括反映APIの操作粒度、失敗時のエラー粒度、ページング方式、新規永続化要否、監査ログ粒度、画面構成、編集UI方式、スキーマ未取込時の挙動、型変換方式）を提示し回答待ち。"
+**Context**: CONSTRUCTION - UNIT-05 Functional Design Part 1（計画）、質問提示・回答待ち
+
+---

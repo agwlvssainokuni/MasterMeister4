@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - Per-Unit Loop開始（Functional Designの要否判定待ち）
-- **Next Stage**: UNIT-05の各ステージ完了後、UNIT-06以降 → 全ユニット完了後のBuild and Test
+- **Current Stage**: UNIT-05 マスタメンテナンス - Functional Design Part 1（計画）、質問提示・回答待ち
+- **Next Stage**: 回答収集後、業務ロジック設計成果物の作成・承認 → NFR Requirements等 → Code Generation
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
@@ -81,6 +81,13 @@
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-20T14:55:00Z）
 - [x] Infrastructure Design — SKIP（devenvはローカル開発環境設定であり、本番デプロイのインフラ設計には該当しない）
 - [x] Code Generation — EXECUTE、COMPLETED（承認 2026-07-20T19:26:00Z。Part 1計画承認 → Part 2実装、全12セクション完了）
+
+## Current Unit - Stage Progress (UNIT-05)
+- [ ] Functional Design — EXECUTE中（Part 1: 計画作成・質問提示、回答待ち）
+- [ ] NFR Requirements
+- [ ] NFR Design
+- [ ] Infrastructure Design
+- [ ] Code Generation
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
