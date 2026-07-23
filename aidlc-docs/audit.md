@@ -1607,3 +1607,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Functional Design Part、成果物作成完了・完了メッセージ提示前
 
 ---
+
+## UNIT-05 Functional Design完了メッセージ後のレビュー指摘対応（deletable欠落）
+**Timestamp**: 2026-07-24T09:40:00Z
+**User Input**: "AccessibleTable に deletable は不要？"
+**AI Response**: "指摘のとおり、`AccessibleTable`に`creatable`はあるが対になる`deletable`（`canDelete()`の結果）が欠落していた欠陥を確認。あわせて`RecordPage`にも`creatable`/`deletable`が渡っておらず、レコード一覧画面がテーブル/ビュー一覧を経由せず直接遷移・再読込された場合にボタン活性制御の情報源がない欠陥も発見。domain-entities.md（AccessibleTable/RecordPageへのdeletable/creatable追加）、business-logic-model.md §2、business-rules.md BR-MASTER-01を修正した。"
+**Context**: CONSTRUCTION - UNIT-05 Functional Design承認前レビュー、deletableフィールド欠落の修正
+
+---
