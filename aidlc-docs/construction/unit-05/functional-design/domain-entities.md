@@ -27,6 +27,7 @@ business-rules.mdで定義したルールに対応するドメインモデルを
 | `tableName` | String | テーブル/ビュー名 |
 | `tableType` | TableType | `TABLE`/`VIEW`（UNIT-03） |
 | `creatable` | boolean | `canCreate()`の結果。`VIEW`は常に`false` |
+| `deletable` | boolean | `canDelete()`の結果。`VIEW`は常に`false`（BR-MASTER-02）、主キーを持たないテーブルも常に`false`（BR-MASTER-03） |
 
 ---
 
@@ -76,6 +77,8 @@ SQL手入力によるWHERE/ORDER BY句。
 | `page` | int | ページ番号 |
 | `pageSize` | int | 1ページあたり件数 |
 | `totalCount` | long | 総件数 |
+| `creatable` | boolean | `canCreate()`の結果（`AccessibleTable.creatable`と同値）。レコード一覧画面がURL直接遷移・リロードされた場合でも、前画面の状態に依存せず「新規作成」導線の活性/非活性を判定できるようにするため、レコード一覧取得のレスポンス自体にも含める |
+| `deletable` | boolean | `canDelete()`の結果（`AccessibleTable.deletable`と同値）。理由は`creatable`と同様 |
 
 ---
 
