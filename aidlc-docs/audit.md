@@ -1663,3 +1663,11 @@
 **Context**: CONSTRUCTION - UNIT-05 NFR Requirements承認、NFR Designへ移行
 
 ---
+
+## UNIT-05 マスタメンテナンス - NFR Design計画作成
+**Timestamp**: 2026-07-24T10:25:00Z
+**User Input**: (N/A - AI-initiated step、NFR Design要否判定・計画作成)
+**AI Response**: "unit-05-nfr-design-plan.mdを作成。8件の質問（オールオアナッシングの検証手順、失敗行の特定方式、SQL構文検証拒否時の例外設計、カラム型カテゴリの導出箇所、/api/master-data/**のアクセス制御設定、バッチ上限・監査閾値の設定配置、DataSourceTransactionManagerの生成/キャッシュ方針、Controller構成）を提示し回答待ち。"
+**Context**: CONSTRUCTION - UNIT-05 NFR Design Part 1（計画）、質問提示・回答待ち
+
+---

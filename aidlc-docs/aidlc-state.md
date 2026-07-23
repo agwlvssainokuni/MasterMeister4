@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - NFR Designの要否判定待ち
-- **Next Stage**: NFR Design → Infrastructure Design → Code Generation
+- **Current Stage**: UNIT-05 マスタメンテナンス - NFR Design Part 1（計画）、質問提示・回答待ち
+- **Next Stage**: 回答収集後、NFR設計文書の作成・承認 → Infrastructure Design → Code Generation
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)
