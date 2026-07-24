@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - COMPLETED（承認 2026-07-24T13:36:00Z）
-- **Next Stage**: UNIT-06 クエリ保存・実行 - ステージ判定（Functional Design/NFR Requirements/NFR Design/Infrastructure Design）
+- **Current Stage**: UNIT-06 クエリ保存・実行 - Functional Design計画提示中（全10問、回答待ち）
+- **Next Stage**: ユーザ回答後、business-logic-model.md等の成果物生成へ
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
@@ -91,6 +91,13 @@
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-24T10:40:00Z。全8問に回答。オールオアナッシングの2段階検証手順、JSqlParserのダミーSELECT文embedding構文検証、DataSourceTransactionManagerのリクエストごと生成、/api/master-data/**の新規SecurityFilterChainルール、MasterDataController等の論理コンポーネントを確定）
 - [x] Infrastructure Design — SKIP（承認 2026-07-24T10:45:00Z。新規インフラ不要、JSqlParserはライブラリ依存のみ）
 - [x] Code Generation — COMPLETED（承認 2026-07-24T13:36:00Z。全16セクション完了。実機E2E検証（PostgreSQL/MySQL）で2件の重大バグを発見・修正: ObjectMapper DI注入によるアプリ起動失敗、RecordBatchService.executeDeleteの主キー型バインド不具合。承認前レビュー対応2件: APIパス構造の簡略化（/api/master-data/connections/{id}/...→/api/master-data/{id}/...）、ダークモードでの編集可能セル文字色固定の修正）
+
+## Current Unit - Stage Progress (UNIT-06)
+- [ ] Functional Design — EXECUTE（承認 2026-07-24T13:45:00Z）
+- [ ] NFR Requirements — EXECUTE（承認 2026-07-24T13:45:00Z）
+- [ ] NFR Design — EXECUTE（承認 2026-07-24T13:45:00Z）
+- [x] Infrastructure Design — SKIP（承認 2026-07-24T13:45:00Z。新規インフラ不要）
+- [ ] Code Generation — 未着手
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）

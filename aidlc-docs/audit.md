@@ -1809,3 +1809,30 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、承認確定
 
 ---
+
+## UNIT-06 ステージ判定 - 提示
+
+**Timestamp**: 2026-07-24T13:40:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "unit-of-work.md記載のUNIT-06（クエリ保存・実行、Epic 6/7、STORY-6.1〜6.2/7.1〜7.3、COMP-14/15、前提ユニットUNIT-01〜04）の内容を確認。ステージ判定案を提示: Functional Design=EXECUTE（保存クエリの新規データモデル・公開範囲/権限などの複雑な業務ルールがあるため）、NFR Requirements=EXECUTE（SQL手入力実行のセキュリティ検証方式、パラメータ対応方式など技術選定が必要なため）、NFR Design=EXECUTE（NFR Requirementsの結果を受けてパターン設計が必要と見込まれるため）、Infrastructure Design=SKIP（新規インフラ不要と見込まれるため、UNIT-05と同様）。aidlc-state.mdにUNIT-06のCurrent Unit - Stage Progressプレースホルダー（判定中）を追加。ユーザに承認を依頼。"
+**Context**: CONSTRUCTION - UNIT-06着手、ステージ判定提示（承認待ち）
+
+---
+
+## UNIT-06 ステージ判定 - 承認
+
+**Timestamp**: 2026-07-24T13:45:00Z
+**User Input**: "承認します。"
+**AI Response**: "UNIT-06のステージ判定（Functional Design/NFR Requirements/NFR Design=EXECUTE、Infrastructure Design=SKIP）を承認として記録。aidlc-state.mdのCurrent Unit - Stage Progress (UNIT-06)を更新。Functional Designに着手。"
+**Context**: CONSTRUCTION - UNIT-06ステージ判定承認、Functional Design開始
+
+---
+
+## UNIT-06 Functional Design - 計画作成
+
+**Timestamp**: 2026-07-24T13:50:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "unit-of-work.md・stories.md（STORY-6.1〜6.2, 7.1〜7.3）・requirements.md（FR-6.1〜6.6, 7.1〜7.9）・component-methods.md（COMP-14 QueryExecutionService, COMP-15 SavedQueryService）を確認。既存のEffectivePermissionResolver（テーブル/カラム単位判定のみ、スキーマ単位集約なし）とUNIT-05のJSqlParser活用パターンを踏まえ、aidlc-docs/construction/plans/unit-06-functional-design-plan.mdを作成。全10問を出題: (1)UNIT-08未着手時点での実行履歴永続化の扱い、(2)生SQL実行のアクセス制御範囲（スキーマ単位のみかテーブル/カラム単位も適用するか）、(3)公開範囲の管理者オーバーライド要否、(4)スキーマ許可リストの評価タイミング、(5)パラメータのメタデータ保存要否、(6)読み取り専用SQL検証方式（文全体がSELECT文であることの検証）、(7)画面構成、(8)保存クエリの編集可能項目、(9)非表示化後のアクセス、(10)作成者アカウント無効化時の扱い。ユーザに回答を依頼。"
+**Context**: CONSTRUCTION - UNIT-06 Functional Design、計画提示（回答待ち）
+
+---
