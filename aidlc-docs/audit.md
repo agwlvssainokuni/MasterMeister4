@@ -1863,3 +1863,12 @@
 **Context**: CONSTRUCTION - UNIT-06 Functional Design、成果物完成
 
 ---
+
+## UNIT-06 Functional Design - 承認前レビュー指摘: 画面フロー訂正
+
+**Timestamp**: 2026-07-24T14:20:00Z
+**User Input**: "保存クエリの画面遷移イメージ。接続選択画面があり、接続を選択すると保存クエリ一覧画面。追加ボタンを押下すると新規保存クエリ画面。" → (AIが画面構成案を提示・確認質問) → "ad-hoc実行は別に設ける想定。で、ad-hoc実行から新規保存クエリ画面という遷移もあり。なお、ad-hoc実行もはじめに接続選択画面を挟む。" → (Flow A/B構成案を提示、ad-hoc入口の扱いを確認) → "新規ナビ項目を追加"
+**AI Response**: "当初の2画面構成（保存クエリ一覧＋クエリ実行共用）を、Flow A（保存クエリ管理: 接続選択→一覧→新規/既存保存クエリ画面、ナビ項目`savedQueries`）とFlow B（ad-hocクエリ実行: 接続選択→実行、新規ナビ項目`queryExecution`を追加）に分離する構成へ全面改訂。Flow Bの実行画面から「名前を付けて保存」するとFlow Aの新規保存クエリ画面へ実行済みSQL等をrouter state経由で引き継いで遷移する設計とした。frontend-components.mdを全面改訂、unit-06-functional-design-plan.mdのStep Gに訂正内容を追記。"
+**Context**: CONSTRUCTION - UNIT-06 Functional Design、承認前レビュー、Request Changes対応
+
+---
