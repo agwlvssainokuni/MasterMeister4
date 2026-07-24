@@ -1783,3 +1783,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2完了後の承認前レビュー、Request Changes対応
 
 ---
+
+## UNIT-05 Code Generation - 承認前レビュー指摘: ダークモードでの編集可能セルの文字色固定
+**Timestamp**: 2026-07-24T13:30:00Z
+**User Input**: "frontendについて。UPDATE権限のあるカラムのデータが、テーマをダークにした時に黒いまま。"
+**AI Response**: "MasterDataRecordListPageの編集可能セル（インライン編集ボタン）が、ネイティブbutton要素の既定文字色（ダークモードでも黒のまま）を継承しており、周囲のダークテーマの文字色を反映していなかった。原因はcolor: inheritの指定漏れ（DataTable.module.cssの.sortButtonが同じ既定色問題への対策として既にcolor: inherit; font: inherit;を適用済みだったが、MasterDataRecordListPageのインラインstyleにはこれが含まれていなかった）。MasterDataRecordListPage.module.cssを新設し、.sortButtonと同じリセット方針（color: inherit, font: inherit等）の.cellButtonクラスを定義してインラインstyleを置き換えた。npx tsc -b、npm test（全169件）、npm run build成功、ビルド後CSSにcolor:inheritが正しく含まれることを確認した。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2完了後の承認前レビュー、Request Changes対応
+
+---

@@ -44,6 +44,7 @@ import type {
   RecordPage,
 } from '../api/masterData'
 import { ApiError } from '../api/http'
+import styles from './MasterDataRecordListPage.module.css'
 
 const PAGE_SIZE = 20
 
@@ -319,9 +320,9 @@ export function MasterDataRecordListPage() {
         return column.editable && !isDeleted ? (
           <button
             type="button"
+            className={styles.cellButton}
             onClick={() => startEdit(key, column.columnName, displayValue)}
             data-testid={`record-cell-${column.columnName}`}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             {displayValue}
           </button>
