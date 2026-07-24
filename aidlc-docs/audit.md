@@ -1791,3 +1791,21 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2完了後の承認前レビュー、Request Changes対応
 
 ---
+
+## UNIT-05 Code Generation - 検討課題提起: E2Eテストフレームワーク導入
+
+**Timestamp**: 2026-07-24T13:35:00Z
+**User Input**: "検討課題です。unitの最後にコマンドラインでE2Eテストを実行していますが、PlaywrightなどのE2Eフレームワークを導入してはどうでしょうか？"
+**AI Response**: "Playwright導入自体は有用（今回のダークモード文字色バグのような見た目の不具合はコマンドラインでのAPI検証では検出できず、ビジュアル回帰テストがあれば自動検出できた可能性が高い）としつつ、これまでのE2Eで発見した重大バグ（ObjectMapper未提供によるアプリ起動失敗、PostgreSQLでの主キー型バインドエラー）はバックエンド/インフラ層の問題であり実インフラ検証は引き続き必要なため、Playwrightは既存のE2E検証を置き換えるのではなく補完する位置づけになる旨を回答。UNIT-05個別のスコープではなくプロジェクト全体のテスト戦略として別途検討することを提案し、ユーザに確認を求めた。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2完了後の検討課題（今後のバックログ項目として扱う方針）
+
+---
+
+## UNIT-05 Code Generation Part 2 - 承認
+
+**Timestamp**: 2026-07-24T13:36:00Z
+**User Input**: "E2Eテストフレームワークの導入は今後のバックログ項目として扱ってください。UNIT-05を承認します。"
+**AI Response**: "UNIT-05 Code Generation Part 2を承認として記録（全16セクション完了、実機E2E検証済み、承認前レビュー対応2件（APIパス簡略化、ダークモード文字色修正）を含む）。E2Eテストフレームワーク（Playwright等）導入検討をaidlc-state.mdのバックログ項目として記録。aidlc-state.mdのUNIT-05 Code Generation行をCOMPLETEDに更新、Current Unit ProgressのUNIT-05をCOMPLETEDに更新。unit-of-work.md前提ユニット記載のとおり、次はUNIT-06（クエリ保存・実行）のステージ判定に着手。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、承認確定
+
+---

@@ -50,9 +50,12 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - Code Generation Part 2（全16セクション完了、実機E2E検証済み、承認待ち）
-- **Next Stage**: 承認後、Build and Testへ
+- **Current Stage**: UNIT-05 マスタメンテナンス - COMPLETED（承認 2026-07-24T13:36:00Z）
+- **Next Stage**: UNIT-06 クエリ保存・実行 - ステージ判定（Functional Design/NFR Requirements/NFR Design/Infrastructure Design）
 - **Status**: 実施中
+
+## Backlog（今後の検討課題）
+- **E2Eテストフレームワーク（Playwright等）の導入**: 現状、各ユニットのCode Generation最終ステップでコマンドラインによる実機E2E検証（curl等）を実施しているが、UI表示に関する不具合（例: UNIT-05のダークモード文字色バグ）はこの方式では検出できない。Playwright等のフレームワークは既存の実インフラE2E検証（DB方言差異等のバックエンド/インフラ層の不具合検出に有効）を置き換えるものではなく補完するものと位置づけ、プロジェクト全体のテスト戦略として別途検討する（2026-07-24、UNIT-05承認時にユーザ提起）。
 
 ## Current Unit - Stage Progress (UNIT-02)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-20T21:10:00Z。business-logic-model.md, business-rules.md, domain-entities.md, frontend-components.mdを作成。レビューで複数回の修正を反映: DISABLED運用フロー、email一意制約、REJECTED再登録方針、管理者ダッシュボード/ユーザ管理画面の統合とトップ画面新設、無効化時のトークン失効、AuditLogEntry記録内容の一元化、メール件名管理方式）
@@ -87,15 +90,15 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-24T10:20:00Z。JSqlParserによるSQL手入力の構文検証、既存`RdbmsConnectionService.getDataSource()`＋`NamedParameterJdbcTemplate`による動的レコードアクセス、一括反映バッチ上限1,000件、監査ログ閾値のapplication.yml設定化を決定。レビューで一括反映のトランザクション制御方式の欠陥（@Transactionalが対象RDBMS用DataSourceを制御できない）を発見し、接続ごとの`DataSourceTransactionManager`＋`TransactionTemplate`による明示的制御に修正）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-24T10:40:00Z。全8問に回答。オールオアナッシングの2段階検証手順、JSqlParserのダミーSELECT文embedding構文検証、DataSourceTransactionManagerのリクエストごと生成、/api/master-data/**の新規SecurityFilterChainルール、MasterDataController等の論理コンポーネントを確定）
 - [x] Infrastructure Design — SKIP（承認 2026-07-24T10:45:00Z。新規インフラ不要、JSqlParserはライブラリ依存のみ）
-- [ ] Code Generation
+- [x] Code Generation — COMPLETED（承認 2026-07-24T13:36:00Z。全16セクション完了。実機E2E検証（PostgreSQL/MySQL）で2件の重大バグを発見・修正: ObjectMapper DI注入によるアプリ起動失敗、RecordBatchService.executeDeleteの主キー型バインド不具合。承認前レビュー対応2件: APIパス構造の簡略化（/api/master-data/connections/{id}/...→/api/master-data/{id}/...）、ダークモードでの編集可能セル文字色固定の修正）
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
 - [x] UNIT-02 ユーザ登録・認証 — COMPLETED（承認 2026-07-21T00:15:00Z）
 - [x] UNIT-03 RDBMSセットアップ — COMPLETED（承認 2026-07-22T06:10:00Z）
 - [x] UNIT-04 アクセス制御 — COMPLETED（承認 2026-07-24T09:00:00Z）
-- [ ] UNIT-05 マスタメンテナンス — IN PROGRESS
-- [ ] UNIT-06 クエリ保存・実行
+- [x] UNIT-05 マスタメンテナンス — COMPLETED（承認 2026-07-24T13:36:00Z）
+- [ ] UNIT-06 クエリ保存・実行 — IN PROGRESS
 - [ ] UNIT-07 クエリビルダー
 - [ ] UNIT-08 クエリ履歴
 - [ ] UNIT-09 監査ログ閲覧
