@@ -1719,3 +1719,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 1完了
 
 ---
+
+## UNIT-05 Code Generation Part 2 - Step 2完了（AuditEventType拡張）
+**Timestamp**: 2026-07-24T11:08:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "AuditEventTypeにMASTER_DATA_BULK_ACCESSED, MASTER_DATA_BATCH_APPLIEDを追加。既存のswitch文（PermissionYamlService, SchemaIntrospectionService）はAuditEventType以外のenumに対するものであることを確認し、影響なし。compileJava成功を確認。unit-05-code-generation-plan.mdのStep 2.1を完了に更新。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 2完了
+
+---

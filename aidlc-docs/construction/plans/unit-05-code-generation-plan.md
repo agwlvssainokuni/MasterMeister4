@@ -28,7 +28,7 @@
 
 ### 2. AuditEventType拡張
 
-- [ ] Step 2.1: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`MASTER_DATA_BULK_ACCESSED`, `MASTER_DATA_BATCH_APPLIED`を追加する（domain-entities.md §9。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
+- [x] Step 2.1: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`MASTER_DATA_BULK_ACCESSED`, `MASTER_DATA_BATCH_APPLIED`を追加する（domain-entities.md §9。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
 
 ### 3. Data Access Layer Generation & Testing
 
