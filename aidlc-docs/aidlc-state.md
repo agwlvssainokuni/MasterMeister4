@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-05 マスタメンテナンス - Code Generation Part 1（計画作成完了、承認待ち）
-- **Next Stage**: 承認後、Code Generation Part 2（実装）
+- **Current Stage**: UNIT-05 マスタメンテナンス - Code Generation Part 2（実装中）
+- **Next Stage**: Part 2完了後、承認を得てBuild and Testへ
 - **Status**: 実施中
 
 ## Current Unit - Stage Progress (UNIT-02)

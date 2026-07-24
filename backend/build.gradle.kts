@@ -33,6 +33,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.4")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+    // UNIT-05: SQL手入力(WHERE/ORDER BY)の構文検証(tech-stack-decisions.md §1)
+    implementation("com.github.jsqlparser:jsqlparser:5.3")
     implementation(project(":cherry-mustache-core"))
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.flywaydb:flyway-core")

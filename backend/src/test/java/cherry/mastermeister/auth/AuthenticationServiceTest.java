@@ -80,7 +80,9 @@ class AuthenticationServiceTest {
                 new AppProperties.Frontend("https://example.com"),
                 new AppProperties.Datasource("./data/test"),
                 new AppProperties.Mail("no-reply@example.com"),
-                new AppProperties.Rdbms("1:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE="));
+                new AppProperties.Rdbms("1:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE="),
+                new AppProperties.Masterdata(1000),
+                new AppProperties.Audit(100));
         authenticationService = new AuthenticationService(userRepository, passwordEncoder, loginAttemptGuard,
                 refreshTokenService, auditEventPublisher, jwtEncoder, appProperties);
     }

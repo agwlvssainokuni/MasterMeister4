@@ -35,7 +35,9 @@ public record AppProperties(
         Frontend frontend,
         Datasource datasource,
         Mail mail,
-        Rdbms rdbms
+        Rdbms rdbms,
+        Masterdata masterdata,
+        Audit audit
 ) {
 
     public AppProperties {
@@ -48,6 +50,8 @@ public record AppProperties(
         Objects.requireNonNull(datasource, "mm.app.datasource must be configured");
         Objects.requireNonNull(mail, "mm.app.mail must be configured");
         Objects.requireNonNull(rdbms, "mm.app.rdbms must be configured");
+        Objects.requireNonNull(masterdata, "mm.app.masterdata must be configured");
+        Objects.requireNonNull(audit, "mm.app.audit must be configured");
     }
 
     public record Jwt(String secret, Duration accessTokenExpiry, Duration refreshTokenExpiry) {
@@ -204,6 +208,24 @@ public record AppProperties(
         }
 
         public record EncryptionKey(int keyId, byte[] key) {
+        }
+    }
+
+    public record Masterdata(int batchMaxSize) {
+
+        public Masterdata {
+            if (batchMaxSize < 1) {
+                throw new IllegalArgumentException("mm.app.masterdata.batch-max-size must be positive");
+            }
+        }
+    }
+
+    public record Audit(int bulkAccessThreshold) {
+
+        public Audit {
+            if (bulkAccessThreshold < 1) {
+                throw new IllegalArgumentException("mm.app.audit.bulk-access-threshold must be positive");
+            }
         }
     }
 }

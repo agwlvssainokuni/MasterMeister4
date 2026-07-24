@@ -40,7 +40,9 @@ class ConnectionCredentialCipherTest {
                 new AppProperties.Frontend("https://example.com"),
                 new AppProperties.Datasource("./data/test"),
                 new AppProperties.Mail("no-reply@example.com"),
-                new AppProperties.Rdbms(encryptionKeys));
+                new AppProperties.Rdbms(encryptionKeys),
+                new AppProperties.Masterdata(1000),
+                new AppProperties.Audit(100));
     }
 
     @Test

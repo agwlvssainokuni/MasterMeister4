@@ -22,9 +22,9 @@
 
 ### 1. Build Configuration
 
-- [ ] Step 1.1: `backend/build.gradle.kts`に依存関係を追加する: `implementation("com.github.jsqlparser:jsqlparser:...")`（tech-stack-decisions.md §1、WebSearchで最新安定版を確認の上、明示バージョン指定で追加）
-- [ ] Step 1.2: `backend/src/main/resources/application.yml`に`mm.app.masterdata.batch-max-size`（デフォルト1000）・`mm.app.audit.bulk-access-threshold`（デフォルト100）を追加する（logical-components.md §3）
-- [ ] Step 1.3: `AppProperties`に対応するネストプロパティ（`Masterdata.batchMaxSize`, `Audit.bulkAccessThreshold`）を追加する
+- [x] Step 1.1: `backend/build.gradle.kts`に依存関係を追加する: `implementation("com.github.jsqlparser:jsqlparser:...")`（tech-stack-decisions.md §1、WebSearchで最新安定版を確認の上、明示バージョン指定で追加）— jsqlparser 5.3（2026-07時点最新安定版、Maven Central確認済み）を追加
+- [x] Step 1.2: `backend/src/main/resources/application.yml`に`mm.app.masterdata.batch-max-size`（デフォルト1000）・`mm.app.audit.bulk-access-threshold`（デフォルト100）を追加する（logical-components.md §3）
+- [x] Step 1.3: `AppProperties`に対応するネストプロパティ（`Masterdata.batchMaxSize`, `Audit.bulkAccessThreshold`）を追加する — 既存の`new AppProperties(...)`直接構築テスト7件に新規引数を追加、コンパイル確認済み
 
 ### 2. AuditEventType拡張
 

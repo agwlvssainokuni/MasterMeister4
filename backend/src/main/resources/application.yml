@@ -71,6 +71,10 @@ mm:
       from: ${MM_APP_MAIL_FROM:no-reply@mastermeister.example}
     rdbms:
       encryption-keys: ${MM_APP_RDBMS_ENCRYPTION_KEYS:}
+    masterdata:
+      batch-max-size: ${MM_APP_MASTERDATA_BATCH_MAX_SIZE:1000}
+    audit:
+      bulk-access-threshold: ${MM_APP_AUDIT_BULK_ACCESS_THRESHOLD:100}
 
 springdoc:
   swagger-ui:

@@ -1703,3 +1703,19 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 1、計画承認待ち
 
 ---
+
+## UNIT-05 Code Generation Part 1 - 承認
+**Timestamp**: 2026-07-24T11:00:00Z
+**User Input**: "GO"
+**AI Response**: "unit-05-code-generation-plan.md（全16セクション）を承認として記録。aidlc-state.mdのCurrent Statusを更新（Code Generation Part 2実装中）。Part 2実装（Step 1: Build Configuration）に着手。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation（Part 1承認 → Part 2実装開始）
+
+---
+
+## UNIT-05 Code Generation Part 2 - Step 1完了（Build Configuration）
+**Timestamp**: 2026-07-24T11:05:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "backend/build.gradle.ktsにjsqlparser 5.3を追加（WebSearch/Maven Centralで最新安定版を確認）。application.ymlにmm.app.masterdata.batch-max-size（デフォルト1000）・mm.app.audit.bulk-access-threshold（デフォルト100）を追加。AppPropertiesにMasterdata/Auditレコードを追加し、AppPropertiesを直接newしていた既存テスト7件（RegistrationRateGuardTest, UserRegistrationServiceTest, RefreshTokenServiceTest, LoginAttemptGuardTest, AuthenticationServiceTest, ConnectionCredentialCipherTest, SchemaIntrospectionServiceTest）に新規引数を追加。compileJava/compileTestJava成功を確認。unit-05-code-generation-plan.mdのStep 1.1〜1.3を完了に更新。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 1完了
+
+---
