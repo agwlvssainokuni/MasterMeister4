@@ -80,7 +80,7 @@ export function listMasterDataConnections(): Promise<AccessibleConnection[]> {
 }
 
 export function listMasterDataTables(connectionId: number): Promise<AccessibleTable[]> {
-  return apiFetch<AccessibleTable[]>(`/api/master-data/connections/${connectionId}/tables`, { auth: true })
+  return apiFetch<AccessibleTable[]>(`/api/master-data/${connectionId}/tables`, { auth: true })
 }
 
 export interface ListRecordsParams {
@@ -109,7 +109,7 @@ export function listRecords(
   if (params.orderBy) {
     query.set('orderBy', params.orderBy)
   }
-  const path = `/api/master-data/connections/${connectionId}/tables/${encodeURIComponent(schemaName)}/${encodeURIComponent(tableName)}/records?${query.toString()}`
+  const path = `/api/master-data/${connectionId}/tables/${encodeURIComponent(schemaName)}/${encodeURIComponent(tableName)}/records?${query.toString()}`
   return apiFetch<RecordPage>(path, { auth: true })
 }
 
@@ -119,7 +119,7 @@ export function applyBatch(
   tableName: string,
   operations: BatchOperationItem[],
 ): Promise<BatchOperationResult> {
-  const path = `/api/master-data/connections/${connectionId}/tables/${encodeURIComponent(schemaName)}/${encodeURIComponent(tableName)}/records/batch`
+  const path = `/api/master-data/${connectionId}/tables/${encodeURIComponent(schemaName)}/${encodeURIComponent(tableName)}/records/batch`
   return apiFetch<BatchOperationResult>(path, {
     method: 'POST',
     auth: true,

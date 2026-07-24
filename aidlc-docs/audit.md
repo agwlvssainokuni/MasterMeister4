@@ -1775,3 +1775,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 16完了（全ステップ完了、ユーザ承認待ち）
 
 ---
+
+## UNIT-05 Code Generation - 承認前レビュー指摘: APIパス構造の簡略化
+**Timestamp**: 2026-07-24T13:20:00Z
+**User Input**: "APIのパスについて。GET /api/master-data/connections 以外の connections は不要な気がしてきました。"
+**AI Response**: "指摘のとおり、接続配下のリソースパスに`connections`セグメントが冗長に重なっていたため修正。MasterDataControllerの@RequestMappingを/api/master-data/connectionsから/api/master-dataへ変更し、listConnectionsのみ@GetMapping(\"/connections\")を付与、他3エンドポイントは/{connectionId}/...へ簡略化（/api/admin/permissions/{connectionId}と同様の命名規約に統一）。frontend/src/api/masterData.tsのURL構築、backend/frontendの該当テスト（MasterDataControllerTest, masterData.test.ts）のパス期待値を更新。バックエンド266件・フロントエンド169件全件成功を確認。api-layer-summary.mdに訂正内容を追記。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2完了後の承認前レビュー、Request Changes対応
+
+---

@@ -101,7 +101,7 @@ class MasterDataControllerTest {
         when(masterDataService.listAccessibleTables(42L, 1L)).thenReturn(List.of(
                 new AccessibleTable("public", "products", TableType.TABLE, true, false)));
 
-        mockMvc.perform(get("/api/master-data/connections/1/tables").with(generalUserJwt()))
+        mockMvc.perform(get("/api/master-data/1/tables").with(generalUserJwt()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].tableName").value("products"))
                 .andExpect(jsonPath("$[0].creatable").value(true));
@@ -115,7 +115,7 @@ class MasterDataControllerTest {
         when(masterDataService.getRecords(eq(42L), eq(1L), eq("public"), eq("products"), anyList(), any(), any(),
                 anyInt(), anyInt())).thenReturn(page);
 
-        mockMvc.perform(get("/api/master-data/connections/1/tables/public/products/records")
+        mockMvc.perform(get("/api/master-data/1/tables/public/products/records")
                         .with(generalUserJwt()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalCount").value(1))
@@ -130,7 +130,7 @@ class MasterDataControllerTest {
                 any(), any(), anyInt(), anyInt()))
                 .thenReturn(new RecordPage(List.of(), List.of(), 0, 50, 0, true, true));
 
-        mockMvc.perform(get("/api/master-data/connections/1/tables/public/products/records")
+        mockMvc.perform(get("/api/master-data/1/tables/public/products/records")
                         .param("filter", "[{\"columnName\":\"name\",\"operator\":\"EQ\",\"value\":\"Alice\"}]")
                         .with(generalUserJwt()))
                 .andExpect(status().isOk());
@@ -138,7 +138,7 @@ class MasterDataControllerTest {
 
     @Test
     void listRecords_returnsBadRequest_whenFilterParamIsMalformedJson() throws Exception {
-        mockMvc.perform(get("/api/master-data/connections/1/tables/public/products/records")
+        mockMvc.perform(get("/api/master-data/1/tables/public/products/records")
                         .param("filter", "not-json")
                         .with(generalUserJwt()))
                 .andExpect(status().isBadRequest())
@@ -150,7 +150,7 @@ class MasterDataControllerTest {
         when(masterDataService.getRecords(anyLong(), anyLong(), anyString(), anyString(), anyList(), any(), any(),
                 anyInt(), anyInt())).thenThrow(new InvalidQueryConditionException());
 
-        mockMvc.perform(get("/api/master-data/connections/1/tables/public/products/records")
+        mockMvc.perform(get("/api/master-data/1/tables/public/products/records")
                         .param("where", "1=1; DROP TABLE x")
                         .with(generalUserJwt()))
                 .andExpect(status().isBadRequest())
@@ -162,7 +162,7 @@ class MasterDataControllerTest {
         when(masterDataService.applyBatch(eq(42L), eq(1L), eq("public"), eq("products"), any()))
                 .thenReturn(new BatchOperationResult(true, List.of()));
 
-        mockMvc.perform(post("/api/master-data/connections/1/tables/public/products/records/batch")
+        mockMvc.perform(post("/api/master-data/1/tables/public/products/records/batch")
                         .with(generalUserJwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -174,7 +174,7 @@ class MasterDataControllerTest {
 
     @Test
     void applyBatch_returnsBadRequest_whenOperationsEmpty() throws Exception {
-        mockMvc.perform(post("/api/master-data/connections/1/tables/public/products/records/batch")
+        mockMvc.perform(post("/api/master-data/1/tables/public/products/records/batch")
                         .with(generalUserJwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"operations\":[]}"))
@@ -186,7 +186,7 @@ class MasterDataControllerTest {
         when(masterDataService.applyBatch(eq(42L), eq(1L), eq("public"), eq("products"), any()))
                 .thenThrow(new BatchSizeExceededException(1000));
 
-        mockMvc.perform(post("/api/master-data/connections/1/tables/public/products/records/batch")
+        mockMvc.perform(post("/api/master-data/1/tables/public/products/records/batch")
                         .with(generalUserJwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""

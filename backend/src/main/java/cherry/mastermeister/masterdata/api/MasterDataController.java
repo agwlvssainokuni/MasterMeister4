@@ -48,9 +48,15 @@ import java.util.List;
  * {@code /api/admin/**}とは独立し、SecurityConfigの既存ルール（{@code /api/**}は
  * ロール不問で認証済みなら許可）がそのまま適用される（新規ルール追加は不要、
  * nfr-design-patterns.md §3.2からの簡略化。詳細はapi-layer-summary.md参照）。
+ * <p>
+ * パス構造の訂正（承認前レビュー指摘の反映）: 当初は接続配下のリソースにも
+ * {@code /connections/{connectionId}/...}と"connections"セグメントを重ねていたが、
+ * 冗長なため、接続一覧取得（{@code GET /api/master-data/connections}）以外は
+ * {@code /api/master-data/{connectionId}/...}へ簡略化した（`/api/admin/permissions/{connectionId}`
+ * と同様、接続IDを直接ぶら下げる既存の命名規約に合わせる）。
  */
 @RestController
-@RequestMapping("/api/master-data/connections")
+@RequestMapping("/api/master-data")
 public class MasterDataController {
 
     private static final int DEFAULT_PAGE_SIZE = 50;
@@ -68,7 +74,7 @@ public class MasterDataController {
         this.masterDataService = masterDataService;
     }
 
-    @GetMapping
+    @GetMapping("/connections")
     public ResponseEntity<List<AccessibleConnectionResponse>> listConnections(
             @AuthenticationPrincipal Jwt principal) {
         List<AccessibleConnectionResponse> responses = masterDataService

@@ -37,7 +37,7 @@ describe('masterData API client', () => {
   it('listMasterDataTables はGETでテーブル一覧エンドポイントを呼ぶ', async () => {
     vi.mocked(apiFetch).mockResolvedValueOnce([])
     await listMasterDataTables(1)
-    expect(apiFetch).toHaveBeenCalledWith('/api/master-data/connections/1/tables', { auth: true })
+    expect(apiFetch).toHaveBeenCalledWith('/api/master-data/1/tables', { auth: true })
   })
 
   it('listRecords はページング・スキーマ/テーブル名をパスに含めてGETを呼ぶ', async () => {
@@ -52,7 +52,7 @@ describe('masterData API client', () => {
     })
     await listRecords(1, 'public', 'products', { page: 0, pageSize: 20 })
     expect(apiFetch).toHaveBeenCalledWith(
-      '/api/master-data/connections/1/tables/public/products/records?page=0&pageSize=20',
+      '/api/master-data/1/tables/public/products/records?page=0&pageSize=20',
       { auth: true },
     )
   })
@@ -98,7 +98,7 @@ describe('masterData API client', () => {
     vi.mocked(apiFetch).mockResolvedValueOnce({ success: true, itemResults: [] })
     const operations = [{ operationType: 'DELETE' as const, primaryKeyValues: { id: '1' } }]
     await applyBatch(1, 'public', 'products', operations)
-    expect(apiFetch).toHaveBeenCalledWith('/api/master-data/connections/1/tables/public/products/records/batch', {
+    expect(apiFetch).toHaveBeenCalledWith('/api/master-data/1/tables/public/products/records/batch', {
       method: 'POST',
       auth: true,
       body: { operations },
