@@ -1,6 +1,6 @@
 # MasterMeister backend
 
-Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を、UNIT-03（RDBMSセットアップ）で対象RDBMS接続の登録・管理とスキーマ取込の基盤を、UNIT-04（アクセス制御）でグループ管理・権限設定・実効権限判定の基盤を構築した。
+Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を、UNIT-03（RDBMSセットアップ）で対象RDBMS接続の登録・管理とスキーマ取込の基盤を、UNIT-04（アクセス制御）でグループ管理・権限設定・実効権限判定の基盤を、UNIT-05（マスタメンテナンス）で一般ユーザ向けのマスタデータ参照・編集機能を構築した。
 
 ## 起動
 
@@ -62,9 +62,22 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 
 管理者ダッシュボードの「グループ管理」画面（`/groups`）でユーザグループを作成・管理し、各RDBMS接続の「権限設定」画面（`/permissions/{connectionId}`）でユーザ／グループ単位にスキーマ／テーブル／カラム階層の権限（主権限: NONE/READ/UPDATE、補助権限: CREATE/DELETE）を設定する。実効権限の判定結果（`EffectivePermissionResolver`）はCaffeineでインメモリキャッシュし（`spring.cache.*`、`maximumSize=10000, expireAfterWrite=30m`）、権限変更・グループ変更・スキーマ再取込のたびに全体無効化する。追加の環境変数は不要（キャッシュはアプリ内蔵、外部ミドルウェア不要）。
 
+## マスタメンテナンス（UNIT-05）
+
+一般ユーザ（ロール不問、認証済みであれば誰でも）が、`/master-data`画面から自分がアクセス可能なRDBMS接続・テーブル/ビュー・レコードを参照・編集する。API名前空間は`/api/master-data/**`（`/api/admin/**`とは独立した、本プロジェクト初の非管理者向けトップレベル名前空間）で、既存のSecurityFilterChain設定（`/api/**`→`authenticated()`の汎用ルール）がそのまま適用されるため追加のセキュリティ設定は不要。
+
+- レコード一覧の絞込は、構造化フィルタ（カラム・演算子・値の組）とSQL手入力のWHERE/ORDER BY句を併用可能（AND結合、BR-MASTER-15）。SQL手入力は[JSqlParser](https://github.com/JSQLParser/JSqlParser)でダミーSELECT文へ埋め込みパースし、許可された構文要素（比較演算子・AND/OR・カラム参照・リテラル値のみ）のみで構成されているかを検証したうえで、パラメータ化されたSQLへ再構築する（`RawQueryConditionValidator`）
+- 一括反映（作成・更新・削除混在バッチ）はオールオアナッシングで、対象RDBMS用に**リクエストごとに生成する**`DataSourceTransactionManager`＋`TransactionTemplate`で明示的にトランザクション制御する（`RecordBatchService`）。Spring Bootの`@Transactional`は既定でアプリ内部DB用のトランザクションマネージャに紐づき、動的に選択される対象RDBMS用の`DataSource`とは無関係であるため、この方式を採用している
+- 一括反映の1リクエストあたりの操作件数上限（既定1,000件）、大量データ取得とみなす閾値（既定100件、監査ログ`MASTER_DATA_BULK_ACCESSED`の記録判定に使用）は、下記環境変数で設定可能
+
+| 環境変数 | デフォルト | 用途 |
+|---|---|---|
+| `MM_APP_MASTERDATA_BATCH_MAX_SIZE` | `1000` | 一括反映バッチの1リクエストあたりの操作件数上限 |
+| `MM_APP_AUDIT_BULK_ACCESS_THRESHOLD` | `100` | `MASTER_DATA_BULK_ACCESSED`監査イベントを記録する結果件数の閾値 |
+
 ## API仕様書（OpenAPI/Swagger UI）
 
-起動後、`http://localhost:8080/swagger-ui.html`で確認できる（`springdoc-openapi-starter-webmvc-ui`により自動生成、`/api/admin/**`はBearer認証が必要）。
+起動後、`http://localhost:8080/swagger-ui.html`で確認できる（`springdoc-openapi-starter-webmvc-ui`により自動生成、`/api/admin/**`はBearer認証＋ADMINロールが、`/api/master-data/**`はBearer認証のみ（ロール不問）が必要）。
 
 ## ビルド・テスト
 
@@ -81,4 +94,4 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 - `backend`: 本モジュール（アプリケーション本体）
 - `cherry-mustache-core`: メールテンプレートレンダリングに使用する自作Mustacheエンジン（独立したGradleサブプロジェクト。パッケージ名は`cherry.mustache`のまま維持）
 
-詳細は`aidlc-docs/construction/unit-0{2,3,4}/code/{repository-layer-summary,business-logic-summary,api-layer-summary}.md`を参照。
+詳細は`aidlc-docs/construction/unit-0{2,3,4,5}/code/{repository-layer-summary,data-access-layer-summary,business-logic-summary,api-layer-summary}.md`を参照。

@@ -1759,3 +1759,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 11-13完了
 
 ---
+
+## UNIT-05 Code Generation Part 2 - Step 14-15完了（ドキュメント・デプロイ成果物確認）
+**Timestamp**: 2026-07-24T12:50:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "backend/README.mdにUNIT-05概要（マスタメンテナンス、JSqlParserによるSQL手入力検証、一括反映のトランザクション制御方式、新規環境変数MM_APP_MASTERDATA_BATCH_MAX_SIZE/MM_APP_AUDIT_BULK_ACCESS_THRESHOLD、/api/master-data/**のアクセス制御）を追記。frontend/README.mdにUNIT-05の3画面をpages概要に追記。devenv/docker-compose.ymlを確認し、MySQL/MariaDB/PostgreSQLが既存定義済みでStep 16のE2E検証にそのまま使えることを確認（変更なし）。unit-05-code-generation-plan.mdのStep 14.1〜15.1を完了に更新。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 14-15完了
+
+---
