@@ -44,20 +44,20 @@
 
 ### 5. Business Logic Generation
 
-- [ ] Step 5.1: `MasterDataService`（`cherry.mastermeister.masterdata`）を作成する（アクセス可能な接続一覧・テーブル/ビュー一覧の取得、`EffectivePermissionResolver`（UNIT-04）・`SchemaIntrospectionService`（UNIT-03）を直接呼び出し、BR-MASTER-01〜03・13）
-- [ ] Step 5.2: 新規例外を作成する: `InvalidQueryConditionException`, `BatchSizeExceededException`（`cherry.mastermeister.common.exception`、既存パッケージ規約に合わせる）
-- [ ] Step 5.3: `RecordQueryService`・`RecordBatchService`から`AuditEventPublisher`経由でイベント発行を組み込む（Step 3.3〜3.4の実装に含む場合はここで確認のみ）
+- [x] Step 5.1: `MasterDataService`（`cherry.mastermeister.masterdata`）を作成する（アクセス可能な接続一覧・テーブル/ビュー一覧の取得、`EffectivePermissionResolver`（UNIT-04）・`SchemaIntrospectionService`（UNIT-03）を直接呼び出し、BR-MASTER-01〜03・13）— `MasterDataTableNotAccessibleException`（404、存在有無と権限有無を区別しないフェイルクローズ）を追加
+- [x] Step 5.2: 新規例外を作成する: `InvalidQueryConditionException`, `BatchSizeExceededException`（`cherry.mastermeister.common.exception`、既存パッケージ規約に合わせる）— Step 3で前倒し作成済み
+- [x] Step 5.3: `RecordQueryService`・`RecordBatchService`から`AuditEventPublisher`経由でイベント発行を組み込む — `MasterDataService`に集約（閾値判定・成功時のみ発行の判断はビジネスロジック層の責務のため）
 
 ### 6. Business Logic Unit Testing
 
-- [ ] Step 6.1: `MasterDataServiceTest`を作成する（Mockito。アクセス可能判定（BR-MASTER-01・13）、VIEW/主キー無しテーブルの読み取り専用化（BR-MASTER-02・03）の境界値）
-- [ ] Step 6.2: `RawQueryConditionValidatorPropertyTest`をjqwikで作成する（business-logic-model.md §7.1: 安全性の不変条件、拒否の健全性）
-- [ ] Step 6.3: `RecordBatchServicePropertyTest`をjqwikで作成する（business-logic-model.md §7.2: オールオアナッシングの原子性・全件反映）
-- [ ] Step 6.4: `RecordQueryServiceTest`に表示対象カラムの絞り込み（business-logic-model.md §7.3: 非表示の不変条件）のテストケースを含める
+- [x] Step 6.1: `MasterDataServiceTest`を作成する（Mockito。アクセス可能判定（BR-MASTER-01・13）、VIEW/主キー無しテーブルの読み取り専用化（BR-MASTER-02・03）の境界値）— 11件
+- [x] Step 6.2: `RawQueryConditionValidatorPropertyTest`をjqwikで作成する（business-logic-model.md §7.1: 安全性の不変条件、拒否の健全性）— 3件
+- [x] Step 6.3: `RecordBatchServicePropertyTest`をjqwikで作成する（business-logic-model.md §7.2: オールオアナッシングの原子性・全件反映）— 2件
+- [x] Step 6.4: 表示対象カラムの絞り込み（business-logic-model.md §7.3: 非表示の不変条件）— `MasterDataServiceColumnVisibilityPropertyTest`をjqwikで新設（RecordQueryServiceの実装では絞り込みの実際の判断主体ではないため、判断主体であるMasterDataServiceに対するPBTとした）
 
 ### 7. Business Logic Summary
 
-- [ ] Step 7.1: `aidlc-docs/construction/unit-05/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、PBTプロパティ実装内容、テスト結果）
+- [x] Step 7.1: `aidlc-docs/construction/unit-05/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、PBTプロパティ実装内容、テスト結果）
 
 ### 8. API Layer Generation
 

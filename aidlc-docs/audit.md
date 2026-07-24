@@ -1735,3 +1735,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 3-4完了
 
 ---
+
+## UNIT-05 Code Generation Part 2 - Step 5-7完了（Business Logic）
+**Timestamp**: 2026-07-24T12:20:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "MasterDataServiceを作成（アクセス可能な接続/テーブル一覧取得、レコード一覧取得・一括反映のオーケストレーション、監査イベント発行判断）。新規例外MasterDataTableNotAccessibleException（404、存在有無と権限有無を区別しないフェイルクローズ）を追加。BR-MASTER-13の接続可視判定はresolvePrimaryの階層フォールバックを利用し「接続内の少なくとも1テーブルがBR-MASTER-01の可視条件を満たすか」に単純化。MasterDataServiceTest（Mockito、11件）、MasterDataServiceColumnVisibilityPropertyTest（jqwik、§7.3非表示の不変条件）、RawQueryConditionValidatorPropertyTest（jqwik、§7.1安全性・拒否健全性、3件）、RecordBatchServicePropertyTest（jqwik、§7.2オールオアナッシングの原子性、H2実DB使用、2件）を作成。business-logic-summary.mdを作成。./gradlew :backend:test で全256件成功（既存テスト含む、リグレッションなし）を確認。unit-05-code-generation-plan.mdのStep 5.1〜7.1を完了に更新。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 5-7完了
+
+---
