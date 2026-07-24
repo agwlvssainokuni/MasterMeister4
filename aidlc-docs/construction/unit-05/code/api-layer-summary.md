@@ -41,6 +41,7 @@ frontend-components.md §3では「確定的な契約はCode Generation段階で
 - SQL手入力WHERE句が拒否された場合`400`+`INVALID_QUERY_CONDITION`
 - 一括反映: 成功時のレスポンス、`operations`空の場合の`400`（Bean Validation）、バッチ上限超過時の`400`+`BATCH_SIZE_EXCEEDED`
 
-注記: `@WebMvcTest`スライスには`JacksonAutoConfiguration`由来の`ObjectMapper` Beanが含まれないため（`MasterDataController`が`ObjectMapper`を直接コンストラクタインジェクションする初のコントローラ）、テスト側で`@TestConfiguration`により明示的に提供した。実アプリケーション（`spring-boot-starter-web`によるフル自動設定）では通常どおり`ObjectMapper`が利用可能であり、本番動作には影響しない。
+### 4. ObjectMapperのDI注入を廃止（実機E2E検証で判明したバグの修正）
+当初`MasterDataController`は`ObjectMapper`をコンストラクタインジェクションしていたが、Step 16の実機起動検証で、本番相当の起動（`java -jar`）でも`NoSuchBeanDefinitionException`によりアプリケーション自体が起動失敗することが判明した（`@WebMvcTest`スライスで先に同じ事象が起きていたが、その時点では誤って「本番環境の自動設定では問題にならない」と判断していた。この判断は誤りだった）。本プロジェクトの依存構成では`spring-boot-starter-web`がJacksonの自動`ObjectMapper` Bean登録までは行わない（他の既存コントローラはレスポンスのシリアライズをSpring MVCのメッセージコンバータに委ねるのみで、`ObjectMapper`を直接インジェクションしていなかったため、これまで顕在化していなかった）。**修正**: `MasterDataController`は`filter`クエリパラメータのデコードのみに`ObjectMapper`を使うため、DI注入をやめてフィールドで`new ObjectMapper()`を直接保持する方式に変更した。テスト側の`@TestConfiguration`によるBean提供も不要になったため削除した。修正後、実機起動・全機能のE2E検証で問題なく動作することを確認した（詳細はbuild-and-test関連のE2E検証結果を参照）。
 
 `./gradlew :backend:compileJava :backend:compileTestJava`および対象テストは成功。OpenAPI/Swagger UIへの反映は既存コントローラ同様、追加のアノテーション実装なしにspringdocが自動生成する（Step 16の起動確認で最終確認）。

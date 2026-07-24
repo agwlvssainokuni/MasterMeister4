@@ -55,12 +55,17 @@ public class MasterDataController {
 
     private static final int DEFAULT_PAGE_SIZE = 50;
 
-    private final MasterDataService masterDataService;
-    private final ObjectMapper objectMapper;
+    // 実機E2E検証で判明: このプロジェクトの依存構成ではJacksonAutoConfiguration由来の
+    // ObjectMapper Beanがコンテナに登録されず(spring-boot-starter-webがJacksonの
+    // 自動Bean登録までは行わない構成のため)、DIで受け取ろうとするとアプリ起動自体に失敗する。
+    // filterクエリパラメータの単純なDTOデコードのみに使うため、Bean注入に頼らず
+    // インスタンスを直接保持する（Spring管理のJacksonカスタマイズは不要な用途のため）。
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public MasterDataController(MasterDataService masterDataService, ObjectMapper objectMapper) {
+    private final MasterDataService masterDataService;
+
+    public MasterDataController(MasterDataService masterDataService) {
         this.masterDataService = masterDataService;
-        this.objectMapper = objectMapper;
     }
 
     @GetMapping

@@ -192,7 +192,8 @@ public class RecordBatchService {
                 case CREATE -> executeCreate(jdbcTemplate, dialect, qualifiedTable, columns, item, index);
                 case UPDATE -> executeUpdate(jdbcTemplate, dialect, qualifiedTable, columns, primaryKeyColumns, item,
                         index);
-                case DELETE -> executeDelete(jdbcTemplate, dialect, qualifiedTable, primaryKeyColumns, item, index);
+                case DELETE -> executeDelete(jdbcTemplate, dialect, qualifiedTable, columns, primaryKeyColumns, item,
+                        index);
             };
         } catch (DateTimeParseException | IllegalArgumentException e) {
             return new BatchOperationItemResult(index, "INVALID_VALUE", e.getMessage());
@@ -241,16 +242,23 @@ public class RecordBatchService {
 
     private BatchOperationItemResult executeDelete(NamedParameterJdbcTemplate jdbcTemplate,
                                                     RdbmsDialectStrategy dialect, String qualifiedTable,
-                                                    List<String> primaryKeyColumns, BatchOperationItem item,
-                                                    int index) {
+                                                    List<RecordColumn> columns, List<String> primaryKeyColumns,
+                                                    BatchOperationItem item, int index) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         String whereClause = buildPrimaryKeyWhereClause(dialect, primaryKeyColumns, item.primaryKeyValues(), params,
-                List.of());
+                columns);
         String sql = "DELETE FROM " + qualifiedTable + " WHERE " + whereClause;
         int updated = jdbcTemplate.update(sql, params);
         return updated == 1 ? null : new BatchOperationItemResult(index, "RECORD_NOT_FOUND", "対象行が見つかりません");
     }
 
+    /**
+     * 主キー列のデータ型カテゴリはcolumnsから解決する（実機E2E検証で判明したレビュー指摘の反映）。
+     * 当初、DELETEではcolumnsを渡さずSTRINGにフォールバックしていたが、PostgreSQLはSTRING値と
+     * INTEGER列の比較を暗黙変換せずエラーとするため、UPDATE同様に必ず実際の型で解決する必要がある
+     * （BR-ACCESS-07によりcanDelete()がtrueの場合、全主キー列は実効主権限READ以上でありcolumnsに
+     * 必ず含まれるため、常に解決可能）。
+     */
     private String buildPrimaryKeyWhereClause(RdbmsDialectStrategy dialect, List<String> primaryKeyColumns,
                                                Map<String, String> primaryKeyValues, MapSqlParameterSource params,
                                                List<RecordColumn> columns) {
@@ -259,8 +267,7 @@ public class RecordBatchService {
         for (String pkColumn : primaryKeyColumns) {
             String paramName = "pk" + (i++);
             conditions.add(dialect.quoteIdentifier(pkColumn) + " = :" + paramName);
-            ColumnDataTypeCategory category = categoryOfOrString(columns, pkColumn);
-            params.addValue(paramName, parseValue(primaryKeyValues.get(pkColumn), category));
+            params.addValue(paramName, parseValue(primaryKeyValues.get(pkColumn), categoryOf(columns, pkColumn)));
         }
         return String.join(" AND ", conditions);
     }
@@ -271,13 +278,6 @@ public class RecordBatchService {
                 .findFirst()
                 .map(RecordColumn::dataTypeCategory)
                 .orElse(ColumnDataTypeCategory.STRING);
-    }
-
-    private ColumnDataTypeCategory categoryOfOrString(List<RecordColumn> columns, String columnName) {
-        if (columns.isEmpty()) {
-            return ColumnDataTypeCategory.STRING;
-        }
-        return categoryOf(columns, columnName);
     }
 
     private Object parseValue(String rawValue, ColumnDataTypeCategory category) {

@@ -106,9 +106,16 @@
 
 ### 16. 最終ビルド検証
 
-- [ ] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（全ユニットテスト成功、jqwikプロパティテスト含む）、`npm test`（frontend）、`npm run build`（frontend）がすべて成功することを確認する
-- [ ] Step 16.2: devenvの実RDBMS（スキーマ取込済み接続）に対し、`java -jar`起動した実アプリへcurlで、一般ユーザとしてのアクセス可能接続一覧・テーブル一覧・レコード一覧（絞込・SQL手入力・ページング）取得、レコード作成・更新・削除の一括反映（正常系・オールオアナッシング失敗系の両方）を検証する。特に一括反映のトランザクション制御（`DataSourceTransactionManager`+`TransactionTemplate`）が実際に機能する（1件の失敗で全件ロールバックされる）ことを実機で確認する
-- [ ] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）は、UNIT-02〜04と同じくNVD APIキー未設定のため実施見送り（既知の制約として記録。新規追加のJSqlParser依存も次回実施時の対象に含める）
+- [x] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（全266件成功、jqwikプロパティテスト含む）、`npm test`（frontend、全169件成功）、`npm run build`（frontend、成功）を確認した
+- [x] Step 16.2: devenv（PostgreSQL・MySQL）に対し、`java -jar`起動した実アプリへcurlで、一般ユーザ（非ADMIN）としてのアクセス可能接続一覧・テーブル一覧・レコード一覧（構造化フィルタ・SQL手入力WHERE/ORDER BY・両者のAND結合・ページング・SQLインジェクション試行の拒否）取得、レコード作成・更新・削除混在の一括反映（正常系・オールオアナッシング失敗系の両方、FK制約違反を含む本物のDB例外での検証）を確認した。一括反映のトランザクション制御（`DataSourceTransactionManager`+`TransactionTemplate`）が実際に機能し、1件の失敗（FK制約違反）で他の正常な操作も含め全件ロールバックされることを実機で確認した。**この過程で2件の実装バグを発見・修正**（詳細は下記「実機E2E検証で発見した不具合」参照）
+- [x] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）は、UNIT-02〜04と同じくNVD APIキー未設定のため実施見送り（既知の制約として記録。新規追加のJSqlParser依存も次回実施時の対象に含める）
+
+### 実機E2E検証で発見した不具合（Step 16.2）
+
+1. **`MasterDataController`の`ObjectMapper`未起動バグ**: `ObjectMapper`をコンストラクタインジェクションしていたが、本プロジェクトの依存構成では`spring-boot-starter-web`がJacksonの`ObjectMapper` Bean自動登録までは行わないため、`java -jar`起動時に`NoSuchBeanDefinitionException`でアプリケーション自体が起動失敗した。`@WebMvcTest`のテストでも同じ事象が先に起きていたが、その時点では誤って「本番の自動設定では問題にならない」と判断していた（誤り）。**修正**: DI注入をやめ、フィールドで`new ObjectMapper()`を直接保持する方式に変更（api-layer-summary.md §4参照）
+2. **`RecordBatchService.executeDelete`の主キー型解決バグ**: DELETE操作の主キー値バインド時に空の列リストを渡していたため、常にSTRINGへフォールバックしていた。H2（単体テスト）では検出されなかったが、実際のPostgreSQLに対するDELETEで`operator does not exist: integer = character varying`エラーが発生した（PostgreSQLは型不一致に厳格なため）。**修正**: `UPDATE`と同様、実際のカラム型で解決するよう修正（data-access-layer-summary.md §6参照）
+
+いずれも修正後、PostgreSQL・MySQL（識別子クオートの2方式: ダブルクオート・バッククオート）の両方で全機能（絞込・SQL手入力・一括反映・オールオアナッシングのロールバック）が正しく動作することを実機で確認した。なお、MySQLの検証中にdevenvのシードデータ（日本語文字列）が文字化けして返る事象を確認したが、調査の結果、docker-entrypoint-initdb.dによる初期データ投入時の文字コード起因（PostgreSQLでは同じ日本語データが正しく扱えている）と判明した既知のdevenv環境上の問題であり、UNIT-05のアプリケーションコード（動的SQL生成・識別子クオート等）には起因しない。対象行の特定・更新・削除自体は正しく機能しており（値の表示のみが影響を受ける）、本ユニットの完了を妨げるものではないと判断した。
 
 ---
 

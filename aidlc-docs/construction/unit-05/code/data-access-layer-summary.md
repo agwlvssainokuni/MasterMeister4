@@ -32,6 +32,9 @@ JSqlParserによる構文解析・再構築のアプローチでは、コメン�
 ### 5. MASTER_DATA_BULK_ACCESSED / MASTER_DATA_BATCH_APPLIEDの記録タイミング
 `RecordQueryService`/`RecordBatchService`は純粋なデータアクセス層とし、監査イベントの発行判断（閾値比較、成功時のみ発行等）はStep 5で作成する`MasterDataService`（ビジネスロジック層）に集約する。
 
+### 6. RecordBatchService.executeDeleteの主キー型解決バグ修正（実機E2E検証で判明）
+`RecordBatchService.executeDelete`は当初、主キー値のバインド時に空の列リスト（`List.of()`）を渡していたため、`ColumnDataTypeCategory`が常にSTRINGへフォールバックし、主キー値が文字列としてバインドされていた。H2（インメモリ、単体テスト）では暗黙の型変換が寛容なため検出されなかったが、Step 16の実機E2E検証で実際のPostgreSQLに対してDELETEを実行したところ、`ERROR: operator does not exist: integer = character varying`で失敗することが判明した（PostgreSQLは列とパラメータの型不一致に厳格なため）。**修正**: `executeDelete`にも`columns`（表示対象カラム一覧）を渡すようにし、`UPDATE`と同様に主キー列の実際のデータ型カテゴリを解決してからバインドするよう修正した（BR-ACCESS-07により`canDelete()`が真の場合、全主キー列は実効主権限READ以上でありcolumnsに必ず含まれるため、常に解決可能）。修正後、PostgreSQL・MySQLの両方に対する一括反映（作成・更新・削除混在、オールオアナッシングのロールバックを含む）が正しく動作することを実機で確認した。
+
 ## テスト結果
 
 - `RawQueryConditionValidatorTest`: 11件成功（許可構文の受理、サブクエリ・関数呼び出し・コメント記号・複数ステートメント・構文エラーの拒否、ORDER BYの列+ASC/DESC限定、負数リテラル）

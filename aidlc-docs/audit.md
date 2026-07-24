@@ -1767,3 +1767,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 14-15完了
 
 ---
+
+## UNIT-05 Code Generation Part 2 - Step 16完了（最終ビルド検証・実機E2E検証）
+**Timestamp**: 2026-07-24T13:10:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "./gradlew :backend:build（全266件成功）、npm test（全169件成功）、npm run build（成功）を確認。devenvのPostgreSQL・MySQLに対しjava -jar起動した実アプリへcurlで一般ユーザ（非ADMIN）としての全機能を検証: アクセス可能接続/テーブル一覧、レコード一覧（構造化フィルタ・SQL手入力WHERE/ORDER BY・AND結合・ページング・SQLインジェクション試行の拒否）、一括反映（作成/更新/削除混在、正常系・FK制約違反によるオールオアナッシングロールバックの両方）。この過程で実装バグを2件発見・修正: (1) MasterDataControllerのObjectMapper DI注入により実アプリ起動自体が失敗する不具合（フィールドでnew ObjectMapper()を直接保持する方式に変更）、(2) RecordBatchService.executeDeleteが主キー値を常にSTRING型でバインドしており、PostgreSQLでDELETE時に型不一致エラーが発生する不具合（UPDATEと同様に実際のカラム型で解決するよう修正）。修正後、両DBで全機能が正しく動作することを再確認。MySQL検証中に判明した日本語データの文字化けはdevenv初期化時の文字コード起因の既知の環境問題（PostgreSQLでは正常）と判明し、UNIT-05のコードとは無関係と判断。devenvコンテナを停止・削除しクリーンアップ。unit-05-code-generation-plan.mdのStep 16.1〜16.3を完了に更新、発見した不具合を記録。aidlc-state.mdのCurrent Statusを更新（全16セクション完了、実機E2E検証済み、承認待ち）。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 16完了（全ステップ完了、ユーザ承認待ち）
+
+---

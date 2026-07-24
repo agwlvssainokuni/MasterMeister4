@@ -28,13 +28,10 @@ import cherry.mastermeister.masterdata.model.RecordColumn;
 import cherry.mastermeister.masterdata.model.RecordFilterCondition;
 import cherry.mastermeister.masterdata.model.RecordPage;
 import cherry.mastermeister.rdbmsconnection.entity.TableType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -65,7 +62,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * （既存の{@code /api/**}→authenticated()ルールがそのまま適用されることの実証、Step 9.1）。
  */
 @WebMvcTest(MasterDataController.class)
-@Import({SecurityConfig.class, MasterDataControllerTest.JacksonTestConfig.class})
+@Import(SecurityConfig.class)
 @EnableConfigurationProperties(cherry.mastermeister.common.config.AppProperties.class)
 @TestPropertySource(properties = {
         "mm.app.jwt.secret=test-secret-key-at-least-32-bytes-long-for-hs256",
@@ -197,18 +194,5 @@ class MasterDataControllerTest {
                                 """))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("BATCH_SIZE_EXCEEDED"));
-    }
-
-    /**
-     * このWebMvcTestスライスにはJacksonAutoConfiguration由来の{@code ObjectMapper}Beanが
-     * 含まれないため、MasterDataControllerが要求する{@code ObjectMapper}を明示的に提供する。
-     */
-    @TestConfiguration
-    static class JacksonTestConfig {
-
-        @Bean
-        ObjectMapper objectMapper() {
-            return new ObjectMapper();
-        }
     }
 }
