@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-06 クエリ保存・実行 - Functional Design計画提示中（全10問、回答待ち）
-- **Next Stage**: ユーザ回答後、business-logic-model.md等の成果物生成へ
+- **Current Stage**: UNIT-06 クエリ保存・実行 - Functional Design成果物作成完了、承認待ち
+- **Next Stage**: 承認後、NFR Requirementsへ
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）

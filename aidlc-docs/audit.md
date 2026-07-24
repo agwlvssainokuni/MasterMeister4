@@ -1836,3 +1836,30 @@
 **Context**: CONSTRUCTION - UNIT-06 Functional Design、計画提示（回答待ち）
 
 ---
+
+## UNIT-06 Functional Design - 推奨提示・回答受領（Q1〜10）
+
+**Timestamp**: 2026-07-24T13:55:00Z
+**User Input**: "推奨は？" → (全10問への推奨と理由を提示) → "Q9=B, それ以外はA(推奨どおり)。なお、Q5について確認。保存クエリに ':param' が含まれる場合、その指定方法はどう想定している？あと、クエリ実行できるのは保存したクエリのみ？"
+**AI Response**: "全10問の推奨（すべてA）と理由を提示。ユーザからQ9=B（作成者は絞込フィルタで自分の非表示化済みクエリを引き続き参照可能）、他は推奨どおりAとの回答を受領。追加質問2件に回答: (1)`:param`はSQL入力欄に直接タイプする形式で、JSqlParserのSELECT文パース結果から`JdbcNamedParameter`ノードを収集して検出する方式（正規表現でなくAST走査、文字列リテラル内の誤検出を回避）、(2)保存クエリのみでなくad-hoc（未保存）実行も可能で、STORY-7.1はEpic6を経由しない直接実行を想定していることを説明。"
+**Context**: CONSTRUCTION - UNIT-06 Functional Design、回答受領
+
+---
+
+## UNIT-06 Functional Design - 回答確定・成果物生成、追加質問Q11
+
+**Timestamp**: 2026-07-24T14:00:00Z
+**User Input**: "OK"
+**AI Response**: "unit-06-functional-design-plan.mdの[Answer]:タグに全10問の回答を記入（Q1〜8,10=A、Q9=B、Q5/Q7に補足を追記）。曖昧性なしと判断しStep C以降（成果物生成）に着手。frontend-components.md作成中に、本アプリが複数RDBMS接続に対応しており（UNIT-03）、クエリ実行時にスキーマだけでなく接続の選択も必要になる点の見落としを発見（UNIT-05のQ15〜17と同種）。追加質問Q11を提示し、AI推奨（接続もスキーマも非依存、UNIT-05同様の2段階選択）をユーザに確認依頼。"
+**Context**: CONSTRUCTION - UNIT-06 Functional Design、成果物生成中に追加質問
+
+---
+
+## UNIT-06 Functional Design - Q11訂正: 保存クエリは接続に紐付け
+
+**Timestamp**: 2026-07-24T14:10:00Z
+**User Input**: "保存クエリは接続に紐付けたい。"
+**AI Response**: "AI推奨（接続もスキーマも非依存）を訂正。保存クエリは`connectionId`を保持し接続に紐付ける、スキーマのみFR-6.3どおり非依存として実行時点で選択する方式に確定。business-logic-model.md（§3, §7）、domain-entities.md（SavedQueryに`connectionId`属性追加、ER図更新）、business-rules.md（BR-QUERY-02〜03を接続固定の内容に修正）を更新。frontend-components.mdを作成: 保存クエリ一覧画面（`/saved-queries`）とクエリ実行画面（`/saved-queries/execute`＝ad-hoc、`/saved-queries/execute/:savedQueryId`＝保存クエリ、Q7=A）の2画面構成。ad-hocモードは接続・スキーマ両方を選択、保存クエリモードは接続固定・スキーマのみ選択（Q11）。新規API名前空間`/api/queries/*`、パッケージ`cherry.mastermeister.query`。"
+**Context**: CONSTRUCTION - UNIT-06 Functional Design、成果物完成
+
+---
