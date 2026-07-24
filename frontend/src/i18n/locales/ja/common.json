@@ -184,6 +184,25 @@
     "create": "CREATE",
     "delete": "DELETE"
   },
+  "masterData": {
+    "title": "マスタメンテナンス",
+    "connectionName": "接続の表示名",
+    "connectionListEmpty": "アクセス可能な接続はありません",
+    "tableListTitle": "テーブル/ビュー一覧",
+    "backToConnections": "接続選択画面へ戻る",
+    "tableListEmpty": "アクセス可能なテーブル/ビューはありません",
+    "rowActions": "操作",
+    "undoDelete": "削除を取消",
+    "addRow": "新規作成",
+    "applyButton": "反映",
+    "applySuccess": "変更を反映しました",
+    "addFilterCondition": "条件追加",
+    "rawQueryToggle": "SQL手入力",
+    "rawWhere": "WHERE句",
+    "rawOrderBy": "ORDER BY句",
+    "recordListEmpty": "レコードがありません",
+    "createTitle": "新規作成"
+  },
   "home": {
     "welcome": "ようこそ、MasterMeisterへ",
     "comingSoon": "準備中",

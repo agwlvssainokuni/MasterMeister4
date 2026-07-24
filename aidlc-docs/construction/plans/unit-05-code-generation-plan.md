@@ -77,23 +77,23 @@
 
 ### 11. Frontend Components Generation
 
-- [ ] Step 11.1: APIクライアント`frontend/src/api/masterData.ts`を作成する（接続一覧・テーブル一覧・レコード一覧・一括反映の各関数）
-- [ ] Step 11.2: `MasterDataConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1）
-- [ ] Step 11.3: `MasterDataTableListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §2）
-- [ ] Step 11.4: `MasterDataRecordListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §3、絞込UI・インライン編集・一括反映・ページング）
-- [ ] Step 11.5: `App.tsx`のルーティングに`/master-data`, `/master-data/:connectionId`, `/master-data/:connectionId/:schemaName/:tableName`を追加する（`ProtectedRoute`配下）
-- [ ] Step 11.6: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'masterData'`を追加する（frontend-components.md §4。ナビ項目・パスはUNIT-01予約分をそのまま使用、変更不要）
-- [ ] Step 11.7: i18nリソース（`common.json`の`ja`/`en`）に`masterData.*`関連キーを追加する
+- [x] Step 11.1: APIクライアント`frontend/src/api/masterData.ts`を作成する（接続一覧・テーブル一覧・レコード一覧・一括反映の各関数）
+- [x] Step 11.2: `MasterDataConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §1）
+- [x] Step 11.3: `MasterDataTableListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §2）
+- [x] Step 11.4: `MasterDataRecordListPage`（`frontend/src/pages/`）を作成する（frontend-components.md §3、絞込UI・インライン編集・一括反映・ページング）
+- [x] Step 11.5: `App.tsx`のルーティングに`/master-data`, `/master-data/:connectionId`, `/master-data/:connectionId/:schemaName/:tableName`を追加する（`ProtectedRoute`配下）
+- [x] Step 11.6: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'masterData'`を追加する（frontend-components.md §4。ナビ項目・パスはUNIT-01予約分をそのまま使用、変更不要）
+- [x] Step 11.7: i18nリソース（`common.json`の`ja`/`en`）に`masterData.*`関連キーを追加する
 
 ### 12. Frontend Components Unit Testing
 
-- [ ] Step 12.1: `MasterDataConnectionListPage.test.tsx`・`MasterDataTableListPage.test.tsx`・`MasterDataRecordListPage.test.tsx`を作成する（Vitest + RTL、一覧表示・絞込・インライン編集・一括反映のAPI呼び出しモック）
-- [ ] Step 12.2: `masterData.test.ts`（APIクライアント）を作成する
-- [ ] Step 12.3: `HomePage.test.tsx`の実装済みバッジ数の変化を反映する
+- [x] Step 12.1: `MasterDataConnectionListPage.test.tsx`・`MasterDataTableListPage.test.tsx`・`MasterDataRecordListPage.test.tsx`を作成する（Vitest + RTL、一覧表示・絞込・インライン編集・一括反映のAPI呼び出しモック）— それぞれ3件・3件・7件
+- [x] Step 12.2: `masterData.test.ts`（APIクライアント）を作成する — 6件
+- [x] Step 12.3: `HomePage.test.tsx`の実装済みバッジ数の変化を反映する — 準備中バッジ5→4件、マスタメンテナンスカードのテストを追加
 
 ### 13. Frontend Components Summary
 
-- [ ] Step 13.1: `aidlc-docs/construction/unit-05/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
+- [x] Step 13.1: `aidlc-docs/construction/unit-05/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
 
 ### 14. Documentation Generation
 

@@ -27,6 +27,9 @@ import { RdbmsConnectionListPage } from './pages/RdbmsConnectionListPage'
 import { SchemaDetailPage } from './pages/SchemaDetailPage'
 import { GroupManagementPage } from './pages/GroupManagementPage'
 import { AccessPermissionTreePage } from './pages/AccessPermissionTreePage'
+import { MasterDataConnectionListPage } from './pages/MasterDataConnectionListPage'
+import { MasterDataTableListPage } from './pages/MasterDataTableListPage'
+import { MasterDataRecordListPage } from './pages/MasterDataRecordListPage'
 
 // devビルド限定ルート（/mock/*）。lazy()呼び出し自体をimport.meta.env.DEVの
 // 三項演算子内に置くことで、本番ビルド時（DEV=falseへ静的に置換される）に
@@ -88,6 +91,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <AccessPermissionTreePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/master-data"
+            element={
+              <ProtectedRoute>
+                <MasterDataConnectionListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/master-data/:connectionId"
+            element={
+              <ProtectedRoute>
+                <MasterDataTableListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/master-data/:connectionId/:schemaName/:tableName"
+            element={
+              <ProtectedRoute>
+                <MasterDataRecordListPage />
               </ProtectedRoute>
             }
           />

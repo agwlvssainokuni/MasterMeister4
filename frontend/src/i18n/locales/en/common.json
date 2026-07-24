@@ -184,6 +184,25 @@
     "create": "CREATE",
     "delete": "DELETE"
   },
+  "masterData": {
+    "title": "Master Data Maintenance",
+    "connectionName": "Connection display name",
+    "connectionListEmpty": "No accessible connections",
+    "tableListTitle": "Tables / Views",
+    "backToConnections": "Back to connection selection",
+    "tableListEmpty": "No accessible tables/views",
+    "rowActions": "Actions",
+    "undoDelete": "Undo delete",
+    "addRow": "Add row",
+    "applyButton": "Apply",
+    "applySuccess": "Changes applied",
+    "addFilterCondition": "Add condition",
+    "rawQueryToggle": "Raw SQL input",
+    "rawWhere": "WHERE clause",
+    "rawOrderBy": "ORDER BY clause",
+    "recordListEmpty": "No records",
+    "createTitle": "Create new record"
+  },
   "home": {
     "welcome": "Welcome to MasterMeister",
     "comingSoon": "Coming soon",

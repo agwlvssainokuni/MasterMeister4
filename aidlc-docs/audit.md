@@ -1751,3 +1751,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 8-10完了
 
 ---
+
+## UNIT-05 Code Generation Part 2 - Step 11-13完了（Frontend）
+**Timestamp**: 2026-07-24T12:45:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "APIクライアント（masterData.ts）と3画面（MasterDataConnectionListPage/MasterDataTableListPage/MasterDataRecordListPage）を作成。UNIT-01先行実装済みのDataTableのcellStates/rowStatesを活用してインライン編集・保留状態を表現（追加コンポーネント実装不要）。App.tsxに3ルート追加、HomePage.tsxのIMPLEMENTED_KEYSにmasterData追加（準備中バッジ5→4）、i18n（common.json ja/en）にmasterData.*キー追加。テスト一式（masterData.test.ts 6件、3画面のテスト計13件、HomePage.test.tsx更新4件）を作成、全169件成功を確認。npx tsc -b、npm run buildも成功。frontend-summary.mdを作成。unit-05-code-generation-plan.mdのStep 11.1〜13.1を完了に更新。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 11-13完了
+
+---
