@@ -61,19 +61,19 @@
 
 ### 8. API Layer Generation
 
-- [ ] Step 8.1: DTOを作成する（`cherry.mastermeister.masterdata.dto`: `AccessibleConnectionResponse`, `AccessibleTableResponse`, `RecordPageResponse`, `RecordColumnResponse`, `RecordFilterRequest`, `BatchOperationRequest`/`BatchOperationItemRequest`, `BatchOperationResultResponse`/`BatchOperationItemResultResponse`、logical-components.md §1）
-- [ ] Step 8.2: `MasterDataController`（`cherry.mastermeister.masterdata.api`）を作成する（logical-components.md §1のエンドポイント一覧）
-- [ ] Step 8.3: `GlobalExceptionHandler`（UNIT-02）に`InvalidQueryConditionException`/`BatchSizeExceededException`のハンドラを追加する（VALIDATION_ERROR/400、nfr-design-patterns.md §1.2）
-- [ ] Step 8.4: SecurityFilterChain設定に`/api/master-data/**`（認証済みなら許可）の新規ルールを追加する（nfr-design-patterns.md §3.2）
-- [ ] Step 8.5: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）
+- [x] Step 8.1: DTOを作成する（`cherry.mastermeister.masterdata.dto`: `AccessibleConnectionResponse`, `AccessibleTableResponse`, `RecordPageResponse`, `RecordColumnResponse`, `RecordFilterRequest`, `BatchOperationRequest`/`BatchOperationItemRequest`, `BatchOperationResultResponse`/`BatchOperationItemResultResponse`、logical-components.md §1）
+- [x] Step 8.2: `MasterDataController`（`cherry.mastermeister.masterdata.api`）を作成する（logical-components.md §1のエンドポイント一覧）— `filter`クエリパラメータはJSON配列としてエンコード（`RecordFilterRequest`のリスト）する実装とした
+- [x] Step 8.3: `GlobalExceptionHandler`（UNIT-02）に`InvalidQueryConditionException`/`BatchSizeExceededException`のハンドラを追加する（VALIDATION_ERROR/400、nfr-design-patterns.md §1.2）— 実装訂正: 両例外とも`ApiException`のサブクラスであり、既存の汎用`@ExceptionHandler(ApiException.class)`がそのまま処理するため、個別ハンドラの追加は不要と判明（Step 3で対応済み）
+- [x] Step 8.4: SecurityFilterChain設定に`/api/master-data/**`（認証済みなら許可）の新規ルールを追加する（nfr-design-patterns.md §3.2）— 実装訂正: 既存の`SecurityConfig`には`/api/admin/**`（ADMIN限定）の次に`/api/**`→`authenticated()`という汎用ルールが既に存在しており、`/api/master-data/**`は`/api/admin/**`に一致しないためこの既存ルールがそのまま適用される。新規ルール追加は不要と判明し、`MasterDataControllerTest`で非ADMINユーザによるアクセス可能性を実証するに留めた
+- [x] Step 8.5: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）— 既存コントローラ同様、springdocによる自動生成のみで追加のアノテーションは不要（Step 16の起動確認で最終確認）
 
 ### 9. API Layer Unit Testing
 
-- [ ] Step 9.1: `@WebMvcTest`で`MasterDataControllerTest`を作成する（一般ユーザ（非ADMIN）でもアクセス可能なことの確認、絞込パラメータ・SQL手入力パラメータのバリデーション、一括反映のバッチ上限超過エラー）
+- [x] Step 9.1: `@WebMvcTest`で`MasterDataControllerTest`を作成する（一般ユーザ（非ADMIN）でもアクセス可能なことの確認、絞込パラメータ・SQL手入力パラメータのバリデーション、一括反映のバッチ上限超過エラー）— 10件成功。WebMvcTestスライスに`ObjectMapper`Beanが含まれないため、テスト用`@TestConfiguration`で明示提供
 
 ### 10. API Layer Summary
 
-- [ ] Step 10.1: `aidlc-docs/construction/unit-05/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
+- [x] Step 10.1: `aidlc-docs/construction/unit-05/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
 
 ### 11. Frontend Components Generation
 

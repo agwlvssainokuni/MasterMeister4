@@ -1743,3 +1743,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 5-7完了
 
 ---
+
+## UNIT-05 Code Generation Part 2 - Step 8-10完了（API Layer）
+**Timestamp**: 2026-07-24T12:30:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "DTO一式（AccessibleConnectionResponse等8種）とMasterDataController（/api/master-data/connections配下4エンドポイント）を作成。実装訂正2件: (1) GlobalExceptionHandlerへの個別ハンドラ追加は不要（ApiExceptionサブクラスの汎用ハンドラで処理、Step3で対応済み）、(2) SecurityFilterChainへの新規ルール追加も不要（既存の/api/**→authenticated()汎用ルールが適用される。MasterDataControllerTestで非ADMINユーザのアクセス可能性を実証）。filterクエリパラメータはJSON配列エンコード方式で確定。MasterDataControllerTest（@WebMvcTest、実SecurityFilterChain有効化、10件）を作成、WebMvcTestスライスにObjectMapper Beanが含まれない問題をテスト用@TestConfigurationで解決。api-layer-summary.mdを作成。./gradlew :backend:test で全266件成功を確認。unit-05-code-generation-plan.mdのStep 8.1〜10.1を完了に更新。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 8-10完了
+
+---
