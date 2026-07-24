@@ -32,15 +32,15 @@
 
 ### 3. Data Access Layer Generation & Testing
 
-- [ ] Step 3.1: `ColumnDataTypeMapper`（`cherry.mastermeister.masterdata`）を作成する（UNIT-03の`SchemaColumn`のJDBC型情報から`ColumnDataTypeCategory`への変換、logical-components.md §1）
-- [ ] Step 3.2: `RawQueryConditionValidator`（`cherry.mastermeister.masterdata`）を作成する（JSqlParserによるWHERE/ORDER BY句の構文検証・パラメータ化、nfr-design-patterns.md §3.1。拒否時は`InvalidQueryConditionException`を送出）
-- [ ] Step 3.3: `RecordQueryService`（`cherry.mastermeister.masterdata`）を作成する（`NamedParameterJdbcTemplate`による動的SELECT文組み立て・実行、ページング・構造化フィルタ・SQL手入力のAND結合（BR-MASTER-15）、表示対象カラムの絞り込み（BR-MASTER-14）、閾値超過時の`MASTER_DATA_BULK_ACCESSED`記録）
-- [ ] Step 3.4: `RecordBatchService`（`cherry.mastermeister.masterdata`）を作成する（権限事前検証→`DataSourceTransactionManager`+`TransactionTemplate`によるトランザクション内個別SQL実行→成功時コミット・`MASTER_DATA_BATCH_APPLIED`記録／失敗時ロールバック・失敗理由返却、BR-MASTER-06〜09。バッチ件数上限チェックを含む）
-- [ ] Step 3.5: **検証チェックポイント**: `RawQueryConditionValidatorTest`（許可構文の受理、禁止構文（サブクエリ・関数呼び出し・コメント記号・複数ステートメント）の拒否）、`RecordQueryServiceTest`・`RecordBatchServiceTest`をH2の実テーブル（テスト用に動的に作成するテーブル）に対して作成し、動作を確認する
+- [x] Step 3.1: `ColumnDataTypeMapper`（`cherry.mastermeister.masterdata`）を作成する（UNIT-03の`SchemaColumn`のJDBC型情報から`ColumnDataTypeCategory`への変換、logical-components.md §1）— 実装訂正: `SchemaColumn.normalizedType`が既にJDBC型情報の正規化結果を保持していたため、生JDBC型情報の再解析ではなく`NormalizedType`からのマッピングとした（詳細はdata-access-layer-summary.md参照）
+- [x] Step 3.2: `RawQueryConditionValidator`（`cherry.mastermeister.masterdata`）を作成する（JSqlParserによるWHERE/ORDER BY句の構文検証・パラメータ化、nfr-design-patterns.md §3.1。拒否時は`InvalidQueryConditionException`を送出）— 識別子クオートのため`RdbmsDialectStrategy.quoteIdentifier()`を新設（MySQL/MariaDBはバッククオート、他はダブルクオート）
+- [x] Step 3.3: `RecordQueryService`（`cherry.mastermeister.masterdata`）を作成する（`NamedParameterJdbcTemplate`による動的SELECT文組み立て・実行、ページング・構造化フィルタ・SQL手入力のAND結合（BR-MASTER-15）、表示対象カラムの絞り込み（BR-MASTER-14）。`MASTER_DATA_BULK_ACCESSED`記録はMasterDataService側で件数を見て発行する（Step 5で実施）
+- [x] Step 3.4: `RecordBatchService`（`cherry.mastermeister.masterdata`）を作成する（権限事前検証→`DataSourceTransactionManager`+`TransactionTemplate`によるトランザクション内個別SQL実行→成功時コミット／失敗時ロールバック・失敗理由返却、BR-MASTER-06〜09。`MASTER_DATA_BATCH_APPLIED`記録・バッチ件数上限チェックはMasterDataService側で実施、Step 5）
+- [x] Step 3.5: **検証チェックポイント**: `RawQueryConditionValidatorTest`（11件、許可構文の受理、禁止構文（サブクエリ・関数呼び出し・コメント記号・複数ステートメント）の拒否）、`RecordQueryServiceTest`（8件）・`RecordBatchServiceTest`（7件、オールオアナッシングのロールバック実証を含む）をH2の実テーブル（インメモリ、テスト用に動的作成）に対して作成し、全件成功を確認した
 
 ### 4. Data Access Layer Summary
 
-- [ ] Step 4.1: `aidlc-docs/construction/unit-05/code/data-access-layer-summary.md`を作成する（作成したコンポーネント一覧、責務、テスト結果）
+- [x] Step 4.1: `aidlc-docs/construction/unit-05/code/data-access-layer-summary.md`を作成する（作成したコンポーネント一覧、責務、テスト結果）
 
 ### 5. Business Logic Generation
 

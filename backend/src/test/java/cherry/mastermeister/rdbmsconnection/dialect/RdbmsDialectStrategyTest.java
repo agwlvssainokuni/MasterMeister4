@@ -38,6 +38,8 @@ class RdbmsDialectStrategyTest {
                 .isEqualTo("jdbc:mysql://localhost:3306/mastermeister?useSSL=false&serverTimezone=UTC");
         assertThatThrownBy(() -> strategy.applySchemaSwitch(null, "any"))
                 .isInstanceOf(UnsupportedOperationException.class);
+        assertThat(strategy.quoteIdentifier("col\"name")).isEqualTo("`col\"name`");
+        assertThat(strategy.quoteIdentifier("col`name")).isEqualTo("`col``name`");
     }
 
     @Test
@@ -48,6 +50,7 @@ class RdbmsDialectStrategyTest {
         assertThat(strategy.requiresSchemaSwitch()).isFalse();
         assertThat(strategy.buildJdbcUrl("localhost", 3307, "mastermeister", "useSSL=false"))
                 .isEqualTo("jdbc:mariadb://localhost:3307/mastermeister?useSSL=false");
+        assertThat(strategy.quoteIdentifier("col`name")).isEqualTo("`col``name`");
     }
 
     @Test
@@ -62,6 +65,7 @@ class RdbmsDialectStrategyTest {
         assertThat(strategy.isSystemSchema("pg_catalog")).isTrue();
         assertThat(strategy.isSystemSchema("pg_toast")).isTrue();
         assertThat(strategy.isSystemSchema("public")).isFalse();
+        assertThat(strategy.quoteIdentifier("col\"name")).isEqualTo("\"col\"\"name\"");
     }
 
     @Test

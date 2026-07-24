@@ -1727,3 +1727,11 @@
 **Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 2完了
 
 ---
+
+## UNIT-05 Code Generation Part 2 - Step 3-4完了（Data Access Layer）
+**Timestamp**: 2026-07-24T12:10:00Z
+**User Input**: (N/A - AI-initiated step)
+**AI Response**: "ColumnDataTypeMapper, RawQueryConditionValidator（JSqlParser 5.3使用）, RecordQueryService, RecordBatchServiceを作成。実装訂正3件を発見・反映: (1) ColumnDataTypeMapperはSchemaColumn.normalizedTypeを直接マッピング（生JDBC型情報の再解析は不要と判明）、(2) 識別子クオートのためRdbmsDialectStrategy.quoteIdentifier()を新設（MySQL/MariaDBはバッククオート）、(3) InvalidQueryConditionException/BatchSizeExceededExceptionはApiExceptionのサブクラスとして実装し、GlobalExceptionHandlerの既存汎用ハンドラで処理されるため個別ハンドラ追加は不要と判明。RawQueryConditionValidatorTest（11件）、RecordQueryServiceTest（8件）、RecordBatchServiceTest（7件、オールオアナッシングのロールバック実証含む）をH2実テーブルに対して作成し全件成功を確認。data-access-layer-summary.mdを作成。unit-05-code-generation-plan.mdのStep 3.1〜4.1を完了に更新。"
+**Context**: CONSTRUCTION - UNIT-05 Code Generation Part 2、Step 3-4完了
+
+---

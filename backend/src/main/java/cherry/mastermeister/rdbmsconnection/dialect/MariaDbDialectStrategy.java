@@ -45,4 +45,9 @@ public class MariaDbDialectStrategy implements RdbmsDialectStrategy {
         String base = "jdbc:mariadb://" + host + ":" + port + "/" + databaseName;
         return (additionalParams == null || additionalParams.isBlank()) ? base : base + "?" + additionalParams;
     }
+
+    @Override
+    public String quoteIdentifier(String identifier) {
+        return "`" + identifier.replace("`", "``") + "`";
+    }
 }

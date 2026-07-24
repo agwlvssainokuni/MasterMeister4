@@ -45,4 +45,9 @@ public class MySqlDialectStrategy implements RdbmsDialectStrategy {
         String base = "jdbc:mysql://" + host + ":" + port + "/" + databaseName;
         return (additionalParams == null || additionalParams.isBlank()) ? base : base + "?" + additionalParams;
     }
+
+    @Override
+    public String quoteIdentifier(String identifier) {
+        return "`" + identifier.replace("`", "``") + "`";
+    }
 }

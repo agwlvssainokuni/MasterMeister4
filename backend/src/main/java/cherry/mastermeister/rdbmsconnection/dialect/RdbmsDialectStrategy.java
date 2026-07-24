@@ -62,4 +62,15 @@ public interface RdbmsDialectStrategy {
     default boolean isSystemSchema(String schemaName) {
         return false;
     }
+
+    /**
+     * 識別子（テーブル名・カラム名等）をこの方言のクオート規約でエスケープする
+     * （UNIT-05で追加、nfr-design-patterns.md §3.1）。ANSI標準はダブルクオートだが、
+     * MySQL/MariaDBは既定でバッククオートを用いるため、当該2方言はオーバーライドする。
+     * 対象は動的に組み立てるSQL（レコード一覧・一括反映）のスキーマ名・テーブル名・カラム名で、
+     * いずれもUNIT-03のスキーマ取込結果（DB由来）またはその集合に対する検証済みの値のみを渡す。
+     */
+    default String quoteIdentifier(String identifier) {
+        return "\"" + identifier.replace("\"", "\"\"") + "\"";
+    }
 }
