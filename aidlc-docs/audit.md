@@ -1899,3 +1899,12 @@
 **Context**: CONSTRUCTION - UNIT-06 NFR Requirements、計画提示
 
 ---
+
+## UNIT-06 NFR Requirements - 推奨確認・回答確定
+
+**Timestamp**: 2026-07-25T00:20:00Z
+**User Input**: "推奨は？" → (AIが全6問の推奨をQ1〜Q6ともAと提示、根拠を説明) → "推奨どおりとする。"
+**AI Response**: "全6問をAI推奨（全問A）で確定。nfr-requirements.md（Scalability/Performance/Availability/Security/監査ログ/Reliability/PBTのカテゴリ別NFR要件、Security Baseline該当ルール一覧）、tech-stack-decisions.md（SingleConnectionDataSourceによる接続管理、サブクエリラップ方式のLIMIT/OFFSETページング（ORDER BY保持の既知の制約を注記）、JDBC標準setQueryTimeoutによるタイムアウト制御（`mm.app.query.execution-timeout-seconds`）、結果件数上限10,000件（`mm.app.query.max-result-rows`）、大量データ取得専用監査イベントは追加しない方針、EffectivePermissionResolver.resolvePrimaryのループ呼び出しによるスキーマ許可リスト判定）を作成。"
+**Context**: CONSTRUCTION - UNIT-06 NFR Requirements、成果物完成
+
+---

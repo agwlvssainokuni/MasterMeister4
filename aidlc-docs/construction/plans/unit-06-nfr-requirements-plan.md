@@ -34,10 +34,10 @@ business-logic-model.md §9でテスト可能プロパティを識別済み（SQ
 
 ## 計画チェックリスト
 
-- [ ] Step A: 質問への回答を収集する（全6問）
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
-- [ ] Step D: `tech-stack-decisions.md`（スキーマ切替＋クエリ実行の接続管理方式、ページング方式、タイムアウト制御、監査ログ閾値の扱い等）を作成する
+- [x] Step A: 質問への回答を収集する（全6問、AI推奨どおり全問Aで確定 2026-07-25T00:20:00Z）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 回答に曖昧性なし
+- [x] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する（2026-07-25T00:25:00Z）
+- [x] Step D: `tech-stack-decisions.md`（スキーマ切替＋クエリ実行の接続管理方式、ページング方式、タイムアウト制御、監査ログ閾値の扱い等）を作成する（2026-07-25T00:25:00Z）
 - [ ] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
@@ -51,7 +51,7 @@ B) UNIT-05の`RecordBatchService`と同様に`DataSourceTransactionManager`＋`T
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Tech Stack Selection・Performance、FR-7.6）
 ページング有効時、ユーザが入力した任意のSELECT文にLIMIT/OFFSETを適用する方式は？
@@ -62,7 +62,7 @@ B) アプリケーション層でのメモリ内ページング（DB側は常に
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Reliability・Security Requirements、SECURITY-14）
 ユーザが入力した任意SQLの実行に対するタイムアウト制御は？
@@ -75,7 +75,7 @@ C) タイムアウト制御を設けない（社内ツール規模のため許�
 
 D) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Scalability・Reliability、FR-7.6）
 ページングを無効にした場合の結果件数に、安全のための上限を設けますか？
@@ -86,7 +86,7 @@ B) 上限を設けない（ユーザの任意SQL・任意規模であり、結�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 5（Security Requirements・監査ログ、requirements.md §6.1「大量データ取得」との関係）
 requirements.md §6.1は「大量データ取得（閾値は設定可能、デフォルト100件以上）」と「クエリ実行（結果件数・実行時間を含む）」を別個のデータアクセスイベントとして列挙している。BR-QUERY-10により`QUERY_EXECUTED`は実行のたびに結果件数（rowCount）を含めて必ず記録されるが、これとは別に、UNIT-05で導入した閾値判定（`mm.app.audit.bulk-access-threshold`）に基づく専用の大量データ取得イベントを追加しますか？
@@ -97,7 +97,7 @@ B) 追加する。新規イベント種別`QUERY_BULK_ACCESSED`を新設し、UN
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 6（Tech Stack Selection・Performance、BR-QUERY-02〜03）
 実行対象スキーマの許可リスト判定（「その接続について、実行者がいずれかのテーブル/カラムに実効主権限READ以上を持つスキーマ」の集合を求める処理）は、既存の`EffectivePermissionResolver`をどう利用しますか？
@@ -108,4 +108,4 @@ B) `EffectivePermissionResolver`に新規メソッド（例: `listAccessibleSche
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
