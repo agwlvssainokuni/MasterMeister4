@@ -23,6 +23,7 @@
 - [x] Step E: `business-rules.md`（公開範囲・編集権限・実行時スキーマ検証・読み取り専用検証等の詳細規則）を作成する
 - [x] Step F: `frontend-components.md`（クエリ実行画面・保存クエリ一覧画面のコンポーネント構造）を作成する。作成過程でマルチ接続対応の見落としを発見し、Q11として追加確認（ユーザ指摘により「保存クエリは接続に紐付け、スキーマのみ非依存」に訂正）
 - [x] Step G: 完了メッセージを提示（1回目） → レビューで画面フロー訂正の指摘（保存クエリ一覧はUNIT-05同様に接続選択を起点とする、ad-hoc実行は独立したFlowとして分離し新規ナビ項目`queryExecution`を追加）。frontend-components.mdをFlow A（保存クエリ管理: 接続選択→一覧→新規/既存）・Flow B（ad-hocクエリ実行: 接続選択→実行、「名前を付けて保存」でFlow Aの新規保存クエリ画面へ遷移）の構成に全面改訂（2026-07-24T14:30:00Z）
+- [x] Step G: 完了メッセージを提示（2回目） → レビューでAPIパス命名の指摘（UNIT-05と同様に見直しが必要）。UNIT-05で確立済みの規約（接続一覧取得のみ`/api/master-data/connections`、他は`connections`セグメントを省き`/api/master-data/{connectionId}/...`にネスト）に倣い、frontend-components.mdの全APIパスを`/api/queries/connections`（一覧のみ）／`/api/queries/{connectionId}/schemas`／`/api/queries/{connectionId}/execute`／`/api/queries/{connectionId}/saved`配下に統一（2026-07-25T00:00:00Z）
 
 ## 質問
 

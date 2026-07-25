@@ -14,6 +14,10 @@ UNIT-02〜UNIT-05で確立した規約（`frontend/src/pages/`・`frontend/src/a
 
 **バックエンドAPIパス・パッケージ構成**: UNIT-05に続く一般ユーザ向け機能のため、新規のトップレベル名前空間`/api/queries/*`を新設する（管理者ロールを要求しない）。パッケージは`cherry.mastermeister.query`（`unit-of-work.md`のユニット→パッケージ対応表のとおり）。
 
+**APIパス規約（UNIT-05の訂正を踏襲）**: UNIT-05では当初`/api/master-data/connections/{connectionId}/tables`のように`connections`セグメントが冗長に重なっていたが、レビュー指摘を受けて接続一覧取得（`GET /api/master-data/connections`）以外は`/api/master-data/{connectionId}/...`へ簡略化する規約に整理された（`api-layer-summary.md`参照）。本ユニットも当初案では同様の冗長（`/api/queries/connections/{connectionId}/schemas`）や、`connectionId`をクエリパラメータで渡す不統一（保存クエリ一覧）があったため、はじめからUNIT-05の確立済み規約に揃える:
+- 接続一覧取得のみ`GET /api/queries/connections`とし、それ以外の接続配下リソースはすべて`/api/queries/{connectionId}/...`にネストする
+- 保存クエリも`SavedQuery`が`connectionId`に紐付く（Q11）ため、`/api/queries/{connectionId}/saved`配下にネストする
+
 ---
 
 ## Flow A: 保存クエリ管理（ナビ項目`savedQueries`）
@@ -52,8 +56,8 @@ SavedQueryListPage (AppShell)
 **State**: `connectionId`（ルートパラメータ）、`queries: SavedQuerySummary[]`, `visibilityFilter: 'ALL' | 'PUBLIC' | 'PRIVATE'`, `includeOwnRetired: boolean`, `loading: boolean`, `errorMessage: string | null`
 
 **API連携**:
-- `GET /api/queries/saved?connectionId=...&visibility=...&includeOwnRetired=...` — 対象接続に紐づく可視な保存クエリ一覧取得（BR-QUERY-05, BR-QUERY-08）
-- `POST /api/queries/saved/{id}/retire` — 非表示化（作成者のみ、BR-QUERY-07〜08）
+- `GET /api/queries/{connectionId}/saved?visibility=...&includeOwnRetired=...` — 対象接続に紐づく可視な保存クエリ一覧取得（BR-QUERY-05, BR-QUERY-08）
+- `POST /api/queries/{connectionId}/saved/{savedQueryId}/retire` — 非表示化（作成者のみ、BR-QUERY-07〜08）
 
 ---
 
@@ -77,9 +81,9 @@ SavedQueryEditorPage (AppShell, mode='new')
 **State**: `connectionId`（ルートパラメータ）、`prefill: { sql, schemaName, paramValues } | null`（router stateから受領）、`schemas: string[]`, `selectedSchema: string | null`, `sql: string`, `detectedParams: string[]`, `paramValues: Record<string, string>`, `pagingEnabled: boolean`, `pageSize: number`, `result: QueryResult | null`, `loading: boolean`, `errorMessage: string | null`
 
 **API連携**:
-- `GET /api/queries/connections/{connectionId}/schemas` — アクセス可能なスキーマ一覧（BR-QUERY-02）
-- `POST /api/queries/execute` — 保存前の実行確認（BR-QUERY-01, BR-QUERY-04）
-- `POST /api/queries/saved` — 新規保存（`connectionId`, `name`, `sql`, `visibility`。BR-QUERY-05）
+- `GET /api/queries/{connectionId}/schemas` — アクセス可能なスキーマ一覧（BR-QUERY-02）
+- `POST /api/queries/{connectionId}/execute` — 保存前の実行確認（BR-QUERY-01, BR-QUERY-04）
+- `POST /api/queries/{connectionId}/saved` — 新規保存（`name`, `sql`, `visibility`。`connectionId`はパスから取得。BR-QUERY-05）
 
 ---
 
@@ -105,11 +109,11 @@ SavedQueryEditorPage (AppShell, mode='existing')
 **State**: `connectionId`, `savedQueryId`（ルートパラメータ）、`savedQuery: SavedQuerySummary | null`（名前・公開範囲・作成者情報。編集権限の判定・更新ダイアログの初期値に使う）、`editing: boolean`、他はA-3と共通（スキーマ・SQL・パラメータ・ページング・結果）
 
 **API連携**:
-- `GET /api/queries/saved/{id}` — 保存クエリの取得（アクセス可否はBR-QUERY-09で判定、拒否時は403）
-- `GET /api/queries/connections/{connectionId}/schemas`
-- `POST /api/queries/saved/{id}/execute` — 実行（BR-QUERY-09）
-- `PUT /api/queries/saved/{id}` — 更新（作成者のみ、BR-QUERY-07）
-- `POST /api/queries/saved/{id}/retire` — 非表示化（作成者のみ、BR-QUERY-08）
+- `GET /api/queries/{connectionId}/saved/{savedQueryId}` — 保存クエリの取得（アクセス可否はBR-QUERY-09で判定、拒否時は403）
+- `GET /api/queries/{connectionId}/schemas`
+- `POST /api/queries/{connectionId}/saved/{savedQueryId}/execute` — 実行（BR-QUERY-09）
+- `PUT /api/queries/{connectionId}/saved/{savedQueryId}` — 更新（作成者のみ、BR-QUERY-07）
+- `POST /api/queries/{connectionId}/saved/{savedQueryId}/retire` — 非表示化（作成者のみ、BR-QUERY-08）
 
 ---
 
@@ -150,8 +154,8 @@ QueryExecutionPage (AppShell)
 **State**: `connectionId`（ルートパラメータ）、`schemas: string[]`, `selectedSchema: string | null`, `sql: string`, `detectedParams: string[]`, `paramValues: Record<string, string>`, `pagingEnabled: boolean`, `pageSize: number`, `result: QueryResult | null`, `loading: boolean`, `errorMessage: string | null`
 
 **API連携**:
-- `GET /api/queries/connections/{connectionId}/schemas`
-- `POST /api/queries/execute` — ad-hoc実行（BR-QUERY-01, BR-QUERY-04）
+- `GET /api/queries/{connectionId}/schemas`
+- `POST /api/queries/{connectionId}/execute` — ad-hoc実行（BR-QUERY-01, BR-QUERY-04）
 
 ---
 

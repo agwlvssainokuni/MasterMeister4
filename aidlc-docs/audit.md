@@ -1872,3 +1872,12 @@
 **Context**: CONSTRUCTION - UNIT-06 Functional Design、承認前レビュー、Request Changes対応
 
 ---
+
+## UNIT-06 Functional Design - 承認前レビュー指摘: APIパス命名の見直し
+
+**Timestamp**: 2026-07-25T00:00:00Z
+**User Input**: "unit-05と同じく、apiのパス名は見直しが必要かも。"
+**AI Response**: "UNIT-05で確立済みの規約（接続一覧取得のみ`/api/master-data/connections`、それ以外は`connections`セグメントを省き`/api/master-data/{connectionId}/...`にネスト。api-layer-summary.mdの実装訂正記録に基づく）に倣い、frontend-components.mdの全APIパスを整理。修正内容: (1) `GET /api/queries/connections/{connectionId}/schemas` → `GET /api/queries/{connectionId}/schemas`（`connections`重複除去）、(2) `POST /api/queries/execute` → `POST /api/queries/{connectionId}/execute`、(3) 保存クエリ一覧をクエリパラメータ`connectionId`渡しから`GET /api/queries/{connectionId}/saved`へ変更、(4) 保存クエリのCRUD・実行・非表示化エンドポイントをすべて`/api/queries/{connectionId}/saved/{savedQueryId}/...`にネスト。接続一覧取得`GET /api/queries/connections`のみ変更なし。frontend-components.mdにAPIパス規約セクションを追加し、unit-06-functional-design-plan.mdのStep Gに訂正履歴を追記。"
+**Context**: CONSTRUCTION - UNIT-06 Functional Design、承認前レビュー、Request Changes対応
+
+---
