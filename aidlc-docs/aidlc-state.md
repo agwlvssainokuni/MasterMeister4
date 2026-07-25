@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-06 クエリ保存・実行 - Functional Design成果物作成完了、承認待ち
-- **Next Stage**: 承認後、NFR Requirementsへ
+- **Current Stage**: UNIT-06 クエリ保存・実行 - Functional Design承認完了
+- **Next Stage**: NFR Requirements
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
@@ -93,7 +93,7 @@
 - [x] Code Generation — COMPLETED（承認 2026-07-24T13:36:00Z。全16セクション完了。実機E2E検証（PostgreSQL/MySQL）で2件の重大バグを発見・修正: ObjectMapper DI注入によるアプリ起動失敗、RecordBatchService.executeDeleteの主キー型バインド不具合。承認前レビュー対応2件: APIパス構造の簡略化（/api/master-data/connections/{id}/...→/api/master-data/{id}/...）、ダークモードでの編集可能セル文字色固定の修正）
 
 ## Current Unit - Stage Progress (UNIT-06)
-- [ ] Functional Design — EXECUTE（承認 2026-07-24T13:45:00Z）
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-25T00:10:00Z。business-logic-model.md, business-rules.md（BR-QUERY-01〜11）, domain-entities.md, frontend-components.mdを作成。全10問（Q1〜10、Q9=B以外は推奨A）＋追加質問Q11に回答。レビュー指摘を反映: 保存クエリは`connectionId`を保持し接続に紐付ける（スキーマは非依存のまま）方式に訂正、画面フローをFlow A（保存クエリ管理: 接続選択→一覧→新規/既存、ナビ項目`savedQueries`）とFlow B（ad-hocクエリ実行: 接続選択→実行、新規ナビ項目`queryExecution`）に分離、APIパス命名をUNIT-05確立済み規約（`connections`セグメント重複除去、`{connectionId}`配下へのネスト統一）に整理）
 - [ ] NFR Requirements — EXECUTE（承認 2026-07-24T13:45:00Z）
 - [ ] NFR Design — EXECUTE（承認 2026-07-24T13:45:00Z）
 - [x] Infrastructure Design — SKIP（承認 2026-07-24T13:45:00Z。新規インフラ不要）

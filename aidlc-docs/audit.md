@@ -1881,3 +1881,12 @@
 **Context**: CONSTRUCTION - UNIT-06 Functional Design、承認前レビュー、Request Changes対応
 
 ---
+
+## UNIT-06 Functional Design - 承認
+
+**Timestamp**: 2026-07-25T00:10:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-06 Functional Designを承認。aidlc-state.mdのCurrent Unit - Stage Progress (UNIT-06)にCOMPLETEDを記録、Current Status/Next StageをNFR Requirementsに更新。次はNFR Requirementsステージへ進む。"
+**Context**: CONSTRUCTION - UNIT-06 Functional Design、承認完了、NFR Requirementsへ移行
+
+---
