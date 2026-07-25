@@ -1890,3 +1890,12 @@
 **Context**: CONSTRUCTION - UNIT-06 Functional Design、承認完了、NFR Requirementsへ移行
 
 ---
+
+## UNIT-06 NFR Requirements - 計画作成
+
+**Timestamp**: 2026-07-25T00:15:00Z
+**User Input**: (NFR Requirementsステージ開始、ユーザ入力なし)
+**AI Response**: "unit-06-nfr-requirements-plan.mdを作成。既存実装調査で`RdbmsDialectStrategy.applySchemaSwitch`がUNIT-04時点でUNIT-06専用として用意済み（未使用）であることを確認。Security Baseline該当ルール評価、全6問（スキーマ切替とクエリ実行の接続管理方式、ページングのLIMIT/OFFSET適用方式、クエリタイムアウト制御、ページング無効時の結果件数上限、大量データ取得監査イベントの要否、スキーマ許可リスト判定でのEffectivePermissionResolver利用方式）を提示し回答待ち。"
+**Context**: CONSTRUCTION - UNIT-06 NFR Requirements、計画提示
+
+---
