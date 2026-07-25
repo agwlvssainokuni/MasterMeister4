@@ -1908,3 +1908,12 @@
 **Context**: CONSTRUCTION - UNIT-06 NFR Requirements、成果物完成
 
 ---
+
+## UNIT-06 NFR Requirements - 承認
+
+**Timestamp**: 2026-07-25T00:30:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-06 NFR Requirementsを承認。aidlc-state.mdのCurrent Unit - Stage Progress (UNIT-06)にCOMPLETEDを記録、Current Status/Next StageをNFR Designに更新。次はNFR Designステージへ進む。"
+**Context**: CONSTRUCTION - UNIT-06 NFR Requirements、承認完了、NFR Designへ移行
+
+---

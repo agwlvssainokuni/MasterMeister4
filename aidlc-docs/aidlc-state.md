@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-06 クエリ保存・実行 - Functional Design承認完了
-- **Next Stage**: NFR Requirements
+- **Current Stage**: UNIT-06 クエリ保存・実行 - NFR Requirements承認完了
+- **Next Stage**: NFR Design
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
@@ -94,7 +94,7 @@
 
 ## Current Unit - Stage Progress (UNIT-06)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-25T00:10:00Z。business-logic-model.md, business-rules.md（BR-QUERY-01〜11）, domain-entities.md, frontend-components.mdを作成。全10問（Q1〜10、Q9=B以外は推奨A）＋追加質問Q11に回答。レビュー指摘を反映: 保存クエリは`connectionId`を保持し接続に紐付ける（スキーマは非依存のまま）方式に訂正、画面フローをFlow A（保存クエリ管理: 接続選択→一覧→新規/既存、ナビ項目`savedQueries`）とFlow B（ad-hocクエリ実行: 接続選択→実行、新規ナビ項目`queryExecution`）に分離、APIパス命名をUNIT-05確立済み規約（`connections`セグメント重複除去、`{connectionId}`配下へのネスト統一）に整理）
-- [ ] NFR Requirements — EXECUTE（承認 2026-07-24T13:45:00Z）
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-25T00:30:00Z。全6問AI推奨（全問A）で確定。nfr-requirements.md（Security Baseline全15ルール評価、Scalability/Performance/Availability/監査ログ/Reliability方針）、tech-stack-decisions.md（SingleConnectionDataSourceによるスキーマ切替＋クエリ実行の接続管理、サブクエリラップ方式のLIMIT/OFFSETページング、JDBC標準setQueryTimeoutによるタイムアウト制御、結果件数上限10,000件、EffectivePermissionResolver.resolvePrimaryループ呼び出しによるスキーマ許可リスト判定）を作成。新規外部ライブラリ依存なし）
 - [ ] NFR Design — EXECUTE（承認 2026-07-24T13:45:00Z）
 - [x] Infrastructure Design — SKIP（承認 2026-07-24T13:45:00Z。新規インフラ不要）
 - [ ] Code Generation — 未着手
