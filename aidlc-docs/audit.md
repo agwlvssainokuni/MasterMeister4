@@ -2142,3 +2142,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Design、計画・質問提示、回答待ち
 
 ---
+
+## UNIT-07 NFR Design 質問への推奨提示・回答受領・成果物作成完了
+
+**Timestamp**: 2026-07-26T06:28:00Z
+**User Input**: "推奨は？" → "推奨どおり。"
+**AI Response**: "全5問について推奨（全問A）と理由を提示: Q1専用例外QueryBuilderInvalidGroupByException（1業務ルール1例外方針）、Q2構文非対応(422)とアクセス権限不足(403)を別例外に分離（性質の違いを反映）、Q3 UNIT-06のQuerySchemaNotAccessibleExceptionを再利用（重複回避）、Q4テーブル/カラム一覧取得ロジックをQueryBuilderAccessResolverとして分離（UNIT-06 QuerySqlAnalyzerの前例踏襲）、Q5単一QueryBuilderController。ユーザが推奨どおり全問Aで確定。nfr-design-patterns.md（エラーハンドリング詳細、型安全なリテラル構築、アクセス可能一覧取得の性能方針）、logical-components.md（QueryBuilderController/QueryBuilderService/QueryBuilderAccessResolver/QueryBuilderColumnTypeMapperの4クラス構成、4種の新規例外＋UNIT-06例外の再利用、DTO設計）を作成。"
+**Context**: CONSTRUCTION - UNIT-07 NFR Design、成果物完成・承認待ち
+
+---

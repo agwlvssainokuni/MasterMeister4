@@ -10,11 +10,11 @@ requirements.mdの前提（同時利用者約10名規模）により、新規の
 
 ## 計画チェックリスト
 
-- [x] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-design-patterns.md`（エラー表現・例外設計、SQL生成/解析の詳細パターン）を作成する
-- [ ] Step D: `logical-components.md`（新設する論理コンポーネント、Controller構成）を作成する
-- [ ] Step E: 完了メッセージを提示し、承認を得る
+- [x] Step A: 質問への回答を収集する（全5問、推奨どおり全問Aで確定）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
+- [x] Step C: `nfr-design-patterns.md`（エラー表現・例外設計、SQL生成/解析の詳細パターン）を作成する
+- [x] Step D: `logical-components.md`（新設する論理コンポーネント、Controller構成）を作成する
+- [x] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
 
@@ -27,7 +27,7 @@ B) 専用例外は設けず、Bean Validationの`@AssertTrue`等でリクエス�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Security Patterns、BR-QUERYBUILDER-07、重要）
 リバースエンジニアリング失敗時のエラー表現は？BR-QUERYBUILDER-07は「タブUIで表現できない構文要素（サブクエリ・UNION・FULL JOIN等）」と「参照テーブル/カラムへのアクセス権限不足」という、性質の異なる2種類の失敗要因を列挙している。
@@ -38,7 +38,7 @@ B) 単一の`QueryBuilderReverseEngineeringFailedException`（例: 422で統一�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Security Patterns、business-logic-model.md §1・BR-QUERYBUILDER-01）
 テーブル/カラム一覧取得（`GET /api/query-builder/{connectionId}/tables`）で、指定された`schemaName`がアクセス可能なスキーマ一覧（UNIT-06の`listAccessibleSchemas`基準）に含まれない場合のエラー表現は？
@@ -49,7 +49,7 @@ B) 本ユニット独自の例外クラスを新設する
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Logical Components、重要）
 アクセス可能テーブル/カラム一覧取得ロジック（`SchemaIntrospectionService`＋`EffectivePermissionResolver`＋独自の型分類マッパーの組み合わせ）の配置は？
@@ -60,7 +60,7 @@ B) `QueryBuilderService`に3つ目のメソッドとして統合する（Applica
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 5（Logical Components）
 Controller構成は？
@@ -71,4 +71,4 @@ B) 複数のControllerに分割する
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
