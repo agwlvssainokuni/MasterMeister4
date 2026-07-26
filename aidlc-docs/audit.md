@@ -2097,3 +2097,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Requirements、計画・質問提示、回答待ち
 
 ---
+
+## aidlc-state.md 点検・是正
+
+**Timestamp**: 2026-07-26T06:05:00Z
+**User Input**: "aidlc-state.mdの書きっぷりを点検しておいて。"
+**AI Response**: "全体を点検し3点の問題を発見。(1) 冒頭の**Current Stage**フィールドがプロジェクト開始時（INCEPTION - Workflow Planning）のまま一度も更新されていなかった → 現状（CONSTRUCTION - UNIT-07 NFR Requirements）に修正、詳細は## Current Statusを参照する旨を付記。(2) Current Unit ProgressのUNIT-07行が『Functional Design成果物完成、承認待ち』のまま古く、実際は承認済みでNFR Requirementsに進んでいることと矛盾 → 最新状態に修正。(3) Current Unit - Stage Progressの並び順がUNIT-02→04→03→01→05→06→07と不揃い → ユーザに確認のうえ、UNIT-01〜07の番号順に並べ替え（内容自体は変更なし）。"
+**Context**: CONSTRUCTION - aidlc-state.md是正、UNIT-07 NFR Requirements回答待ちのまま継続
+
+---
