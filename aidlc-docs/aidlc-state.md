@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-08 Infrastructure Design（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - UNIT-08 Code Generation Part 2（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -50,9 +50,9 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-08 クエリ履歴 - Infrastructure Design SKIP
-- **Next Stage**: UNIT-08 クエリ履歴 - Code Generation
-- **Status**: 実施中
+- **Current Stage**: UNIT-08 クエリ履歴 - Code Generation Part 2完了・承認待ち
+- **Next Stage**: Code Generation承認後、Build and Testへ（UNIT-08が最後のユニット）
+- **Status**: 承認待ち
 
 ## Backlog（今後の検討課題）
 - **E2Eテストフレームワーク（Playwright等）の導入**: 現状、各ユニットのCode Generation最終ステップでコマンドラインによる実機E2E検証（curl等）を実施しているが、UI表示に関する不具合（例: UNIT-05のダークモード文字色バグ）はこの方式では検出できない。Playwright等のフレームワークは既存の実インフラE2E検証（DB方言差異等のバックエンド/インフラ層の不具合検出に有効）を置き換えるものではなく補完するものと位置づけ、プロジェクト全体のテスト戦略として別途検討する（2026-07-24、UNIT-05承認時にユーザ提起）。
@@ -111,7 +111,7 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-26T20:53:00Z。unit-08-nfr-requirements-plan.mdの全5問に推奨どおり全問Aで回答: JpaSpecificationExecutorによる動的絞込クエリ（プロジェクト内初導入）、(connection_id, executed_at)複合インデックス新設（既存query_execution_recordテーブルにconnection_idのインデックスがなかったため）、絞込パラメータの入力検証、Controller層でのロール判定によるフェイルクローズ、findAllByIdInによる名前解決（キャッシュなし）。nfr-requirements.md（Security Baseline全15ルール評価）、tech-stack-decisions.mdを作成。承認前レビューで事実誤認を発見・修正: 「UNIT-05/06で確立したロール判定パターンを踏襲」という記述が誤りで、実際には業務ロジック内でのロール分岐に前例はなく本ユニットが初導入と訂正。JWTのroleクレーム参照方法（principal.getClaimAsString("role")）を具体化）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-26T21:33:00Z。unit-08-nfr-design-plan.mdの全4問に推奨どおり全問Aで回答: Bean Validationでの絞込パラメータ検証、QueryHistoryServiceへの3責務集約、単一QueryHistoryController（3エンドポイント）、Controller層のみでの実行者スコープ判定。nfr-design-patterns.md, logical-components.mdを作成。承認前レビューで2件発見・修正: (1)ServiceシグネチャがisAdmin（ロール由来の値）をそのまま受け取っており「ロール判定ロジックをServiceに持ち込まない」という方針と矛盾していたため、executedByFilter（絞込済みの実行者ID）を渡す形に是正、(2)listSchemasが実行者スコープの絞込を受け取っておらず一般ユーザが他ユーザのスキーマ名を知りうる情報漏洩リスクを発見・修正（listConnectionsと同じexecutedByFilter方式に統一）。さらに、この情報漏洩パターンが他ユニット(UNIT-01〜07)にも存在しないか横断点検（Exploreエージェント）を実施し、問題なしと確認）
 - [x] Infrastructure Design — SKIP（判定 2026-07-26T21:34:00Z。新規DB永続化なし（既存query_execution_recordテーブルの閲覧のみ）、新規外部サービス依存なし、既存インフラ（UNIT-03/04/06）の再利用のみのため新規インフラ設計不要）
-- [ ] Code Generation — EXECUTE
+- [ ] Code Generation — EXECUTE。Part 1（計画）承認済み（2026-07-26T21:45:00Z）、Part 2（コード生成）全14セクション完了・承認待ち（unit-08-code-generation-plan.md。Business Logic層（DTO/enum群、QueryHistorySpecifications、既存QueryExecutionRecordRepository/SavedQueryRepositoryの拡張、QueryHistoryService）、API層（QueryHistoryController、新規例外QueryHistoryInvalidParameterException）、Frontend（接続選択画面、履歴一覧画面、既存auth/jwt.tsへのdecodeJwtRole追加）、DBマイグレーション（V17複合インデックス）を作成。バックエンド全412件・フロントエンド全241件成功。実装時の発見・判断: (1)QueryHistorySearchRequestのようなBean Validation付きDTOを個々の@RequestParamに変更（既存GETエンドポイントとの一貫性のため）、(2)AuthContextにロール情報がなく既存decodeJwtEmailと同じ設計思想でdecodeJwtRoleを追加。実機E2E検証（PostgreSQL）で実行者スコープのフェイルクローズ、保存クエリ名解決、絞込・ページング、削除済み接続のプレースホルダー表示を確認）
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
