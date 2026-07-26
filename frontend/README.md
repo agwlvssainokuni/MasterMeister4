@@ -53,9 +53,9 @@ src/
 ├── i18n/                 # 多言語対応（react-i18next、common/design-system名前空間。アプリ全体で使う横断的インフラのためdesign-system/の外に配置）
 ├── auth/                # 認証状態管理（AuthContext）、トークン保管（sessionStorage）、JWTデコード
 ├── api/                  # バックエンドAPIクライアント（apiFetch、リフレッシュ自動再試行）
-├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）・UNIT-04（グループ管理、権限設定）・UNIT-05（マスタメンテナンス3画面）・UNIT-06（保存クエリ管理3画面、ad-hocクエリ実行2画面、共有のQueryEditorPanel）で構築した画面
+├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）・UNIT-04（グループ管理、権限設定）・UNIT-05（マスタメンテナンス3画面）・UNIT-06（保存クエリ管理3画面、ad-hocクエリ実行2画面、共有のQueryEditorPanel）・UNIT-07（クエリビルダー2画面＋タブサブコンポーネント7種＋共有のQueryBuilderOperandPicker）で構築した画面
 ├── mocks/              # devビルド限定のコンポーネントカタログ・代表画面モック
 └── test/                 # テスト共通セットアップ・ヘルパー（renderMock、renderPage）
 ```
 
-詳細は`aidlc-docs/construction/unit-01/code/component-inventory.md`（デザインシステム）・`aidlc-docs/construction/unit-0{2,3,4,5,6}/code/frontend-summary.md`（認証基盤・画面）を参照。
+詳細は`aidlc-docs/construction/unit-01/code/component-inventory.md`（デザインシステム）・`aidlc-docs/construction/unit-0{2,3,4,5,6,7}/code/frontend-summary.md`（認証基盤・画面）を参照。

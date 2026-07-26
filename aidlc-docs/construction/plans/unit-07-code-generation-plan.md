@@ -92,12 +92,12 @@
 
 ### 10. Documentation Generation
 
-- [ ] Step 10.1: `backend/README.md`を更新する（UNIT-07概要: クエリビルダー、`/api/query-builder/*`エンドポイント）
-- [ ] Step 10.2: `frontend/README.md`を更新する（UNIT-07の新規画面をpages概要に追記）
+- [x] Step 10.1: `backend/README.md`を更新する（UNIT-07概要: クエリビルダー、`/api/query-builder/*`エンドポイント）
+- [x] Step 10.2: `frontend/README.md`を更新する（UNIT-07の新規画面をpages概要に追記）
 
 ### 11. Deployment Artifacts
 
-- [ ] Step 11.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認する
+- [x] Step 11.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認した（MySQL/MariaDB/PostgreSQLが既に定義済みで、Step 12のE2E検証にそのまま使用できる。既存構成のまま変更なし）
 
 ### 12. 最終ビルド検証
 

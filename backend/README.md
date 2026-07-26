@@ -92,6 +92,16 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 | `MM_APP_QUERY_EXECUTION_TIMEOUT_SECONDS` | `30` | クエリ実行のタイムアウト秒数（超過時408 `QUERY_EXECUTION_TIMEOUT`） |
 | `MM_APP_QUERY_MAX_RESULT_ROWS` | `10000` | ページング無効時の結果件数上限（超過時400 `QUERY_RESULT_SIZE_EXCEEDED`） |
 
+## クエリビルダー（UNIT-07）
+
+`/query-builder`画面で、タブUI（SELECT/FROM/JOIN/WHERE/GROUP BY/HAVING/ORDER BY/LIMIT OFFSET）によるSQL組み立て・既存SQLからのリバースエンジニアリングができる。API名前空間は`/api/query-builder/**`（3エンドポイント）。接続一覧・スキーマ一覧はUNIT-06の既存API（`/api/queries/connections`・`/api/queries/{connectionId}/schemas`）をそのまま再利用する。UNIT-05の`MasterDataService`には依存せず、UNIT-03の`SchemaIntrospectionService`・UNIT-04の`EffectivePermissionResolver`を直接組み合わせて独自に実装する（`QueryBuilderAccessResolver`）。
+
+- FROM/JOINタブのテーブル候補・他タブのカラム候補は、列単位の実効権限フィルタリングで絞り込む（UNIT-05の`isTableVisible`と同じOR条件、BR-QUERYBUILDER-01）。UNIT-06のad-hoc実行がスキーマ単位の粒度に留めているのとは異なる粒度だが、タブUI上で参照テーブル/カラムが常に明示的に特定できるため技術的制約なく実現できる
+- SQL生成（`QueryBuilderService.generateSql`）・リバースエンジニアリング（`parseToBuilderState`）はいずれもJSqlParserのオブジェクトモデル（`PlainSelect`/`Join`/`SelectItem`等）を構築・走査する。WHERE/HAVING比較値は列のデータ型分類に応じた型安全なリテラル（`LongValue`/`StringValue`等）へ変換し、SQL文字列連結によるインジェクションを構造的に防止する
+- JOIN種別はINNER/LEFT/RIGHTのみサポート（FULL JOINは対象RDBMS4種のうちMySQL/MariaDBが非対応のため除外）。JOIN条件は構造化された等価結合のみ
+- サポート対象外の構文（サブクエリ・UNION・FULL JOIN等）を検出した場合は422、参照するテーブル/カラムへのアクセス権限がない場合は403で、いずれもタブUIへの部分的な反映は行わない（フェイルクローズ、BR-QUERYBUILDER-07）
+- 生成したSQLは、UNIT-06のクエリ実行画面・保存クエリ作成/編集画面へそのまま連携できる（逆方向の「クエリビルダーで編集」による相互遷移にも対応）
+
 ## トレースログ
 
 `TraceAspect`（`cherry.mastermeister.common.aop`、`reference/trace/TraceAspect.java`を移植）が、`cherry.mastermeister`配下（`common.config`を除く）の全メソッドの呼び出し・復帰・例外を`Spring`の`CustomizableTraceInterceptor`経由でログ出力する。実際に出力されるのは`MM_LOGGING_LEVEL_APP=TRACE`のとき（既定値`INFO`では無効）。設定値は`mm.app.trace.*`（`AppProperties.Trace`）で調整可能。
