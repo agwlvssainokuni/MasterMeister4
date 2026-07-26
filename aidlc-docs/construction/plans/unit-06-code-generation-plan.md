@@ -15,6 +15,7 @@
 - パッケージ構成は`cherry.mastermeister.query`単一（`unit-of-work.md`のユニット→パッケージ対応表のとおり）。エンティティは`{package}.entity`、リポジトリは`{package}.repository`、サービスクラスはパッケージ直下、DTOは`{package}.dto`、コントローラは`{package}.api`に配置する
 - `saved_query.connection_id`は`rdbms_connection`への外部キー制約（`ON DELETE CASCADE`）を設ける。UNIT-04の`access_permission`と同様、`SavedQuery`は接続が存在する前提で意味を持つ生きたリソースであり、対象接続が削除されれば連動して削除されるべきと判断する
 - `query_execution_record`の`connection_id`・`saved_query_id`は外部キー制約を設けない。UNIT-02の`audit_log_entry`と同じ理由（対象リソースのライフサイクル変更が実行履歴に影響しないようにするため）で、`QueryExecutionRecord`は監査ログに準じた履歴記録として扱う
+- `saved_query.sql`・`query_execution_record.sql`・`query_execution_record.params`は`@Lob`（CLOB/TEXT相当、方言ごとにH2はCLOB・PostgreSQLはTEXT・MySQL/MariaDBはLONGTEXTへ解決）とする。既存のテキスト系カラム（`audit_log_entry.detail VARCHAR(2000)`等）はいずれも短い要約用の固定長だが、本ユニットで初めて任意長のユーザ入力SQL文自体を永続化するため、固定長VARCHARによる切り詰め・保存失敗リスクを避ける（レビュー指摘の反映）
 - スキーマ切替＋クエリ実行の接続管理は`SingleConnectionDataSource`（`suppressClose=true`）によるラップ方式（nfr-design-patterns.md §2.1）。`DataSourceTransactionManager`は導入しない
 - SQL読み取り専用検証・パラメータ検出は`QuerySqlAnalyzer`（1クラス、1回のJSqlParser解析結果を両方の用途で再利用）で実装する（nfr-design-patterns.md §3.1）
 - Controllerは`QueryController`（接続一覧・スキーマ一覧・ad-hoc実行）と`SavedQueryController`（保存クエリCRUD・実行・非表示化）の2つに分割する（nfr-design/logical-components.md §1、Q7=B）
@@ -30,15 +31,15 @@
 
 ### 2. Database Migration Scripts
 
-- [ ] Step 2.1: `V15__create_saved_query_table.sql`を作成する（`saved_query`テーブル: `id`, `connection_id`（FK、ON DELETE CASCADE）, `name`, `sql`, `visibility`, `created_by`, `retired`, `created_at`, `updated_at`。domain-entities.md §1）
-- [ ] Step 2.2: `V16__create_query_execution_record_table.sql`を作成する（`query_execution_record`テーブル: `id`, `executed_by`, `connection_id`（FK制約なし）, `schema_name`, `sql`, `params`, `saved_query_id`（nullable、FK制約なし）, `row_count`, `duration_millis`, `executed_at`。domain-entities.md §2）
+- [ ] Step 2.1: `V15__create_saved_query_table.sql`を作成する（`saved_query`テーブル: `id`, `connection_id`（FK、ON DELETE CASCADE）, `name`, `sql`（CLOB/TEXT相当）, `visibility`, `created_by`, `retired`, `created_at`, `updated_at`。domain-entities.md §1）
+- [ ] Step 2.2: `V16__create_query_execution_record_table.sql`を作成する（`query_execution_record`テーブル: `id`, `executed_by`, `connection_id`（FK制約なし）, `schema_name`, `sql`（CLOB/TEXT相当）, `params`（CLOB/TEXT相当）, `saved_query_id`（nullable、FK制約なし）, `row_count`, `duration_millis`, `executed_at`。domain-entities.md §2）
 - [ ] Step 2.3: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`QUERY_EXECUTED`, `QUERY_SAVED`, `QUERY_UPDATED`, `QUERY_RETIRED`を追加する（domain-entities.md §6。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
 - [ ] Step 2.4: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する（Step 3.4で実施）
 
 ### 3. Repository Layer Generation
 
 - [ ] Step 3.1: enumを作成する: `Visibility`（`cherry.mastermeister.query.entity`）
-- [ ] Step 3.2: JPAエンティティ`SavedQuery`・`QueryExecutionRecord`（`cherry.mastermeister.query.entity`）を作成する（domain-entities.md §1〜2の属性）
+- [ ] Step 3.2: JPAエンティティ`SavedQuery`・`QueryExecutionRecord`（`cherry.mastermeister.query.entity`）を作成する（domain-entities.md §1〜2の属性。`sql`/`params`フィールドは`@Lob`を付与する）
 - [ ] Step 3.3: Spring Data JPAリポジトリを作成する: `SavedQueryRepository`（`cherry.mastermeister.query.repository`、`findAllByConnectionId`等）, `QueryExecutionRecordRepository`（同、`save`のみが主用途）
 - [ ] Step 3.4: **検証チェックポイント**: リポジトリの基本CRUD操作をH2（テスト用インメモリDB）で確認する
 

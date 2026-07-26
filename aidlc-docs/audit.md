@@ -1953,3 +1953,12 @@
 **Context**: CONSTRUCTION - UNIT-06 Code Generation Part 1、計画提示・承認待ち
 
 ---
+
+## UNIT-06 Code Generation Part 1 - レビュー指摘: SQL列の型
+
+**Timestamp**: 2026-07-25T01:05:00Z
+**User Input**: "特に確認すべき事項はありますか？" → (AIがFK/カスケード設計はUNIT-03/04の既存方針踏襲で確認不要と説明した上で、SQL文/パラメータ格納列の型（VARCHAR固定長 vs @Lob）が本ユニット初の新規判断であることを指摘) → "@Lob（CLOB/TEXT相当）"
+**AI Response**: "`saved_query.sql`・`query_execution_record.sql`・`query_execution_record.params`を`@Lob`（CLOB/TEXT相当）に確定。unit-06-code-generation-plan.mdのStep 2.1〜2.2・3.2、Part 1実装判断に反映。既存のテキスト系カラムはいずれも短い固定長VARCHARのみで、任意長のユーザ入力SQL文を永続化する前例がなかったため、切り詰め・保存失敗リスクを避ける判断とした。"
+**Context**: CONSTRUCTION - UNIT-06 Code Generation Part 1、承認前レビュー対応
+
+---
