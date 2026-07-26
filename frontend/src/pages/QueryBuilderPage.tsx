@@ -186,7 +186,7 @@ export function QueryBuilderPage() {
           <QueryBuilderJoinTab
             schemaName={schemaName}
             tables={accessibleTables}
-            leftColumns={availableColumns}
+            columns={availableColumns}
             value={builderState.joins}
             onChange={(joins) => setBuilderState({ ...builderState, joins })}
           />

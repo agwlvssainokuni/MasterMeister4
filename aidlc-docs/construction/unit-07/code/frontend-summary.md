@@ -41,6 +41,15 @@ Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合�
 
 続けて「FROMタブについて。FROMの駆動表とJOINの縦方向のスペースを開けて」という指摘を受けた。`QueryBuilderPage.tsx`のFROMタブcontentは`QueryBuilderFromTab`と`QueryBuilderJoinTab`をReact Fragment（`<>...</>`）で並べていたため間隔がなかった。`QueryBuilderPage.module.css`（新規）に`.fromSection`（`display:flex; flex-direction:column; gap:var(--mm-space-4)`）を追加し、Fragmentをdivに置き換えて縦の間隔を確保した。修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
 
+## 承認前レビュー対応5（JOIN条件右辺の候補列を左辺と同一化）
+
+「FROMタブについて。JOIN条件の右辺にJOIN句のカラムしか出さないのは意図した挙動ですか？」という質問を受けた。実装を確認したところ、`QueryBuilderJoinTab.tsx`の`rightColumnsFor`関数により右辺の候補列がそのJOIN行自体の結合先テーブルの列のみに限定されており、左辺（`leftColumns`＝FROM起点テーブル＋それまでの全JOIN済みテーブルの列）とは非対称だった。これはCode Generation時の暗黙の実装判断であり、`business-rules.md`（BR-QUERYBUILDER-03）等には明記されていない。SQLの等価結合自体は左右対称なので表現力に制限はないが、ユーザーの意向を確認したところ「左辺と同じ選択肢にする」で確定した。
+
+- `QueryBuilderJoinTab.tsx`: `rightColumnsFor`関数を削除。propsの`leftColumns`を`columns`にリネーム（左辺・右辺で同一の候補列を使うようになったため）。左辺・右辺いずれのSelectも`columns`（FROM起点テーブル＋全JOIN済みテーブルの列）から選べるように統一
+- `QueryBuilderPage.tsx`: `<QueryBuilderJoinTab leftColumns={availableColumns} .../>`を`columns={availableColumns}`に変更
+- `QueryBuilderPage.test.tsx`: 新規テストケース「JOIN条件の右辺にもFROM句・JOIN済みテーブルの列を選択できる」を追加（2テーブル・JOIN追加・結合条件追加のうえ、右辺selectの選択肢にFROM側の列が含まれることを確認）
+- 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル220件、新規1件含む）・`npm run build`をすべて実行し成功を確認
+
 ## 逆遷移・相互遷移の実装（BR-QUERYBUILDER-12）
 
 - `QueryExecutionPage.tsx`・`SavedQueryEditorPage.tsx`（new/editモード双方）に「クエリビルダーで編集」ボタンを追加し、現在のSQL・スキーマをrouter state経由でクエリビルダー画面へ引き継ぐ
@@ -61,9 +70,9 @@ Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合�
 
 - `queryBuilder.test.ts`: 3件（APIクライアント）
 - `QueryBuilderConnectionListPage.test.tsx`: 3件
-- `QueryBuilderPage.test.tsx`: 6件（テーブル/カラム一覧読み込み、SQL生成プレビュー、保存/実行への遷移、リバースエンジニアリングの成功・失敗）
+- `QueryBuilderPage.test.tsx`: 7件（テーブル/カラム一覧読み込み、SQL生成プレビュー、保存/実行への遷移、リバースエンジニアリングの成功・失敗、承認前レビュー対応5で追加したJOIN条件右辺の選択肢確認）
 - `QueryExecutionPage.test.tsx`: 既存5件に「クエリビルダーで編集」ボタンのテスト1件を追加
 - `SavedQueryEditorPage.test.tsx`: 既存7件に「クエリビルダーで編集」ボタンのテスト2件（new/editモード双方）を追加
 - `HomePage.test.tsx`: 実装済みバッジ数の変化（3→2）とqueryBuilderカードのテストを反映
 
-全件成功（`npm test -- --run`、既存ユニット分含め全55ファイル219件成功）
+全件成功（`npm test -- --run`、既存ユニット分含め全55ファイル220件成功）

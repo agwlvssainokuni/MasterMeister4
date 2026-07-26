@@ -27,13 +27,13 @@ const JOIN_TYPES: JoinType[] = ['INNER', 'LEFT', 'RIGHT']
 export function QueryBuilderJoinTab({
   schemaName,
   tables,
-  leftColumns,
+  columns,
   value,
   onChange,
 }: {
   schemaName: string
   tables: AccessibleBuilderTable[]
-  leftColumns: AvailableColumn[]
+  columns: AvailableColumn[]
   value: JoinClause[]
   onChange: (value: JoinClause[]) => void
 }) {
@@ -65,20 +65,10 @@ export function QueryBuilderJoinTab({
     onChange(value.filter((_, i) => i !== index))
   }
 
-  const rightColumnsFor = (tableName: string, alias: string): AvailableColumn[] => {
-    const table = tables.find((t) => t.tableName === tableName)
-    return (table?.columns ?? []).map((c) => ({
-      tableAlias: alias,
-      columnName: c.columnName,
-      dataTypeCategory: c.dataTypeCategory,
-    }))
-  }
-
   const addCondition = (index: number) => {
     const join = value[index]
-    const rightColumns = rightColumnsFor(join.tableName, join.alias)
-    const left = leftColumns[0]
-    const right = rightColumns[0]
+    const left = columns[0]
+    const right = columns[1] ?? columns[0]
     if (!left || !right) {
       return
     }
@@ -105,7 +95,6 @@ export function QueryBuilderJoinTab({
   return (
     <div>
       {value.map((join, index) => {
-        const rightColumns = rightColumnsFor(join.tableName, join.alias)
         return (
           <div key={index} className={styles.join} data-testid={`query-builder-join-${index}`}>
             <div className={styles.joinRow}>
@@ -161,7 +150,7 @@ export function QueryBuilderJoinTab({
                       updateJoin(index, { ...join, onConditions: nextConditions })
                     }}
                   >
-                    {leftColumns.map((c) => (
+                    {columns.map((c) => (
                       <option key={columnKey(c)} value={columnKey(c)}>
                         {c.tableAlias}.{c.columnName}
                       </option>
@@ -181,7 +170,7 @@ export function QueryBuilderJoinTab({
                       updateJoin(index, { ...join, onConditions: nextConditions })
                     }}
                   >
-                    {rightColumns.map((c) => (
+                    {columns.map((c) => (
                       <option key={columnKey(c)} value={columnKey(c)}>
                         {c.tableAlias}.{c.columnName}
                       </option>

@@ -2269,11 +2269,11 @@
 
 ---
 
-## UNIT-07 Code Generation完了報告への指摘5: FROMタブの駆動表とJOINの間隔
+## UNIT-07 Code Generation完了報告への指摘3: FROM/JOINタブのレイアウトを一行に
 
-**Timestamp**: 2026-07-26T19:14:00Z
-**User Input**: "FROMタブについて。FROMの駆動表とJOINの縦方向のスペースを開けて。"
-**AI Response**: "QueryBuilderPage.tsxのFROMタブcontentがQueryBuilderFromTabとQueryBuilderJoinTabをReact Fragmentで並べていたため間隔がなかった。QueryBuilderPage.module.cssを新規追加し、.fromSection（display:flex; flex-direction:column; gap:var(--mm-space-4)）を持つdivに置き換えて縦の間隔を確保。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応4として追記。"
+**Timestamp**: 2026-07-26T19:05:00Z
+**User Input**: "FROMタブのテーブル名とエイリアス名、JOINのテーブル名とエイリアス名と削除ボタン、結合条件の左辺と比較演算子と右辺と削除ボタン、は、一行に納めて欲しい。"
+**AI Response**: "QueryBuilderFromTab.module.css・QueryBuilderJoinTab.module.cssを新規作成し、design-system既存のFilterBar.module.cssと同じ横並びレイアウトパターン（display:flex; align-items; gap; flex-wrap:wrap）を適用。FROMタブはテーブル選択とエイリアス入力の2つのFormFieldを横並びに。JOINタブはJOIN種別・結合先テーブル・エイリアス・削除ボタンを1行（.joinRow）に、結合条件の左辺・=・右辺・削除ボタンをもう1行（.conditionRow）に整理。SelectやTextInputなどのコンポーネント自体は変更せず、ラップするdivにCSS Moduleクラスを付与するのみ。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功を確認。frontend-summary.mdに追記。"
 **Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
@@ -2287,11 +2287,22 @@
 
 ---
 
-## UNIT-07 Code Generation完了報告への指摘3: FROM/JOINタブのレイアウトを一行に
+## UNIT-07 Code Generation完了報告への指摘5: FROMタブの駆動表とJOINの間隔
 
-**Timestamp**: 2026-07-26T19:05:00Z
-**User Input**: "FROMタブのテーブル名とエイリアス名、JOINのテーブル名とエイリアス名と削除ボタン、結合条件の左辺と比較演算子と右辺と削除ボタン、は、一行に納めて欲しい。"
-**AI Response**: "QueryBuilderFromTab.module.css・QueryBuilderJoinTab.module.cssを新規作成し、design-system既存のFilterBar.module.cssと同じ横並びレイアウトパターン（display:flex; align-items; gap; flex-wrap:wrap）を適用。FROMタブはテーブル選択とエイリアス入力の2つのFormFieldを横並びに。JOINタブはJOIN種別・結合先テーブル・エイリアス・削除ボタンを1行（.joinRow）に、結合条件の左辺・=・右辺・削除ボタンをもう1行（.conditionRow）に整理。SelectやTextInputなどのコンポーネント自体は変更せず、ラップするdivにCSS Moduleクラスを付与するのみ。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功を確認。frontend-summary.mdに追記。"
+**Timestamp**: 2026-07-26T19:14:00Z
+**User Input**: "FROMタブについて。FROMの駆動表とJOINの縦方向のスペースを開けて。"
+**AI Response**: "QueryBuilderPage.tsxのFROMタブcontentがQueryBuilderFromTabとQueryBuilderJoinTabをReact Fragmentで並べていたため間隔がなかった。QueryBuilderPage.module.cssを新規追加し、.fromSection（display:flex; flex-direction:column; gap:var(--mm-space-4)）を持つdivに置き換えて縦の間隔を確保。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応4として追記。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---
+
+## UNIT-07 Code Generation完了報告への指摘6: JOIN条件右辺の候補列は意図した挙動か
+
+**Timestamp**: 2026-07-26T19:17:00Z
+**User Input**: "FROMタブについて。JOIN条件の右辺にJOIN句のカラムしか出さないのは意図した挙動ですか？"
+**AI Response**: "実装（QueryBuilderJoinTab.tsxのrightColumnsFor）を確認したところ、右辺の候補列がそのJOIN行自体の結合先テーブルの列のみに限定されており、左辺（FROM＋全JOIN済みの列）とは非対称になっていた。これはCode Generation時の暗黙の実装判断であり、business-rules.md等には明記されていない旨を説明し、AskUserQuestionで現状維持か左辺と統一するかを確認した。"
+**User Input（AskUserQuestion回答）**: "左辺と同じ選択肢にする"
+**AI Response**: "QueryBuilderJoinTab.tsxのrightColumnsFor関数を削除し、propsのleftColumnsをcolumnsにリネーム。左辺・右辺いずれもFROM起点テーブル＋全JOIN済みテーブルの列から選べるよう統一。QueryBuilderPage.tsxの呼び出し側props名も追従。QueryBuilderPage.test.tsxに新規テスト「JOIN条件の右辺にもFROM句・JOIN済みテーブルの列を選択できる」を追加。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル220件成功、新規1件含む）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応5として追記。"
 **Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---

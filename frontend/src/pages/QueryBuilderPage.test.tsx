@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -35,6 +35,15 @@ const TABLES = [
       { columnName: 'id', dataTypeCategory: 'NUMERIC' as const },
       { columnName: 'name', dataTypeCategory: 'STRING' as const },
     ],
+  },
+]
+
+const TABLES_WITH_JOIN = [
+  ...TABLES,
+  {
+    tableName: 'categories',
+    tableType: 'TABLE' as const,
+    columns: [{ columnName: 'id', dataTypeCategory: 'NUMERIC' as const }],
   },
 ]
 
@@ -103,6 +112,29 @@ describe('QueryBuilderPage', () => {
     await user.click(screen.getByTestId('query-builder-select-item-add'))
 
     expect(await screen.findByText('SELECT t1.id FROM items AS t1')).toBeInTheDocument()
+  })
+
+  it('JOIN条件の右辺にもFROM句・JOIN済みテーブルの列を選択できる', async () => {
+    vi.mocked(queryApi.listQuerySchemas).mockResolvedValueOnce([{ schemaName: 'public' }])
+    vi.mocked(queryBuilderApi.listAccessibleBuilderTables).mockResolvedValueOnce(TABLES_WITH_JOIN)
+    const user = userEvent.setup()
+    renderPage()
+
+    await screen.findByText('public')
+    await user.click(screen.getByRole('tab', { name: 'FROM' }))
+    await user.selectOptions(screen.getByLabelText('テーブル'), 'items')
+    await user.click(screen.getByTestId('query-builder-join-add'))
+
+    const joinRow = screen.getByTestId('query-builder-join-0')
+    const joinTableSelect = within(joinRow).getAllByRole('combobox')[1]
+    await user.selectOptions(joinTableSelect, 'categories')
+    await user.click(screen.getByTestId('query-builder-join-0-condition-add'))
+
+    const conditionRow = screen.getByTestId('query-builder-join-0-condition-0')
+    const rightSelect = within(conditionRow).getAllByRole('combobox')[1]
+    expect(within(rightSelect).getByRole('option', { name: 'items.id' })).toBeInTheDocument()
+    expect(within(rightSelect).getByRole('option', { name: 'items.name' })).toBeInTheDocument()
+    expect(within(rightSelect).getByRole('option', { name: 'categories.id' })).toBeInTheDocument()
   })
 
   it('生成後に「実行へ」ボタンでクエリ実行画面へ遷移する', async () => {
