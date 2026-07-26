@@ -2416,3 +2416,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Functional Design完了、NFR Requirementsへ移行
 
 ---
+
+## UNIT-08 NFR Requirements 計画作成・質問提示
+
+**Timestamp**: 2026-07-26T20:31:00Z
+**User Input**: (Functional Design承認後、ワークフローに従いNFR Requirementsへ自動移行)
+**AI Response**: "既存のquery_execution_recordテーブル（V16マイグレーション）を再確認し、connection_id列にインデックスがなく、BR-QUERYHISTORY-02の主要クエリパターン（接続指定+日時降順ソート）に対してフルテーブルスキャンの懸念があることを発見。unit-08-nfr-requirements-plan.mdを作成し、Security Baseline該当ルール評価（SECURITY-05・06が重要該当）を実施、全5問の質問（動的クエリ実装方式、インデックス追加要否、絞込パラメータ検証方針、実行者スコープ権限判定レイヤー、名前解決方式）を提示。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Requirements、質問への回答待ち
+
+---
