@@ -2472,3 +2472,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design、質問への回答待ち
 
 ---
+
+## UNIT-08 NFR Design 推奨提示
+
+**Timestamp**: 2026-07-26T21:00:00Z
+**User Input**: "推奨は？"
+**AI Response**: "全4問について全問Aを推奨する旨を回答。理由: Q1はUNIT-02〜07で確立済みのBean Validationエラー応答との一貫性、Q2は一連の履歴一覧フローとしてQueryHistoryServiceに集約する方が見通しが良い、Q3はUNIT-05/06と同程度の小規模Controllerで十分、Q4はService層への多層防御は規模・リスクに対して過剰でControllerのみのシンプルな判定を優先。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design、質問への回答待ち
+
+---
