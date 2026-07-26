@@ -5,7 +5,7 @@
 - **`api/queryBuilder.ts`**: アクセス可能テーブル/カラム一覧取得・SQL生成・リバースエンジニアリングの各APIクライアント関数、バックエンドDTOに対応する型定義一式
 - **`QueryBuilderConnectionListPage`**: 接続選択画面（frontend-components.md 画面1、UNIT-05/06と同じパターン）
 - **`QueryBuilderPage`**: クエリビルダー本体画面（画面2）。スキーマセレクタ、design-system既存の`Tabs`コンポーネントで7タブを構成（承認前レビュー対応、下記参照）、デバウンス付きSQLプレビュー（`CodeBlock`）、「保存へ」「実行へ」ボタン、router state経由の逆遷移時リバースエンジニアリング対応
-- **タブサブコンポーネント7種**: `QueryBuilderSelectTab`, `QueryBuilderFromTab`, `QueryBuilderJoinTab`, `QueryBuilderConditionList`（WHERE/HAVING共通）, `QueryBuilderColumnListTab`（GROUP BY）, `QueryBuilderOrderByTab`, `QueryBuilderLimitOffsetTab`（`QueryBuilderFromTab`・`QueryBuilderJoinTab`自体は別コンポーネントのまま維持し、`QueryBuilderPage`側でFROMタブのcontentとして両方を並べてレンダリングする）
+- **タブサブコンポーネント6種**: `QueryBuilderFromTab`（起点テーブル選択＋JOIN一覧、承認前レビュー対応6で1コンポーネントに統合、下記参照）, `QueryBuilderSelectTab`, `QueryBuilderConditionList`（WHERE/HAVING共通）, `QueryBuilderColumnListTab`（GROUP BY）, `QueryBuilderOrderByTab`, `QueryBuilderLimitOffsetTab`
 
 ## 承認前レビュー対応1（タブ構成の見直し）
 
@@ -49,6 +49,17 @@ Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合�
 - `QueryBuilderPage.tsx`: `<QueryBuilderJoinTab leftColumns={availableColumns} .../>`を`columns={availableColumns}`に変更
 - `QueryBuilderPage.test.tsx`: 新規テストケース「JOIN条件の右辺にもFROM句・JOIN済みテーブルの列を選択できる」を追加（2テーブル・JOIN追加・結合条件追加のうえ、右辺selectの選択肢にFROM側の列が含まれることを確認）
 - 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル220件、新規1件含む）・`npm run build`をすべて実行し成功を確認
+
+## 承認前レビュー対応6（FROM/JOINタブの実装を1ファイル・1コンポーネントに統合）
+
+「FROMタブの実装が2ファイルに分かれている。1ファイルにできるか？」という指摘を受けた。承認前レビュー対応1でタブUIとしては1つに統合していたが、実装コンポーネント自体は`QueryBuilderFromTab`と`QueryBuilderJoinTab`の2つに分かれたままだった。これを1コンポーネントに統合した:
+
+- `QueryBuilderFromTab.tsx`: `QueryBuilderJoinTab`が持っていたJOIN一覧の追加・削除・結合条件のロジック（`addJoin`/`updateJoin`/`removeJoin`/`addCondition`/`removeCondition`）を取り込み、propsを`schemaName, tables, columns, from, joins, onChangeFrom, onChangeJoins`に拡張。返り値のdivに（旧`QueryBuilderPage.module.css`の）`.fromSection`を適用し、駆動表とJOIN一覧の縦間隔もこのコンポーネント内で完結させた
+- `QueryBuilderFromTab.module.css`: `QueryBuilderJoinTab.module.css`の`.join`/`.joinRow`/`.conditions`/`.conditionRow`と、`QueryBuilderPage.module.css`の`.fromSection`を統合
+- `QueryBuilderJoinTab.tsx`・`QueryBuilderJoinTab.module.css`・`QueryBuilderPage.module.css`を削除
+- `QueryBuilderPage.tsx`: `<QueryBuilderFromTab .../>`と`<QueryBuilderJoinTab .../>`の2呼び出しを、`<QueryBuilderFromTab schemaName=... tables=... columns=... from=... joins=... onChangeFrom=... onChangeJoins=... />`の1呼び出しに統合
+- data-testid（`query-builder-join-*`等）はコンポーネント統合後も変更なし、既存テストは無修正のまま成功
+- 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル220件）・`npm run build`をすべて実行し成功を確認
 
 ## 逆遷移・相互遷移の実装（BR-QUERYBUILDER-12）
 

@@ -29,14 +29,12 @@ import {
 import type { AccessibleBuilderTable, QueryBuilderState } from '../api/queryBuilder'
 import { ApiError } from '../api/http'
 import { QueryBuilderFromTab } from './QueryBuilderFromTab'
-import { QueryBuilderJoinTab } from './QueryBuilderJoinTab'
 import { QueryBuilderSelectTab } from './QueryBuilderSelectTab'
 import { QueryBuilderConditionList } from './QueryBuilderConditionList'
 import { QueryBuilderColumnListTab } from './QueryBuilderColumnListTab'
 import { QueryBuilderOrderByTab } from './QueryBuilderOrderByTab'
 import { QueryBuilderLimitOffsetTab } from './QueryBuilderLimitOffsetTab'
 import type { AvailableColumn } from './QueryBuilderOperandPicker'
-import styles from './QueryBuilderPage.module.css'
 
 const EMPTY_STATE: QueryBuilderState = {
   from: null,
@@ -171,26 +169,21 @@ export function QueryBuilderPage() {
 
   const tabs: readonly TabItem[] = [
     {
-      // 承認前レビュー対応: FROM/JOINは1つのタブに統合する（FROM句を構成する一体の情報のため）。
-      // タブ順序: FROM/SELECT/WHERE/GROUP BY/HAVING/ORDER BY/LIMIT OFFSET
+      // 承認前レビュー対応: FROM/JOINは1つのタブ・1コンポーネントに統合する
+      // （FROM句を構成する一体の情報のため）。タブ順序: FROM/SELECT/WHERE/GROUP BY/
+      // HAVING/ORDER BY/LIMIT OFFSET
       key: 'from',
       label: t('queryBuilder.tab.from'),
       content: (
-        <div className={styles.fromSection}>
-          <QueryBuilderFromTab
-            schemaName={schemaName}
-            tables={accessibleTables}
-            value={builderState.from}
-            onChange={(from) => setBuilderState({ ...builderState, from })}
-          />
-          <QueryBuilderJoinTab
-            schemaName={schemaName}
-            tables={accessibleTables}
-            columns={availableColumns}
-            value={builderState.joins}
-            onChange={(joins) => setBuilderState({ ...builderState, joins })}
-          />
-        </div>
+        <QueryBuilderFromTab
+          schemaName={schemaName}
+          tables={accessibleTables}
+          columns={availableColumns}
+          from={builderState.from}
+          joins={builderState.joins}
+          onChangeFrom={(from) => setBuilderState({ ...builderState, from })}
+          onChangeJoins={(joins) => setBuilderState({ ...builderState, joins })}
+        />
       ),
     },
     {

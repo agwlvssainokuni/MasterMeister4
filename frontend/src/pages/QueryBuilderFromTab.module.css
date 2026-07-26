@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
+/* FROMタブ: 駆動表とJOIN一覧の間に縦方向の間隔を空ける */
+.fromSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-4);
+}
+
 .row {
   display: flex;
   align-items: flex-end;
@@ -24,4 +31,39 @@
 .row > * {
   flex: 1;
   min-width: 160px;
+}
+
+.join {
+  margin-bottom: var(--mm-space-3);
+}
+
+.joinRow {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  flex-wrap: wrap;
+}
+
+.joinRow > select,
+.joinRow > input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.conditions {
+  margin-top: var(--mm-space-2);
+  padding-left: var(--mm-space-4);
+}
+
+.conditionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--mm-space-2);
+}
+
+.conditionRow > select {
+  flex: 1;
+  min-width: 140px;
 }

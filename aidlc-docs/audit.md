@@ -2306,3 +2306,23 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## audit.md・frontend-summary.mdの記載順序の誤りを指摘
+
+**Timestamp**: 2026-07-26T19:24:00Z
+**User Input**: "audit.mdの順番は合っている？frontend-component.mdの順番は？"
+**AI Response**: "audit.mdを確認したところ、指摘2→指摘6→指摘5→指摘4→指摘3という、タイムスタンプ順（本来の時系列）と完全に逆転した並びになっていたことを発見（過去のEdit操作で新しいエントリを既存エントリの前に挿入してしまった誤り）。指摘2→3→4→5→6の時系列順に修正。frontend-summary.md（Code Generation成果物）も同様に対応1→2→3→5→4の順で対応4と5が入れ替わっていたため対応1→2→3→4→5に修正し、末尾のテスト件数（6件→7件、219件→220件）も更新。frontend-components.md（Functional Design成果物）は複数の対応セクションを持たず問題なしと回答。"
+**User Input**: "OK"
+**AI Response**: "audit.md・frontend-summary.mdの順序修正をコミット（abc36e1に含む）。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の記録整合性の是正
+
+---
+
+## UNIT-07 Code Generation完了報告への指摘7: FROM/JOINタブの実装を1ファイルに統合
+
+**Timestamp**: 2026-07-26T19:30:00Z
+**User Input**: "FROMタブの実装が2ファイルに分かれている。1ファイルにできるか？"
+**AI Response**: "承認前レビュー対応1でタブUIとしては1つに統合済みだったが、実装コンポーネント自体はQueryBuilderFromTabとQueryBuilderJoinTabの2ファイル・2コンポーネントに分かれたままだった。QueryBuilderFromTab.tsxにQueryBuilderJoinTabのJOIN一覧・結合条件のロジックを取り込み、propsをschemaName, tables, columns, from, joins, onChangeFrom, onChangeJoinsに拡張して1コンポーネントに統合。CSS ModuleもQueryBuilderFromTab.module.cssに統合（旧QueryBuilderJoinTab.module.cssの.join/.joinRow/.conditions/.conditionRowと旧QueryBuilderPage.module.cssの.fromSectionを集約）。QueryBuilderJoinTab.tsx・QueryBuilderJoinTab.module.css・QueryBuilderPage.module.cssを削除。QueryBuilderPage.tsxの呼び出しを1つの<QueryBuilderFromTab .../>にまとめた。data-testidは変更なしのため既存テストは無修正のまま成功。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル220件成功）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応6として追記。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---
