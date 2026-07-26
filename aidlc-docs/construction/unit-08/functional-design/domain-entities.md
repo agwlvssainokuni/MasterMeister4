@@ -56,3 +56,15 @@
 **QueryExecutionRecordとの関係**: QueryExecutionRecord 1 – 1 QueryHistoryRecordView（表示用に変換するのみ、永続化なし）
 **Userとの関係（参照のみ）**: User 1 – N QueryExecutionRecord（`executedBy`、UNIT-02のUserエンティティを参照専用で利用、本ユニットでは新規保存・更新は行わない）
 **SavedQueryとの関係（参照のみ）**: SavedQuery 0..1 – N QueryExecutionRecord（`savedQueryId`、UNIT-06のSavedQueryエンティティを参照専用で利用）
+
+## 4. QueryHistoryConnectionView（新規、DTO、永続化なし。承認前レビューでの追加）
+
+接続選択画面用の接続一覧APIのレスポンス1件分を表す（BR-QUERYHISTORY-11）。
+
+| 属性 | 型 | 説明 |
+|---|---|---|
+| `connectionId` | Long | `QueryExecutionRecord.connectionId` |
+| `displayName` | String | 接続の表示名（UNIT-03の`RdbmsConnection.displayName`から解決。対象接続が削除済みの場合は「(削除済み接続)」のプレースホルダー） |
+
+**QueryExecutionRecordとの関係**: `QueryExecutionRecord`の`connectionId`のDISTINCT集合から導出（永続化なし）
+**RdbmsConnectionとの関係（参照のみ）**: RdbmsConnection 0..1 – N QueryExecutionRecord（`connectionId`、UNIT-03のRdbmsConnectionエンティティを参照専用で利用。削除されている場合は0件）

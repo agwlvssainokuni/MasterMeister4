@@ -2481,3 +2481,14 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design、質問への回答待ち
 
 ---
+
+## UNIT-08 Functional Design 遡及修正: 接続選択画面も履歴実績ベースに
+
+**Timestamp**: 2026-07-26T21:02:00Z
+**User Input**: "推奨通り。なお、Q3について、履歴記録ずみのスキーマ名一覧というのは正しい？接続の一覧ではない？"
+**AI Response**: "Q3の「履歴記録済みスキーマ名一覧取得」はスキーマ名一覧（GET /api/query-history/{connectionId}/schemas）であり、接続一覧（UNIT-06既存のGET /api/queries/connections）とは別物である旨を説明。"
+**User Input**: "UNIt-06の接続一覧は「現在アクセスできる接続の一覧」であり、UNIT-08としては「履歴記録ずみ接続一覧」も必要になるのでは？"
+**AI Response**: "ご指摘の通り重大な見落としと認め、AskUserQuestionで接続選択画面の基準（履歴実績ベースに変更 or 現状維持）を確認。「履歴実績ベースに変更（推奨）」の回答を受け、Functional Design成果物4ファイルを遡及修正: business-logic-model.md（§2の接続選択記述修正、新設§3-1接続一覧取得ロジック、§6に削除済み接続のプレースホルダー追加）、business-rules.md（BR-QUERYHISTORY-02修正、BR-04の「例外」節を削除済み接続の扱いに更新、BR-QUERYHISTORY-11新設）、frontend-components.md（接続選択画面のAPI連携をGET /api/query-history/connectionsに変更、APIパス一覧に追加）、domain-entities.md（QueryHistoryConnectionView新規DTOを追加）。BR-01〜11の連番整合性を確認。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design遡及修正完了、NFR Design質問への回答待ち継続
+
+---

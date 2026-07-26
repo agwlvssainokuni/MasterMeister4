@@ -6,11 +6,11 @@ UNIT-02〜UNIT-07で確立した規約（`frontend/src/pages/`・`frontend/src/a
 
 **バックエンドAPIパス・パッケージ構成**: パッケージは`cherry.mastermeister.queryhistory`（unit-of-work.mdのユニット→パッケージ対応表のとおり）。
 
-**接続一覧はUNIT-06の既存APIをそのまま再利用する（重複実装しない）**:
-- `GET /api/queries/connections`（UNIT-06既存） — アクセス可能な接続一覧
+**接続一覧はUNIT-06の既存APIを再利用しない**（承認前レビューでの是正、BR-QUERYHISTORY-11）: 現在アクセス可能な接続一覧ではなく、履歴に実際に記録されている接続の一覧を新規APIで取得する。
 
 **APIパス規約（UNIT-05/06/07の確立済み規約を踏襲）**: 新規のトップレベル名前空間`/api/query-history/*`を新設する（管理者ロールを要求しない。実行者スコープの絞込はエンドポイント内部でロール判定する、BR-QUERYHISTORY-03）。
 
+- `GET /api/query-history/connections` — 履歴に実際に記録されている接続の一覧（DISTINCT取得、実行者スコープの範囲はBR-QUERYHISTORY-03に従う、BR-QUERYHISTORY-11）
 - `GET /api/query-history/{connectionId}?executedByScope=ALL|MINE&executedAtFrom=...&executedAtTo=...&schemaName=...&sqlKeyword=...&page=0&pageSize=...` — 履歴一覧取得（絞込・ページング、FR-8.1〜8.3）
 - `GET /api/query-history/{connectionId}/schemas` — 対象接続の履歴に実際に記録されているスキーマ名の一覧（DISTINCT取得、スキーマ絞込セレクタ用、BR-QUERYHISTORY-10）
 
@@ -20,20 +20,20 @@ UNIT-02〜UNIT-07で確立した規約（`frontend/src/pages/`・`frontend/src/a
 
 ### 1. 接続選択画面（`/query-history`、`AppShell`）
 
-UNIT-05/06/07と同様の接続選択画面パターンを踏襲する。
+UNIT-05/06/07と同様の画面構造パターンを踏襲するが、一覧の取得元はUNIT-06既存APIではなく新規APIとする（BR-QUERYHISTORY-11）。
 
 ```
 QueryHistoryConnectionListPage (AppShell)
 └ PageHeader（タイトル「クエリ履歴」）
-  ├ DataTable（列: 接続の表示名のみ）
+  ├ DataTable（列: 接続の表示名。削除済み接続は「(削除済み接続)」のプレースホルダー表示）
   │  └ 行クリックで履歴一覧画面（2）へ遷移
-  ├ EmptyState（アクセス可能な接続が0件の場合）
+  ├ EmptyState（履歴に記録された接続が0件の場合）
   └ Alert（取得失敗時）
 ```
 
-**State**: `connections: AccessibleConnection[]`, `loading: boolean`, `errorMessage: string | null`
+**State**: `connections: QueryHistoryConnectionView[]`, `loading: boolean`, `errorMessage: string | null`
 
-**API連携**: `GET /api/queries/connections`（UNIT-06既存を再利用）
+**API連携**: `GET /api/query-history/connections`（新規。履歴実績ベースの接続一覧、BR-QUERYHISTORY-11）
 
 ---
 
