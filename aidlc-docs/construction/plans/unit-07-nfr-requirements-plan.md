@@ -89,7 +89,7 @@ C) Other（[Answer]: の後に内容を記述）
 ### Question 5（Security Requirements・Reliability）
 `QueryBuilderState`リクエスト（SQL生成API・アクセス可能テーブル/カラム一覧取得後にユーザが構築する状態）の各リスト項目数に上限を設けますか？
 
-A) 上限を設ける（例: SELECT項目・WHERE条件・HAVING条件・ORDER BY項目は各50件、JOINは20件までとし、Bean Validationの`@Size`で強制する）。過大なリクエストによるリソース消費・生成SQLの肥大化を防ぐ
+A) 上限を設ける（Bean Validationの`@Size`で強制する）。過大なリクエストによるリソース消費・生成SQLの肥大化を防ぐ。具体的な件数は承認前レビューでSELECT項目=200、JOIN=20、WHERE条件=50、GROUP BY列=20、HAVING条件=20、ORDER BY項目=20に確定（tech-stack-decisions.md §5参照）
 
 B) 上限を設けない（社内ツール規模のため実質的なリスクは低いと判断する）
 

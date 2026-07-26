@@ -2151,3 +2151,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Design、成果物完成・承認待ち
 
 ---
+
+## UNIT-07 NFR Requirements 遡及修正: リクエストサイズ上限の具体値変更
+
+**Timestamp**: 2026-07-26T06:32:00Z
+**User Input**: "一つ遡って修正。リクエストサイズ上限は、selectItems=200, joins=20, whereConditions=50, groupByColumns=20, havingConditions=20, orderByItems=20"
+**AI Response**: "NFR Requirements（承認済み）のtech-stack-decisions.md §5の上限件数表を、selectItems=200（旧50）、joins=20（変更なし）、whereConditions=50（変更なし）、groupByColumns=20（旧50）、havingConditions=20（旧50）、orderByItems=20（旧50）に修正。unit-07-nfr-requirements-plan.mdのQuestion 5選択肢Aの記述（旧: 各50件・JOIN20件という例示）も、確定した具体的な件数に更新。NFR Design（nfr-design-patterns.md・logical-components.md）は具体的な件数を含んでいなかったため修正不要。"
+**Context**: CONSTRUCTION - UNIT-07 NFR Requirements遡及修正、NFR Design承認待ちのまま継続
+
+---

@@ -44,12 +44,12 @@ UNIT-05の`ColumnDataTypeMapper`と同じ設計思想（UNIT-03の`SchemaColumn.
 
 | リスト | 上限件数 |
 |---|---|
-| `selectItems` | 50 |
+| `selectItems` | 200 |
 | `joins` | 20 |
 | `whereConditions` | 50 |
-| `groupByColumns` | 50 |
-| `havingConditions` | 50 |
-| `orderByItems` | 50 |
+| `groupByColumns` | 20 |
+| `havingConditions` | 20 |
+| `orderByItems` | 20 |
 
 上限超過時は400エラー（Bean Validationの標準的なバリデーションエラー応答、UNIT-02〜06で確立済みの方式）とする。
 
