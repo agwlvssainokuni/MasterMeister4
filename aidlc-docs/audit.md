@@ -1944,3 +1944,12 @@
 **Context**: CONSTRUCTION - UNIT-06 NFR Design、承認完了、Infrastructure DesignはSKIP済みのためCode Generationへ移行
 
 ---
+
+## UNIT-06 Code Generation - Part 1 計画提示
+
+**Timestamp**: 2026-07-25T01:00:00Z
+**User Input**: (Code Generation Part 1計画作成、ユーザ入力なし)
+**AI Response**: "unit-06-code-generation-plan.mdを作成。UNIT-04/05の計画スタイル（Build Configuration→Database Migration Scripts→Repository Layer→Business Logic→API Layer→Frontend→Documentation→Deployment Artifacts→最終ビルド検証の16セクション）を踏襲。実装判断: saved_query.connection_idはrdbms_connectionへのFK（ON DELETE CASCADE、UNIT-04のaccess_permissionと同じ理由）、query_execution_recordのconnection_id/saved_query_idはFK制約なし（UNIT-02のaudit_log_entryと同じ理由、履歴記録のライフサイクル独立性）。承認待ち。"
+**Context**: CONSTRUCTION - UNIT-06 Code Generation Part 1、計画提示・承認待ち
+
+---
