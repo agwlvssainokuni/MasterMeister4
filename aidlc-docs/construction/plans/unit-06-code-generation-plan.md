@@ -45,25 +45,25 @@
 
 ### 4. Repository Layer Summary
 
-- [ ] Step 4.1: `aidlc-docs/construction/unit-06/code/repository-layer-summary.md`を作成する（作成したエンティティ・リポジトリ一覧、マイグレーション内容、テスト結果）
+- [x] Step 4.1: `aidlc-docs/construction/unit-06/code/repository-layer-summary.md`を作成する（作成したエンティティ・リポジトリ一覧、マイグレーション内容、テスト結果）
 
 ### 5. Business Logic Generation
 
-- [ ] Step 5.1: `QuerySqlAnalyzer`（`cherry.mastermeister.query`）を作成する（JSqlParserによる1回の構文解析、`isReadOnly()`・`detectParameters()`の2メソッド、nfr-design-patterns.md §3.1）
-- [ ] Step 5.2: 新規例外を作成する: `QuerySchemaNotAccessibleException`（403）, `NonReadOnlyQueryException`（400）, `SavedQueryNotAccessibleException`（404）, `QueryExecutionTimeoutException`（408）, `QueryResultSizeExceededException`（400）（`cherry.mastermeister.common.exception`、既存パッケージ規約に合わせる）
-- [ ] Step 5.3: `QueryExecutionService`（`cherry.mastermeister.query`、COMP-14）を作成する（`execute`/`executeSavedQuery`。接続確立・スキーマ切替（`SingleConnectionDataSource`）→スキーマ許可リスト判定→`QuerySqlAnalyzer`検証→パラメータバインド実行・ページング（サブクエリラップ＋LIMIT/OFFSET、COUNT取得、結果件数上限）→`QueryExecutionRecord`永続化・`QUERY_EXECUTED`監査ログ記録、business-logic-model.md §1〜6）
-- [ ] Step 5.4: `SavedQueryService`（`cherry.mastermeister.query`、COMP-15）を作成する（`saveQuery`/`updateQuery`/`retireQuery`/`getSavedQuery`/`listSavedQueries`。BR-QUERY-05〜09のアクセス可否判定、`QUERY_SAVED`/`QUERY_UPDATED`/`QUERY_RETIRED`監査ログ記録、business-logic-model.md §7〜8）
+- [x] Step 5.1: `QuerySqlAnalyzer`（`cherry.mastermeister.query`）を作成する（JSqlParserによる1回の構文解析、`isReadOnly()`・`detectParameters()`の2メソッド、nfr-design-patterns.md §3.1）— 実装訂正: `CCJSqlParserUtil.parse(String)`は"SELECT 1; DELETE FROM x"のような複数ステートメントの先頭のみを解析し後続を無視することを検証で発見。`parseStatements`でステートメント数1件を確認する方式に変更。パラメータ検出は`TablesNamesFinder`を継承しJOIN・サブクエリ含む全体を漏れなく走査
+- [x] Step 5.2: 新規例外を作成する: `QuerySchemaNotAccessibleException`（403）, `NonReadOnlyQueryException`（400）, `SavedQueryNotAccessibleException`（404）, `QueryExecutionTimeoutException`（408）, `QueryResultSizeExceededException`（400）（`cherry.mastermeister.common.exception`、既存パッケージ規約に合わせる）— messages_ja/en.propertiesにもエラーメッセージを追加
+- [x] Step 5.3: `QueryExecutionService`（`cherry.mastermeister.query`、COMP-14）を作成する（`execute`/`executeSavedQuery`。接続確立・スキーマ切替（`SingleConnectionDataSource`）→スキーマ許可リスト判定→`QuerySqlAnalyzer`検証→パラメータバインド実行・ページング（サブクエリラップ＋LIMIT/OFFSET、COUNT取得、結果件数上限）→`QueryExecutionRecord`永続化・`QUERY_EXECUTED`監査ログ記録、business-logic-model.md §1〜6）
+- [x] Step 5.4: `SavedQueryService`（`cherry.mastermeister.query`、COMP-15）を作成する（`saveQuery`/`updateQuery`/`retireQuery`/`getSavedQuery`/`listSavedQueries`。BR-QUERY-05〜09のアクセス可否判定、`QUERY_SAVED`/`QUERY_UPDATED`/`QUERY_RETIRED`監査ログ記録、business-logic-model.md §7〜8）
 
 ### 6. Business Logic Unit Testing
 
-- [ ] Step 6.1: `QuerySqlAnalyzerTest`を作成する（許可SQL（単一SELECT、JOIN・サブクエリ・集約関数を含む）の受理、禁止SQL（INSERT/UPDATE/DELETE/DDL・複数ステートメント・パース不能）の拒否、パラメータ検出（文字列リテラル内の`:`除外）を確認）
-- [ ] Step 6.2: `QueryExecutionServiceTest`を作成する（Mockito＋H2実テーブル併用。スキーマ許可リスト判定、ページング・COUNT取得、結果件数上限超過時の`QueryResultSizeExceededException`、保存クエリ経由実行時のアクセス可否判定）
-- [ ] Step 6.3: `SavedQueryServiceTest`を作成する（Mockito。BR-QUERY-05〜09のアクセス可否判定境界値、編集・非表示化の作成者限定チェック）
-- [ ] Step 6.4: `QuerySqlAnalyzerPropertyTest`をjqwikで作成する（business-logic-model.md §9: 任意のSELECT文は常に受理、任意のINSERT/UPDATE/DELETE/DDL文・複数ステートメントは常に拒否、任意個数の`:param`トークンが過不足なく検出される、という性質）
+- [x] Step 6.1: `QuerySqlAnalyzerTest`を作成する（許可SQL（単一SELECT、JOIN・サブクエリ・集約関数を含む）の受理、禁止SQL（INSERT/UPDATE/DELETE/DDL・複数ステートメント・パース不能）の拒否、パラメータ検出（文字列リテラル内の`:`除外）を確認）— 13件
+- [x] Step 6.2: `QueryExecutionServiceTest`を作成する（Mockito＋H2実テーブル併用。スキーマ許可リスト判定、ページング・COUNT取得、結果件数上限超過時の`QueryResultSizeExceededException`、保存クエリ経由実行時のアクセス可否判定）— 8件
+- [x] Step 6.3: `SavedQueryServiceTest`を作成する（Mockito。BR-QUERY-05〜09のアクセス可否判定境界値、編集・非表示化の作成者限定チェック）— 14件
+- [x] Step 6.4: `QuerySqlAnalyzerPropertyTest`をjqwikで作成する（business-logic-model.md §9: 任意のSELECT文は常に受理、任意のINSERT/UPDATE/DELETE/DDL文・複数ステートメントは常に拒否、任意個数の`:param`トークンが過不足なく検出される、という性質）— 4プロパティ
 
 ### 7. Business Logic Summary
 
-- [ ] Step 7.1: `aidlc-docs/construction/unit-06/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、PBTプロパティ実装内容、テスト結果）
+- [x] Step 7.1: `aidlc-docs/construction/unit-06/code/business-logic-summary.md`を作成する（作成したサービス一覧、責務、PBTプロパティ実装内容、テスト結果）
 
 ### 8. API Layer Generation
 
