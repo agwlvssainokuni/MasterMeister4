@@ -2344,3 +2344,39 @@
 **Context**: CONSTRUCTION - UNIT-07完了、UNIT-08 クエリ履歴のFunctional Designへ移行
 
 ---
+
+## UNIT-08 Functional Design 計画作成・質問提示
+
+**Timestamp**: 2026-07-26T20:09:00Z
+**User Input**: (UNIT-07承認後、ワークフローに従いUNIT-08 Functional Designへ自動移行)
+**AI Response**: "unit-of-work.md・stories.md・requirements.mdからUNIT-08（Epic 8、STORY-8.1/8.2、FR-8.1〜8.4、COMP-17、パッケージcherry.mastermeister.queryhistory）の定義を確認。既存資産調査（Exploreエージェント）でUNIT-06のQueryExecutionRecordエンティティ・テーブル構造、Repository（カスタムfinderなし）、記録ロジック（成功時のみ記録、失敗は記録されない設計）、フロントエンドのqueryHistoryナビ項目（仮予約済み・未実装）を確認。unit-08-functional-design-plan.mdを作成し、全8問の質問（失敗実行の扱い、画面構成、全ユーザ/自分のみ絞込の権限モデル、アクセス権喪失時の扱い、SQLテキスト検索方式、保存クエリ名表示方式、画面遷移方式、ページング方式）を提示。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design、質問への回答待ち
+
+---
+
+## UNIT-08 Functional Design 質問への推奨提示
+
+**Timestamp**: 2026-07-26T20:10:00Z
+**User Input**: "推奨は？"
+**AI Response**: "全8問について全問Aを推奨する旨を回答。理由: Q1はUNIT-06への遡及修正を避けスコープを閲覧機能に限定するため、Q2はUNIT-05/06/07の2画面構成との一貫性、Q3はUNIT-04のアクセス制御モデルとの整合、Q4はUNIT-02監査ログと同じ記録不変の考え方、Q5はプロジェクト全体の小〜中規模想定、Q6は履歴の実用性向上、Q7はUNIT-06/07で確立済みのrouter state遷移パターンの再利用、Q8はSpring Data JPA標準Pageableの自然な適合。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design、質問への回答待ち
+
+---
+
+## コミットルールの確認
+
+**Timestamp**: 2026-07-26T20:11:00Z
+**User Input**: "コミットルールは？"
+**AI Response**: "メモリ（feedback_commit_rules.md）の内容を回答: (1)こまめにコミットする、(2)コミットメッセージは日本語、(3)audit.md記録時も都度コミットする。この時点ではファイル変更が発生していなかったためコミット対象なしと回答。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design、質問への回答待ち
+
+---
+
+## audit.md記録漏れの指摘
+
+**Timestamp**: 2026-07-26T20:12:00Z
+**User Input**: "audit.mdに記録したがコミットされていない。"
+**AI Response**: "「推奨は？」「コミットルールは？」の2件のユーザー入力がaudit.mdに未記録だったことを認め、追記のうえコミットする。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design、記録漏れの是正
+
+---
