@@ -1917,3 +1917,12 @@
 **Context**: CONSTRUCTION - UNIT-06 NFR Requirements、承認完了、NFR Designへ移行
 
 ---
+
+## UNIT-06 NFR Design - 計画作成
+
+**Timestamp**: 2026-07-25T00:35:00Z
+**User Input**: (NFR Designステージ開始、ユーザ入力なし)
+**AI Response**: "unit-06-nfr-design-plan.mdを作成。既存例外クラス（ApiExceptionサブクラス、GlobalExceptionHandlerの汎用ハンドラで自動処理される既存パターン）を調査したうえで、全7問（スキーマ非許可時のエラー表現、SQL非読み取り専用時のエラー表現、保存クエリアクセス不可時のエラー表現、クエリタイムアウト・結果件数上限超過の例外変換、COUNT取得と結果取得の接続共有方式、SQL検証・パラメータ検出のクラス構成、Controller分割方針）を提示し回答待ち。"
+**Context**: CONSTRUCTION - UNIT-06 NFR Design、計画提示
+
+---
