@@ -2250,3 +2250,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、全ステップ完了
 
 ---
+
+## UNIT-07 Code Generation完了報告への指摘: 実行可能アーティファクトはWAR
+
+**Timestamp**: 2026-07-26T08:38:00Z
+**User Input**: "本プロジェクトでは、実行可能JARではなく実行可能WARを想定。buildすると実行可能WARができる。"
+**AI Response**: "backend/build.gradle.ktsを確認したところ、現状は`tasks.named(\"assemble\") { setDependsOn(emptyList()) }`により`:backend:build`単体では`war`/`bootWar`いずれも実行されず、`:backend:bootWar`を明示的に実行しない限り実行可能な成果物は生成されないことを確認。実際に`rm -rf backend/build/libs && ./gradlew :backend:build`で検証しlibsが空であることを確認した。ユーザに意図を確認したところ「現状維持」の回答。すなわちGradle設定自体は変更せず、今後の実機E2E検証では（これまでのセッションで使ってきた`bootJar`ではなく）`bootWar`を明示的に実行して検証する運用に改める旨で確定。この学びをメモリ（feedback_deployment_artifact.md）に記録した。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の運用改善、UNIT-08への移行待ち
+
+---
