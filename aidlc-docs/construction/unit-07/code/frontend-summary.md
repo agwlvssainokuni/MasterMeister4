@@ -37,6 +37,10 @@ Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合�
 - `QueryBuilderSelectTab.tsx`・`QueryBuilderConditionList.tsx`（WHERE/HAVING共通）・`QueryBuilderOrderByTab.tsx`の各行divに`styles.row`を付与するのみで、コンポーネント構造自体は変更なし
 - 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
 
+## 承認前レビュー対応4（FROMタブの駆動表とJOINの間隔）
+
+続けて「FROMタブについて。FROMの駆動表とJOINの縦方向のスペースを開けて」という指摘を受けた。`QueryBuilderPage.tsx`のFROMタブcontentは`QueryBuilderFromTab`と`QueryBuilderJoinTab`をReact Fragment（`<>...</>`）で並べていたため間隔がなかった。`QueryBuilderPage.module.css`（新規）に`.fromSection`（`display:flex; flex-direction:column; gap:var(--mm-space-4)`）を追加し、Fragmentをdivに置き換えて縦の間隔を確保した。修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
+
 ## 逆遷移・相互遷移の実装（BR-QUERYBUILDER-12）
 
 - `QueryExecutionPage.tsx`・`SavedQueryEditorPage.tsx`（new/editモード双方）に「クエリビルダーで編集」ボタンを追加し、現在のSQL・スキーマをrouter state経由でクエリビルダー画面へ引き継ぐ

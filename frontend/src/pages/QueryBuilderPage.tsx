@@ -36,6 +36,7 @@ import { QueryBuilderColumnListTab } from './QueryBuilderColumnListTab'
 import { QueryBuilderOrderByTab } from './QueryBuilderOrderByTab'
 import { QueryBuilderLimitOffsetTab } from './QueryBuilderLimitOffsetTab'
 import type { AvailableColumn } from './QueryBuilderOperandPicker'
+import styles from './QueryBuilderPage.module.css'
 
 const EMPTY_STATE: QueryBuilderState = {
   from: null,
@@ -175,7 +176,7 @@ export function QueryBuilderPage() {
       key: 'from',
       label: t('queryBuilder.tab.from'),
       content: (
-        <>
+        <div className={styles.fromSection}>
           <QueryBuilderFromTab
             schemaName={schemaName}
             tables={accessibleTables}
@@ -189,7 +190,7 @@ export function QueryBuilderPage() {
             value={builderState.joins}
             onChange={(joins) => setBuilderState({ ...builderState, joins })}
           />
-        </>
+        </div>
       ),
     },
     {

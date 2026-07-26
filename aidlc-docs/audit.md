@@ -2269,6 +2269,15 @@
 
 ---
 
+## UNIT-07 Code Generation完了報告への指摘5: FROMタブの駆動表とJOINの間隔
+
+**Timestamp**: 2026-07-26T19:14:00Z
+**User Input**: "FROMタブについて。FROMの駆動表とJOINの縦方向のスペースを開けて。"
+**AI Response**: "QueryBuilderPage.tsxのFROMタブcontentがQueryBuilderFromTabとQueryBuilderJoinTabをReact Fragmentで並べていたため間隔がなかった。QueryBuilderPage.module.cssを新規追加し、.fromSection（display:flex; flex-direction:column; gap:var(--mm-space-4)）を持つdivに置き換えて縦の間隔を確保。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応4として追記。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---
+
 ## UNIT-07 Code Generation完了報告への指摘4: SELECT/WHERE/HAVING/ORDER BYタブも一行に
 
 **Timestamp**: 2026-07-26T19:10:00Z
