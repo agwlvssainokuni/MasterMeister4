@@ -29,6 +29,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-flyway")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     // トレースログ(TraceAspect、reference/trace参照)。Spring Boot 4.1でspring-boot-starter-aopは
     // spring-boot-starter-aspectjに改称された
     implementation("org.springframework.boot:spring-boot-starter-aspectj")

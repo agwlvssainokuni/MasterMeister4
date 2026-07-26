@@ -92,4 +92,34 @@ class SecurityConfigTest {
                         .content("{\"email\":\"taro@example.com\",\"language\":\"ja\"}"))
                 .andExpect(status().isOk());
     }
+
+    /**
+     * Spring Boot Actuator。health/infoは未認証で許可する（ロードバランサ等のヘルスチェック用）。
+     * 本テストスライスにはActuatorの自動構成が含まれずハンドラは存在しないため、
+     * SecurityFilterChainが403/401でブロックしない（＝permitAllが適用される）ことのみを確認する。
+     */
+    @Test
+    void actuatorHealth_isNotBlockedByAuthenticationRequirement() throws Exception {
+        mockMvc.perform(get("/actuator/health"))
+                .andExpect(result -> {
+                    int status = result.getResponse().getStatus();
+                    org.assertj.core.api.Assertions.assertThat(status).isNotIn(401, 403);
+                });
+    }
+
+    /**
+     * health/info以外のActuatorエンドポイントは内部状態を露出しうるため、ADMINロール必須とする。
+     */
+    @Test
+    void actuatorOther_returnsUnauthorized_whenNotAuthenticated() throws Exception {
+        mockMvc.perform(get("/actuator/metrics"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void actuatorOther_returnsForbidden_whenAuthenticatedWithoutAdminRole() throws Exception {
+        mockMvc.perform(get("/actuator/metrics")
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+                .andExpect(status().isForbidden());
+    }
 }

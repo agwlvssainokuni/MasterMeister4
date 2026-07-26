@@ -98,6 +98,12 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 
 **注意（機微情報）**: `CustomizableTraceInterceptor`はメソッドの引数・戻り値をそのまま`toString()`してログ出力するため、TRACE有効時は認証関連処理（ログインのパスワード平文、発行したJWT/リフレッシュトークン等）がログに残る。トラブルシューティング等で一時的に有効化する用途に限定し、本番環境・共有ログでは常時有効化しないこと。
 
+## Spring Boot Actuator
+
+`spring-boot-starter-actuator`を有効化済み。`http://localhost:8080/actuator/health`は未認証で疎通確認用に公開する（ロードバランサ等のヘルスチェック向け、詳細情報は含まない`{"status":"UP"}`相当のみ）。それ以外のActuatorエンドポイント（`/actuator/metrics`等）は内部状態を露出しうるため、`/api/admin/**`と同様にADMINロール必須（`SecurityConfig`）。`health`の詳細情報（DB接続・ディスク容量・メール送信先等）も`management.endpoint.health.show-details: when-authorized`＋`roles: ADMIN`により、ADMINロールで認証済みの場合のみ表示される。
+
+公開するエンドポイントは`management.endpoints.web.exposure.include`（`application.yml`）で調整する。既定は`health,info,metrics`のみ（`env`・`beans`・`heapdump`等、機微情報や内部構造を露出するエンドポイントは含めていない）。
+
 ## API仕様書（OpenAPI/Swagger UI）
 
 起動後、`http://localhost:8080/swagger-ui.html`で確認できる（`springdoc-openapi-starter-webmvc-ui`により自動生成、`/api/admin/**`はBearer認証＋ADMINロールが、`/api/master-data/**`・`/api/queries/**`はBearer認証のみ（ロール不問）が必要）。

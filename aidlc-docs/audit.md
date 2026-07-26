@@ -1989,3 +1989,12 @@
 **Context**: 横断的技術追加（特定unitに属さない）、実機検証で2件の不具合を発見・修正
 
 ---
+
+## 横断的機能: Spring Boot Actuator有効化（UNIT-06のスコープ外）
+
+**Timestamp**: 2026-07-26T03:20:00Z
+**User Input**: "Spring Boot Actuatorを有効化して欲しい。"
+**AI Response**: "spring-boot-starter-actuatorを追加。SecurityConfigに/actuator/**の認可ルールを新設: /actuator/health・/actuator/infoは未認証で許可（ロードバランサ等のヘルスチェック用）、それ以外（/actuator/metrics等）は/api/admin/**と同様ADMINロール必須とした（既存のanyRequest().permitAll()にすべて落ちてしまうと内部状態が無防備に露出するため）。application.ymlでmanagement.endpoints.web.exposure.includeをhealth,info,metricsに限定（env/beans/heapdump等は含めない）、management.endpoint.health.show-details=when-authorized+roles=ADMINでhealthの詳細情報（DB接続・ディスク容量・メール送信先等）もADMIN限定とした。実機起動確認で、匿名アクセス時のhealth（200、詳細非表示）・metrics（401）、ADMIN認証後のmetrics（200）・healthの詳細表示を確認。SecurityConfigTestに3件のテストケースを追加。backend/README.mdに追記。バックエンド全337件成功。"
+**Context**: 横断的技術追加（特定unitに属さない）、実機検証で動作確認済み
+
+---

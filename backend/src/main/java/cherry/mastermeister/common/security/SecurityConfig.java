@@ -89,7 +89,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**", "/api/registrations/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/**").authenticated()
-                        // /api/**以外（SPAの静的リソース・クライアントサイドルート）はpermitAllとする
+                        // Spring Boot Actuator: health/infoはロードバランサ等のヘルスチェック用に
+                        // 未認証で許可する（health自体の詳細情報はshow-details=when-authorizedで
+                        // ADMIN限定、application.yml参照）。それ以外の公開済みエンドポイント
+                        // （metrics等）は内部状態を露出するためADMIN限定とする
+                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
+                        .requestMatchers("/actuator/**").hasRole("ADMIN")
+                        // /api/**・/actuator/**以外（SPAの静的リソース・クライアントサイドルート）は
+                        // permitAllとする
                         .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)))

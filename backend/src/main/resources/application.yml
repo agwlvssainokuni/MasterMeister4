@@ -101,3 +101,16 @@ mm:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+# health/infoのみ未認証で公開する（SecurityConfigで/actuator/**への認可ルールを設定、
+# それ以外のエンドポイントはADMINロール必須）。詳細情報の露出(env・beans・heapdump等)を
+# 抑えるため、公開するエンドポイントは最小限に絞る。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+      roles: ADMIN
