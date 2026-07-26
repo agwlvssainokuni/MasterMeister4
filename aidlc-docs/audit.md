@@ -1998,3 +1998,12 @@
 **Context**: 横断的技術追加（特定unitに属さない）、実機検証で動作確認済み
 
 ---
+
+## 横断的機能: OpenTelemetry受信環境（Grafana+Tempo+Prometheus+Collector）追加（UNIT-06のスコープ外）
+
+**Timestamp**: 2026-07-26T04:30:00Z
+**User Input**: "Spring Boot 4のOpenTelemetry情報を受け取れる環境をdockerで作れる？" → (受信ツール選択の質問を提示、ユーザがクラリファイ希望で拒否) → "トレースだけでなく、メトリクスも収集＆グラフィカル表示したい。あと、devenvとは独立して立てたい。"
+**AI Response**: "ユーザ要望（トレース＋メトリクス、devenvとは独立）に基づき、Grafana + Tempo（トレース）+ Prometheus（メトリクス）+ OpenTelemetry Collectorの4コンテナ構成を`observability/docker-compose.yml`（devenv/とは別ディレクトリ）に新設。バックエンド側は`spring-boot-starter-opentelemetry`を追加（Micrometer Tracing + OTLPエクスポート、micrometer-registry-otlp含む）。デフォルトは無効（MM_TRACING_ENABLED/MM_OTLP_METRICS_ENABLEDで有効化）。Spring Boot 4.0での複数プロパティ非推奨（management.tracing.enabled→management.tracing.export.enabled、management.otlp.tracing.endpoint→management.opentelemetry.tracing.export.otlp.endpoint等）をIDE警告で発見し対応。実機検証で当初トレース・メトリクスが一切届かない問題が発生し、原因調査の結果、`:backend:build`が`bootJar`を再生成しない設定（assembleから除外）のため、依存追加前の古いJARでテストしていたことが判明（テスト手順上の見落とし、コード自体は正しかった）。bootJarを明示的に再ビルド後、実機でトレース（Tempo、http post /api/auth/loginスパン等5件を含む）・メトリクス（Prometheus、148種のメトリクス名、http_server_requests等）の到達を確認。backend/README.mdとobservability/README.mdに使用方法を追記。バックエンド全337件成功（コード変更は依存追加・application.yml設定のみ、新規テストなし）。"
+**Context**: 横断的技術追加（特定unitに属さない）、実機検証で動作確認済み・調査の過程でテスト手順の見落としを自己発見・修正
+
+---

@@ -104,6 +104,28 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 
 公開するエンドポイントは`management.endpoints.web.exposure.include`（`application.yml`）で調整する。既定は`health,info,metrics`のみ（`env`・`beans`・`heapdump`等、機微情報や内部構造を露出するエンドポイントは含めていない）。
 
+## OpenTelemetry（トレース・メトリクス）
+
+`spring-boot-starter-opentelemetry`（Micrometer Tracing + OTLPエクスポート）を追加済み。デフォルトでは無効（既存の開発・テスト・CI環境への影響を避けるため）で、以下の環境変数を設定すると有効化する。
+
+| 環境変数 | デフォルト | 用途 |
+|---|---|---|
+| `MM_TRACING_ENABLED` | `false` | トレースのエクスポートを有効化する |
+| `MM_TRACING_SAMPLING_PROBABILITY` | `1.0` | トレースのサンプリング確率（開発用に全件サンプリングを既定値とする） |
+| `MM_OTLP_TRACING_ENDPOINT` | `http://localhost:4318/v1/traces` | OTLPトレース送信先 |
+| `MM_OTLP_METRICS_ENABLED` | `false` | メトリクスのOTLPエクスポートを有効化する |
+| `MM_OTLP_METRICS_ENDPOINT` | `http://localhost:4318/v1/metrics` | OTLPメトリクス送信先 |
+| `MM_OTLP_METRICS_STEP` | `15s` | メトリクスのエクスポート間隔 |
+
+受信・可視化環境（Grafana + Tempo + Prometheus + OpenTelemetry Collector、`devenv/`とは独立）は`../observability/`を参照。
+
+```bash
+docker compose -f ../observability/docker-compose.yml up -d
+export MM_TRACING_ENABLED=true
+export MM_OTLP_METRICS_ENABLED=true
+./gradlew :backend:bootRun
+```
+
 ## API仕様書（OpenAPI/Swagger UI）
 
 起動後、`http://localhost:8080/swagger-ui.html`で確認できる（`springdoc-openapi-starter-webmvc-ui`により自動生成、`/api/admin/**`はBearer認証＋ADMINロールが、`/api/master-data/**`・`/api/queries/**`はBearer認証のみ（ロール不問）が必要）。

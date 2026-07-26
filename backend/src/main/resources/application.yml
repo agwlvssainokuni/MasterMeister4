@@ -105,6 +105,10 @@ springdoc:
 # health/infoのみ未認証で公開する（SecurityConfigで/actuator/**への認可ルールを設定、
 # それ以外のエンドポイントはADMINロール必須）。詳細情報の露出(env・beans・heapdump等)を
 # 抑えるため、公開するエンドポイントは最小限に絞る。
+#
+# OpenTelemetry(トレース・メトリクスのOTLPエクスポート、observability/docker-compose.yml参照)は
+# デフォルトで無効(既存環境・テスト・CIへの影響を避けるため)。有効化する場合はMM_TRACING_ENABLED=true・
+# MM_OTLP_METRICS_ENABLED=trueを設定する(observability/README.md参照)。
 management:
   endpoints:
     web:
@@ -114,3 +118,19 @@ management:
     health:
       show-details: when-authorized
       roles: ADMIN
+  tracing:
+    export:
+      enabled: ${MM_TRACING_ENABLED:false}
+    sampling:
+      probability: ${MM_TRACING_SAMPLING_PROBABILITY:1.0}
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: ${MM_OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}
+  otlp:
+    metrics:
+      export:
+        enabled: ${MM_OTLP_METRICS_ENABLED:false}
+        url: ${MM_OTLP_METRICS_ENDPOINT:http://localhost:4318/v1/metrics}
+        step: ${MM_OTLP_METRICS_STEP:15s}
