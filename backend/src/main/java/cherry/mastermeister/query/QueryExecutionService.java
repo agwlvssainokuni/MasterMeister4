@@ -75,7 +75,10 @@ public class QueryExecutionService {
     private final QueryExecutionRecordRepository queryExecutionRecordRepository;
     private final AuditEventPublisher auditEventPublisher;
     private final AppProperties appProperties;
-    private final ObjectMapper objectMapper;
+
+    // UNIT-05のPermissionYamlService/MasterDataControllerと同じ理由（Jacksonの自動Bean登録は
+    // 行われずDI注入するとアプリ起動に失敗するため）で、DIに頼らずインスタンスを直接保持する。
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public QueryExecutionService(RdbmsConnectionService rdbmsConnectionService,
                                   SchemaIntrospectionService schemaIntrospectionService,
@@ -83,8 +86,7 @@ public class QueryExecutionService {
                                   RdbmsDialectStrategyResolver dialectStrategyResolver,
                                   SavedQueryService savedQueryService,
                                   QueryExecutionRecordRepository queryExecutionRecordRepository,
-                                  AuditEventPublisher auditEventPublisher, AppProperties appProperties,
-                                  ObjectMapper objectMapper) {
+                                  AuditEventPublisher auditEventPublisher, AppProperties appProperties) {
         this.rdbmsConnectionService = rdbmsConnectionService;
         this.schemaIntrospectionService = schemaIntrospectionService;
         this.effectivePermissionResolver = effectivePermissionResolver;
@@ -93,7 +95,6 @@ public class QueryExecutionService {
         this.queryExecutionRecordRepository = queryExecutionRecordRepository;
         this.auditEventPublisher = auditEventPublisher;
         this.appProperties = appProperties;
-        this.objectMapper = objectMapper;
     }
 
     /**

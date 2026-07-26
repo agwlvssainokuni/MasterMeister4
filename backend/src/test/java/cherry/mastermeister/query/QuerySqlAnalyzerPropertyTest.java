@@ -47,9 +47,20 @@ class QuerySqlAnalyzerPropertyTest {
         return Arbitraries.longs().between(-100_000L, 100_000L);
     }
 
+    // JSqlParserはSQL予約語（use, order, select等）と衝突するパラメータ名（:use等）を
+    // 構文エラーとして拒否する既知の制限があるため（実機検証で発見、business-logic-summary.md参照）、
+    // 本プロパティテストでは予約語との衝突を避け、AST走査によるパラメータ検出自体の正しさを検証する
+    private static final java.util.Set<String> SQL_RESERVED_WORDS = java.util.Set.of(
+            "use", "order", "select", "where", "from", "and", "or", "as", "by", "in", "is", "not", "on", "all",
+            "asc", "desc", "into", "join", "like", "null", "set", "top", "for", "key", "add", "table", "index",
+            "drop", "alter", "cross", "full", "left", "right", "inner", "outer", "union", "with", "case", "when",
+            "then", "else", "end", "exists", "having", "group", "limit", "offset", "distinct", "values", "insert",
+            "update", "delete", "create", "default", "check", "unique", "primary", "foreign", "references", "column");
+
     @Provide
     Arbitrary<String> paramName() {
-        return Arbitraries.strings().withCharRange('a', 'z').ofMinLength(3).ofMaxLength(8);
+        return Arbitraries.strings().withCharRange('a', 'z').ofMinLength(3).ofMaxLength(8)
+                .filter(name -> !SQL_RESERVED_WORDS.contains(name));
     }
 
     /**

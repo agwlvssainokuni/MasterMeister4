@@ -51,7 +51,7 @@
 
 - [x] Step 5.1: `QuerySqlAnalyzer`（`cherry.mastermeister.query`）を作成する（JSqlParserによる1回の構文解析、`isReadOnly()`・`detectParameters()`の2メソッド、nfr-design-patterns.md §3.1）— 実装訂正: `CCJSqlParserUtil.parse(String)`は"SELECT 1; DELETE FROM x"のような複数ステートメントの先頭のみを解析し後続を無視することを検証で発見。`parseStatements`でステートメント数1件を確認する方式に変更。パラメータ検出は`TablesNamesFinder`を継承しJOIN・サブクエリ含む全体を漏れなく走査
 - [x] Step 5.2: 新規例外を作成する: `QuerySchemaNotAccessibleException`（403）, `NonReadOnlyQueryException`（400）, `SavedQueryNotAccessibleException`（404）, `QueryExecutionTimeoutException`（408）, `QueryResultSizeExceededException`（400）（`cherry.mastermeister.common.exception`、既存パッケージ規約に合わせる）— messages_ja/en.propertiesにもエラーメッセージを追加
-- [x] Step 5.3: `QueryExecutionService`（`cherry.mastermeister.query`、COMP-14）を作成する（`execute`/`executeSavedQuery`。接続確立・スキーマ切替（`SingleConnectionDataSource`）→スキーマ許可リスト判定→`QuerySqlAnalyzer`検証→パラメータバインド実行・ページング（サブクエリラップ＋LIMIT/OFFSET、COUNT取得、結果件数上限）→`QueryExecutionRecord`永続化・`QUERY_EXECUTED`監査ログ記録、business-logic-model.md §1〜6）
+- [x] Step 5.3: `QueryExecutionService`（`cherry.mastermeister.query`、COMP-14）を作成する（`execute`/`executeSavedQuery`。接続確立・スキーマ切替（`SingleConnectionDataSource`）→スキーマ許可リスト判定→`QuerySqlAnalyzer`検証→パラメータバインド実行・ページング（サブクエリラップ＋LIMIT/OFFSET、COUNT取得、結果件数上限）→`QueryExecutionRecord`永続化・`QUERY_EXECUTED`監査ログ記録、business-logic-model.md §1〜6）— 実装訂正: `params`のJSON化に使う`ObjectMapper`を当初コンストラクタDIで受け取る設計としていたが、UNIT-05の`MasterDataController`のコメントで既知の「Jacksonの自動Bean登録は行われずDI注入するとアプリ起動に失敗する」問題を思い出し、`PermissionYamlService`と同じくフィールドで直接`new ObjectMapper()`する方式に訂正（実際に起動失敗する前に発見・修正）
 - [x] Step 5.4: `SavedQueryService`（`cherry.mastermeister.query`、COMP-15）を作成する（`saveQuery`/`updateQuery`/`retireQuery`/`getSavedQuery`/`listSavedQueries`。BR-QUERY-05〜09のアクセス可否判定、`QUERY_SAVED`/`QUERY_UPDATED`/`QUERY_RETIRED`監査ログ記録、business-logic-model.md §7〜8）
 
 ### 6. Business Logic Unit Testing
@@ -67,21 +67,21 @@
 
 ### 8. API Layer Generation
 
-- [ ] Step 8.1: DTOを作成する（`cherry.mastermeister.query.dto`: `AccessibleConnectionResponse`, `AccessibleSchemaResponse`, `QueryExecutionRequest`, `QueryResultResponse`, `SavedQueryRequest`, `SavedQuerySummaryResponse`, `SavedQueryExecutionRequest`。logical-components.md §1）
-- [ ] Step 8.2: `QueryController`（`cherry.mastermeister.query.api`）を作成する（接続一覧・スキーマ一覧・ad-hoc実行の3エンドポイント）
-- [ ] Step 8.3: `SavedQueryController`（`cherry.mastermeister.query.api`）を作成する（保存クエリの一覧・取得・作成・更新・実行・非表示化の6エンドポイント）
-- [ ] Step 8.4: `GlobalExceptionHandler`への追加要否を確認する（Step 5.2の5例外はいずれも`ApiException`のサブクラスのため、UNIT-05の前例（Step 8.3訂正）通り既存の汎用`@ExceptionHandler(ApiException.class)`で処理される可能性が高い。実装時に確認する）
-- [ ] Step 8.5: SecurityFilterChain設定への`/api/queries/**`ルール追加要否を確認する（nfr-design-patterns.md §3.2。UNIT-05のCode Generationで判明した前例（既存の`/api/**`→`authenticated()`という汎用ルールが既にカバーしていた）を踏まえ、実装時に確認する）
-- [ ] Step 8.6: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）
+- [x] Step 8.1: DTOを作成する（`cherry.mastermeister.query.dto`: `AccessibleConnectionResponse`, `AccessibleSchemaResponse`, `QueryExecutionRequest`, `QueryResultResponse`, `SavedQueryRequest`, `SavedQuerySummaryResponse`, `SavedQueryExecutionRequest`。logical-components.md §1）
+- [x] Step 8.2: `QueryController`（`cherry.mastermeister.query.api`）を作成する（接続一覧・スキーマ一覧・ad-hoc実行の3エンドポイント）
+- [x] Step 8.3: `SavedQueryController`（`cherry.mastermeister.query.api`）を作成する（保存クエリの一覧・取得・作成・更新・実行・非表示化の6エンドポイント）
+- [x] Step 8.4: `GlobalExceptionHandler`への追加要否を確認する — 確認の結果、Step 5.2の5例外はいずれも`ApiException`のサブクラスであり、既存の汎用`@ExceptionHandler(ApiException.class)`で処理されるため追加不要と判明（UNIT-05と同じ結論）
+- [x] Step 8.5: SecurityFilterChain設定への`/api/queries/**`ルール追加要否を確認する — `SecurityConfig`を確認した結果、既存の`/api/admin/**`（ADMIN限定）の次の`/api/**`→`authenticated()`という汎用ルールが`/api/queries/**`にもそのまま適用されるため、新規ルール追加は不要と判明（UNIT-05と同じ結論）
+- [x] Step 8.6: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要。Step 16の起動確認で最終確認）
 
 ### 9. API Layer Unit Testing
 
-- [ ] Step 9.1: `@WebMvcTest`で`QueryControllerTest`を作成する（一般ユーザ（非ADMIN）でもアクセス可能なことの確認、ad-hoc実行のバリデーション・エラー応答）
-- [ ] Step 9.2: `@WebMvcTest`で`SavedQueryControllerTest`を作成する（CRUD・実行・非表示化、作成者以外による編集/非表示化の403相当拒否、非公開/非表示化クエリへのアクセス拒否）
+- [x] Step 9.1: `@WebMvcTest`で`QueryControllerTest`を作成する（一般ユーザ（非ADMIN）でもアクセス可能なことの確認、ad-hoc実行のバリデーション・エラー応答）— 7件。実装時の発見: Jackson 3系はプリミティブ型（`boolean`/`int`）のレコード構成要素に対応するJSONフィールドが欠落していると`MismatchedInputException`（500相当）となる。実際のフロントエンドは全フィールドを送信するため実害はないが、テストのJSONペイロードは全フィールドを含める必要があると判明
+- [x] Step 9.2: `@WebMvcTest`で`SavedQueryControllerTest`を作成する（CRUD・実行・非表示化、作成者以外による編集/非表示化の403相当拒否、非公開/非表示化クエリへのアクセス拒否）— 9件
 
 ### 10. API Layer Summary
 
-- [ ] Step 10.1: `aidlc-docs/construction/unit-06/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
+- [x] Step 10.1: `aidlc-docs/construction/unit-06/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
 
 ### 11. Frontend Components Generation
 

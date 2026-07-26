@@ -16,7 +16,6 @@
 
 package cherry.mastermeister.query;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import cherry.mastermeister.audit.AuditEventPublisher;
 import cherry.mastermeister.audit.entity.AuditEventType;
 import cherry.mastermeister.audit.event.AuditEvent;
@@ -115,8 +114,7 @@ class QueryExecutionServiceTest {
 
         service = new QueryExecutionService(rdbmsConnectionService, schemaIntrospectionService,
                 effectivePermissionResolver, new RdbmsDialectStrategyResolver(List.of(new H2DialectStrategy())),
-                savedQueryService, queryExecutionRecordRepository, auditEventPublisher,
-                appProperties(10000), new ObjectMapper());
+                savedQueryService, queryExecutionRecordRepository, auditEventPublisher, appProperties(10000));
     }
 
     @AfterEach
@@ -208,7 +206,7 @@ class QueryExecutionServiceTest {
         QueryExecutionService smallCapService = new QueryExecutionService(rdbmsConnectionService,
                 schemaIntrospectionService, effectivePermissionResolver,
                 new RdbmsDialectStrategyResolver(List.of(new H2DialectStrategy())), savedQueryService,
-                queryExecutionRecordRepository, auditEventPublisher, appProperties(2), new ObjectMapper());
+                queryExecutionRecordRepository, auditEventPublisher, appProperties(2));
 
         assertThatThrownBy(() -> smallCapService.execute(USER_ID, CONNECTION_ID, "SELECT * FROM items", Map.of(),
                 "PUBLIC", false, 0, 0))
