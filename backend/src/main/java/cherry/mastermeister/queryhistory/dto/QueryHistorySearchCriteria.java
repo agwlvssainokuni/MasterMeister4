@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.query.repository;
+package cherry.mastermeister.queryhistory.dto;
 
-import cherry.mastermeister.query.entity.SavedQuery;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.time.Instant;
 
-import java.util.Collection;
-import java.util.List;
-
-public interface SavedQueryRepository extends JpaRepository<SavedQuery, Long> {
-
-    List<SavedQuery> findAllByConnectionId(Long connectionId);
-
-    /**
-     * UNIT-08 logical-components.md §2。QueryHistoryServiceの保存クエリ名一括解決（N+1回避）で使用する。
-     */
-    List<SavedQuery> findAllByIdIn(Collection<Long> ids);
+/**
+ * domain-entities.md §2。QueryHistoryServiceに渡す絞込条件。executedByScope自体は含まない
+ * （Controller層でexecutedByFilterへ変換済みのため、logical-components.md §3参照）。
+ */
+public record QueryHistorySearchCriteria(
+        Instant executedAtFrom,
+        Instant executedAtTo,
+        String schemaName,
+        String sqlKeyword
+) {
 }

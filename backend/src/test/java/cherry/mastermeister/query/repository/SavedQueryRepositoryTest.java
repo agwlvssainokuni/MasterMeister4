@@ -27,6 +27,7 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 
 import java.time.Instant;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -77,6 +78,25 @@ class SavedQueryRepositoryTest {
 
         assertThat(savedQueryRepository.findAllByConnectionId(connectionId1)).hasSize(1)
                 .allMatch(q -> q.getConnectionId().equals(connectionId1));
+    }
+
+    /**
+     * UNIT-08 logical-components.md §2。QueryHistoryServiceの保存クエリ名一括解決（N+1回避）で使用する。
+     */
+    @Test
+    void findAllByIdIn_returnsMatchingSavedQueries() {
+        Long connectionId = persistConnection("接続1");
+        Instant now = Instant.now();
+        SavedQuery savedA = savedQueryRepository.saveAndFlush(
+                new SavedQuery(connectionId, "クエリA", "SELECT 1", Visibility.PUBLIC, 1L, now));
+        SavedQuery savedB = savedQueryRepository.saveAndFlush(
+                new SavedQuery(connectionId, "クエリB", "SELECT 2", Visibility.PUBLIC, 1L, now));
+        savedQueryRepository.saveAndFlush(
+                new SavedQuery(connectionId, "クエリC", "SELECT 3", Visibility.PUBLIC, 1L, now));
+
+        assertThat(savedQueryRepository.findAllByIdIn(List.of(savedA.getId(), savedB.getId())))
+                .extracting(SavedQuery::getName)
+                .containsExactlyInAnyOrder("クエリA", "クエリB");
     }
 
     @Test

@@ -52,4 +52,53 @@ class QueryExecutionRecordRepositoryTest {
         assertThat(reloaded.getSavedQueryId()).isEqualTo(42L);
         assertThat(reloaded.getParams()).isEqualTo("{\"id\":\"1\"}");
     }
+
+    /**
+     * UNIT-08 logical-components.md §2。DISTINCT取得系メソッド（BR-QUERYHISTORY-10・11）。
+     */
+    @Test
+    void findDistinctConnectionIdByExecutedBy_returnsOnlyOwnConnections() {
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(1L, 100L, "public", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(1L, 200L, "public", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(2L, 300L, "public", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+
+        assertThat(queryExecutionRecordRepository.findDistinctConnectionIdByExecutedBy(1L))
+                .containsExactlyInAnyOrder(100L, 200L);
+    }
+
+    @Test
+    void findDistinctConnectionId_returnsAllUsersConnections() {
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(1L, 100L, "public", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(2L, 300L, "public", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+
+        assertThat(queryExecutionRecordRepository.findDistinctConnectionId())
+                .containsExactlyInAnyOrder(100L, 300L);
+    }
+
+    @Test
+    void findDistinctSchemaNameByConnectionIdAndExecutedBy_returnsOnlyOwnSchemas() {
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(1L, 100L, "public", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(2L, 100L, "secret", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+
+        assertThat(queryExecutionRecordRepository.findDistinctSchemaNameByConnectionIdAndExecutedBy(100L, 1L))
+                .containsExactly("public");
+    }
+
+    @Test
+    void findDistinctSchemaNameByConnectionId_returnsAllUsersSchemas() {
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(1L, 100L, "public", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+        queryExecutionRecordRepository.saveAndFlush(
+                new QueryExecutionRecord(2L, 100L, "secret", "SELECT 1", null, null, 1L, 5L, Instant.now()));
+
+        assertThat(queryExecutionRecordRepository.findDistinctSchemaNameByConnectionId(100L))
+                .containsExactlyInAnyOrder("public", "secret");
+    }
 }

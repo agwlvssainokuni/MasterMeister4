@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.query.repository;
+package cherry.mastermeister.queryhistory.dto;
 
-import cherry.mastermeister.query.entity.SavedQuery;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Collection;
-import java.util.List;
-
-public interface SavedQueryRepository extends JpaRepository<SavedQuery, Long> {
-
-    List<SavedQuery> findAllByConnectionId(Long connectionId);
-
-    /**
-     * UNIT-08 logical-components.md §2。QueryHistoryServiceの保存クエリ名一括解決（N+1回避）で使用する。
-     */
-    List<SavedQuery> findAllByIdIn(Collection<Long> ids);
+/**
+ * domain-entities.md §4。BR-QUERYHISTORY-11。displayNameは対象接続が削除済みの場合
+ * "(削除済み接続)" のプレースホルダーとなる。
+ */
+public record QueryHistoryConnectionResponse(Long connectionId, String displayName) {
 }

@@ -29,26 +29,26 @@
 
 ### 1. Business Logic Generation
 
-- [ ] Step 1.1: DTOクラス群を作成する（`cherry.mastermeister.queryhistory.dto`）: `QueryHistoryConnectionResponse`（`connectionId`, `displayName`）, `QueryHistoryRecordResponse`（`id`, `executedBy`, `executorDisplayName`, `connectionId`, `schemaName`, `sql`, `savedQueryId`, `savedQueryName`, `queryType`, `rowCount`, `durationMillis`, `executedAt`）, `QueryHistorySearchRequest`（`executedByScope`, `executedAtFrom`, `executedAtTo`, `schemaName`, `sqlKeyword`, `page`, `pageSize`。`@Max`でページサイズ上限、`@AssertTrue`＋`@JsonIgnore`で日時範囲の相関検証、domain-entities.md §2）, `QueryHistorySearchCriteria`（`executedAtFrom`, `executedAtTo`, `schemaName`, `sqlKeyword`。Service層内部用、`executedByScope`を含まない）
-- [ ] Step 1.2: enumを作成する（`cherry.mastermeister.queryhistory.dto`）: `ExecutedByScope`（`ALL`/`MINE`）, `QueryType`（`SAVED`/`AD_HOC`）
-- [ ] Step 1.3: `QueryHistorySpecifications`（`cherry.mastermeister.queryhistory`）を作成する（`Specification<QueryExecutionRecord>`の静的ファクトリメソッド: `connectionIdEquals`, `executedByEquals`, `executedAtFrom`, `executedAtTo`, `schemaNameEquals`, `sqlContains`。nfr-design-patterns.md §2.1）
-- [ ] Step 1.4: `QueryExecutionRecordRepository`（UNIT-06既存、`cherry.mastermeister.query.repository`）を修正する: `JpaSpecificationExecutor<QueryExecutionRecord>`を追加実装、新規メソッド`findDistinctConnectionIdByExecutedBy(Long)`, `findDistinctConnectionId()`, `findDistinctSchemaNameByConnectionIdAndExecutedBy(Long, Long)`, `findDistinctSchemaNameByConnectionId(Long)`を追加（logical-components.md §2）
-- [ ] Step 1.5: `SavedQueryRepository`（UNIT-06既存、`cherry.mastermeister.query.repository`）を修正する: `findAllByIdIn(Collection<Long>)`を追加
-- [ ] Step 1.6: `QueryHistoryService`（`cherry.mastermeister.queryhistory`、COMP-17）を作成する
+- [x] Step 1.1: DTOクラス群を作成する（`cherry.mastermeister.queryhistory.dto`）: `QueryHistoryConnectionResponse`（`connectionId`, `displayName`）, `QueryHistoryRecordResponse`（`id`, `executedBy`, `executorDisplayName`, `connectionId`, `schemaName`, `sql`, `savedQueryId`, `savedQueryName`, `queryType`, `rowCount`, `durationMillis`, `executedAt`）, `QueryHistorySearchCriteria`（`executedAtFrom`, `executedAtTo`, `schemaName`, `sqlKeyword`。Service層内部用、`executedByScope`を含まない）, `QueryHistoryPageResponse`（新規、実装時追加。`Page<QueryHistoryRecordResponse>`をmasterdata.dto.RecordPageResponseと同様の独自の軽量ラッパーへ変換）。**実装時の判断**: 計画時点では`QueryHistorySearchRequest`（`@Valid`＋Bean Validation付きDTO）をGETのクエリパラメータバインド先とする想定だったが、既存プロジェクトのGETエンドポイント（`SavedQueryController`, `MasterDataController`）はいずれも個々の`@RequestParam`で受け取るパターンで統一されており、`@ModelAttribute`によるDTOバインドの前例がなかった（`@Valid @ModelAttribute`失敗時は`BindException`となり、既存の`GlobalExceptionHandler`は`MethodArgumentNotValidException`のみハンドリング済みで対応漏れが生じる）。既存パターンとの一貫性を優先し、`QueryHistorySearchRequest`は作成せず、Controller側で個々の`@RequestParam`を受け取り検証する方式に変更（Step 4.1参照）
+- [x] Step 1.2: enumを作成する（`cherry.mastermeister.queryhistory.dto`）: `ExecutedByScope`（`ALL`/`MINE`）, `QueryType`（`SAVED`/`AD_HOC`）
+- [x] Step 1.3: `QueryHistorySpecifications`（`cherry.mastermeister.queryhistory`）を作成する（`Specification<QueryExecutionRecord>`の静的ファクトリメソッド: `connectionIdEquals`, `executedByEquals`, `executedAtFrom`, `executedAtTo`, `schemaNameEquals`, `sqlContains`。nfr-design-patterns.md §2.1）
+- [x] Step 1.4: `QueryExecutionRecordRepository`（UNIT-06既存、`cherry.mastermeister.query.repository`）を修正する: `JpaSpecificationExecutor<QueryExecutionRecord>`を追加実装、新規メソッド`findDistinctConnectionIdByExecutedBy(Long)`, `findDistinctConnectionId()`, `findDistinctSchemaNameByConnectionIdAndExecutedBy(Long, Long)`, `findDistinctSchemaNameByConnectionId(Long)`を追加（logical-components.md §2）
+- [x] Step 1.5: `SavedQueryRepository`（UNIT-06既存、`cherry.mastermeister.query.repository`）を修正する: `findAllByIdIn(Collection<Long>)`を追加
+- [x] Step 1.6: `QueryHistoryService`（`cherry.mastermeister.queryhistory`、COMP-17）を作成する
   - `listConnections(Long executedByFilter): List<QueryHistoryConnectionResponse>` — DISTINCT取得→`RdbmsConnectionRepository.findAllById`で表示名一括解決、見つからない場合は「(削除済み接続)」（business-logic-model.md §3-1）
   - `listSchemas(Long connectionId, Long executedByFilter): List<String>` — DISTINCT取得（business-rules.md BR-QUERYHISTORY-10）
   - `listHistory(Long connectionId, Long executedByFilter, QueryHistorySearchCriteria criteria, Pageable pageable): Page<QueryHistoryRecordResponse>` — `QueryHistorySpecifications`で動的組立→`findAll(spec, pageable)`→`savedQueryId`/`executedBy`の一括解決（`SavedQueryRepository.findAllByIdIn`, `UserRepository.findAllById`）→`QueryHistoryRecordResponse`へ変換（business-logic-model.md §2・§5〜6）
 
 ### 2. Business Logic Unit Testing
 
-- [ ] Step 2.1: `QueryHistoryServiceTest`を作成する（Mockito。`listConnections`: 実行者スコープによる絞込、削除済み接続のプレースホルダー表示。`listSchemas`: 実行者スコープによる絞込。`listHistory`: 各絞込条件の組み合わせ、保存クエリ名解決（正常・削除済み）、実行者名解決（正常・不明ユーザ）、queryType導出）
-- [ ] Step 2.2: `QueryHistorySpecificationsTest`を作成する（`@DataJpaTest`。各ファクトリメソッド単体、および複数条件の組み合わせでの絞込結果確認）
-- [ ] Step 2.3: `QueryExecutionRecordRepositoryTest`（UNIT-06既存）に、追加した新規カスタムクエリメソッドのテストケースを追加する（既存ファイルの修正）
-- [ ] Step 2.4: `SavedQueryRepositoryTest`（UNIT-06既存、存在する場合）に`findAllByIdIn`のテストケースを追加する（既存ファイルの修正。存在しない場合は`QueryHistoryServiceTest`側で間接的に検証する）
+- [x] Step 2.1: `QueryHistoryServiceTest`を作成する（Mockito。`listConnections`: 実行者スコープによる絞込、削除済み接続のプレースホルダー表示。`listSchemas`: 実行者スコープによる絞込。`listHistory`: 各絞込条件の組み合わせ、保存クエリ名解決（正常・削除済み）、実行者名解決（正常・不明ユーザ）、queryType導出）— 9件
+- [x] Step 2.2: `QueryHistorySpecificationsTest`を作成する（`@DataJpaTest`。各ファクトリメソッド単体、および複数条件の組み合わせでの絞込結果確認）— 6件
+- [x] Step 2.3: `QueryExecutionRecordRepositoryTest`（UNIT-06既存）に、追加した新規カスタムクエリメソッドのテストケースを追加する（既存ファイルの修正）— 4件追加
+- [x] Step 2.4: `SavedQueryRepositoryTest`（UNIT-06既存）に`findAllByIdIn`のテストケースを追加する（既存ファイルの修正）— 1件追加
 
 ### 3. Business Logic Summary
 
-- [ ] Step 3.1: `aidlc-docs/construction/unit-08/code/business-logic-summary.md`を作成する
+- [x] Step 3.1: `aidlc-docs/construction/unit-08/code/business-logic-summary.md`を作成する
 
 ### 4. API Layer Generation
 

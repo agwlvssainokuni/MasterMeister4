@@ -18,6 +18,31 @@ package cherry.mastermeister.query.repository;
 
 import cherry.mastermeister.query.entity.QueryExecutionRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface QueryExecutionRecordRepository extends JpaRepository<QueryExecutionRecord, Long> {
+import java.util.List;
+
+/**
+ * UNIT-08 logical-components.md §2。JpaSpecificationExecutorはQueryHistoryServiceの
+ * 動的絞込クエリ（QueryHistorySpecifications）で使用する。DISTINCT取得系メソッドは
+ * 接続一覧・スキーマ名一覧の実行者スコープ別バリエーション（BR-QUERYHISTORY-10・11）。
+ */
+public interface QueryExecutionRecordRepository
+        extends JpaRepository<QueryExecutionRecord, Long>, JpaSpecificationExecutor<QueryExecutionRecord> {
+
+    @Query("select distinct r.connectionId from QueryExecutionRecord r where r.executedBy = :executedBy")
+    List<Long> findDistinctConnectionIdByExecutedBy(@Param("executedBy") Long executedBy);
+
+    @Query("select distinct r.connectionId from QueryExecutionRecord r")
+    List<Long> findDistinctConnectionId();
+
+    @Query("select distinct r.schemaName from QueryExecutionRecord r "
+            + "where r.connectionId = :connectionId and r.executedBy = :executedBy")
+    List<String> findDistinctSchemaNameByConnectionIdAndExecutedBy(@Param("connectionId") Long connectionId,
+                                                                    @Param("executedBy") Long executedBy);
+
+    @Query("select distinct r.schemaName from QueryExecutionRecord r where r.connectionId = :connectionId")
+    List<String> findDistinctSchemaNameByConnectionId(@Param("connectionId") Long connectionId);
 }

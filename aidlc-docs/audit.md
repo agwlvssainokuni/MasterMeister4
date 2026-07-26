@@ -2566,3 +2566,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Code Generation Part 1承認、Part 2実装へ
 
 ---
+
+## UNIT-08 Code Generation Part 2 - Business Logic層完了（セクション1〜3）
+
+**Timestamp**: 2026-07-26T21:59:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "DTO/enum群、QueryHistorySpecifications、既存QueryExecutionRecordRepository/SavedQueryRepositoryの拡張、QueryHistoryServiceを実装。実装時の判断: 計画時点ではQueryHistorySearchRequest（Bean Validation付きDTO）をGETクエリパラメータのバインド先とする想定だったが、既存プロジェクトのGETエンドポイントはいずれも個々の@RequestParamで受け取るパターンで統一されており、@ModelAttributeのDTOバインドは前例がなかった（BindExceptionが既存GlobalExceptionHandlerでハンドリングされていない問題も判明）。既存パターンとの一貫性を優先し、Controller側で個々の@RequestParamを受け取る方式に変更。QueryHistoryServiceTest（9件）、QueryHistorySpecificationsTest（6件）、既存Repository修正2ファイルへのテスト追加（計5件）を実施、全件成功。business-logic-summary.mdを作成。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、Business Logic層完了、API層へ
+
+---
