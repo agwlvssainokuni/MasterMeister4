@@ -1926,3 +1926,12 @@
 **Context**: CONSTRUCTION - UNIT-06 NFR Design、計画提示
 
 ---
+
+## UNIT-06 NFR Design - 推奨確認・回答確定・成果物作成
+
+**Timestamp**: 2026-07-25T00:40:00Z
+**User Input**: "推奨は？" → (AIが全7問の推奨をQ1〜6=A、Q7=Bと提示、根拠を説明) → "推奨どおりとする。"
+**AI Response**: "全7問をAI推奨（Q1〜6=A、Q7=B）で確定。nfr-design-patterns.md（スキーマ非許可時403/SQL非読み取り専用時400/保存クエリアクセス不可時404の各専用例外、タイムアウト・結果件数上限超過の専用例外変換、同一物理接続でのスキーマ切替＋COUNT・結果取得の2回実行、QuerySqlAnalyzerによる1回解析の再利用、既存EffectivePermissionResolverループ方式）、logical-components.md（QueryController/SavedQueryControllerの2分割、QueryExecutionService/SavedQueryService/QuerySqlAnalyzerの新設、5種の新規例外クラス、AppProperties.Query新設、DTO設計）を作成。"
+**Context**: CONSTRUCTION - UNIT-06 NFR Design、成果物完成
+
+---

@@ -10,10 +10,10 @@ requirements.mdの前提（同時利用者約10名規模）により、新規の
 
 ## 計画チェックリスト
 
-- [ ] Step A: 質問への回答を収集する（全7問）
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-design-patterns.md`（レジリエンス・パフォーマンス・セキュリティの設計パターン）を作成する
-- [ ] Step D: `logical-components.md`（新設する論理コンポーネント、データ設計上の注意点等）を作成する
+- [x] Step A: 質問への回答を収集する（全7問、AI推奨どおりQ1〜6=A、Q7=Bで確定 2026-07-25T00:40:00Z）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
+- [x] Step C: `nfr-design-patterns.md`（レジリエンス・パフォーマンス・セキュリティの設計パターン）を作成する（2026-07-25T00:45:00Z）
+- [x] Step D: `logical-components.md`（新設する論理コンポーネント、データ設計上の注意点等）を作成する（2026-07-25T00:45:00Z）
 - [ ] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
@@ -27,7 +27,7 @@ B) UNIT-05と同様404 NOT_FOUNDとし、スキーマの存在自体を隠すフ
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Security Patterns、BR-QUERY-01）
 SQLが単一のSELECT文でない（構文エラー・複数ステートメント・非SELECT文）場合のエラー表現は？
@@ -38,7 +38,7 @@ B) UNIT-05の`InvalidQueryConditionException`（BR-MASTER-04用）を流用す�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Security Patterns、BR-QUERY-09）
 保存クエリへのアクセス不可（非表示化済み・Privateで作成者以外等）の場合のエラー表現は？
@@ -49,7 +49,7 @@ B) 403 FORBIDDENとし、保存クエリの存在自体は示しつつアクセ�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Resilience Patterns・Security Requirements、NFR Requirements Q3〜Q4）
 クエリ実行タイムアウト（`SQLTimeoutException`）・結果件数上限超過の例外処理は？
@@ -60,7 +60,7 @@ B) 明示的な変換は行わず、`SQLTimeoutException`は既存の汎用`Exce
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 5（Performance Patterns、tech-stack-decisions.md §2〜4）
 ページング有効時、総件数（COUNT）取得と結果取得（LIMIT/OFFSET）を、どのように実行しますか？
@@ -71,7 +71,7 @@ B) COUNT取得と結果取得を、それぞれ独立した物理接続（`DataS
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 6（Logical Components、STORY-7.1、BR-QUERY-01〜§2）
 SQL読み取り専用検証（BR-QUERY-01）とパラメータ検出（§2、`JdbcNamedParameter`収集）を担うクラス構成は？
@@ -82,7 +82,7 @@ B) 検証用（`ReadOnlyQueryValidator`）とパラメータ検出用（`QueryPa
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 7（Logical Components）
 `query`パッケージのController構成は？
@@ -93,4 +93,4 @@ B) `QueryController`（接続一覧・スキーマ一覧・ad-hoc実行の3エ�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: B
