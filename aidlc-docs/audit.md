@@ -2205,3 +2205,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation Part 1、承認完了、Part 2へ移行
 
 ---
+
+## UNIT-07 Code Generation Part 2 - Business Logic層完了（セクション1〜3）
+
+**Timestamp**: 2026-07-26T07:40:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "セクション1〜3（Business Logic Generation/Testing/Summary）完了。DTO・enum群、QueryBuilderColumnTypeMapper、新規例外4種、QueryBuilderAccessResolver、QueryBuilderService（generateSql/parseToBuilderState）を作成。単体テスト39件（QueryBuilderColumnTypeMapperTest 5件、QueryBuilderAccessResolverTest 7件、QueryBuilderServiceTest 26件、QueryBuilderServicePropertyTest 1000回試行）全件成功。実装・テストの過程で3件の実バグを発見・修正: (1)WHERE/HAVING列参照でSQLエイリアスをそのまま実テーブル名として権限チェックに渡していた誤り、(2)JSqlParserのLongValue/BooleanValueが実際には値検証しないこと・DateValueのtoString()がJDBC escape構文になり移植性懸念があったことを発見しリテラル構築方式を修正、(3)HAVING句の集計関数オペランド未対応を修正。business-logic-summary.mdを作成。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、Business Logic層完了、API Layerへ
+
+---
