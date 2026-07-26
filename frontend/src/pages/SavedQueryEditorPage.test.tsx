@@ -16,7 +16,7 @@
 
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ThemeProvider } from '../design-system/theme/ThemeProvider'
 import { AuthProvider } from '../auth/AuthContext'
@@ -24,6 +24,19 @@ import * as queryApi from '../api/query'
 import { SavedQueryEditorPage } from './SavedQueryEditorPage'
 
 vi.mock('../api/query')
+
+function QueryBuilderTarget() {
+  const location = useLocation()
+  const state = location.state as
+    | { sql?: string; schemaName?: string; editMode?: boolean; savedQueryId?: number }
+    | null
+  return (
+    <p>
+      クエリビルダー画面 sql={state?.sql} schema={state?.schemaName} editMode={String(state?.editMode)}
+      savedQueryId={state?.savedQueryId}
+    </p>
+  )
+}
 
 function renderPage(initialEntry: string, state?: unknown) {
   return render(
@@ -34,6 +47,7 @@ function renderPage(initialEntry: string, state?: unknown) {
             <Route path="/saved-queries/:connectionId/new" element={<SavedQueryEditorPage />} />
             <Route path="/saved-queries/:connectionId/:savedQueryId" element={<SavedQueryEditorPage />} />
             <Route path="/saved-queries/:connectionId" element={<p>保存クエリ一覧画面</p>} />
+            <Route path="/query-builder/:connectionId" element={<QueryBuilderTarget />} />
           </Routes>
         </AuthProvider>
       </MemoryRouter>
@@ -86,6 +100,22 @@ describe('SavedQueryEditorPage - 新規作成モード', () => {
       visibility: 'PRIVATE',
     })
     expect(await screen.findByRole('heading', { name: 'マイクエリ' })).toBeInTheDocument()
+  })
+
+  it('「クエリビルダーで編集」をクリックすると現在の入力をrouter state経由でクエリビルダー画面へ引き継ぐ', async () => {
+    vi.mocked(queryApi.listQuerySchemas).mockResolvedValueOnce([{ schemaName: 'public' }])
+    const user = userEvent.setup()
+    renderPage('/saved-queries/1/new')
+
+    await screen.findByText('public')
+    await user.type(screen.getByTestId('query-editor-sql-input'), 'SELECT 1')
+    await user.selectOptions(screen.getByLabelText('スキーマ'), 'public')
+    await user.click(screen.getByTestId('saved-query-edit-in-builder-button'))
+
+    expect(await screen.findByText(/クエリビルダー画面/)).toBeInTheDocument()
+    expect(screen.getByText(/sql=SELECT 1/)).toBeInTheDocument()
+    expect(screen.getByText(/schema=public/)).toBeInTheDocument()
+    expect(screen.getByText(/editMode=undefined/)).toBeInTheDocument()
   })
 })
 
@@ -157,5 +187,20 @@ describe('SavedQueryEditorPage - 既存クエリ実行モード', () => {
 
     expect(queryApi.retireSavedQuery).toHaveBeenCalledWith(1, 42)
     expect(await screen.findByText('保存クエリ一覧画面')).toBeInTheDocument()
+  })
+
+  it('編集モードで「クエリビルダーで編集」をクリックすると編集情報を引き継いでクエリビルダー画面へ遷移する', async () => {
+    vi.mocked(queryApi.listQuerySchemas).mockResolvedValueOnce([{ schemaName: 'public' }])
+    vi.mocked(queryApi.getSavedQuery).mockResolvedValueOnce(EXISTING_QUERY)
+    const user = userEvent.setup()
+    renderPage('/saved-queries/1/42')
+
+    await user.click(await screen.findByTestId('saved-query-edit-button'))
+    await user.click(screen.getByTestId('saved-query-edit-in-builder-button'))
+
+    expect(await screen.findByText(/クエリビルダー画面/)).toBeInTheDocument()
+    expect(screen.getByText(/sql=SELECT \* FROM t/)).toBeInTheDocument()
+    expect(screen.getByText(/editMode=true/)).toBeInTheDocument()
+    expect(screen.getByText(/savedQueryId=42/)).toBeInTheDocument()
   })
 })

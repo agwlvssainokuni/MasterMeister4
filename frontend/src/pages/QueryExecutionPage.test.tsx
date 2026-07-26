@@ -35,6 +35,16 @@ function SaveAsTarget() {
   )
 }
 
+function QueryBuilderTarget() {
+  const location = useLocation()
+  const state = location.state as { sql?: string; schemaName?: string } | null
+  return (
+    <p>
+      クエリビルダー画面 sql={state?.sql} schema={state?.schemaName}
+    </p>
+  )
+}
+
 function renderPage() {
   return render(
     <ThemeProvider>
@@ -43,6 +53,7 @@ function renderPage() {
           <Routes>
             <Route path="/query-execution/:connectionId" element={<QueryExecutionPage />} />
             <Route path="/saved-queries/:connectionId/new" element={<SaveAsTarget />} />
+            <Route path="/query-builder/:connectionId" element={<QueryBuilderTarget />} />
           </Routes>
         </AuthProvider>
       </MemoryRouter>
@@ -115,6 +126,21 @@ describe('QueryExecutionPage', () => {
     await user.click(screen.getByTestId('query-execution-save-as-button'))
 
     expect(await screen.findByText(/新規保存クエリ画面/)).toBeInTheDocument()
+    expect(screen.getByText(/sql=SELECT 1/)).toBeInTheDocument()
+    expect(screen.getByText(/schema=public/)).toBeInTheDocument()
+  })
+
+  it('「クエリビルダーで編集」をクリックすると現在の入力をrouter state経由でクエリビルダー画面へ引き継ぐ', async () => {
+    vi.mocked(queryApi.listQuerySchemas).mockResolvedValueOnce([{ schemaName: 'public' }])
+    const user = userEvent.setup()
+    renderPage()
+
+    await screen.findByText('public')
+    await user.type(screen.getByTestId('query-editor-sql-input'), 'SELECT 1')
+    await user.selectOptions(screen.getByLabelText('スキーマ'), 'public')
+    await user.click(screen.getByTestId('query-execution-edit-in-builder-button'))
+
+    expect(await screen.findByText(/クエリビルダー画面/)).toBeInTheDocument()
     expect(screen.getByText(/sql=SELECT 1/)).toBeInTheDocument()
     expect(screen.getByText(/schema=public/)).toBeInTheDocument()
   })

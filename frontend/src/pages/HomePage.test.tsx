@@ -34,6 +34,7 @@ function renderHomePage() {
             <Route path="/master-data" element={<p>マスタメンテナンス画面</p>} />
             <Route path="/saved-queries" element={<p>保存クエリ画面</p>} />
             <Route path="/query-execution" element={<p>クエリ実行画面</p>} />
+            <Route path="/query-builder" element={<p>クエリビルダー画面</p>} />
           </Routes>
         </AuthProvider>
       </MemoryRouter>
@@ -42,7 +43,7 @@ function renderHomePage() {
 }
 
 describe('HomePage', () => {
-  it('SideNavの9項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」「マスタメンテナンス」「保存クエリ」「クエリ実行」とする', () => {
+  it('SideNavの9項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」「マスタメンテナンス」「保存クエリ」「クエリ実行」「クエリビルダー」とする', () => {
     renderHomePage()
     // NAV_ROUTESの全項目のタイトルが表示される（SideNav側にも同名の項目があるため、
     // カード側は実装済みカードのdata-testidで、非活性カードはgetAllByTextで確認する）
@@ -59,10 +60,13 @@ describe('HomePage', () => {
     expect(
       within(screen.getByTestId('feature-card-query-execution')).getByText('クエリ実行'),
     ).toBeInTheDocument()
+    expect(
+      within(screen.getByTestId('feature-card-query-builder')).getByText('クエリビルダー'),
+    ).toBeInTheDocument()
     expect(screen.getAllByText('監査ログ').length).toBeGreaterThan(0)
 
-    // 未実装カードは「準備中」バッジを持つ（UNIT-06でsavedQueries/queryExecutionが実装済みになった分、4→3に変化）
-    expect(screen.getAllByText('準備中')).toHaveLength(3)
+    // 未実装カードは「準備中」バッジを持つ（UNIT-07でqueryBuilderが実装済みになった分、3→2に変化）
+    expect(screen.getAllByText('準備中')).toHaveLength(2)
 
     // 実装済みカードのみクリック可能なボタンとして描画される
     expect(screen.getByTestId('feature-card-users')).toBeInTheDocument()
@@ -70,6 +74,7 @@ describe('HomePage', () => {
     expect(screen.getByTestId('feature-card-master-data')).toBeInTheDocument()
     expect(screen.getByTestId('feature-card-saved-queries')).toBeInTheDocument()
     expect(screen.getByTestId('feature-card-query-execution')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-query-builder')).toBeInTheDocument()
   })
 
   it('実装済みカードをクリックすると対応するページへ遷移する', async () => {
@@ -100,5 +105,11 @@ describe('HomePage', () => {
     renderHomePage()
     await userEvent.click(screen.getByTestId('feature-card-query-execution'))
     expect(await screen.findByText('クエリ実行画面')).toBeInTheDocument()
+  })
+
+  it('クエリビルダーカードをクリックすると対応するページへ遷移する', async () => {
+    renderHomePage()
+    await userEvent.click(screen.getByTestId('feature-card-query-builder'))
+    expect(await screen.findByText('クエリビルダー画面')).toBeInTheDocument()
   })
 })
