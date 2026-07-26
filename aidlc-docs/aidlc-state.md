@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-07 Code Generation（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - UNIT-08 Functional Design（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -50,9 +50,9 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-07 クエリビルダー - Code Generation
-- **Next Stage**: Code Generation完了後、UNIT-08のFunctional Designへ
-- **Status**: 実施中
+- **Current Stage**: UNIT-07 クエリビルダー - COMPLETED
+- **Next Stage**: UNIT-08 クエリ履歴 - Functional Design
+- **Status**: UNIT-08着手前
 
 ## Backlog（今後の検討課題）
 - **E2Eテストフレームワーク（Playwright等）の導入**: 現状、各ユニットのCode Generation最終ステップでコマンドラインによる実機E2E検証（curl等）を実施しているが、UI表示に関する不具合（例: UNIT-05のダークモード文字色バグ）はこの方式では検出できない。Playwright等のフレームワークは既存の実インフラE2E検証（DB方言差異等のバックエンド/インフラ層の不具合検出に有効）を置き換えるものではなく補完するものと位置づけ、プロジェクト全体のテスト戦略として別途検討する（2026-07-24、UNIT-05承認時にユーザ提起）。
@@ -104,7 +104,7 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-26T06:18:00Z。unit-07-nfr-requirements-plan.mdの全6問に推奨どおり全問Aで回答: 比較値はリテラル埋め込み、JSqlParser Expression APIによる型安全な埋め込み、SQL生成/解析はJSqlParserのASTオブジェクトモデルで統一、ColumnDataTypeCategoryはUNIT-05踏襲の独自再実装、リクエスト件数上限あり、既存Caffeineキャッシュに一任。nfr-requirements.md, tech-stack-decisions.mdを作成。承認前レビューでBOOLEAN型リテラルの「確認済み」という未検証の言い切りを是正）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-26T06:38:00Z。unit-07-nfr-design-plan.mdの全5問に推奨どおり全問Aで回答: GROUP BY整合性違反は専用例外、リバースエンジニアリング失敗は構文非対応(422)とアクセス権限不足(403)を分離、スキーマアクセス不可はUNIT-06の既存例外を再利用、テーブル/カラム一覧取得ロジックはQueryBuilderAccessResolverとして分離、Controllerは単一構成。nfr-design-patterns.md, logical-components.mdを作成。承認前レビューで補助メソッド名existsTableColumn（存在確認のみを示唆）をisColumnAccessible（存在+権限確認の両方を明示）に是正）
 - [x] Infrastructure Design — SKIP（判定 2026-07-26T06:38:00Z。新規DB永続化なし、新規外部サービス依存なし、既存インフラ（UNIT-03/04/06）の再利用のみのため新規インフラ設計不要）
-- [ ] Code Generation — Part 1（計画）承認済み（2026-07-26T06:50:00Z）、Part 2（コード生成）全12セクション完了・承認待ち（unit-07-code-generation-plan.md。Business Logic層（DTO/enum群、QueryBuilderColumnTypeMapper、新規例外4種、QueryBuilderAccessResolver、QueryBuilderService）、API層（QueryBuilderController）、Frontend（接続選択画面、タブUIサブコンポーネント7種+共有OperandPicker、QueryBuilderPage、UNIT-06既存ページへの逆遷移ボタン追加）を作成。バックエンド全384件・フロントエンド全219件成功。実装・実機検証の過程で発見・修正した不具合: (1)WHERE/HAVING列参照でSQLエイリアスを実テーブル名として権限チェックに渡していた誤り、(2)JSqlParserのLongValue/BooleanValueが値検証しないこと・DateValueがJDBC escape構文になる問題、(3)HAVING句の集計関数オペランド未対応、(4)Bean Validation用@AssertTrueメソッドがJacksonのgetterとしてレスポンスJSONへ漏れていた問題。実機E2E検証（PostgreSQL/MySQL）でSQL生成・実行・リバースエンジニアリング・異常系を確認、BOOLEAN型リテラルの4方言動作を確認）
+- [x] Code Generation — COMPLETED（承認 2026-07-26T19:56:00Z）。Part 1（計画）承認済み（2026-07-26T06:50:00Z）、Part 2全12セクション完了（unit-07-code-generation-plan.md。Business Logic層（DTO/enum群、QueryBuilderColumnTypeMapper、新規例外4種、QueryBuilderAccessResolver、QueryBuilderService）、API層（QueryBuilderController）、Frontend（接続選択画面、タブUIサブコンポーネント、QueryBuilderPage、UNIT-06既存ページへの逆遷移ボタン追加）を作成。実装・実機検証の過程で発見・修正した不具合4件: (1)WHERE/HAVING列参照でSQLエイリアスを実テーブル名として権限チェックに渡していた誤り、(2)JSqlParserのLongValue/BooleanValueが値検証しないこと・DateValueがJDBC escape構文になる問題、(3)HAVING句の集計関数オペランド未対応、(4)Bean Validation用@AssertTrueメソッドがJacksonのgetterとしてレスポンスJSONへ漏れていた問題。実機E2E検証（PostgreSQL/MySQL）でSQL生成・実行・リバースエンジニアリング・異常系を確認、BOOLEAN型リテラルの4方言動作を確認。**完了報告後、承認前レビューで8件の指摘に対応**: (1)実行可能アーティファクトはWAR（運用ルール確定、Gradle設定変更なし、feedback_deployment_artifact.mdに記録）、(2)FROM/JOINタブをFROMタブ1つに統合しタブ順序をFROM/SELECT/WHERE/GROUP BY/HAVING/ORDER BY/LIMIT OFFSETに変更、(3)FROM/JOINタブのレイアウトを一行化、(4)SELECT/WHERE/HAVING/ORDER BYタブのレイアウトを一行化、(5)FROMタブの駆動表とJOINの縦間隔追加、(6)JOIN条件右辺の候補列を左辺と同一化（FROM+全JOIN済み列から選択可能に）、(7)FROM/JOINタブの実装をQueryBuilderFromTab 1ファイル・1コンポーネントに統合、(8)クエリビルダーからの逆遷移でSQLが引き継がれないバグ修正（QueryExecutionPage.tsxのrouter state受信ロジック欠落、SavedQueryEditorPage.tsxのgetSavedQuery非同期競合状態）。最終状態: バックエンド全384件・フロントエンド全222件成功
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
@@ -113,7 +113,7 @@
 - [x] UNIT-04 アクセス制御 — COMPLETED（承認 2026-07-24T09:00:00Z）
 - [x] UNIT-05 マスタメンテナンス — COMPLETED（承認 2026-07-24T13:36:00Z）
 - [x] UNIT-06 クエリ保存・実行 — COMPLETED（承認 2026-07-26T05:21:00Z）
-- [ ] UNIT-07 クエリビルダー — IN PROGRESS（Functional Design・NFR Requirements・NFR Design承認済み、Infrastructure DesignはSKIP、Code Generation Part 2完了・承認待ち）
+- [x] UNIT-07 クエリビルダー — COMPLETED（承認 2026-07-26T19:56:00Z）
 - [ ] UNIT-08 クエリ履歴
 - [ ] UNIT-09 監査ログ閲覧
 - [ ] UNIT-10 CI/CD

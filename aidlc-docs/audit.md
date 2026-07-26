@@ -2335,3 +2335,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（バグ修正）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-07 Code Generation 最終承認
+
+**Timestamp**: 2026-07-26T20:04:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-07 クエリビルダー Code Generationを承認。完了報告後の承認前レビューで計8件の指摘（実行可能アーティファクトの運用ルール確認、FROM/JOINタブ統合・順序変更、レイアウト一行化×2、FROM/JOIN縦間隔、JOIN条件右辺候補列の是正、FROM/JOINタブの1ファイル統合、クエリビルダーからの逆遷移SQL引き継ぎバグ修正）に対応した後の最終承認。aidlc-state.mdを更新: UNIT-07のCode Generationを[x] COMPLETEDに、Current Unit ProgressのUnit-07を[x] COMPLETEDに、Current StatusのNext StageをUNIT-08 Functional Designに変更。"
+**Context**: CONSTRUCTION - UNIT-07完了、UNIT-08 クエリ履歴のFunctional Designへ移行
+
+---
