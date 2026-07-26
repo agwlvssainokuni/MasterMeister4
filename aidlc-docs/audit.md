@@ -2537,3 +2537,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design、横断レビュー完了、Continue to Next Stage待ち
 
 ---
+
+## UNIT-08 NFR Design承認、Infrastructure Design判定
+
+**Timestamp**: 2026-07-26T21:34:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-08 クエリ履歴 NFR Designを承認。続けてInfrastructure Designを判定: 新規DB永続化なし（既存query_execution_recordテーブルの閲覧のみ）、新規外部サービス依存なし、既存インフラ（UNIT-03/04/06）の再利用のみのためSKIPと判定（UNIT-05/06/07と同様）。aidlc-state.mdを更新: UNIT-08のNFR Designを[x] COMPLETEDに、Infrastructure Designを[x] SKIPに記録、Current StatusのNext StageをCode Generationに更新。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design完了・Infrastructure Design SKIP、Code Generationへ移行
+
+---
