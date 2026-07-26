@@ -2070,3 +2070,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Functional Design、承認前レビュー対応・修正完了
 
 ---
+
+## UNIT-07 Functional Design 承認
+
+**Timestamp**: 2026-07-26T05:55:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-07 Functional Designを承認。aidlc-state.mdを更新し、NFR Requirementsへ進む。"
+**Context**: CONSTRUCTION - UNIT-07 Functional Design完了、NFR Requirementsへ移行
+
+---

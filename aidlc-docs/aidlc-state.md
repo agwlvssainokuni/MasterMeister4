@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-07 クエリビルダー - Functional Design成果物完成、承認待ち
-- **Next Stage**: 承認後、UNIT-07のNFR Requirementsへ
+- **Current Stage**: UNIT-07 クエリビルダー - NFR Requirements
+- **Next Stage**: NFR Requirements完了後、NFR Designへ
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
@@ -100,7 +100,7 @@
 - [x] Code Generation — COMPLETED（承認 2026-07-26T05:21:00Z。Part 1計画承認 2026-07-25T01:10:00Z。マイグレーション（V15 saved_query, V16 query_execution_record）、QuerySqlAnalyzer/QueryExecutionService/SavedQueryService、5種新規例外、QueryController/SavedQueryController、フロントエンドFlow A/B全5画面＋共有QueryEditorPanel、新規ナビ項目queryExecution追加。バックエンド334件・フロントエンド203件全件成功。実機E2E検証（PostgreSQL/MySQL）でSavedQueryService.updateQuery/retireQueryの永続化バグを発見・修正）
 
 ## Current Unit - Stage Progress (UNIT-07)
-- [ ] Functional Design — EXECUTE、成果物完成・承認待ち（unit-07-functional-design-plan.mdの全10問に回答: Q1-8=A（列単位実効権限フィルタリング、INNER/LEFT/RIGHTのみ、構造化等価結合、フラットAND、UNIT-05踏襲の演算子体系独自定義、常にエイリアス修飾、リバースエンジニアリング失敗時は専用例外拒否、QueryBuilderState永続化なし）、Q9=B（標準5種+DISTINCT修飾）、Q10=A+逆遷移/相互遷移追加。business-logic-model.md, business-rules.md（BR-QUERYBUILDER-01〜12）, domain-entities.md, frontend-components.mdを作成）
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-26T05:55:00Z。unit-07-functional-design-plan.mdの全10問に回答: Q1-8=A（列単位実効権限フィルタリング、INNER/LEFT/RIGHTのみ、構造化等価結合、フラットAND、UNIT-05踏襲の演算子体系独自定義、常にエイリアス修飾、リバースエンジニアリング失敗時は専用例外拒否、QueryBuilderState永続化なし）、Q9=B（標準5種+DISTINCT修飾）、Q10=A+逆遷移/相互遷移追加。business-logic-model.md, business-rules.md（BR-QUERYBUILDER-01〜12）, domain-entities.md, frontend-components.mdを作成。承認前レビューでテーブル可視判定ロジックの矛盾（UNIT-05 isTableVisible()との不整合）を発見・修正）
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
