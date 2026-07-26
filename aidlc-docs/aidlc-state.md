@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-08 NFR Requirements（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - UNIT-08 NFR Design（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-08 クエリ履歴 - Functional Design COMPLETED
-- **Next Stage**: UNIT-08 クエリ履歴 - NFR Requirements
+- **Current Stage**: UNIT-08 クエリ履歴 - NFR Requirements COMPLETED
+- **Next Stage**: UNIT-08 クエリ履歴 - NFR Design
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
@@ -108,7 +108,7 @@
 
 ## Current Unit - Stage Progress (UNIT-08)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-26T20:26:00Z。unit-08-functional-design-plan.mdの全8問に推奨どおり全問Aで回答: 失敗実行は記録対象外（既存QueryExecutionRecord踏襲）、接続選択→履歴一覧の2画面構成、実行者スコープはロールに応じフェイルクローズ、履歴閲覧はアクセス権を再判定しない（記録の不変性）、SQLテキスト検索は部分一致、保存クエリ名表示、router state経由の画面遷移、Spring Data JPA標準Pageable採用。business-logic-model.md, business-rules.md（BR-QUERYHISTORY-01〜10）, domain-entities.md, frontend-components.mdを作成。承認前レビューで2件の矛盾を発見・修正: (1)Pagination（1-indexed）とPageable（0-indexed）の基準不一致の明記、(2)スキーマ絞込セレクタが「現在アクセス可能なスキーマ」ではBR-04（アクセス権不問の閲覧）と矛盾するため、履歴実績ベースのDISTINCT取得に是正（BR-QUERYHISTORY-10新設、新規API追加））
-- [ ] NFR Requirements — EXECUTE（ユニットごと、判定は都度独立）
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-26T20:53:00Z。unit-08-nfr-requirements-plan.mdの全5問に推奨どおり全問Aで回答: JpaSpecificationExecutorによる動的絞込クエリ（プロジェクト内初導入）、(connection_id, executed_at)複合インデックス新設（既存query_execution_recordテーブルにconnection_idのインデックスがなかったため）、絞込パラメータの入力検証、Controller層でのロール判定によるフェイルクローズ、findAllByIdInによる名前解決（キャッシュなし）。nfr-requirements.md（Security Baseline全15ルール評価）、tech-stack-decisions.mdを作成。承認前レビューで事実誤認を発見・修正: 「UNIT-05/06で確立したロール判定パターンを踏襲」という記述が誤りで、実際には業務ロジック内でのロール分岐に前例はなく本ユニットが初導入と訂正。JWTのroleクレーム参照方法（principal.getClaimAsString("role")）を具体化）
 - [ ] NFR Design — EXECUTE（ユニットごと、判定は都度独立）
 - [ ] Infrastructure Design — EXECUTE（ユニットごと、判定は都度独立）
 - [ ] Code Generation — EXECUTE
