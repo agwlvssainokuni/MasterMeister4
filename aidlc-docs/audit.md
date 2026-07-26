@@ -2016,3 +2016,12 @@
 **Context**: 横断的技術追加（特定unitに属さない）、実機検証で2件の不具合（アペンダ欠落・依存バージョン不整合）を発見・修正
 
 ---
+
+## UNIT-06 Code Generation 承認 → UNIT-06完了
+
+**Timestamp**: 2026-07-26T05:21:00Z
+**User Input**: "UNIT-06 Code Generation、Continue to Next Stageで承認する"
+**AI Response**: "UNIT-06 Code Generationを承認。aidlc-state.mdを更新し、UNIT-06（クエリ保存・実行）を全ステージ完了とした。次はUNIT-07（クエリビルダー）のFunctional Designへ進む。"
+**Context**: CONSTRUCTION - UNIT-06全体完了、UNIT-07へ移行
+
+---
