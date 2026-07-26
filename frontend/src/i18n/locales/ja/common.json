@@ -314,6 +314,39 @@
       "IS_NOT_NULL": "空でない"
     }
   },
+  "queryHistory": {
+    "title": "クエリ実行履歴",
+    "connectionName": "接続の表示名",
+    "connectionListEmpty": "履歴が記録された接続はありません",
+    "selectPlaceholder": "選択してください",
+    "detailTitle": "クエリ詳細",
+    "executeButton": "実行へ",
+    "saveButton": "保存へ",
+    "builderButton": "ビルダーで開く",
+    "column": {
+      "executedAt": "実行日時",
+      "queryType": "種別",
+      "summary": "クエリ",
+      "executor": "実行者",
+      "schemaName": "対象スキーマ",
+      "rowCount": "結果件数",
+      "durationMillis": "実行時間(ms)"
+    },
+    "queryType": {
+      "SAVED": "保存クエリ",
+      "AD_HOC": "直接入力"
+    },
+    "filter": {
+      "executedAtFrom": "実行日時（開始）",
+      "executedAtTo": "実行日時（終了）",
+      "schemaName": "対象スキーマ",
+      "executedByScope": "実行者"
+    },
+    "executedByScope": {
+      "ALL": "全ユーザ",
+      "MINE": "自分のみ"
+    }
+  },
   "home": {
     "welcome": "ようこそ、MasterMeisterへ",
     "comingSoon": "準備中",

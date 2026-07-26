@@ -30,3 +30,22 @@ export function decodeJwtEmail(accessToken: string): string | null {
     return null
   }
 }
+
+// UNIT-08 frontend-components.md「管理者判定」。AuthenticationServiceがJWT発行時に
+// roleクレームへuser.getRole().name()を格納済みのため、decodeJwtEmailと同様の方式で
+// 表示制御用に取り出す（実行者スコープSelectの表示・非表示のみに使用、権限境界としては
+// 機能しない。実際のアクセス制御はサーバ側BR-QUERYHISTORY-03のフェイルクローズで担保する）。
+export function decodeJwtRole(accessToken: string): string | null {
+  try {
+    const payload = accessToken.split('.')[1]
+    if (!payload) {
+      return null
+    }
+    const base64 = payload.replace(/-/g, '+').replace(/_/g, '/')
+    const json = window.atob(base64)
+    const claims = JSON.parse(json) as { role?: string }
+    return claims.role ?? null
+  } catch {
+    return null
+  }
+}

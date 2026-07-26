@@ -30,6 +30,7 @@ const IMPLEMENTED_KEYS = new Set([
   'savedQueries',
   'queryExecution',
   'queryBuilder',
+  'queryHistory',
 ])
 
 export function HomePage() {

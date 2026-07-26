@@ -314,6 +314,39 @@
       "IS_NOT_NULL": "Is not empty"
     }
   },
+  "queryHistory": {
+    "title": "Query History",
+    "connectionName": "Connection display name",
+    "connectionListEmpty": "No connections with recorded history",
+    "selectPlaceholder": "Please select",
+    "detailTitle": "Query Details",
+    "executeButton": "Go to execute",
+    "saveButton": "Go to save",
+    "builderButton": "Open in builder",
+    "column": {
+      "executedAt": "Executed at",
+      "queryType": "Type",
+      "summary": "Query",
+      "executor": "Executor",
+      "schemaName": "Target schema",
+      "rowCount": "Row count",
+      "durationMillis": "Duration (ms)"
+    },
+    "queryType": {
+      "SAVED": "Saved query",
+      "AD_HOC": "Ad-hoc"
+    },
+    "filter": {
+      "executedAtFrom": "Executed at (from)",
+      "executedAtTo": "Executed at (to)",
+      "schemaName": "Target schema",
+      "executedByScope": "Executor"
+    },
+    "executedByScope": {
+      "ALL": "All users",
+      "MINE": "Mine only"
+    }
+  },
   "home": {
     "welcome": "Welcome to MasterMeister",
     "comingSoon": "Coming soon",

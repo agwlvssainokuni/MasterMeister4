@@ -43,7 +43,7 @@ function renderHomePage() {
 }
 
 describe('HomePage', () => {
-  it('SideNavの9項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」「マスタメンテナンス」「保存クエリ」「クエリ実行」「クエリビルダー」とする', () => {
+  it('SideNavの9項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」「マスタメンテナンス」「保存クエリ」「クエリ実行」「クエリビルダー」「クエリ履歴」とする', () => {
     renderHomePage()
     // NAV_ROUTESの全項目のタイトルが表示される（SideNav側にも同名の項目があるため、
     // カード側は実装済みカードのdata-testidで、非活性カードはgetAllByTextで確認する）
@@ -63,10 +63,13 @@ describe('HomePage', () => {
     expect(
       within(screen.getByTestId('feature-card-query-builder')).getByText('クエリビルダー'),
     ).toBeInTheDocument()
+    expect(
+      within(screen.getByTestId('feature-card-query-history')).getByText('クエリ実行履歴'),
+    ).toBeInTheDocument()
     expect(screen.getAllByText('監査ログ').length).toBeGreaterThan(0)
 
-    // 未実装カードは「準備中」バッジを持つ（UNIT-07でqueryBuilderが実装済みになった分、3→2に変化）
-    expect(screen.getAllByText('準備中')).toHaveLength(2)
+    // 未実装カードは「準備中」バッジを持つ（UNIT-08でqueryHistoryが実装済みになった分、2→1に変化）
+    expect(screen.getAllByText('準備中')).toHaveLength(1)
 
     // 実装済みカードのみクリック可能なボタンとして描画される
     expect(screen.getByTestId('feature-card-users')).toBeInTheDocument()
@@ -75,6 +78,7 @@ describe('HomePage', () => {
     expect(screen.getByTestId('feature-card-saved-queries')).toBeInTheDocument()
     expect(screen.getByTestId('feature-card-query-execution')).toBeInTheDocument()
     expect(screen.getByTestId('feature-card-query-builder')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-query-history')).toBeInTheDocument()
   })
 
   it('実装済みカードをクリックすると対応するページへ遷移する', async () => {

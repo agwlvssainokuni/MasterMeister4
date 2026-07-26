@@ -71,22 +71,22 @@
 
 ### 8. Frontend Components Generation
 
-- [ ] Step 8.1: APIクライアント`frontend/src/api/queryHistory.ts`を作成する（接続一覧・スキーマ名一覧・履歴一覧取得の各関数、型定義）
-- [ ] Step 8.2: `QueryHistoryConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面1）
-- [ ] Step 8.3: `QueryHistoryPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面2。`FilterBar`＋`DataTable`＋`Pagination`＋詳細`Modal`、`Pagination`↔`Pageable`のページ番号変換、実行者スコープSelect変更時のスキーマ一覧再取得）
-- [ ] Step 8.4: `App.tsx`のルーティングに`/query-history`, `/query-history/:connectionId`を追加する（`ProtectedRoute`配下）
-- [ ] Step 8.5: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'queryHistory'`を追加する
-- [ ] Step 8.6: i18nリソース（`common.json`の`ja`/`en`）に`queryHistory.*`関連キーを追加する（`nav.queryHistory`はUNIT-01で追加済み）
+- [x] Step 8.1: APIクライアント`frontend/src/api/queryHistory.ts`を作成する（接続一覧・スキーマ名一覧・履歴一覧取得の各関数、型定義）
+- [x] Step 8.2: `QueryHistoryConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面1）
+- [x] Step 8.3: `QueryHistoryPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面2。`FilterBar`＋`DataTable`＋`Pagination`＋詳細`Modal`、`Pagination`↔`Pageable`のページ番号変換、実行者スコープSelect変更時のスキーマ一覧再取得）。**実装時の発見**: `AuthContext`にロール情報がなく、既存の`decodeJwtEmail`と同じ設計思想で`auth/jwt.ts`に`decodeJwtRole`を追加（既存ファイルの修正）
+- [x] Step 8.4: `App.tsx`のルーティングに`/query-history`, `/query-history/:connectionId`を追加する（`ProtectedRoute`配下）
+- [x] Step 8.5: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'queryHistory'`を追加する
+- [x] Step 8.6: i18nリソース（`common.json`の`ja`/`en`）に`queryHistory.*`関連キーを追加する（`nav.queryHistory`はUNIT-01で追加済み）。**実装時の発見**: `queryHistory.title`を当初「クエリ履歴」としたが、UNIT-01確定済みの`nav.queryHistory`ラベル「クエリ実行履歴」と不一致だったため統一
 
 ### 9. Frontend Components Unit Testing
 
-- [ ] Step 9.1: `queryHistory.test.ts`（APIクライアント）を作成する
-- [ ] Step 9.2: `QueryHistoryConnectionListPage.test.tsx`を作成する
-- [ ] Step 9.3: `QueryHistoryPage.test.tsx`を作成する（一覧表示、絞込条件変更、ページング、詳細モーダルからの3遷移、削除済み接続/保存クエリのプレースホルダー表示）
+- [x] Step 9.1: `queryHistory.test.ts`（APIクライアント）を作成する — 5件
+- [x] Step 9.2: `QueryHistoryConnectionListPage.test.tsx`を作成する — 3件
+- [x] Step 9.3: `QueryHistoryPage.test.tsx`を作成する（一覧表示、実行者スコープSelectの表示制御、詳細モーダルからの3遷移、絞込条件変更時の再取得）— 8件。`jwt.test.ts`に`decodeJwtRole`のテスト3件を追加、`HomePage.test.tsx`のバッジ数変化（2→1）を反映
 
 ### 10. Frontend Components Summary
 
-- [ ] Step 10.1: `aidlc-docs/construction/unit-08/code/frontend-summary.md`を作成する
+- [x] Step 10.1: `aidlc-docs/construction/unit-08/code/frontend-summary.md`を作成する
 
 ### 11. Database Migration Scripts
 

@@ -2584,3 +2584,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、API層完了、フロントエンドへ
 
 ---
+
+## UNIT-08 Code Generation Part 2 - フロントエンド完了（セクション7〜10）
+
+**Timestamp**: 2026-07-26T22:38:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "APIクライアント（queryHistory.ts）、QueryHistoryConnectionListPage、QueryHistoryPage（FilterBar/DataTable/Pagination/詳細Modal）、App.tsxルーティング、HomePage.tsxのIMPLEMENTED_KEYS、i18nリソースを実装。実装時の発見: AuthContextにロール情報がなく、既存のdecodeJwtEmailと同じ設計思想でauth/jwt.tsにdecodeJwtRoleを追加（AuthContext自体は変更せず既存の各ページで直接呼ぶパターンを踏襲）。queryHistory.title「クエリ履歴」がUNIT-01確定済みnav.queryHistoryラベル「クエリ実行履歴」と不一致だったため統一。queryHistory.test.ts（5件）、QueryHistoryConnectionListPage.test.tsx（3件）、QueryHistoryPage.test.tsx（8件）、jwt.test.tsへのdecodeJwtRoleテスト追加（3件）、HomePage.test.tsxのバッジ数変化（2→1）を反映。frontend-summary.mdを作成。フロントエンド全58ファイル241件成功（npm test -- --run）、tsc・lint・build成功。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、フロントエンド完了、DBマイグレーションへ
+
+---

@@ -15,7 +15,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { decodeJwtEmail } from './jwt'
+import { decodeJwtEmail, decodeJwtRole } from './jwt'
 
 function makeToken(payload: unknown): string {
   const header = window.btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
@@ -40,5 +40,19 @@ describe('decodeJwtEmail', () => {
 
   it('ペイロードがJSONとしてパースできない場合はnullを返す', () => {
     expect(decodeJwtEmail(`header.${window.btoa('not-json')}.signature`)).toBeNull()
+  })
+})
+
+describe('decodeJwtRole', () => {
+  it('roleクレームを取り出す', () => {
+    expect(decodeJwtRole(makeToken({ sub: '1', role: 'ADMIN' }))).toBe('ADMIN')
+  })
+
+  it('roleクレームが無い場合はnullを返す', () => {
+    expect(decodeJwtRole(makeToken({ sub: '1' }))).toBeNull()
+  })
+
+  it('ペイロード部が無い不正なトークンはnullを返す', () => {
+    expect(decodeJwtRole('not-a-jwt')).toBeNull()
   })
 })
