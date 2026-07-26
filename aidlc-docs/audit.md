@@ -2629,3 +2629,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-08 Code Generation 最終承認
+
+**Timestamp**: 2026-07-27T00:17:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-08 クエリ履歴 Code Generationを承認。完了報告後の承認前レビューで2件のレイアウト指摘（絞込条件の縦並び・ラベル横並び、SQLキーワード検索の統合）に対応した後の最終承認。aidlc-state.mdを更新: UNIT-08のCode Generationを[x] COMPLETEDに、Current Unit ProgressのUNIT-08を[x] COMPLETEDに変更。あわせて以前の誤記（「UNIT-08が最後のユニット」）を修正し、実際にはUNIT-09（監査ログ閲覧）・UNIT-10（CI/CD）が残っていることを反映、Current StatusのNext StageをUNIT-09 Functional Designに更新。"
+**Context**: CONSTRUCTION - UNIT-08完了、UNIT-09 監査ログ閲覧のFunctional Designへ移行
+
+---
