@@ -12,6 +12,7 @@ UNIT-02〜UNIT-07で確立した規約（`frontend/src/pages/`・`frontend/src/a
 **APIパス規約（UNIT-05/06/07の確立済み規約を踏襲）**: 新規のトップレベル名前空間`/api/query-history/*`を新設する（管理者ロールを要求しない。実行者スコープの絞込はエンドポイント内部でロール判定する、BR-QUERYHISTORY-03）。
 
 - `GET /api/query-history/{connectionId}?executedByScope=ALL|MINE&executedAtFrom=...&executedAtTo=...&schemaName=...&sqlKeyword=...&page=0&pageSize=...` — 履歴一覧取得（絞込・ページング、FR-8.1〜8.3）
+- `GET /api/query-history/{connectionId}/schemas` — 対象接続の履歴に実際に記録されているスキーマ名の一覧（DISTINCT取得、スキーマ絞込セレクタ用、BR-QUERYHISTORY-10）
 
 ---
 
@@ -45,7 +46,9 @@ QueryHistoryPage (AppShell)
   │  ├ 検索欄（searchValue/onSearchChange。SQLテキストキーワード、BR-QUERYHISTORY-05）
   │  └ children（追加フィルタ）
   │     ├ 実行日時範囲（開始・終了の日時入力2件、片側指定可）
-  │     ├ 対象スキーマセレクタ（対象接続内でアクセス可能なスキーマの一覧から選択、任意）
+  │     ├ 対象スキーマセレクタ（選択肢は「現在アクセス可能なスキーマ」ではなく、対象接続の履歴に
+  │     │  実際に記録されているスキーマ名の一覧（DISTINCT取得、BR-QUERYHISTORY-10）。BR-04により
+  │     │  現在アクセス権のないスキーマの履歴も閲覧可能なため、絞込の選択肢もそれに合わせる、任意）
   │     └ 実行者スコープSelect（管理者のみ表示。「全ユーザ」「自分のみ」の2択。
   │        一般ユーザには表示せず常に自分のみで固定、BR-QUERYHISTORY-03）
   ├ DataTable（design-system既存コンポーネント。列: 実行日時、種別（保存/直接入力、FR-8.2）、
@@ -65,7 +68,7 @@ QueryHistoryPage (AppShell)
 **State**: `connectionId`（ルートパラメータ）、`records: QueryHistoryRecordView[]`、`page: number`、`totalPages: number`、絞込条件一式（`sqlKeyword`, `executedAtFrom`, `executedAtTo`, `schemaName`, `executedByScope`）、`selectedRecord: QueryHistoryRecordView | null`（詳細モーダル用）、`loading: boolean`、`errorMessage: string | null`
 
 **API連携**:
-- `GET /api/queries/{connectionId}/schemas`（UNIT-06既存を再利用、スキーマ絞込セレクタ用）
+- `GET /api/query-history/{connectionId}/schemas`（新規。対象接続の履歴に実際に記録されているスキーマ名の一覧をDISTINCT取得。UNIT-06の`GET /api/queries/{connectionId}/schemas`＝現在アクセス可能なスキーマ一覧とは意味が異なるため別エンドポイントとする、BR-QUERYHISTORY-10）
 - `GET /api/query-history/{connectionId}`（絞込・ページング一覧取得）
 
 **管理者判定**: 現在ログイン中ユーザのロールは、UNIT-02で確立済みの認証コンテキスト（JWTクレームまたは`AuthContext`）から取得する。実行者スコープSelectの表示・非表示はこの情報に基づきフロントエンド側でも制御するが、実際のアクセス制御はサーバ側で行う（BR-QUERYHISTORY-03、フロントエンド側の表示制御はUX向上のためであり権限境界としては機能しない）。

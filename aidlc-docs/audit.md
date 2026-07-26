@@ -2398,3 +2398,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Functional Design完了、承認待ち
 
 ---
+
+## UNIT-08 Functional Design 承認前レビュー・自己指摘対応
+
+**Timestamp**: 2026-07-26T20:26:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "成果物を見直し2点の懸念を発見・修正。(1) design-system Pagination（1-indexed）とSpring Data JPA Pageable（0-indexed）の基準不一致を明記していなかったため、business-logic-model.mdに変換方針（QueryHistoryPage側の1箇所で変換）を追記。(2) スキーマ絞込セレクタを「現在アクセス可能なスキーマ一覧」（UNIT-06既存API再利用）としていたが、BR-QUERYHISTORY-04（アクセス権を再判定しない、記録の不変性）と矛盾していた（アクセス権を失ったスキーマの履歴は一覧には出るが絞込では選べないという抜け穴）。BR-QUERYHISTORY-10を新設し、スキーマ絞込の選択肢は現在のアクセス可否に関わらず履歴に実際に記録されたスキーマ名のDISTINCT一覧とする方針に修正、新規API `GET /api/query-history/{connectionId}/schemas`をfrontend-components.mdに追加（UNIT-06既存の`GET /api/queries/{connectionId}/schemas`とは別エンドポイント）。business-logic-model.md・business-rules.md・frontend-components.mdの3ファイルを整合させて修正。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design、修正完了、承認待ち
+
+---

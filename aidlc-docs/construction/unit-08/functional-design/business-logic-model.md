@@ -25,7 +25,7 @@
 - **実行者スコープ**（Q3=A）:
   - 一般ユーザ（`Role.USER`）は常に自分の実行履歴のみが対象となる。リクエストで「全ユーザ」を指定してもサーバ側で自分のみに強制する（フェイルクローズ、UNIT-04/05で確立した「疑わしい場合はより厳格な側」の方針を踏襲）
   - 管理者（`Role.ADMIN`）は「全ユーザ」または「自分のみ」を選択可能。「全ユーザ」を選んだ場合は`executedBy`条件を付けない。「自分のみ」を選んだ場合は`executedBy = 自分のuserId`で絞り込む
-- **対象スキーマ**: `schemaName`の完全一致
+- **対象スキーマ**: `schemaName`の完全一致。絞込セレクタの選択肢は「現在アクセス可能なスキーマ」ではなく、対象接続の履歴に実際に記録されている`schemaName`のDISTINCT一覧とする（BR-QUERYHISTORY-10）。BR-QUERYHISTORY-04によりアクセス権を失ったスキーマの履歴も閲覧対象となるため、絞込の選択肢もそれに合わせる必要がある
 - **SQLテキスト**: `sql`列に対する部分一致検索（`LIKE '%keyword%'`、Q5=A）。大文字小文字の区別はDB方言のデフォルト照合順序に従う（明示的な大文字小文字無視処理は行わない）
 
 ## 4. ページング（Q8=A）
@@ -34,6 +34,7 @@ Spring Data JPAの`Pageable`/`Page`を新規に導入する（プロジェクト
 
 - デフォルトソート順: `executedAt`降順（新しい実行が先頭）
 - ページサイズはUNIT-06のクエリ実行結果一覧と同程度の既定値を踏襲する（NFR Requirements段階で確定）
+- **フロントエンドのページ番号表現との対応**: design-system既存の`Pagination`コンポーネントは1-indexed（`page=1`が先頭ページ、`page<=1`で「前へ」を無効化）である一方、Spring Data JPAの`Pageable`は0-indexed（`PageRequest.of(0, ...)`が先頭ページ）である。バックエンドAPIのリクエスト/レスポンスは`Pageable`の0-indexedな値をそのまま使用し、フロントエンドの`QueryHistoryPage`側で`Pagination`コンポーネントに渡す直前に1-indexedへ変換する（表示用の`page + 1`、APIリクエスト時は`page - 1`）。UNIT-06の`QueryEditorPanel`では両基準が混在したまま実装されている前例があるため、本ユニットでは変換点をQueryHistoryPage側の1箇所に限定し曖昧にしない
 
 ## 5. 表示用データの結合
 
