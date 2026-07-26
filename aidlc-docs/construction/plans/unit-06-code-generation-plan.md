@@ -120,9 +120,13 @@
 
 ### 16. 最終ビルド検証
 
-- [ ] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（jqwikプロパティテスト含む全件成功）、`npm test`（frontend、全件成功）、`npm run build`（frontend、成功）を確認する
-- [ ] Step 16.2: devenv（PostgreSQL・MySQL）に対し、実アプリへcurlで、一般ユーザ（非ADMIN）としてのad-hoc実行（スキーマ許可リスト判定・読み取り専用検証・パラメータ・ページング・結果件数上限）、保存クエリのCRUD・実行・非表示化（公開範囲・作成者限定操作）を確認する
-- [ ] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜05と同じくNVD APIキー未設定のため実施見送り（既知の制約として記録）
+- [x] Step 16.1: **検証チェックポイント**: `./gradlew :backend:build`（jqwikプロパティテスト含む全334件成功）、`npm test`（frontend、全203件成功）、`npm run build`（frontend、成功）を確認した
+- [x] Step 16.2: devenv（PostgreSQL・MySQL）に対し、`java -jar`起動した実アプリへcurlで、一般ユーザ（非ADMIN、新規登録・承認・権限付与を実際のメール確認フロー（MailPit API）経由で実施）としてのアクセス可能接続一覧・スキーマ一覧、ad-hoc実行（パラメータバインド・ページング・COUNT取得、読み取り専用検証拒否、複数ステートメント拒否、未許可スキーマ拒否）、保存クエリのCRUD・実行・非表示化（公開範囲・作成者限定操作、非表示化後のフェイルクローズなアクセス拒否）を確認した。**この過程で1件の実装バグを発見・修正**（詳細は下記「実機E2E検証で発見した不具合」参照）。MySQL接続で日本語文字化けを観察したが、UNIT-05の既存機能（`/api/master-data/**`）でも同一の事象を確認し、本ユニット固有ではなくMySQL接続の文字コード設定に起因する既存の out-of-scope な事象と判断した
+- [x] Step 16.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜05と同じくNVD APIキー未設定のため実施見送り（既知の制約として記録）
+
+## 実機E2E検証で発見した不具合
+
+**`SavedQueryService.updateQuery`/`retireQuery`の変更が永続化されない**: 両メソッドは`savedQueryRepository.findById`で取得したエンティティを直接ミューテート（`update()`/`retire()`）して返すのみで、`@Transactional`アノテーションも明示的な`.save()`呼び出しも行っていなかった。単体テスト（Mockitoベース、`findById`のスタブが同一のJavaオブジェクトをそのまま返す）ではこの不備を検出できなかったが、実機E2E検証（更新・非表示化後に再取得して値を確認）で、DBへの変更が実際には反映されていないことを発見した。`GroupService.renameGroup`と同じ方式（`@Transactional`を付与し、Hibernateのダーティチェックに永続化を委ねる）に修正し、`saveQuery`/`getSavedQuery`/`listSavedQueries`にも一貫性のため`@Transactional`（読み取り系は`readOnly = true`）を付与した。修正後、実機で変更の永続化を再確認した。
 
 ## Story Traceability
 

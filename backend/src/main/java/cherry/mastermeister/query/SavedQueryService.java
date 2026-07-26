@@ -27,6 +27,7 @@ import cherry.mastermeister.query.entity.Visibility;
 import cherry.mastermeister.query.model.VisibilityFilter;
 import cherry.mastermeister.query.repository.SavedQueryRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
@@ -48,6 +49,7 @@ public class SavedQueryService {
     /**
      * BR-QUERY-05。保存前にBR-QUERY-01の読み取り専用検証を行う。接続は保存時点で固定する（Q11）。
      */
+    @Transactional
     public SavedQuery saveQuery(Long userId, Long connectionId, String name, String sql, Visibility visibility) {
         if (!new QuerySqlAnalyzer(sql).isReadOnly()) {
             throw new NonReadOnlyQueryException();
@@ -61,7 +63,11 @@ public class SavedQueryService {
 
     /**
      * BR-QUERY-07。作成者のみ実行可能。SQL変更時は読み取り専用検証を再度行う。
+     * findOwned〜mutate〜returnを単一トランザクション内で行い、Hibernateのダーティチェックで
+     * 変更を永続化する（GroupService.renameGroupと同じ方式。実機E2E検証で、@Transactionalなしでは
+     * 変更が永続化されないバグを発見し修正）。
      */
+    @Transactional
     public SavedQuery updateQuery(Long userId, Long connectionId, Long savedQueryId, String name, String sql,
                                    Visibility visibility) {
         SavedQuery savedQuery = getOwned(userId, connectionId, savedQueryId);
@@ -78,6 +84,7 @@ public class SavedQueryService {
     /**
      * BR-QUERY-08。作成者のみ実行可能。un-retireは提供しない。
      */
+    @Transactional
     public void retireQuery(Long userId, Long connectionId, Long savedQueryId) {
         SavedQuery savedQuery = getOwned(userId, connectionId, savedQueryId);
         Instant now = Instant.now();
@@ -89,6 +96,7 @@ public class SavedQueryService {
     /**
      * BR-QUERY-09。閲覧・実行時のアクセス可否判定。存在有無と権限有無を区別しないフェイルクローズ。
      */
+    @Transactional(readOnly = true)
     public SavedQuery getSavedQuery(Long userId, Long connectionId, Long savedQueryId) {
         SavedQuery savedQuery = findInConnection(connectionId, savedQueryId);
         if (!isAccessible(userId, savedQuery)) {
@@ -100,6 +108,7 @@ public class SavedQueryService {
     /**
      * BR-QUERY-05, BR-QUERY-08。visibilityFilter・includeOwnRetiredで絞り込んだ一覧を返す。
      */
+    @Transactional(readOnly = true)
     public List<SavedQuery> listSavedQueries(Long userId, Long connectionId, VisibilityFilter visibilityFilter,
                                               boolean includeOwnRetired) {
         return savedQueryRepository.findAllByConnectionId(connectionId).stream()

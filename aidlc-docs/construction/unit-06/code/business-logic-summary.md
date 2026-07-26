@@ -18,6 +18,7 @@
 ### SavedQueryService（COMP-15）
 - `saveQuery`/`updateQuery`/`retireQuery`/`getSavedQuery`/`listSavedQueries`
 - BR-QUERY-05〜09のアクセス可否判定（公開範囲・非表示化・作成者限定）、`QUERY_SAVED`/`QUERY_UPDATED`/`QUERY_RETIRED`監査ログ記録
+- **実機E2E検証で発見・修正した不具合**: `updateQuery`/`retireQuery`は当初`@Transactional`を付与しておらず、エンティティのミューテートのみでDBへの変更が永続化されないバグがあった（単体テストはMockitoスタブが同一Javaオブジェクトを返すため検出できなかった）。`GroupService.renameGroup`と同じ方式（`@Transactional`＋Hibernateダーティチェック）に修正し、全メソッドに一貫して`@Transactional`（読み取り系は`readOnly = true`）を付与した
 
 ## PBT（Property-Based Testing）実装
 
