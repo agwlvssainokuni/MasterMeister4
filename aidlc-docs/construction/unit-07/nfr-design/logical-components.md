@@ -33,7 +33,7 @@ SQL生成・リバースエンジニアリングの2責務に専念する。
   - `SchemaIntrospectionService.getSchema(connectionId)`で対象スキーマの`SchemaTable`一覧を取得
   - 各テーブルについて、UNIT-05の`MasterDataService.isTableVisible()`と同じOR条件のロジック（テーブル単位または列単位いずれかの実効主権限が非NONE）で候補判定（BR-QUERYBUILDER-01、business-logic-model.md §1）
   - 候補に残ったテーブルについて、各カラムの実効主権限がREAD以上のもののみを`AccessibleBuilderColumn`として含める
-  - `existsTableColumn(Long connectionId, String schemaName, String tableName, String columnName): boolean`のような補助メソッドを設け、`QueryBuilderService.parseToBuilderState`から参照テーブル/カラムの存在・アクセス可否確認に利用する
+  - `isColumnAccessible(Long userId, Long connectionId, String schemaName, String tableName, String columnName): boolean`のような補助メソッドを設ける。メソッド名が示すとおり、構造メタデータ上の存在確認とREAD以上の実効権限確認の両方を1メソッドで担う（`existsTableColumn`のような存在確認のみを示唆する命名は、権限チェックの実施有無について実装者に誤解を与えるため避ける）。`QueryBuilderService.parseToBuilderState`が参照テーブル/カラムごとにこのメソッドを呼び出し、`false`が1件でもあれば`QueryBuilderReferenceNotAccessibleException`を送出する
 
 ### QueryBuilderColumnTypeMapper（Q4関連、tech-stack-decisions.md §4）
 - UNIT-05の`ColumnDataTypeMapper`と同じ設計思想（UNIT-03の`SchemaColumn.normalizedType`からのマッピング）を独自実装する

@@ -2160,3 +2160,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Requirements遡及修正、NFR Design承認待ちのまま継続
 
 ---
+
+## UNIT-07 NFR Design 承認前レビュー対応: 補助メソッド名の是正
+
+**Timestamp**: 2026-07-26T06:35:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "logical-components.mdのQueryBuilderAccessResolverが持つ補助メソッド`existsTableColumn`を精査したところ、名前が『存在確認のみ』を示唆する一方、business-logic-model.md §7の失敗条件では『構造メタデータ上の存在』と『実効権限READ以上』の両方を確認する必要があり、名前と実態が不一致だった。実装時に権限チェックの実施有無について誤解を招く恐れがあるため、`isColumnAccessible`に改名し、両方の確認を1メソッドで担う旨を明記した。"
+**Context**: CONSTRUCTION - UNIT-07 NFR Design、承認前レビュー対応・修正完了
+
+---
