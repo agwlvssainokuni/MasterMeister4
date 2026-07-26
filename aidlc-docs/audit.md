@@ -1980,3 +1980,12 @@
 **Context**: CONSTRUCTION - UNIT-06 Code Generation Part 2、成果物完成・承認待ち
 
 ---
+
+## 横断的機能: バックエンドのトレースログ追加（UNIT-06のスコープ外）
+
+**Timestamp**: 2026-07-26T03:10:00Z
+**User Input**: "UNIT-06の機能ではないが良いだろうか？" → "バックエンドでトレースログを出力するようにして欲しい。参考プログラムを references/trace においた。"
+**AI Response**: "reference/trace/TraceAspect.javaを本プロジェクトの構成（AppProperties経由の設定管理、ベースパッケージcherry.mastermeister）に合わせて移植。cherry.mastermeister.common.aop.TraceAspectを新設し、CustomizableTraceInterceptorで対象パッケージ配下（common.configを除く）の全メソッド呼び出し・復帰・例外をログ出力する。build.gradle.ktsにspring-boot-starter-aspectjを追加（Spring Boot 4.1でspring-boot-starter-aopから改称されたことを実機ビルドエラーで発見）。AppProperties.Traceレコード追加（既存の`new AppProperties(...)`呼び出し9件を更新）。実機起動確認で、`AppProperties`（@ConfigurationPropertiesのBean、Java recordで暗黙的final）を含む広いポイントカットがCGLIBプロキシ生成に失敗しアプリ起動自体が失敗するバグを発見し、`!within(cherry.mastermeister.common.config..*)`除外で修正。さらに実機ログイン確認で、CustomizableTraceInterceptorがメソッド引数・戻り値をそのままログ出力するため、TRACE有効時にパスワード平文・JWT/リフレッシュトークンがログに残る点（SECURITY-03、requirements.md §6.3に抵触しうる）を発見しユーザに提示。ユーザ選択（デフォルト非有効化）に従い、logging.level.cherry.mastermeisterの既定値をTRACEからINFOに変更（環境変数MM_LOGGING_LEVEL_APPで明示的に切り替える運用）。backend/README.mdに環境変数・機微情報の注意事項を追記。バックエンド全334件成功（新規テスト追加はなし、既存テストの`new AppProperties(...)`呼び出しにTrace引数を追加のみ）。"
+**Context**: 横断的技術追加（特定unitに属さない）、実機検証で2件の不具合を発見・修正
+
+---

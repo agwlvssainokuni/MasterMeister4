@@ -142,7 +142,8 @@ class MasterDataServiceColumnVisibilityPropertyTest {
                 new AppProperties.Rdbms("1:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE="),
                 new AppProperties.Masterdata(1000),
                 new AppProperties.Audit(100),
-                new AppProperties.Query(30, 10000));
+                new AppProperties.Query(30, 10000),
+                new AppProperties.Trace(true, true, true, "ENTER", "EXIT", "EXCEPTION"));
     }
 
     private static RdbmsConnection connection(Long id, String displayName) {

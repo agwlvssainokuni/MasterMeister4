@@ -46,6 +46,8 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 | `MM_APP_MAIL_FROM` | `no-reply@mastermeister.example` | 送信メールのFromアドレス |
 | `MM_APP_RDBMS_ENCRYPTION_KEYS` | (空・必須) | 対象RDBMS接続パスワードの暗号鍵（AES-256-GCM）。`keyId:base64key`形式、複数世代をカンマ区切りで指定可能（鍵ローテーション対応。最大の`keyId`が新規暗号化に使われる現在鍵となり、全世代の鍵が復号に使用可能）。各鍵はBase64デコード後32バイト（AES-256）である必要がある。生成例: `openssl rand -base64 32` |
 | `SERVER_PORT` | `8080` | Webサーバのポート |
+| `MM_LOGGING_LEVEL_ROOT` | `WARN` | ルートロガーのログレベル |
+| `MM_LOGGING_LEVEL_APP` | `INFO` | `cherry.mastermeister`配下のログレベル。`TRACE`にするとトレースログ（下記）が有効化される |
 
 ## Flywayマイグレーション
 
@@ -89,6 +91,12 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 |---|---|---|
 | `MM_APP_QUERY_EXECUTION_TIMEOUT_SECONDS` | `30` | クエリ実行のタイムアウト秒数（超過時408 `QUERY_EXECUTION_TIMEOUT`） |
 | `MM_APP_QUERY_MAX_RESULT_ROWS` | `10000` | ページング無効時の結果件数上限（超過時400 `QUERY_RESULT_SIZE_EXCEEDED`） |
+
+## トレースログ
+
+`TraceAspect`（`cherry.mastermeister.common.aop`、`reference/trace/TraceAspect.java`を移植）が、`cherry.mastermeister`配下（`common.config`を除く）の全メソッドの呼び出し・復帰・例外を`Spring`の`CustomizableTraceInterceptor`経由でログ出力する。実際に出力されるのは`MM_LOGGING_LEVEL_APP=TRACE`のとき（既定値`INFO`では無効）。設定値は`mm.app.trace.*`（`AppProperties.Trace`）で調整可能。
+
+**注意（機微情報）**: `CustomizableTraceInterceptor`はメソッドの引数・戻り値をそのまま`toString()`してログ出力するため、TRACE有効時は認証関連処理（ログインのパスワード平文、発行したJWT/リフレッシュトークン等）がログに残る。トラブルシューティング等で一時的に有効化する用途に限定し、本番環境・共有ログでは常時有効化しないこと。
 
 ## API仕様書（OpenAPI/Swagger UI）
 

@@ -88,7 +88,8 @@ class MasterDataServiceTest {
                 new AppProperties.Rdbms("1:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE="),
                 new AppProperties.Masterdata(3),
                 new AppProperties.Audit(100),
-                new AppProperties.Query(30, 10000));
+                new AppProperties.Query(30, 10000),
+                new AppProperties.Trace(true, true, true, "ENTER", "EXIT", "EXCEPTION"));
         recordQueryService = mock(RecordQueryService.class);
         when(rdbmsConnectionService.getConnection(CONNECTION_ID)).thenReturn(connection(CONNECTION_ID, "接続A"));
         service = new MasterDataService(rdbmsConnectionService, schemaIntrospectionService,

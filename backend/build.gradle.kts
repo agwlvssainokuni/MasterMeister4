@@ -29,6 +29,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-flyway")
+    // トレースログ(TraceAspect、reference/trace参照)。Spring Boot 4.1でspring-boot-starter-aopは
+    // spring-boot-starter-aspectjに改称された
+    implementation("org.springframework.boot:spring-boot-starter-aspectj")
     // UNIT-04: 実効権限キャッシュ(tech-stack-decisions.md §1・§2)
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.4")

@@ -38,7 +38,8 @@ public record AppProperties(
         Rdbms rdbms,
         Masterdata masterdata,
         Audit audit,
-        Query query
+        Query query,
+        Trace trace
 ) {
 
     public AppProperties {
@@ -54,6 +55,7 @@ public record AppProperties(
         Objects.requireNonNull(masterdata, "mm.app.masterdata must be configured");
         Objects.requireNonNull(audit, "mm.app.audit must be configured");
         Objects.requireNonNull(query, "mm.app.query must be configured");
+        Objects.requireNonNull(trace, "mm.app.trace must be configured");
     }
 
     public record Jwt(String secret, Duration accessTokenExpiry, Duration refreshTokenExpiry) {
@@ -240,6 +242,19 @@ public record AppProperties(
             if (maxResultRows < 1) {
                 throw new IllegalArgumentException("mm.app.query.max-result-rows must be positive");
             }
+        }
+    }
+
+    /**
+     * TraceAspect（reference/trace参照）の設定。{@code CustomizableTraceInterceptor}へそのまま渡す。
+     */
+    public record Trace(boolean useDynamicLogger, boolean hideProxyClassNames, boolean logExceptionStackTrace,
+                         String enterMessage, String exitMessage, String exceptionMessage) {
+
+        public Trace {
+            Objects.requireNonNull(enterMessage, "mm.app.trace.enter-message must be configured");
+            Objects.requireNonNull(exitMessage, "mm.app.trace.exit-message must be configured");
+            Objects.requireNonNull(exceptionMessage, "mm.app.trace.exception-message must be configured");
         }
     }
 }

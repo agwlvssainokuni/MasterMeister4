@@ -1,3 +1,15 @@
+# トレースログ(TraceAspect、reference/trace参照)はTRACEレベル時のみ出力される。
+# CustomizableTraceInterceptorはメソッド引数・戻り値をそのままログ出力するため、
+# 認証関連の処理ではパスワード平文・JWTトークンがログに残る（SECURITY-03、requirements.md §6.3に
+# 抵触しうる）。このためデフォルトではTRACEを無効化し（root/cherry.mastermeisterともにINFO）、
+# トラブルシューティング等で意図的に有効化する場合のみ環境変数で明示的にTRACEへ切り替える運用とする。
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger - %msg%n%xEx"
+  level:
+    root: ${MM_LOGGING_LEVEL_ROOT:WARN}
+    cherry.mastermeister: ${MM_LOGGING_LEVEL_APP:INFO}
+
 spring:
   application:
     name: mastermeister
@@ -78,6 +90,13 @@ mm:
     query:
       execution-timeout-seconds: ${MM_APP_QUERY_EXECUTION_TIMEOUT_SECONDS:30}
       max-result-rows: ${MM_APP_QUERY_MAX_RESULT_ROWS:10000}
+    trace:
+      use-dynamic-logger: ${MM_APP_TRACE_USE_DYNAMIC_LOGGER:true}
+      hide-proxy-class-names: ${MM_APP_TRACE_HIDE_PROXY_CLASS_NAMES:true}
+      log-exception-stack-trace: ${MM_APP_TRACE_LOG_EXCEPTION_STACK_TRACE:true}
+      enter-message: "ENTER $[targetClassShortName]#$[methodName]($[arguments])"
+      exit-message: "EXIT  $[targetClassShortName]#$[methodName](): $[returnValue]"
+      exception-message: "EXCEPTION $[targetClassShortName]#$[methodName](): $[exception]"
 
 springdoc:
   swagger-ui:
