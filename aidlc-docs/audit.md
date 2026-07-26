@@ -1935,3 +1935,12 @@
 **Context**: CONSTRUCTION - UNIT-06 NFR Design、成果物完成
 
 ---
+
+## UNIT-06 NFR Design - 承認
+
+**Timestamp**: 2026-07-25T00:50:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-06 NFR Designを承認。aidlc-state.mdのCurrent Unit - Stage Progress (UNIT-06)にCOMPLETEDを記録。Infrastructure Designは既に2026-07-24T13:45:00ZにSKIP承認済みのため、Current Status/Next StageをCode Generationに更新。次はCode Generationステージへ進む。"
+**Context**: CONSTRUCTION - UNIT-06 NFR Design、承認完了、Infrastructure DesignはSKIP済みのためCode Generationへ移行
+
+---
