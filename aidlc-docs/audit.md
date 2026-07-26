@@ -2268,3 +2268,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-07 Code Generation完了報告への指摘3: FROM/JOINタブのレイアウトを一行に
+
+**Timestamp**: 2026-07-26T19:05:00Z
+**User Input**: "FROMタブのテーブル名とエイリアス名、JOINのテーブル名とエイリアス名と削除ボタン、結合条件の左辺と比較演算子と右辺と削除ボタン、は、一行に納めて欲しい。"
+**AI Response**: "QueryBuilderFromTab.module.css・QueryBuilderJoinTab.module.cssを新規作成し、design-system既存のFilterBar.module.cssと同じ横並びレイアウトパターン（display:flex; align-items; gap; flex-wrap:wrap）を適用。FROMタブはテーブル選択とエイリアス入力の2つのFormFieldを横並びに。JOINタブはJOIN種別・結合先テーブル・エイリアス・削除ボタンを1行（.joinRow）に、結合条件の左辺・=・右辺・削除ボタンをもう1行（.conditionRow）に整理。SelectやTextInputなどのコンポーネント自体は変更せず、ラップするdivにCSS Moduleクラスを付与するのみ。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功を確認。frontend-summary.mdに追記。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---

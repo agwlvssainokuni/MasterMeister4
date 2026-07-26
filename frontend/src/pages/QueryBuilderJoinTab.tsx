@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, Select, TextInput } from '../design-system/components'
 import type { AccessibleBuilderTable, ColumnRef, JoinClause, JoinType } from '../api/queryBuilder'
 import type { AvailableColumn } from './QueryBuilderOperandPicker'
+import styles from './QueryBuilderJoinTab.module.css'
 
 const JOIN_TYPES: JoinType[] = ['INNER', 'LEFT', 'RIGHT']
 
@@ -106,41 +107,47 @@ export function QueryBuilderJoinTab({
       {value.map((join, index) => {
         const rightColumns = rightColumnsFor(join.tableName, join.alias)
         return (
-          <div key={index} data-testid={`query-builder-join-${index}`}>
-            <Select
-              value={join.joinType}
-              onChange={(e) => updateJoin(index, { ...join, joinType: e.target.value as JoinType })}
-            >
-              {JOIN_TYPES.map((jt) => (
-                <option key={jt} value={jt}>
-                  {jt}
-                </option>
-              ))}
-            </Select>
-            <Select
-              value={join.tableName}
-              onChange={(e) => {
-                const tableName = e.target.value
-                updateJoin(index, { ...join, tableName, alias: tableName, onConditions: [] })
-              }}
-            >
-              {tables.map((tbl) => (
-                <option key={tbl.tableName} value={tbl.tableName}>
-                  {tbl.tableName}
-                </option>
-              ))}
-            </Select>
-            <TextInput
-              placeholder={t('queryBuilder.join.alias')}
-              value={join.alias}
-              onChange={(e) => updateJoin(index, { ...join, alias: e.target.value })}
-            />
-            <Button variant="ghost" onClick={() => removeJoin(index)} data-testid={`query-builder-join-${index}-remove`}>
-              {t('action.remove')}
-            </Button>
-            <div>
+          <div key={index} className={styles.join} data-testid={`query-builder-join-${index}`}>
+            <div className={styles.joinRow}>
+              <Select
+                value={join.joinType}
+                onChange={(e) => updateJoin(index, { ...join, joinType: e.target.value as JoinType })}
+              >
+                {JOIN_TYPES.map((jt) => (
+                  <option key={jt} value={jt}>
+                    {jt}
+                  </option>
+                ))}
+              </Select>
+              <Select
+                value={join.tableName}
+                onChange={(e) => {
+                  const tableName = e.target.value
+                  updateJoin(index, { ...join, tableName, alias: tableName, onConditions: [] })
+                }}
+              >
+                {tables.map((tbl) => (
+                  <option key={tbl.tableName} value={tbl.tableName}>
+                    {tbl.tableName}
+                  </option>
+                ))}
+              </Select>
+              <TextInput
+                placeholder={t('queryBuilder.join.alias')}
+                value={join.alias}
+                onChange={(e) => updateJoin(index, { ...join, alias: e.target.value })}
+              />
+              <Button variant="ghost" onClick={() => removeJoin(index)} data-testid={`query-builder-join-${index}-remove`}>
+                {t('action.remove')}
+              </Button>
+            </div>
+            <div className={styles.conditions}>
               {join.onConditions.map((condition, conditionIndex) => (
-                <div key={conditionIndex} data-testid={`query-builder-join-${index}-condition-${conditionIndex}`}>
+                <div
+                  key={conditionIndex}
+                  className={styles.conditionRow}
+                  data-testid={`query-builder-join-${index}-condition-${conditionIndex}`}
+                >
                   <Select
                     value={columnKey(condition.leftColumn)}
                     onChange={(e) => {

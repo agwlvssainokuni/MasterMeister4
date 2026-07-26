@@ -17,6 +17,7 @@
 import { useTranslation } from 'react-i18next'
 import { FormField, Select, TextInput } from '../design-system/components'
 import type { AccessibleBuilderTable, FromClause } from '../api/queryBuilder'
+import styles from './QueryBuilderFromTab.module.css'
 
 interface QueryBuilderFromTabProps {
   schemaName: string
@@ -38,7 +39,7 @@ export function QueryBuilderFromTab({ schemaName, tables, value, onChange }: Que
   }
 
   return (
-    <div>
+    <div className={styles.row}>
       <FormField label={t('queryBuilder.from.table')}>
         <Select value={value?.tableName ?? ''} onChange={(e) => onSelectTable(e.target.value)}>
           <option value="">{t('queryBuilder.selectPlaceholder')}</option>

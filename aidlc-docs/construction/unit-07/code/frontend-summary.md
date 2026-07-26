@@ -17,6 +17,15 @@ Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合�
 - `frontend-components.md`のタブ構成記述を同内容に修正済み
 - `QueryBuilderPage.test.tsx`は元々FROMタブのみを明示的にクリックする実装だったため、テストコード自体の修正は不要だった（全6件そのまま成功）
 - 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
+
+## 承認前レビュー対応2（FROM/JOINタブのレイアウト見直し）
+
+続けて「FROMタブのテーブル名とエイリアス名、JOINのテーブル名とエイリアス名と削除ボタン、結合条件の左辺と比較演算子と右辺と削除ボタん、を一行に納めてほしい」という指摘を受けた。design-systemの`FilterBar.module.css`と同じ横並びレイアウトパターン（`display:flex; align-items; gap; flex-wrap:wrap`）を踏襲し、以下を追加した:
+
+- `QueryBuilderFromTab.module.css`（新規）: `.row`でテーブル選択とエイリアス入力の2つの`FormField`を横並びに
+- `QueryBuilderJoinTab.module.css`（新規）: `.joinRow`でJOIN種別・結合先テーブル・エイリアス・削除ボタンを横並びに、`.conditionRow`で結合条件の左辺・`=`・右辺・削除ボタンを横並びに
+- いずれもコンポーネント構造（`Select`/`TextInput`が直接`<select>`/`<input>`をレンダリングする実装）は変更せず、ラップするdivにCSS Moduleクラスを付与するのみ
+- 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
 - **`QueryBuilderOperandPicker`**（実装時に追加）: SELECT/HAVING/ORDER BYタブで共通利用する、列参照または集計関数適用のいずれかを選択する共有部品。3タブでの重複実装を避けるため抽出
 
 ## 逆遷移・相互遷移の実装（BR-QUERYBUILDER-12）
