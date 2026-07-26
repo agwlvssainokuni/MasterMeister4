@@ -2025,3 +2025,21 @@
 **Context**: CONSTRUCTION - UNIT-06全体完了、UNIT-07へ移行
 
 ---
+
+## UNIT-07 クエリビルダー Functional Design 計画作成・質問提示
+
+**Timestamp**: 2026-07-26T05:25:00Z
+**User Input**: (Functional Design開始、ユーザ入力なし)
+**AI Response**: "unit-of-work.md・stories.md（STORY-5.1〜5.3）・requirements.md（FR-5.1〜5.7）・application-design（COMP-16, component-methods.md）を確認。UNIT-07の前提ユニットにUNIT-05が含まれない点（MasterDataServiceには依存せずUNIT-03/04を直接組み合わせて独自実装する方針）を確認し設計方針に反映。unit-07-functional-design-plan.mdを作成、全10問（アクセス制御粒度、JOIN種別、JOIN条件方式、WHERE/HAVING条件構造、演算子体系、列参照曖昧性回避、リバースエンジニアリング失敗時挙動、QueryBuilderState永続化方針、集計関数範囲、画面構成）を提示。"
+**Context**: CONSTRUCTION - UNIT-07 Functional Design、計画・質問提示、回答待ち
+
+---
+
+## UNIT-07 Functional Design 質問への推奨提示
+
+**Timestamp**: 2026-07-26T05:30:00Z
+**User Input**: "推奨は？"
+**AI Response**: "全10問について推奨（全問A）と理由を提示。Q1列単位の実効権限フィルタリング（FR-5.3の文言に忠実）、Q2 INNER/LEFT/RIGHTのみ（対象RDBMS4種で共通サポート）、Q3構造化された等価結合のみ（ラウンドトリップPBTのオラクル定義が容易）、Q4フラットなANDのみ（P5優先度を踏まえたシンプルさ、複雑条件はUNIT-06手入力SQLで代替可）、Q5 UNIT-05と同じ設計思想を踏襲し独自定義、Q6常にエイリアス修飾（生成ロジックの単純化・正準形の一定化）、Q7専用例外で拒否・部分反映しない（本プロジェクトのフェイルクローズ方針に合致）、Q8永続化しない（COMP-16のステートレスなメソッド定義に合致）、Q9標準5種の集計関数のみ（FR-5.4の文言どおり）、Q10 UNIT-06 Flow Bと同様の画面構成（既存UXパターンとの一貫性）。ユーザの最終確認待ち。"
+**Context**: CONSTRUCTION - UNIT-07 Functional Design、推奨提示・回答待ち
+
+---
