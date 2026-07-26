@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-07 NFR Requirements（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - UNIT-07 NFR Design（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-07 クエリビルダー - NFR Requirements
-- **Next Stage**: NFR Requirements完了後、NFR Designへ
+- **Current Stage**: UNIT-07 クエリビルダー - NFR Design
+- **Next Stage**: NFR Design完了後、Infrastructure Designへ
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
@@ -101,7 +101,7 @@
 
 ## Current Unit - Stage Progress (UNIT-07)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-26T05:55:00Z。unit-07-functional-design-plan.mdの全10問に回答: Q1-8=A（列単位実効権限フィルタリング、INNER/LEFT/RIGHTのみ、構造化等価結合、フラットAND、UNIT-05踏襲の演算子体系独自定義、常にエイリアス修飾、リバースエンジニアリング失敗時は専用例外拒否、QueryBuilderState永続化なし）、Q9=B（標準5種+DISTINCT修飾）、Q10=A+逆遷移/相互遷移追加。business-logic-model.md, business-rules.md（BR-QUERYBUILDER-01〜12）, domain-entities.md, frontend-components.mdを作成。承認前レビューでテーブル可視判定ロジックの矛盾（UNIT-05 isTableVisible()との不整合）を発見・修正）
-- [ ] NFR Requirements — EXECUTE、成果物完成・承認待ち（unit-07-nfr-requirements-plan.mdの全6問に推奨どおり全問Aで回答: 比較値はリテラル埋め込み、JSqlParser Expression APIによる型安全な埋め込み、SQL生成/解析はJSqlParserのASTオブジェクトモデルで統一、ColumnDataTypeCategoryはUNIT-05踏襲の独自再実装、リクエスト件数上限あり、既存Caffeineキャッシュに一任。nfr-requirements.md, tech-stack-decisions.mdを作成）
+- [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-26T06:18:00Z。unit-07-nfr-requirements-plan.mdの全6問に推奨どおり全問Aで回答: 比較値はリテラル埋め込み、JSqlParser Expression APIによる型安全な埋め込み、SQL生成/解析はJSqlParserのASTオブジェクトモデルで統一、ColumnDataTypeCategoryはUNIT-05踏襲の独自再実装、リクエスト件数上限あり、既存Caffeineキャッシュに一任。nfr-requirements.md, tech-stack-decisions.mdを作成。承認前レビューでBOOLEAN型リテラルの「確認済み」という未検証の言い切りを是正）
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
@@ -110,7 +110,7 @@
 - [x] UNIT-04 アクセス制御 — COMPLETED（承認 2026-07-24T09:00:00Z）
 - [x] UNIT-05 マスタメンテナンス — COMPLETED（承認 2026-07-24T13:36:00Z）
 - [x] UNIT-06 クエリ保存・実行 — COMPLETED（承認 2026-07-26T05:21:00Z）
-- [ ] UNIT-07 クエリビルダー — IN PROGRESS（Functional Design承認済み、NFR Requirements成果物完成・承認待ち）
+- [ ] UNIT-07 クエリビルダー — IN PROGRESS（Functional Design・NFR Requirements承認済み、NFR Design着手）
 - [ ] UNIT-08 クエリ履歴
 - [ ] UNIT-09 監査ログ閲覧
 - [ ] UNIT-10 CI/CD
