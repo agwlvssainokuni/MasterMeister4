@@ -36,8 +36,8 @@ STORY-8.1・8.2ともにPBT対象外と明記済み（stories.md）。追加のP
 
 ## 計画チェックリスト
 
-- [x] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
+- [x] Step A: 質問への回答を収集する（全5問、推奨どおり全問Aで確定）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
 - [ ] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
 - [ ] Step D: `tech-stack-decisions.md`（動的クエリ実装方式、インデックス設計、ページサイズ上限、権限判定レイヤー、名前解決方式）を作成する
 - [ ] Step E: 完了メッセージを提示し、承認を得る
@@ -53,7 +53,7 @@ B) `@Query`（JPQL）で固定クエリを書き、未指定条件は`:param IS 
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Performance/Scalability、重要）
 `query_execution_record`テーブルの既存インデックスは`executed_by`・`executed_at`・`saved_query_id`のみで、本ユニットの主要クエリが常に指定する`connection_id`にはインデックスがない。対応方針は？
@@ -64,7 +64,7 @@ B) 既存インデックスのみで運用する（想定データ量・利用�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Security Requirements、SECURITY-05）
 絞込パラメータの入力検証方針は？
@@ -75,7 +75,7 @@ B) 検証は行わず、クライアント側の入力を信頼する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Security Requirements、SECURITY-06・最重要）
 実行者スコープ（「全ユーザ」は管理者限定、BR-QUERYHISTORY-03）の権限判定はどのレイヤーで実施しますか？
@@ -86,7 +86,7 @@ B) Service層で判定する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 5（Performance/Tech Stack Selection）
 実行者表示名（`User.fullName`）・保存クエリ名（`SavedQuery.name`）の解決方式は？
@@ -97,4 +97,4 @@ B) UNIT-04/05/06/07と同様のCaffeineキャッシュを新規に導入する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
