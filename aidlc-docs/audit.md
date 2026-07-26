@@ -2638,3 +2638,12 @@
 **Context**: CONSTRUCTION - UNIT-08完了、UNIT-09 監査ログ閲覧のFunctional Designへ移行
 
 ---
+
+## UNIT-09 Functional Design 計画作成・質問提示
+
+**Timestamp**: 2026-07-27T00:22:00Z
+**User Input**: (UNIT-08承認後、ワークフローに従いUNIT-09 Functional Designへ自動移行)
+**AI Response**: "unit-of-work.md・stories.md・requirements.mdからUNIT-09（Epic 9、STORY-9.1、COMP-18、管理者専用）の定義を確認。既存資産調査（Exploreエージェント）でAuditLogEntry（connection_idにインデックスなし）、AuditEventType（27値）、AuditLogService（AFTER_COMMIT+REQUIRES_NEWで同期記録）、AuditLogEntryRepository（空）、未実装のController・画面（navigation.tsのauditLogは仮予約済み）、大量データ閾値（bulkAccessThreshold=100、記録済み）を確認。UNIT-08との重要な違い（管理者専用のためロールベース絞込ではなくエンドポイント全体のアクセス遮断が必要）を整理。unit-09-functional-design-plan.mdを作成し、全8問の質問（画面構成、管理者専用アクセス制御方式、ページング方式、絞込条件範囲、名前解決方式、イベント種別絞込UI、インデックス追加要否、画面遷移導線）を提示。"
+**Context**: CONSTRUCTION - UNIT-09 Functional Design、質問への回答待ち
+
+---
