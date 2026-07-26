@@ -2044,11 +2044,11 @@
 
 ---
 
-## UNIT-07 Functional Design 質問への推奨提示
+## UNIT-07 Functional Design 質問への回答受領
 
-**Timestamp**: 2026-07-26T05:30:00Z
-**User Input**: "推奨は？"
-**AI Response**: "全10問について推奨（全問A）と理由を提示。Q1列単位の実効権限フィルタリング（FR-5.3の文言に忠実）、Q2 INNER/LEFT/RIGHTのみ（対象RDBMS4種で共通サポート）、Q3構造化された等価結合のみ（ラウンドトリップPBTのオラクル定義が容易）、Q4フラットなANDのみ（P5優先度を踏まえたシンプルさ、複雑条件はUNIT-06手入力SQLで代替可）、Q5 UNIT-05と同じ設計思想を踏襲し独自定義、Q6常にエイリアス修飾（生成ロジックの単純化・正準形の一定化）、Q7専用例外で拒否・部分反映しない（本プロジェクトのフェイルクローズ方針に合致）、Q8永続化しない（COMP-16のステートレスなメソッド定義に合致）、Q9標準5種の集計関数のみ（FR-5.4の文言どおり）、Q10 UNIT-06 Flow Bと同様の画面構成（既存UXパターンとの一貫性）。ユーザの最終確認待ち。"
-**Context**: CONSTRUCTION - UNIT-07 Functional Design、推奨提示・回答待ち
+**Timestamp**: 2026-07-26T05:35:00Z
+**User Input**: "Q1-Q8=A. Q9=B. Q10=A(実行からの逆遷移、新規保存クエリからの逆遷移、保存クエリ編集との相互遷移を追加)."
+**AI Response**: "unit-07-functional-design-plan.mdに全10問の回答を反映。Q1-8は推奨どおり（列単位の実効権限フィルタリング、INNER/LEFT/RIGHTのみ、構造化等価結合、フラットAND、UNIT-05踏襲の演算子体系、常にエイリアス修飾、リバースエンジニアリング失敗時は専用例外で拒否、QueryBuilderStateは永続化しない）。Q9は推奨から変更しB（標準5種の集計関数に加えCOUNT(DISTINCT column)等のバリエーションも含む）。Q10は推奨Aをベースに、クエリ実行画面（Flow B）からの逆遷移・新規保存クエリ画面（Flow A-3）からの逆遷移・保存クエリ編集画面との相互遷移を追加する旨を明記。曖昧な回答なし、Step 4（business-logic-model.md作成）へ進む。"
+**Context**: CONSTRUCTION - UNIT-07 Functional Design、回答確定、成果物作成へ移行
 
 ---
