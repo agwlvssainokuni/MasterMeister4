@@ -2214,3 +2214,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、Business Logic層完了、API Layerへ
 
 ---
+
+## UNIT-07 Code Generation Part 2 - API層完了（セクション4〜6）
+
+**Timestamp**: 2026-07-26T07:50:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "セクション4〜6（API Layer Generation/Testing/Summary）完了。QueryBuilderController（3エンドポイント）を作成。GlobalExceptionHandler・SecurityFilterChainともに既存の汎用ルールで対応済みのため追加実装不要と確認（UNIT-05/06と同じ結論）。QueryBuilderControllerTest（@WebMvcTest、実SecurityFilterChain有効化）8件全件成功。api-layer-summary.mdを作成。バックエンド全384件成功（./gradlew :backend:build）。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、API層完了、Frontendへ
+
+---

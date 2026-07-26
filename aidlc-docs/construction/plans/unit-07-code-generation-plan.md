@@ -52,18 +52,18 @@
 
 ### 4. API Layer Generation
 
-- [ ] Step 4.1: `QueryBuilderController`（`cherry.mastermeister.querybuilder.api`）を作成する（3エンドポイント: `GET /api/query-builder/{connectionId}/tables`, `POST /api/query-builder/{connectionId}/generate`, `POST /api/query-builder/{connectionId}/parse`）
-- [ ] Step 4.2: `GlobalExceptionHandler`への追加要否を確認する（Step 1.4の4例外は`ApiException`のサブクラスであり既存の汎用ハンドラで処理される見込み、UNIT-05/06と同じ結論になるか確認）
-- [ ] Step 4.3: SecurityFilterChain設定への`/api/query-builder/**`ルール追加要否を確認する（既存の`/api/**`→`authenticated()`ルールでカバーされる見込み、nfr-design-patterns.md §4の確認結果どおりか実装時に再確認）
-- [ ] Step 4.4: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要見込み）
+- [x] Step 4.1: `QueryBuilderController`（`cherry.mastermeister.querybuilder.api`）を作成する（3エンドポイント: `GET /api/query-builder/{connectionId}/tables`, `POST /api/query-builder/{connectionId}/generate`, `POST /api/query-builder/{connectionId}/parse`）
+- [x] Step 4.2: `GlobalExceptionHandler`への追加要否を確認する — 確認の結果、Step 1.4の4例外は`ApiException`のサブクラスであり既存の汎用`@ExceptionHandler(ApiException.class)`で処理されるため追加不要と判明（UNIT-05/06と同じ結論）
+- [x] Step 4.3: SecurityFilterChain設定への`/api/query-builder/**`ルール追加要否を確認する — `SecurityConfig`を確認した結果、既存の`/api/admin/**`（ADMIN限定）の次の`/api/**`→`authenticated()`という汎用ルールがそのまま適用されるため、新規ルール追加は不要と判明（UNIT-05/06と同じ結論）
+- [x] Step 4.4: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要。Step 12の起動確認で最終確認）
 
 ### 5. API Layer Unit Testing
 
-- [ ] Step 5.1: `@WebMvcTest`で`QueryBuilderControllerTest`を作成する（テーブル/カラム一覧取得、SQL生成・リバースエンジニアリングの正常系・異常系（各例外のHTTPステータス確認）、リクエストサイズ上限超過時の400応答）
+- [x] Step 5.1: `@WebMvcTest`で`QueryBuilderControllerTest`を作成する（テーブル/カラム一覧取得、SQL生成・リバースエンジニアリングの正常系・異常系（各例外のHTTPステータス確認）、Bean Validation違反時の400応答）— 8件全件成功
 
 ### 6. API Layer Summary
 
-- [ ] Step 6.1: `aidlc-docs/construction/unit-07/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
+- [x] Step 6.1: `aidlc-docs/construction/unit-07/code/api-layer-summary.md`を作成する（エンドポイント一覧、テスト結果）
 
 ### 7. Frontend Components Generation
 
