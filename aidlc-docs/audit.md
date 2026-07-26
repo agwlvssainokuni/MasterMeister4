@@ -2501,3 +2501,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design、成果物作成へ
 
 ---
+
+## UNIT-08 NFR Design 成果物作成完了
+
+**Timestamp**: 2026-07-26T21:20:00Z
+**User Input**: (Step C〜E実施、ユーザ入力なし)
+**AI Response**: "nfr-design-patterns.md（絞込パラメータの検証エラー表現、実行者スコープのフェイルクローズ実装パターン、Specificationによる動的絞込、インデックス設計）、logical-components.md（QueryHistoryController 3エンドポイント、QueryHistoryService、QueryHistorySpecifications新設、Repository拡張3件（QueryExecutionRecordRepositoryへのJpaSpecificationExecutor実装・DISTINCT取得メソッド、SavedQueryRepository.findAllByIdIn）、DTO設計、V17マイグレーション）を作成。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design完了、承認待ち
+
+---

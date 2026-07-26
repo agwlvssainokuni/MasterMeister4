@@ -18,9 +18,9 @@ requirements.mdの前提（同時利用者約10名規模）により、新規の
 
 - [x] Step A: 質問への回答を収集する（全4問、推奨どおり全問Aで確定）
 - [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし。ただしFunctional Design遡及修正（接続選択画面も履歴実績ベースに変更）を受け、Q3の対象エンドポイント数を2→3に修正済み
-- [ ] Step C: `nfr-design-patterns.md`（エラー表現・例外設計、絞込・権限判定の詳細パターン）を作成する
-- [ ] Step D: `logical-components.md`（新設する論理コンポーネント、Controller構成）を作成する
-- [ ] Step E: 完了メッセージを提示し、承認を得る
+- [x] Step C: `nfr-design-patterns.md`（エラー表現・例外設計、絞込・権限判定の詳細パターン）を作成する
+- [x] Step D: `logical-components.md`（新設する論理コンポーネント、Controller構成）を作成する
+- [x] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
 
