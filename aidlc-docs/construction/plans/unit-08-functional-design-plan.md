@@ -23,11 +23,11 @@
 - [x] Step 1: ユニット定義・関連ストーリー・既存コンポーネント（UNIT-06 QueryExecutionRecord）の再確認（完了、本ファイル冒頭に反映）
 - [x] Step 2: 本計画ファイルの作成・質問の提示
 - [x] Step 3: ユーザからの回答収集・曖昧性チェック（全8問推奨どおりA、曖昧な回答なし）
-- [ ] Step 4: `business-logic-model.md` 作成（履歴一覧取得・絞込ロジック、ページング方式）
-- [ ] Step 5: `business-rules.md` 作成（BR-QUERYHISTORY-01〜、絞込条件・アクセス制御・失敗記録の扱い等のルール化）
-- [ ] Step 6: `domain-entities.md` 作成（既存QueryExecutionRecordの参照、必要なら拡張内容の明記）
-- [ ] Step 7: `frontend-components.md` 作成（画面構成、一覧・絞込UIコンポーネント階層、状態管理、API連携ポイント）
-- [ ] Step 8: 完了メッセージ提示・承認待ち
+- [x] Step 4: `business-logic-model.md` 作成（履歴一覧取得・絞込ロジック、ページング方式）
+- [x] Step 5: `business-rules.md` 作成（BR-QUERYHISTORY-01〜09、絞込条件・アクセス制御・失敗記録の扱い等のルール化）
+- [x] Step 6: `domain-entities.md` 作成（既存QueryExecutionRecordの参照、QueryHistorySearchCriteria/QueryHistoryRecordViewの新規DTO定義）
+- [x] Step 7: `frontend-components.md` 作成（画面構成、一覧・絞込UIコンポーネント階層、状態管理、API連携ポイント）
+- [x] Step 8: 完了メッセージ提示・承認待ち
 
 ---
 

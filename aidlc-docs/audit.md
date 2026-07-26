@@ -2389,3 +2389,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Functional Design、成果物作成へ
 
 ---
+
+## UNIT-08 Functional Design 成果物作成完了
+
+**Timestamp**: 2026-07-26T20:18:00Z
+**User Input**: (Step4〜7実施、ユーザ入力なし)
+**AI Response**: "事前調査（Exploreエージェント）でRole enum（USER/ADMIN）、SecurityFilterChainのADMIN判定方式、QueryController/SavedQueryControllerの既存エンドポイント、SavedQueryエンティティ構造、Pageable/Page未使用（プロジェクト初導入）、router state引き継ぎパターン、design-system DataTable/Pagination/FilterBarのprops、User.fullNameを確認。business-logic-model.md（履歴一覧取得フロー、絞込ロジック、Pageableによるページング、保存クエリ名・実行者名の解決、参照整合性の扱い、画面遷移）、business-rules.md（BR-QUERYHISTORY-01〜09）、domain-entities.md（既存QueryExecutionRecordの参照、QueryHistorySearchCriteria/QueryHistoryRecordViewの新規DTO）、frontend-components.md（接続選択画面、履歴一覧画面のFilterBar/DataTable/Pagination構成、新規API /api/query-history/{connectionId}）を作成。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design完了、承認待ち
+
+---
