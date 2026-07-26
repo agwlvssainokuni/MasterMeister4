@@ -2169,3 +2169,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Design、承認前レビュー対応・修正完了
 
 ---
+
+## UNIT-07 NFR Design 承認
+
+**Timestamp**: 2026-07-26T06:38:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-07 NFR Designを承認。Infrastructure Designの要否を判定する（新規DB永続化なし、新規外部サービス依存なし、既存インフラの再利用のみのためSKIPと判定）。aidlc-state.mdを更新し、Code Generationへ進む。"
+**Context**: CONSTRUCTION - UNIT-07 NFR Design完了、Infrastructure Design判定へ
+
+---
