@@ -34,11 +34,11 @@ business-logic-model.md §8でテスト可能プロパティを識別済み（SQ
 
 ## 計画チェックリスト
 
-- [x] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
-- [ ] Step D: `tech-stack-decisions.md`（SQL生成/解析の実装基盤、値の安全な埋め込み方式、型分類マッピング、リクエストサイズ上限、キャッシュ戦略）を作成する
-- [ ] Step E: 完了メッセージを提示し、承認を得る
+- [x] Step A: 質問への回答を収集する（全6問、推奨どおり全問Aで確定）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
+- [x] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
+- [x] Step D: `tech-stack-decisions.md`（SQL生成/解析の実装基盤、値の安全な埋め込み方式、型分類マッピング、リクエストサイズ上限、キャッシュ戦略）を作成する
+- [x] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
 
@@ -51,7 +51,7 @@ B) UNIT-06の`:param`プレースホルダ形式で生成する（例: `WHERE t1
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Security Requirements、SECURITY-05・最重要）
 Q1でAを選んだ場合、比較値をSQL文字列へ安全に埋め込む（SQLインジェクションを防ぐ）実装方式は？
@@ -62,7 +62,7 @@ B) 手動での文字列エスケープ処理（クォート文字の置換等�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Tech Stack Selection）
 SQL生成（`generateSql`）およびリバースエンジニアリング（`parseToBuilderState`）の実装基盤は？
@@ -73,7 +73,7 @@ B) 生成は独自の文字列テンプレート組み立て（解析のみJSqlP
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Tech Stack Selection）
 `ColumnDataTypeCategory`（演算子絞り込みに使う型分類）のマッピング元は？
@@ -84,7 +84,7 @@ B) 異なるマッピング方式を採用する
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 5（Security Requirements・Reliability）
 `QueryBuilderState`リクエスト（SQL生成API・アクセス可能テーブル/カラム一覧取得後にユーザが構築する状態）の各リスト項目数に上限を設けますか？
@@ -95,7 +95,7 @@ B) 上限を設けない（社内ツール規模のため実質的なリスク�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
 
 ### Question 6（Performance・Tech Stack Selection）
 アクセス可能テーブル/カラム一覧取得（`GET /api/query-builder/{connectionId}/tables`）のキャッシュ戦略は？
@@ -106,4 +106,4 @@ B) 一覧結果自体（テーブル/カラム一覧全体）を新たに専用�
 
 C) Other（[Answer]: の後に内容を記述）
 
-[Answer]: 
+[Answer]: A
