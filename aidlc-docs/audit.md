@@ -2115,3 +2115,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Requirements、成果物完成・承認待ち
 
 ---
+
+## UNIT-07 NFR Requirements 承認前レビュー対応: BOOLEAN型リテラルの記述修正
+
+**Timestamp**: 2026-07-26T06:15:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "tech-stack-decisions.md §2を精査したところ、BOOLEAN型リテラルの扱いについて『対象4方言いずれも解釈可能なことを確認済み』と記載していたが、実際には実機検証を行っておらず、この場での裏付けもないまま記載していたことに気付いた。JSqlParser 5.3のjarを実際に展開し`BooleanValue`クラスの存在・`toString()`実装（`Boolean.toString(value)`で小文字true/falseを返す）を確認。PostgreSQL/H2はネイティブでtrue/falseを解釈、MySQL/MariaDBもtrue/falseを1/0の同義語として解釈するという一般的な仕様に基づき動作を見込めるが、『確認済み』という言い切りを『文献・一般的な仕様に基づく判断に留まり実機検証はしていない、Code Generation時の実機E2E検証で最終確認する』という正確な記述に修正した。"
+**Context**: CONSTRUCTION - UNIT-07 NFR Requirements、承認前レビュー対応・修正完了
+
+---

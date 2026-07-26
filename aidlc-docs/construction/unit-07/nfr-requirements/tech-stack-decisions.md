@@ -17,7 +17,7 @@ WHERE/HAVINGタブでの比較値は、リテラル値として直接SQL文字�
 - `NUMERIC` → `LongValue`または`DoubleValue`（整数/小数を値の形式から判定）
 - `DATETIME` → `DateValue`/`TimestampValue`（JSqlParserが自動的にクォート・リテラル接頭辞を付与）
 - `STRING` → `StringValue`（コンストラクタが内部でシングルクォートのエスケープを行う）
-- `BOOLEAN` → JSqlParserの真偽値リテラル相当（方言により`TRUE`/`FALSE`リテラルまたは`1`/`0`を使い分けない。標準SQLの`TRUE`/`FALSE`リテラルで統一し、対象4方言（PostgreSQL/MySQL/MariaDB/H2）いずれも解釈可能なことを確認済み）
+- `BOOLEAN` → JSqlParserの`BooleanValue`（`net.sf.jsqlparser.expression.BooleanValue`、`toString()`は`true`/`false`の小文字リテラルを返す）。PostgreSQL/H2はネイティブでtrue/falseリテラルを解釈し、MySQL/MariaDBもtrue/falseを1/0の同義語として解釈するため4方言いずれでも動作すると見込むが、この時点では文献・一般的な仕様に基づく判断に留まり実機検証はしていない。Code Generation時の実機E2E検証（PostgreSQL/MySQL/MariaDB/H2）で最終確認する
 
 これらをASTの`BinaryExpression`（比較演算子）の右辺として組み込み、文字列連結による手動エスケープを一切行わない。IS NULL/IS NOT NULL等の値不要の演算子は、対応するJSqlParser式クラス（`IsNullExpression`）を使用する。
 
