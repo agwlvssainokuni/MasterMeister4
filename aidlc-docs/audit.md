@@ -2079,3 +2079,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Functional Design完了、NFR Requirementsへ移行
 
 ---
+
+## UNIT-07 PBT拡張コンプライアンス是正: Testable Propertiesセクション追記
+
+**Timestamp**: 2026-07-26T05:58:00Z
+**User Input**: (NFR Requirements着手準備、ユーザ入力なし)
+**AI Response**: "NFR Requirements着手にあたりProperty-Based Testing拡張のPBT-01（Functional Design段階でのプロパティ識別、成果物への明記が必須）を再確認したところ、承認済みのbusiness-logic-model.mdに専用の『Testable Properties』セクションが存在しなかったことに気付いた（内容自体は§6に暗黙的に記載済みだったが、PBT-01が要求する形式的なセクション化がされていなかった）。設計内容を変更するものではないため、承認のやり直しは不要と判断し、§8として追記: generateSql/parseToBuilderStateのラウンドトリップ性質（Round-trip）、GROUP BY整合性制約（Invariant）、アクセス可能テーブル/カラム一覧のREAD以上不変条件（Invariant）、リバースエンジニアリング失敗判定はNo PBT properties identified（個別分岐のため例示ベーステストで対応）と明記。"
+**Context**: CONSTRUCTION - UNIT-07 PBT拡張コンプライアンス是正、NFR Requirements Step 1へ
+
+---

@@ -79,3 +79,18 @@ FROM/JOINタブでのテーブル選択候補、および他タブ（SELECT/WHER
    - 未対応の集計関数、または集計関数の入れ子等の複雑な式を含む
    - パース結果が参照するテーブル・カラムが、対象スキーマの構造メタデータ（`SchemaIntrospectionService`）に存在しない、またはユーザの実効権限（`EffectivePermissionResolver`）でREAD以上を持たない（§1と同じアクセス制御の粒度を、リバースエンジニアリング時にも一貫して適用する）
 4. リバースエンジニアリングの呼び出し元（クエリ実行画面・保存クエリ編集画面等）は、例外発生時に「クエリビルダーに反映できません」等のエラー表示に留め、遷移元の手入力SQL編集画面への留まりを継続する（frontend-components.md参照）
+
+---
+
+## 8. Testable Properties（PBT-01、Property-Based Testing拡張）
+
+本ユニットのコンポーネント（COMP-16 QueryBuilderService）について、テスト可能プロパティを識別する。
+
+| 対象メソッド | プロパティ分類 | プロパティの内容 |
+|---|---|---|
+| `generateSql` / `parseToBuilderState`の組（§6・§7） | **Round-trip**（そして戻ってくる） | `QueryBuilderState`→`generateSql`→`parseToBuilderState`で得られる`QueryBuilderState`が、構造的に元の状態と等価である（§6のPBT対象の記載を参照。タブUIで表現可能な範囲の`QueryBuilderState`を生成する専用ジェネレータを用いる） |
+| `generateSql`（§6） | **Invariant**（不変条件） | GROUP BY整合性制約（BR-QUERYBUILDER-11）に違反する`QueryBuilderState`は常に検証エラーとなり、有効なSQL文字列を生成しない（生成される場合は常に構文的に妥当なSELECT文である） |
+| アクセス可能テーブル/カラム一覧の取得（§1） | **Invariant**（不変条件） | 返却される全てのカラムについて、実効主権限がREAD以上である（BR-QUERYBUILDER-01）。返却される全てのテーブルについて、含まれるカラムが1件以上存在する |
+| `parseToBuilderState`の失敗判定（§7） | **No PBT properties identified** | 失敗条件（サポート対象外の構文要素の網羅的な検出）は、個々の構文要素ごとの分岐処理であり、汎用的に成立する不変条件・ラウンドトリップ性質としては表現しにくい。各失敗パターン（サブクエリ・UNION・CASE式・FULL JOIN等）は例示ベーステストで個別に検証する |
+
+具体的なプロパティの厳密な定義（同値性の判定方法、ジェネレータの構造）およびテストフレームワーク選定はNFR Requirementsで確定する（PBT-09）。
