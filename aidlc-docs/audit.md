@@ -2241,3 +2241,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、Frontend完了、Documentation Generationへ
 
 ---
+
+## UNIT-07 Code Generation Part 2 - Documentation/Deployment/最終ビルド検証完了（セクション10〜12）
+
+**Timestamp**: 2026-07-26T08:25:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "backend/README.md・frontend/README.mdにUNIT-07概要を追記。devenvは既存構成（PostgreSQL/MySQL/MariaDB）で動作確認可能なため変更なし。最終ビルド検証: ./gradlew :backend:build（全384件成功）、npm test（全219件成功）、npm run build成功。実機E2E検証: devenv起動、bootJar明示的再ビルド、管理者ユーザとしてPostgreSQL/MySQL接続を登録・スキーマ取込・権限付与のうえ、curl経由でテーブル/カラム一覧取得（列単位フィルタリング確認）、JOIN・WHERE（BOOLEAN/DATE比較）・ORDER BYを含むSQL生成→UNIT-06実行API経由の実行（PostgreSQL/MySQL両方で同一の期待結果3件を確認）、GROUP BY/HAVING（集計関数）を含むSQL生成→実行、リバースエンジニアリング（JOIN・WHERE・BOOLEAN比較の正しい復元）、異常系（UNION拒否422、FULL JOIN拒否422、GROUP BY整合性違反400、未許可スキーマ403）を確認。tech-stack-decisions.md §2で「未検証」と明記していたBOOLEAN型リテラルの4方言動作を、PostgreSQL・MySQL両方で実際に確認できた。この過程で1件の実装バグを発見・修正: SelectItemDto/ConditionDto/OrderByItemDtoのBean Validation用@AssertTrueメソッドがJacksonのgetter規則に合致しレスポンスJSONへ余分なプロパティとして漏れていたため@JsonIgnoreを追加。なお、ブラウザでの実UI動作確認は本環境にブラウザ操作ツールがないため実施できていない（フロントエンド単体テスト・型チェック・ビルド成功、およびバックエンドAPI層の実機E2E検証で代替）。OWASP Dependency-CheckはUNIT-02〜06と同じくNVD APIキー未設定のため実施見送り。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、全ステップ完了
+
+---

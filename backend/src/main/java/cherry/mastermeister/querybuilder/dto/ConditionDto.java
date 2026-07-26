@@ -16,6 +16,7 @@
 
 package cherry.mastermeister.querybuilder.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
@@ -39,11 +40,14 @@ public record ConditionDto(
         @NotNull ColumnDataTypeCategory dataTypeCategory
 ) {
 
+    // 実機E2E検証で発見: SelectItemDtoと同じ理由でJacksonへのシリアライズを除外する。
+    @JsonIgnore
     @AssertTrue(message = "exactly one of column or aggregate must be set")
     public boolean isColumnOrAggregateExclusive() {
         return (column != null) ^ (aggregate != null);
     }
 
+    @JsonIgnore
     @AssertTrue(message = "value is required unless operator is IS_NULL or IS_NOT_NULL")
     public boolean isValuePresentWhenRequired() {
         boolean valueless = operator == ConditionOperator.IS_NULL || operator == ConditionOperator.IS_NOT_NULL;

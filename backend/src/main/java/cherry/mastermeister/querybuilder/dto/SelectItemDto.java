@@ -16,6 +16,7 @@
 
 package cherry.mastermeister.querybuilder.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 
@@ -29,6 +30,12 @@ public record SelectItemDto(
         String alias
 ) {
 
+    /**
+     * 実機E2E検証で発見: Bean Validation用の{@code isXxx()}メソッドは、対策なしでは
+     * Jacksonのgetter規則に合致してしまい、レスポンスJSONへ余分なプロパティとして
+     * シリアライズされる（{@code QueryBuilderStateResponse}側で発覚）。{@code @JsonIgnore}で除外する。
+     */
+    @JsonIgnore
     @AssertTrue(message = "exactly one of column or aggregate must be set")
     public boolean isColumnOrAggregateExclusive() {
         return (column != null) ^ (aggregate != null);

@@ -16,6 +16,7 @@
 
 package cherry.mastermeister.querybuilder.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
@@ -30,6 +31,8 @@ public record OrderByItemDto(
         @NotNull SortDirection direction
 ) {
 
+    // 実機E2E検証で発見: SelectItemDtoと同じ理由でJacksonへのシリアライズを除外する。
+    @JsonIgnore
     @AssertTrue(message = "exactly one of column or aggregate must be set")
     public boolean isColumnOrAggregateExclusive() {
         return (column != null) ^ (aggregate != null);

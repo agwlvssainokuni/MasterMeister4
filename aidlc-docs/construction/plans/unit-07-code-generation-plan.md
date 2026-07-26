@@ -101,9 +101,9 @@
 
 ### 12. 最終ビルド検証
 
-- [ ] Step 12.1: **検証チェックポイント**: `./gradlew :backend:build`（jqwikプロパティテスト含む）、`npm test`（frontend）、`npm run build`（frontend）が全件成功することを確認する
-- [ ] Step 12.2: devenv（PostgreSQL・MySQL）に対し実アプリで、一般ユーザとして接続選択→スキーマ選択→タブUIでのクエリ組み立て→SQL生成→（UNIT-06連携）保存・実行、および逆方向（クエリ実行画面・保存クエリ編集画面からのクエリビルダーへの遷移とリバースエンジニアリング反映）を実機E2E検証する。BOOLEAN型リテラルの4方言での動作（tech-stack-decisions.md §2で未検証と明記した事項）もここで確認する
-- [ ] Step 12.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜06と同じくNVD APIキー未設定のため実施見送り（既知の制約として記録）
+- [x] Step 12.1: **検証チェックポイント**: `./gradlew :backend:build`（jqwikプロパティテスト含む、全384件成功）、`npm test`（frontend、全55ファイル219件成功）、`npm run build`（frontend、成功）を確認した
+- [x] Step 12.2: devenv（PostgreSQL・MySQL）に対し実アプリ（`bootJar`を明示的に再ビルド）で、管理者ユーザとしてAPI経由（curl）でテーブル/カラム一覧取得（列単位フィルタリング確認）、JOIN・WHERE（BOOLEAN/DATE比較を含む）・ORDER BYを含むSQL生成→UNIT-06実行APIでの実行（PostgreSQL/MySQLとも同一の期待結果3件を確認）、GROUP BY/HAVING（集計関数）を含むSQL生成→実行、リバースエンジニアリング（JOIN・WHERE・BOOLEAN比較を含むSQLの正しい復元）を確認した。異常系（UNION拒否422、FULL JOIN拒否422、GROUP BY整合性違反400、未許可スキーマ403）も確認した。tech-stack-decisions.md §2で「未検証」と明記していたBOOLEAN型リテラルの4方言動作は、PostgreSQL・MySQLの両方で実際に正しく動作することを確認した（小文字`true`リテラル、対象4方言いずれも解釈可能）。**実機検証で発見・修正した不具合**: `SelectItemDto`/`ConditionDto`/`OrderByItemDto`のBean Validation用`@AssertTrue`メソッド（`isColumnOrAggregateExclusive`等）が、対策なしではJacksonのgetter規則に合致し`QueryBuilderStateResponse`のレスポンスJSONへ余分なプロパティとして漏れ出ていたため、`@JsonIgnore`を追加して解消した。なお、フロントエンドのブラウザでの実UI動作確認は、本環境にブラウザ操作ツールがないため実施できていない（フロントエンド単体テスト219件・TypeScript型チェック・ビルド成功、およびバックエンドAPI層の実機E2E検証で代替）
+- [x] Step 12.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜06と同じくNVD APIキー未設定のため実施見送り（既知の制約として記録）
 
 ## Story Traceability
 

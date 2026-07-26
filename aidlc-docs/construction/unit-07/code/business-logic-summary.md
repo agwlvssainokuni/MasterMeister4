@@ -29,6 +29,8 @@ UNIT-05の`ColumnDataTypeMapper`と同じ設計思想（`NormalizedType`から�
 
 いずれもJSqlParserの実クラス・単体テストの実行結果から発見したものであり、事前のAPI調査だけでは気づけなかった（特に1・2はライブラリの実際の挙動が事前の想定と異なっていたことによる）。
 
+**実機E2E検証（Step 12）で発見・修正した不具合（4件目）**: `SelectItemDto`/`ConditionDto`/`OrderByItemDto`のBean Validation用`@AssertTrue`メソッド（`isColumnOrAggregateExclusive`等）が、対策なしではJacksonのgetter命名規則（`isXxx()`）に合致してしまい、`QueryBuilderStateResponse`（リバースエンジニアリングAPIのレスポンス）のJSONへ`columnOrAggregateExclusive`等の余分なプロパティとして漏れ出ていた。単体テスト（Mockitoベース、DTOを直接構築して比較するのみ）では実際のJSONシリアライズを経由しないため検出できず、実機でcurl経由のレスポンスを確認して初めて発見した。各`@AssertTrue`メソッドに`@JsonIgnore`を追加して解消した。
+
 ## PBT（Property-Based Testing）実装
 
 business-logic-model.md §8で識別したラウンドトリップ性質をjqwikで実装（`QueryBuilderServicePropertyTest`）: `QueryBuilderState`→`generateSql`→`parseToBuilderState`のラウンドトリップが元の状態と構造的に等価である。`QueryBuilderAccessResolver`をMockでスタブ化し常にアクセス可能として扱うことで、実際のスキーマ・権限判定への依存を切り離し、SQL生成/解析の構文的な往復性のみを検証する。1000回試行、全件成功。
