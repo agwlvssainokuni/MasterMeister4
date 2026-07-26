@@ -2380,3 +2380,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Functional Design、記録漏れの是正
 
 ---
+
+## UNIT-08 Functional Design 質問への回答確定
+
+**Timestamp**: 2026-07-26T20:15:00Z
+**User Input**: "推奨どおり。"
+**AI Response**: "unit-08-functional-design-plan.mdの全8問をA（推奨どおり）で確定。Step2・Step3を完了[x]に更新。曖昧な回答なし。Step4（business-logic-model.md作成）以降の成果物作成に着手する。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design、成果物作成へ
+
+---

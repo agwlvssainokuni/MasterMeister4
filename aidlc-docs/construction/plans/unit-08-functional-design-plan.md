@@ -21,8 +21,8 @@
 ## 実行計画
 
 - [x] Step 1: ユニット定義・関連ストーリー・既存コンポーネント（UNIT-06 QueryExecutionRecord）の再確認（完了、本ファイル冒頭に反映）
-- [ ] Step 2: 本計画ファイルの作成・質問の提示
-- [ ] Step 3: ユーザからの回答収集・曖昧性チェック
+- [x] Step 2: 本計画ファイルの作成・質問の提示
+- [x] Step 3: ユーザからの回答収集・曖昧性チェック（全8問推奨どおりA、曖昧な回答なし）
 - [ ] Step 4: `business-logic-model.md` 作成（履歴一覧取得・絞込ロジック、ページング方式）
 - [ ] Step 5: `business-rules.md` 作成（BR-QUERYHISTORY-01〜、絞込条件・アクセス制御・失敗記録の扱い等のルール化）
 - [ ] Step 6: `domain-entities.md` 作成（既存QueryExecutionRecordの参照、必要なら拡張内容の明記）
@@ -44,7 +44,7 @@ B) 失敗した実行も履歴に含めるよう、テーブル・UNIT-06の記�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 2
 画面構成（対象接続の扱い）は？
@@ -55,7 +55,7 @@ B) 接続非依存で、アクセス可能な全接続の履歴を横断的に�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 3
 STORY-8.1の受け入れ基準にある「実行者（全ユーザ／自分のみ）」による絞込の権限モデルは？
@@ -66,7 +66,7 @@ B) ロールに関わらず全ユーザが、対象接続へのアクセス権�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 4
 履歴に記録された接続・スキーマへのアクセス権が、閲覧時点で失われていた場合（UNIT-04で権限剥奪等）の扱いは？
@@ -77,7 +77,7 @@ B) 閲覧時点で対象接続・スキーマへのアクセス権を`EffectiveP
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 5
 SQLテキスト検索（FR-8.3）の実装方式は？
@@ -88,7 +88,7 @@ B) 全文検索エンジン等、高度な検索機能を別途導入する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 6
 `savedQueryId`がある履歴（保存クエリ経由の実行）の一覧表示方式は？
@@ -99,7 +99,7 @@ B) 保存クエリ経由か直接入力か（FR-8.2の種別表示）のみ示�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 7
 履歴からの画面遷移（FR-8.4、STORY-8.2）の実装方式は？
@@ -110,7 +110,7 @@ B) 異なる方式にする
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 8
 一覧のページング実装方式は？
@@ -121,4 +121,4 @@ B) UNIT-06のクエリ実行結果一覧と同じ、サブクエリラップ方�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
