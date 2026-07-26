@@ -2528,3 +2528,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design、修正完了、承認待ち
 
 ---
+
+## 横断的セキュリティレビュー: 他ユニットに類似の権限フィルタ漏れがないか点検
+
+**Timestamp**: 2026-07-26T21:32:00Z
+**User Input**: "他のunitに類似の問題が無いか点検。"
+**AI Response**: "UNIT-08で発見した「メインの一覧はスコープ制限されているが、関連する補助的な一覧取得（絞込選択肢等）がスコープ制限を見落とす」というパターンについて、Exploreエージェントに既存実装（UNIT-01〜07）の横断点検を依頼。SavedQueryService（visibility/createdByによる絞込）、MasterDataService、GroupService/PermissionService（/api/admin/**でADMIN限定）、AdminUserController（同左）、QueryBuilderAccessResolverを確認した結果、明確な問題は0件との報告。SavedQueryService.isListable/isAccessibleのロジック（PUBLIC || isOwner）を自分でも再確認し、正しく実装されていることを確認。UNIT-08実装時の注意点（今後追加するdistinct集計メソッドは必ずスコープ判定を統一すること）のみ申し送り事項として残った。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design、横断レビュー完了、Continue to Next Stage待ち
+
+---
