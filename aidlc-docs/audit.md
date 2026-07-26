@@ -2133,3 +2133,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Requirements完了、NFR Designへ移行
 
 ---
+
+## UNIT-07 NFR Design 計画作成・質問提示
+
+**Timestamp**: 2026-07-26T06:22:00Z
+**User Input**: (NFR Design開始、ユーザ入力なし)
+**AI Response**: "unit-07-nfr-design-plan.mdを作成。SecurityConfigの既存ルール（/api/**.authenticated()）が/api/query-builder/**をカバーすることを確認し新規ルール不要と記載。全5問を提示: Q1 GROUP BY整合性違反時のエラー表現、Q2リバースエンジニアリング失敗時のエラー表現（構文非対応とアクセス権限不足を区別するか）、Q3スキーマアクセス不可時にUNIT-06の既存例外を再利用するか、Q4アクセス可能テーブル/カラム一覧取得ロジックの配置（専用クラス分離か統合か）、Q5 Controller構成。"
+**Context**: CONSTRUCTION - UNIT-07 NFR Design、計画・質問提示、回答待ち
+
+---
