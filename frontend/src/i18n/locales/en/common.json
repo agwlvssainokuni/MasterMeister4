@@ -337,6 +337,7 @@
       "AD_HOC": "Ad-hoc"
     },
     "filter": {
+      "sqlKeyword": "SQL keyword",
       "executedAtFrom": "Executed at (from)",
       "executedAtTo": "Executed at (to)",
       "schemaName": "Target schema",

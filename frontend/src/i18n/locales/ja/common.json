@@ -337,6 +337,7 @@
       "AD_HOC": "直接入力"
     },
     "filter": {
+      "sqlKeyword": "SQLキーワード",
       "executedAtFrom": "実行日時（開始）",
       "executedAtTo": "実行日時（終了）",
       "schemaName": "対象スキーマ",

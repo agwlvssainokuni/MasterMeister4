@@ -162,7 +162,7 @@ describe('QueryHistoryPage', () => {
     renderPage()
     await screen.findByText('SELECT * FROM items')
 
-    await user.type(screen.getByTestId('filter-bar-search-input'), 'items')
+    await user.type(screen.getByTestId('query-history-sql-keyword-input'), 'items')
 
     expect(queryHistoryApi.listQueryHistory).toHaveBeenLastCalledWith(
       1,

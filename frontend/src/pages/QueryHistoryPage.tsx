@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
@@ -22,8 +22,6 @@ import {
   Button,
   CodeBlock,
   DataTable,
-  FilterBar,
-  FormField,
   Modal,
   PageHeader,
   Pagination,
@@ -37,6 +35,7 @@ import { decodeJwtRole } from '../auth/jwt'
 import { listQueryHistory, listQueryHistorySchemas } from '../api/queryHistory'
 import type { ExecutedByScope, QueryHistoryRecord } from '../api/queryHistory'
 import { ApiError } from '../api/http'
+import styles from './QueryHistoryPage.module.css'
 
 const DEFAULT_PAGE_SIZE = 50
 
@@ -50,6 +49,11 @@ export function QueryHistoryPage() {
   const connectionIdNum = Number(connectionId)
 
   const isAdmin = decodeJwtRole(getAccessToken() ?? '') === 'ADMIN'
+  const sqlKeywordId = useId()
+  const executedAtFromId = useId()
+  const executedAtToId = useId()
+  const schemaNameId = useId()
+  const executedByScopeId = useId()
 
   const [executedByScope, setExecutedByScope] = useState<ExecutedByScope>('ALL')
   const [schemas, setSchemas] = useState<string[]>([])
@@ -169,23 +173,49 @@ export function QueryHistoryPage() {
     <AuthenticatedLayout activeNavKey="queryHistory">
       <PageHeader title={t('queryHistory.title')} />
       {errorMessage ? <Alert tone="danger">{errorMessage}</Alert> : null}
-      <FilterBar searchValue={sqlKeyword} onSearchChange={(v) => onFilterChange(() => setSqlKeyword(v))}>
-        <FormField label={t('queryHistory.filter.executedAtFrom')}>
+      <div className={styles.filterList}>
+        <div className={styles.filterRow}>
+          <label htmlFor={sqlKeywordId} className={styles.filterLabel}>
+            {t('queryHistory.filter.sqlKeyword')}
+          </label>
           <TextInput
+            id={sqlKeywordId}
+            value={sqlKeyword}
+            onChange={(e) => onFilterChange(() => setSqlKeyword(e.target.value))}
+            data-testid="query-history-sql-keyword-input"
+          />
+        </div>
+        <div className={styles.filterRow}>
+          <label htmlFor={executedAtFromId} className={styles.filterLabel}>
+            {t('queryHistory.filter.executedAtFrom')}
+          </label>
+          <TextInput
+            id={executedAtFromId}
             type="datetime-local"
             value={executedAtFrom}
             onChange={(e) => onFilterChange(() => setExecutedAtFrom(e.target.value))}
           />
-        </FormField>
-        <FormField label={t('queryHistory.filter.executedAtTo')}>
+        </div>
+        <div className={styles.filterRow}>
+          <label htmlFor={executedAtToId} className={styles.filterLabel}>
+            {t('queryHistory.filter.executedAtTo')}
+          </label>
           <TextInput
+            id={executedAtToId}
             type="datetime-local"
             value={executedAtTo}
             onChange={(e) => onFilterChange(() => setExecutedAtTo(e.target.value))}
           />
-        </FormField>
-        <FormField label={t('queryHistory.filter.schemaName')}>
-          <Select value={schemaName} onChange={(e) => onFilterChange(() => setSchemaName(e.target.value))}>
+        </div>
+        <div className={styles.filterRow}>
+          <label htmlFor={schemaNameId} className={styles.filterLabel}>
+            {t('queryHistory.filter.schemaName')}
+          </label>
+          <Select
+            id={schemaNameId}
+            value={schemaName}
+            onChange={(e) => onFilterChange(() => setSchemaName(e.target.value))}
+          >
             <option value="">{t('queryHistory.selectPlaceholder')}</option>
             {schemas.map((s) => (
               <option key={s} value={s}>
@@ -193,19 +223,23 @@ export function QueryHistoryPage() {
               </option>
             ))}
           </Select>
-        </FormField>
+        </div>
         {isAdmin ? (
-          <FormField label={t('queryHistory.filter.executedByScope')}>
+          <div className={styles.filterRow}>
+            <label htmlFor={executedByScopeId} className={styles.filterLabel}>
+              {t('queryHistory.filter.executedByScope')}
+            </label>
             <Select
+              id={executedByScopeId}
               value={executedByScope}
               onChange={(e) => onFilterChange(() => setExecutedByScope(e.target.value as ExecutedByScope))}
             >
               <option value="ALL">{t('queryHistory.executedByScope.ALL')}</option>
               <option value="MINE">{t('queryHistory.executedByScope.MINE')}</option>
             </Select>
-          </FormField>
+          </div>
         ) : null}
-      </FilterBar>
+      </div>
       <DataTable
         columns={columns}
         rows={records}

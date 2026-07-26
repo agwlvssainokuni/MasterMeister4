@@ -2611,3 +2611,21 @@
 **Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、全ステップ完了
 
 ---
+
+## UNIT-08 Code Generation完了報告への指摘: 絞込条件のレイアウト見直し
+
+**Timestamp**: 2026-07-27T00:10:00Z
+**User Input**: "検索条件は全部縦に並べましょう。入力項目名と入力フィールド名を一行に。"
+**AI Response**: "QueryHistoryPage.tsxのFilterBar内の絞込条件（実行日時範囲・対象スキーマ・実行者スコープ）が、design-system既存のFormField（ラベル・入力欄が縦積み）を横並びに配置する構成だったため見直しを実施。FormFieldはレイアウトをオーバーライドするpropsを持たないため、QueryHistoryPage.module.cssを新規作成し、FormFieldを使わず独自の行構造（useIdでhtmlFor/idを紐付けたlabel＋入力欄）に置き換えた。外側はflex-direction:column（縦積み）、各行はflex-direction:row（ラベルと入力欄を横並び）。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全58ファイル241件成功、QueryHistoryPage.test.tsxのgetByLabelText検証も無修正のまま成功）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応として追記。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---
+
+## UNIT-08 承認前レビュー継続: SQLキーワード検索も縦並びに統一
+
+**Timestamp**: 2026-07-27T00:15:00Z
+**User Input**: "キーワードも縦に。"
+**AI Response**: "SQLキーワード検索はFilterBarコンポーネント自体のsearchValue/onSearchChange propsで実装していたため、他の絞込条件と同じ縦並びリストに含められていなかった（FilterBarはsearchValueの有無に関わらず常にトップレベルでSearchInputをレンダリングする実装のため）。FilterBarコンポーネント自体の使用をやめ、SQLキーワードも他の絞込条件と同じfilterList内の1行として実装し直した。i18nキーqueryHistory.filter.sqlKeywordを追加し、data-testidをfilter-bar-search-input（FilterBar由来）からquery-history-sql-keyword-input（独自実装）に変更（QueryHistoryPage.test.tsxの対応箇所も追従）。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全58ファイル241件成功）、npm run build成功を確認。frontend-summary.mdを更新。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---
