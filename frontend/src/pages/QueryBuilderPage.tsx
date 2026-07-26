@@ -71,7 +71,7 @@ export function QueryBuilderPage() {
   const [schemaName, setSchemaName] = useState(prefill?.schemaName ?? '')
   const [accessibleTables, setAccessibleTables] = useState<AccessibleBuilderTable[]>([])
   const [builderState, setBuilderState] = useState<QueryBuilderState>(EMPTY_STATE)
-  const [activeTab, setActiveTab] = useState('select')
+  const [activeTab, setActiveTab] = useState('from')
   const [generatedSql, setGeneratedSql] = useState<string | null>(null)
   const [generating, setGenerating] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -170,6 +170,29 @@ export function QueryBuilderPage() {
 
   const tabs: readonly TabItem[] = [
     {
+      // 承認前レビュー対応: FROM/JOINは1つのタブに統合する（FROM句を構成する一体の情報のため）。
+      // タブ順序: FROM/SELECT/WHERE/GROUP BY/HAVING/ORDER BY/LIMIT OFFSET
+      key: 'from',
+      label: t('queryBuilder.tab.from'),
+      content: (
+        <>
+          <QueryBuilderFromTab
+            schemaName={schemaName}
+            tables={accessibleTables}
+            value={builderState.from}
+            onChange={(from) => setBuilderState({ ...builderState, from })}
+          />
+          <QueryBuilderJoinTab
+            schemaName={schemaName}
+            tables={accessibleTables}
+            leftColumns={availableColumns}
+            value={builderState.joins}
+            onChange={(joins) => setBuilderState({ ...builderState, joins })}
+          />
+        </>
+      ),
+    },
+    {
       key: 'select',
       label: t('queryBuilder.tab.select'),
       content: (
@@ -177,31 +200,6 @@ export function QueryBuilderPage() {
           columns={availableColumns}
           value={builderState.selectItems}
           onChange={(selectItems) => setBuilderState({ ...builderState, selectItems })}
-        />
-      ),
-    },
-    {
-      key: 'from',
-      label: t('queryBuilder.tab.from'),
-      content: (
-        <QueryBuilderFromTab
-          schemaName={schemaName}
-          tables={accessibleTables}
-          value={builderState.from}
-          onChange={(from) => setBuilderState({ ...builderState, from })}
-        />
-      ),
-    },
-    {
-      key: 'join',
-      label: t('queryBuilder.tab.join'),
-      content: (
-        <QueryBuilderJoinTab
-          schemaName={schemaName}
-          tables={accessibleTables}
-          leftColumns={availableColumns}
-          value={builderState.joins}
-          onChange={(joins) => setBuilderState({ ...builderState, joins })}
         />
       ),
     },

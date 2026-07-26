@@ -2259,3 +2259,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の運用改善、UNIT-08への移行待ち
 
 ---
+
+## UNIT-07 Code Generation完了報告への指摘2: クエリビルダーのタブ構成見直し（Request Changes相当）
+
+**Timestamp**: 2026-07-26T18:50:00Z
+**User Input**: "クエリビルダのUIを見直したい。FROM, JOINは一つのタブFROMへ統合。タブの並び順はFROM, SELECT, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT OFFSET"
+**AI Response**: "frontend-components.md（画面2の構成記述）とQueryBuilderPage.tsxのtabs配列を修正。独立していたselect/from/joinの3タブを、fromキー1つ（QueryBuilderFromTabとQueryBuilderJoinTabを同一content内に並べる）に統合し、配列順序をfrom, select, where, groupBy, having, orderBy, limitOffsetに変更。デフォルトのactiveTab初期値を'select'から'from'に変更。common.json（ja/en）のqueryBuilder.tab.joinキーを削除（タブラベルとして不要になったため。queryBuilder.join.*自体は残置）。QueryBuilderPage.test.tsxは元々FROMタブのみを明示的にクリックする実装だったため修正不要、全6件そのまま成功。npx tsc --noEmit、npm run lint（oxlint、既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功をすべて確認。frontend-summary.mdに承認前レビュー対応として追記。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---

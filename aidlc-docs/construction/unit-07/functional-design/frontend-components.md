@@ -47,11 +47,14 @@ QueryBuilderConnectionListPage (AppShell)
 QueryBuilderPage (AppShell)
 └ PageHeader（タイトル: 接続の表示名＋「クエリビルダー」）
   ├ スキーマセレクタ（対象接続内でアクセス可能なスキーマの一覧。選択変更のたびにテーブル/カラム候補を再取得）
-  ├ Tabs（design-systemの既存Tabsコンポーネントを使用）
+  ├ Tabs（design-systemの既存Tabsコンポーネントを使用。タブ順序: FROM/SELECT/WHERE/GROUP BY/
+  │  HAVING/ORDER BY/LIMIT OFFSET。承認前レビューでFROM/JOINタブを1つに統合し順序を整理、
+  │  frontend-summary.md参照）
+  │  ├ FROMタブ（FromTableBuilder: 起点テーブル1件の選択、エイリアス入力（任意）＋
+  │  │  JoinBuilder: JOIN一覧の追加・削除、種別（INNER/LEFT/RIGHT）・結合先テーブル・
+  │  │  結合条件（等価結合、複数可）の指定。起点テーブルとJOIN一覧はFROM句を構成する
+  │  │  一体の情報であるため同一タブにまとめる）
   │  ├ SELECTタブ（SelectItemBuilder: 列参照または集計関数適用の追加・削除、AS別名入力）
-  │  ├ FROMタブ（FromTableBuilder: 起点テーブル1件の選択、エイリアス入力（任意））
-  │  ├ JOINタブ（JoinBuilder: JOIN一覧の追加・削除、種別（INNER/LEFT/RIGHT）・結合先テーブル・
-  │  │  結合条件（等価結合、複数可）の指定）
   │  ├ WHEREタブ（ConditionListBuilder: 条件の追加・削除、列参照・演算子（列のデータ型分類に応じて
   │  │  選択肢を絞り込み）・比較値の指定。WHERE/HAVINGで共通コンポーネントとして再利用）
   │  ├ GROUP BYタブ（ColumnListBuilder: 列参照の追加・削除）

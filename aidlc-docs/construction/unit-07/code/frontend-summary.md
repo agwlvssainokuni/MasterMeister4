@@ -4,8 +4,19 @@
 
 - **`api/queryBuilder.ts`**: アクセス可能テーブル/カラム一覧取得・SQL生成・リバースエンジニアリングの各APIクライアント関数、バックエンドDTOに対応する型定義一式
 - **`QueryBuilderConnectionListPage`**: 接続選択画面（frontend-components.md 画面1、UNIT-05/06と同じパターン）
-- **`QueryBuilderPage`**: クエリビルダー本体画面（画面2）。スキーマセレクタ、design-system既存の`Tabs`コンポーネントで8タブを構成、デバウンス付きSQLプレビュー（`CodeBlock`）、「保存へ」「実行へ」ボタン、router state経由の逆遷移時リバースエンジニアリング対応
-- **タブサブコンポーネント7種**: `QueryBuilderSelectTab`, `QueryBuilderFromTab`, `QueryBuilderJoinTab`, `QueryBuilderConditionList`（WHERE/HAVING共通）, `QueryBuilderColumnListTab`（GROUP BY）, `QueryBuilderOrderByTab`, `QueryBuilderLimitOffsetTab`
+- **`QueryBuilderPage`**: クエリビルダー本体画面（画面2）。スキーマセレクタ、design-system既存の`Tabs`コンポーネントで7タブを構成（承認前レビュー対応、下記参照）、デバウンス付きSQLプレビュー（`CodeBlock`）、「保存へ」「実行へ」ボタン、router state経由の逆遷移時リバースエンジニアリング対応
+- **タブサブコンポーネント7種**: `QueryBuilderSelectTab`, `QueryBuilderFromTab`, `QueryBuilderJoinTab`, `QueryBuilderConditionList`（WHERE/HAVING共通）, `QueryBuilderColumnListTab`（GROUP BY）, `QueryBuilderOrderByTab`, `QueryBuilderLimitOffsetTab`（`QueryBuilderFromTab`・`QueryBuilderJoinTab`自体は別コンポーネントのまま維持し、`QueryBuilderPage`側でFROMタブのcontentとして両方を並べてレンダリングする）
+
+## 承認前レビュー対応（タブ構成の見直し）
+
+Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合、タブ順序をFROM/SELECT/WHERE/GROUP BY/HAVING/ORDER BY/LIMIT OFFSETに」という指摘を受け、以下を修正した:
+
+- `QueryBuilderPage.tsx`のtabs配列: 独立していた`select`/`from`/`join`の3タブを、`from`キー1つ（`QueryBuilderFromTab`と`QueryBuilderJoinTab`を同一content内に並べる）に統合し、配列順序を`from, select, where, groupBy, having, orderBy, limitOffset`に変更
+- デフォルトの`activeTab`初期値を`'select'`から`'from'`に変更（クエリ組み立ての最初のステップとしてFROMタブを起点にするため）
+- `common.json`（ja/en）の`queryBuilder.tab.join`キーを削除（タブラベルとして不要になったため。`queryBuilder.join.*`＝JOIN機能自体のラベルは引き続き使用するため残置）
+- `frontend-components.md`のタブ構成記述を同内容に修正済み
+- `QueryBuilderPage.test.tsx`は元々FROMタブのみを明示的にクリックする実装だったため、テストコード自体の修正は不要だった（全6件そのまま成功）
+- 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
 - **`QueryBuilderOperandPicker`**（実装時に追加）: SELECT/HAVING/ORDER BYタブで共通利用する、列参照または集計関数適用のいずれかを選択する共有部品。3タブでの重複実装を避けるため抽出
 
 ## 逆遷移・相互遷移の実装（BR-QUERYBUILDER-12）

@@ -263,7 +263,6 @@
     "tab": {
       "select": "SELECT",
       "from": "FROM",
-      "join": "JOIN",
       "where": "WHERE",
       "groupBy": "GROUP BY",
       "having": "HAVING",
