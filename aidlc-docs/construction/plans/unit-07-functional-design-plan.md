@@ -14,11 +14,11 @@
 - [ ] Step 1: ユニット定義・関連ストーリー・既存コンポーネント（UNIT-03/04/06）の再確認（完了、本ファイル冒頭に反映）
 - [x] Step 2: 本計画ファイルの作成・質問の提示
 - [x] Step 3: ユーザからの回答収集・曖昧性チェック（Q1-8=A、Q9=B、Q10=A+逆遷移/相互遷移の追加、曖昧な回答なし）
-- [ ] Step 4: `business-logic-model.md` 作成（QueryBuilderStateの構造、SQL生成アルゴリズム、リバースエンジニアリングアルゴリズム）
-- [ ] Step 5: `business-rules.md` 作成（BR-QUERYBUILDER-01〜、アクセス制御粒度・JOIN制約・条件構造等のルール化）
-- [ ] Step 6: `domain-entities.md` 作成（QueryBuilderState関連モデル、永続化なしの明記）
-- [ ] Step 7: `frontend-components.md` 作成（画面構成、タブUIコンポーネント階層、状態管理、API連携ポイント）
-- [ ] Step 8: 完了メッセージ提示・承認待ち
+- [x] Step 4: `business-logic-model.md` 作成（QueryBuilderStateの構造、SQL生成アルゴリズム、リバースエンジニアリングアルゴリズム）
+- [x] Step 5: `business-rules.md` 作成（BR-QUERYBUILDER-01〜12、アクセス制御粒度・JOIN制約・条件構造等のルール化）
+- [x] Step 6: `domain-entities.md` 作成（QueryBuilderState関連モデル、永続化なしの明記）
+- [x] Step 7: `frontend-components.md` 作成（画面構成、タブUIコンポーネント階層、状態管理、API連携ポイント）
+- [x] Step 8: 完了メッセージ提示・承認待ち
 
 ---
 

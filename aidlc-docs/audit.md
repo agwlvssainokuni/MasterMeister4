@@ -2052,3 +2052,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Functional Design、回答確定、成果物作成へ移行
 
 ---
+
+## UNIT-07 Functional Design 成果物作成完了
+
+**Timestamp**: 2026-07-26T05:45:00Z
+**User Input**: (Step 4-7実施、ユーザ入力なし)
+**AI Response**: "business-logic-model.md（アクセス可能テーブル/カラム一覧の取得アルゴリズム＝UNIT-06のlistAccessibleConnections/Schemasを再利用しUNIT-04のEffectivePermissionResolverで列単位フィルタ、QueryBuilderStateの構造、JOIN/曖昧性回避/集計関数の設計、SQL生成アルゴリズムとPBTラウンドトリップ方針、リバースエンジニアリングアルゴリズムと失敗条件）、business-rules.md（BR-QUERYBUILDER-01〜12。BR-QUERYBUILDER-01ではBR-QUERY-04との粒度の違いを技術的制約の有無として明記）、domain-entities.md（QueryBuilderStateとその構成要素、DB永続化エンティティなしの明記）、frontend-components.md（接続選択画面→クエリビルダー画面の2画面構成、既存Tabsコンポーネント使用、UNIT-06既存の接続/スキーマ一覧APIを再利用し新規は/api/query-builder/*に限定、クエリ実行画面・保存クエリ新規/編集画面との逆遷移・相互遷移の実装方針）を作成。全4ファイルとも新規ファイルとして作成完了。"
+**Context**: CONSTRUCTION - UNIT-07 Functional Design、成果物完成・承認待ち
+
+---
