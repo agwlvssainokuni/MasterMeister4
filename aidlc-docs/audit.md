@@ -2546,3 +2546,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design完了・Infrastructure Design SKIP、Code Generationへ移行
 
 ---
+
+## UNIT-08 Code Generation Part 1（計画）提示
+
+**Timestamp**: 2026-07-26T21:40:00Z
+**User Input**: (Infrastructure Design SKIP後、ワークフローに従いCode Generationへ自動移行)
+**AI Response**: "unit-08-code-generation-plan.mdを作成。14セクション（Business Logic Generation/Testing/Summary、API Layer Generation/Testing/Summary、Repository Layer、Frontend Components Generation/Testing/Summary、Database Migration Scripts、Documentation Generation、Deployment Artifacts、最終ビルド検証）で構成。主要な実装判断: QueryHistoryController内でのロール判定→executedByFilter変換、QueryHistoryService/QueryHistorySpecifications、既存QueryExecutionRecordRepository/SavedQueryRepositoryの修正（新規ファイルではなく既存拡張）、V17マイグレーション、フロントエンド2画面構成。承認を求める。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation Part 1（計画）、承認待ち
+
+---
