@@ -16,8 +16,8 @@ requirements.mdの前提（同時利用者約10名規模）により、新規の
 
 ## 計画チェックリスト
 
-- [x] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
+- [x] Step A: 質問への回答を収集する（全4問、推奨どおり全問Aで確定）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし。ただしFunctional Design遡及修正（接続選択画面も履歴実績ベースに変更）を受け、Q3の対象エンドポイント数を2→3に修正済み
 - [ ] Step C: `nfr-design-patterns.md`（エラー表現・例外設計、絞込・権限判定の詳細パターン）を作成する
 - [ ] Step D: `logical-components.md`（新設する論理コンポーネント、Controller構成）を作成する
 - [ ] Step E: 完了メッセージを提示し、承認を得る
@@ -33,7 +33,7 @@ B) 専用の`ApiException`サブクラスを新設する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Logical Components、重要）
 履歴一覧の絞込・ページング・名前解決（実行者名・保存クエリ名の一括解決）ロジックの配置は？
@@ -44,18 +44,18 @@ B) 絞込・ページングと名前解決を別クラスに分離する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Logical Components）
-Controller構成は？
+Controller構成は？（Functional Design遡及修正により、接続選択画面用の一覧取得APIもUNIT-06既存を再利用せず新規追加になったため、対象は3エンドポイントに変更）
 
-A) 単一の`QueryHistoryController`に2エンドポイント（履歴一覧取得・履歴記録済みスキーマ名一覧取得）をまとめる（UNIT-05のMasterDataController、UNIT-06のQueryControllerと同程度の規模）
+A) 単一の`QueryHistoryController`に3エンドポイント（履歴一覧取得・履歴記録済み接続一覧取得・履歴記録済みスキーマ名一覧取得）をまとめる（UNIT-05のMasterDataController、UNIT-06のQueryControllerと同程度の規模）
 
 B) 複数のControllerに分割する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Security Patterns、SECURITY-06・重要）
 実行者スコープのフェイルクローズ（一般ユーザは「全ユーザ」指定不可、tech-stack-decisions.md §4で「Controller層で判定」と決定済み）の実装パターンは？
@@ -66,4 +66,4 @@ B) Controller層の判定に加え、Service層でも呼び出し元のロール
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A

@@ -2492,3 +2492,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Functional Design遡及修正完了、NFR Design質問への回答待ち継続
 
 ---
+
+## UNIT-08 NFR Design 回答確定
+
+**Timestamp**: 2026-07-26T21:14:00Z
+**User Input**: "推奨通り。"（NFR Design全4問への回答として）
+**AI Response**: "unit-08-nfr-design-plan.mdの全4問をA（推奨どおり）で確定。Functional Design遡及修正を受け、Q3の対象エンドポイント数を「2エンドポイント」から「3エンドポイント（履歴一覧取得・履歴記録済み接続一覧取得・履歴記録済みスキーマ名一覧取得）」に修正。Step A・Bを完了[x]に更新。Step C（nfr-design-patterns.md作成）以降の成果物作成に着手する。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design、成果物作成へ
+
+---
