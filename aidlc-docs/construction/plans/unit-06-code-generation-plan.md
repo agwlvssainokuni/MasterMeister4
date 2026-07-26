@@ -111,12 +111,12 @@
 
 ### 14. Documentation Generation
 
-- [ ] Step 14.1: `backend/README.md`を更新する（UNIT-06概要: クエリ保存・実行、読み取り専用SQL検証、スキーマ単位アクセス制御、新規環境変数`MM_APP_QUERY_EXECUTION_TIMEOUT_SECONDS`/`MM_APP_QUERY_MAX_RESULT_ROWS`を追記）
-- [ ] Step 14.2: `frontend/README.md`を更新する（UNIT-06の新規画面（Flow A/B）をpages概要に追記）
+- [x] Step 14.1: `backend/README.md`を更新する（UNIT-06概要: クエリ保存・実行、読み取り専用SQL検証、スキーマ単位アクセス制御、新規環境変数`MM_APP_QUERY_EXECUTION_TIMEOUT_SECONDS`/`MM_APP_QUERY_MAX_RESULT_ROWS`を追記）
+- [x] Step 14.2: `frontend/README.md`を更新する（UNIT-06の新規画面（Flow A/B）をpages概要に追記）
 
 ### 15. Deployment Artifacts
 
-- [ ] Step 15.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認する（既存構成のまま変更なし）
+- [x] Step 15.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認する（既存構成のまま変更なし）— MySQL/MariaDB/PostgreSQLが既に定義済みで、Step 16のE2E検証にそのまま使用できることを確認した
 
 ### 16. 最終ビルド検証
 

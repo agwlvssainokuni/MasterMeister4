@@ -1,6 +1,6 @@
 # MasterMeister backend
 
-Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を、UNIT-03（RDBMSセットアップ）で対象RDBMS接続の登録・管理とスキーマ取込の基盤を、UNIT-04（アクセス制御）でグループ管理・権限設定・実効権限判定の基盤を、UNIT-05（マスタメンテナンス）で一般ユーザ向けのマスタデータ参照・編集機能を構築した。
+Spring Boot 4.1 / Spring Security 7.x / Java 25製のバックエンド。UNIT-02（ユーザ登録・認証）でユーザ登録・JWT認証・ユーザ管理・監査ログの基盤を、UNIT-03（RDBMSセットアップ）で対象RDBMS接続の登録・管理とスキーマ取込の基盤を、UNIT-04（アクセス制御）でグループ管理・権限設定・実効権限判定の基盤を、UNIT-05（マスタメンテナンス）で一般ユーザ向けのマスタデータ参照・編集機能を、UNIT-06（クエリ保存・実行）で任意SQLの読み取り専用実行・クエリの名前付き保存機能を構築した。
 
 ## 起動
 
@@ -75,9 +75,24 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 | `MM_APP_MASTERDATA_BATCH_MAX_SIZE` | `1000` | 一括反映バッチの1リクエストあたりの操作件数上限 |
 | `MM_APP_AUDIT_BULK_ACCESS_THRESHOLD` | `100` | `MASTER_DATA_BULK_ACCESSED`監査イベントを記録する結果件数の閾値 |
 
+## クエリ保存・実行（UNIT-06）
+
+一般ユーザ（ロール不問、認証済みであれば誰でも）が、`/query-execution`画面から任意のSELECT文をad-hocで実行し、`/saved-queries`画面から名前を付けて保存・再実行できる。API名前空間は`/api/queries/**`で、UNIT-05と同様、既存のSecurityFilterChain設定（`/api/**`→`authenticated()`の汎用ルール）がそのまま適用されるため追加のセキュリティ設定は不要。
+
+- SQLは`QuerySqlAnalyzer`がJSqlParserで構文解析し、単一のSELECT文（JOIN・サブクエリ・集約関数・UNIONを含みうる）であることのみを検証する（BR-QUERY-01）。UNIT-05のWHERE/ORDER BY句の式レベル許可リスト検証とは異なり、文全体が読み取り専用であることの保証のみが目的
+- 名前付きパラメータ（`:name`形式）はJSqlParserのAST走査（`JdbcNamedParameter`ノード収集）で検出し、`NamedParameterJdbcTemplate`でバインドする。文字列リテラル内の`:`を誤検出しない
+- アクセス制御はスキーマ単位（実行者が対象接続内のいずれかのテーブル/カラムに実効主権限READ以上を持つスキーマのみ選択可能）で、UNIT-05のようなテーブル/カラム単位の制御は行わない（任意のJOIN・サブクエリを含むSELECT文に対する参照先テーブルの網羅的特定が技術的に大きな負担となるため、BR-QUERY-04）
+- 保存クエリ（`SavedQuery`）は保存時点の対象接続に固定されるが、スキーマは固定せず実行のたびに選択する（実行者自身のその時点の実効権限で評価）
+- クエリ実行はスキーマ切替（対象RDBMS方言に応じ`RdbmsDialectStrategy.applySchemaSwitch`を適用）した単一の物理JDBC接続上でCOUNT取得→結果取得の順に実行し、ページング無効時も内部的に上限+1件取得して安全上限を超えないか判定する
+
+| 環境変数 | デフォルト | 用途 |
+|---|---|---|
+| `MM_APP_QUERY_EXECUTION_TIMEOUT_SECONDS` | `30` | クエリ実行のタイムアウト秒数（超過時408 `QUERY_EXECUTION_TIMEOUT`） |
+| `MM_APP_QUERY_MAX_RESULT_ROWS` | `10000` | ページング無効時の結果件数上限（超過時400 `QUERY_RESULT_SIZE_EXCEEDED`） |
+
 ## API仕様書（OpenAPI/Swagger UI）
 
-起動後、`http://localhost:8080/swagger-ui.html`で確認できる（`springdoc-openapi-starter-webmvc-ui`により自動生成、`/api/admin/**`はBearer認証＋ADMINロールが、`/api/master-data/**`はBearer認証のみ（ロール不問）が必要）。
+起動後、`http://localhost:8080/swagger-ui.html`で確認できる（`springdoc-openapi-starter-webmvc-ui`により自動生成、`/api/admin/**`はBearer認証＋ADMINロールが、`/api/master-data/**`・`/api/queries/**`はBearer認証のみ（ロール不問）が必要）。
 
 ## ビルド・テスト
 
