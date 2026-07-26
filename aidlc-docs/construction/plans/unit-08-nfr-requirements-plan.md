@@ -38,9 +38,9 @@ STORY-8.1・8.2ともにPBT対象外と明記済み（stories.md）。追加のP
 
 - [x] Step A: 質問への回答を収集する（全5問、推奨どおり全問Aで確定）
 - [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
-- [ ] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
-- [ ] Step D: `tech-stack-decisions.md`（動的クエリ実装方式、インデックス設計、ページサイズ上限、権限判定レイヤー、名前解決方式）を作成する
-- [ ] Step E: 完了メッセージを提示し、承認を得る
+- [x] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
+- [x] Step D: `tech-stack-decisions.md`（動的クエリ実装方式、インデックス設計、ページサイズ上限、権限判定レイヤー、名前解決方式）を作成する
+- [x] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
 
