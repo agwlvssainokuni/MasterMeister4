@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-08 Functional Design（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - UNIT-08 NFR Requirements（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -50,9 +50,9 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-07 クエリビルダー - COMPLETED
-- **Next Stage**: UNIT-08 クエリ履歴 - Functional Design
-- **Status**: UNIT-08着手前
+- **Current Stage**: UNIT-08 クエリ履歴 - Functional Design COMPLETED
+- **Next Stage**: UNIT-08 クエリ履歴 - NFR Requirements
+- **Status**: 実施中
 
 ## Backlog（今後の検討課題）
 - **E2Eテストフレームワーク（Playwright等）の導入**: 現状、各ユニットのCode Generation最終ステップでコマンドラインによる実機E2E検証（curl等）を実施しているが、UI表示に関する不具合（例: UNIT-05のダークモード文字色バグ）はこの方式では検出できない。Playwright等のフレームワークは既存の実インフラE2E検証（DB方言差異等のバックエンド/インフラ層の不具合検出に有効）を置き換えるものではなく補完するものと位置づけ、プロジェクト全体のテスト戦略として別途検討する（2026-07-24、UNIT-05承認時にユーザ提起）。
@@ -106,6 +106,13 @@
 - [x] Infrastructure Design — SKIP（判定 2026-07-26T06:38:00Z。新規DB永続化なし、新規外部サービス依存なし、既存インフラ（UNIT-03/04/06）の再利用のみのため新規インフラ設計不要）
 - [x] Code Generation — COMPLETED（承認 2026-07-26T19:56:00Z）。Part 1（計画）承認済み（2026-07-26T06:50:00Z）、Part 2全12セクション完了（unit-07-code-generation-plan.md。Business Logic層（DTO/enum群、QueryBuilderColumnTypeMapper、新規例外4種、QueryBuilderAccessResolver、QueryBuilderService）、API層（QueryBuilderController）、Frontend（接続選択画面、タブUIサブコンポーネント、QueryBuilderPage、UNIT-06既存ページへの逆遷移ボタン追加）を作成。実装・実機検証の過程で発見・修正した不具合4件: (1)WHERE/HAVING列参照でSQLエイリアスを実テーブル名として権限チェックに渡していた誤り、(2)JSqlParserのLongValue/BooleanValueが値検証しないこと・DateValueがJDBC escape構文になる問題、(3)HAVING句の集計関数オペランド未対応、(4)Bean Validation用@AssertTrueメソッドがJacksonのgetterとしてレスポンスJSONへ漏れていた問題。実機E2E検証（PostgreSQL/MySQL）でSQL生成・実行・リバースエンジニアリング・異常系を確認、BOOLEAN型リテラルの4方言動作を確認。**完了報告後、承認前レビューで8件の指摘に対応**: (1)実行可能アーティファクトはWAR（運用ルール確定、Gradle設定変更なし、feedback_deployment_artifact.mdに記録）、(2)FROM/JOINタブをFROMタブ1つに統合しタブ順序をFROM/SELECT/WHERE/GROUP BY/HAVING/ORDER BY/LIMIT OFFSETに変更、(3)FROM/JOINタブのレイアウトを一行化、(4)SELECT/WHERE/HAVING/ORDER BYタブのレイアウトを一行化、(5)FROMタブの駆動表とJOINの縦間隔追加、(6)JOIN条件右辺の候補列を左辺と同一化（FROM+全JOIN済み列から選択可能に）、(7)FROM/JOINタブの実装をQueryBuilderFromTab 1ファイル・1コンポーネントに統合、(8)クエリビルダーからの逆遷移でSQLが引き継がれないバグ修正（QueryExecutionPage.tsxのrouter state受信ロジック欠落、SavedQueryEditorPage.tsxのgetSavedQuery非同期競合状態）。最終状態: バックエンド全384件・フロントエンド全222件成功
 
+## Current Unit - Stage Progress (UNIT-08)
+- [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-26T20:26:00Z。unit-08-functional-design-plan.mdの全8問に推奨どおり全問Aで回答: 失敗実行は記録対象外（既存QueryExecutionRecord踏襲）、接続選択→履歴一覧の2画面構成、実行者スコープはロールに応じフェイルクローズ、履歴閲覧はアクセス権を再判定しない（記録の不変性）、SQLテキスト検索は部分一致、保存クエリ名表示、router state経由の画面遷移、Spring Data JPA標準Pageable採用。business-logic-model.md, business-rules.md（BR-QUERYHISTORY-01〜10）, domain-entities.md, frontend-components.mdを作成。承認前レビューで2件の矛盾を発見・修正: (1)Pagination（1-indexed）とPageable（0-indexed）の基準不一致の明記、(2)スキーマ絞込セレクタが「現在アクセス可能なスキーマ」ではBR-04（アクセス権不問の閲覧）と矛盾するため、履歴実績ベースのDISTINCT取得に是正（BR-QUERYHISTORY-10新設、新規API追加））
+- [ ] NFR Requirements — EXECUTE（ユニットごと、判定は都度独立）
+- [ ] NFR Design — EXECUTE（ユニットごと、判定は都度独立）
+- [ ] Infrastructure Design — EXECUTE（ユニットごと、判定は都度独立）
+- [ ] Code Generation — EXECUTE
+
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
 - [x] UNIT-02 ユーザ登録・認証 — COMPLETED（承認 2026-07-21T00:15:00Z）
@@ -114,6 +121,6 @@
 - [x] UNIT-05 マスタメンテナンス — COMPLETED（承認 2026-07-24T13:36:00Z）
 - [x] UNIT-06 クエリ保存・実行 — COMPLETED（承認 2026-07-26T05:21:00Z）
 - [x] UNIT-07 クエリビルダー — COMPLETED（承認 2026-07-26T19:56:00Z）
-- [ ] UNIT-08 クエリ履歴
+- [ ] UNIT-08 クエリ履歴 — IN PROGRESS（Functional Design承認済み、NFR Requirementsへ）
 - [ ] UNIT-09 監査ログ閲覧
 - [ ] UNIT-10 CI/CD

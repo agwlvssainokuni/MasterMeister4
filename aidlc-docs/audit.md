@@ -2407,3 +2407,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Functional Design、修正完了、承認待ち
 
 ---
+
+## UNIT-08 Functional Design 承認
+
+**Timestamp**: 2026-07-26T20:28:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-08 クエリ履歴 Functional Designを承認。aidlc-state.mdを更新: UNIT-08用のCurrent Unit - Stage Progressセクションを新設しFunctional Designを[x] COMPLETEDに記録、Current Unit ProgressのUNIT-08をIN PROGRESSに変更、Current StatusのNext StageをNFR Requirementsに更新。"
+**Context**: CONSTRUCTION - UNIT-08 Functional Design完了、NFR Requirementsへ移行
+
+---
