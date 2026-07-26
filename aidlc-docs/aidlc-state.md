@@ -104,6 +104,7 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-26T06:18:00Z。unit-07-nfr-requirements-plan.mdの全6問に推奨どおり全問Aで回答: 比較値はリテラル埋め込み、JSqlParser Expression APIによる型安全な埋め込み、SQL生成/解析はJSqlParserのASTオブジェクトモデルで統一、ColumnDataTypeCategoryはUNIT-05踏襲の独自再実装、リクエスト件数上限あり、既存Caffeineキャッシュに一任。nfr-requirements.md, tech-stack-decisions.mdを作成。承認前レビューでBOOLEAN型リテラルの「確認済み」という未検証の言い切りを是正）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-26T06:38:00Z。unit-07-nfr-design-plan.mdの全5問に推奨どおり全問Aで回答: GROUP BY整合性違反は専用例外、リバースエンジニアリング失敗は構文非対応(422)とアクセス権限不足(403)を分離、スキーマアクセス不可はUNIT-06の既存例外を再利用、テーブル/カラム一覧取得ロジックはQueryBuilderAccessResolverとして分離、Controllerは単一構成。nfr-design-patterns.md, logical-components.mdを作成。承認前レビューで補助メソッド名existsTableColumn（存在確認のみを示唆）をisColumnAccessible（存在+権限確認の両方を明示）に是正）
 - [x] Infrastructure Design — SKIP（判定 2026-07-26T06:38:00Z。新規DB永続化なし、新規外部サービス依存なし、既存インフラ（UNIT-03/04/06）の再利用のみのため新規インフラ設計不要）
+- [ ] Code Generation — Part 1（計画）作成完了、承認待ち（unit-07-code-generation-plan.md、全12セクション。DTO設計の簡略化（model/dto分離をせず入れ子DTOを共用）を主要な実装判断として明記）
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
@@ -112,7 +113,7 @@
 - [x] UNIT-04 アクセス制御 — COMPLETED（承認 2026-07-24T09:00:00Z）
 - [x] UNIT-05 マスタメンテナンス — COMPLETED（承認 2026-07-24T13:36:00Z）
 - [x] UNIT-06 クエリ保存・実行 — COMPLETED（承認 2026-07-26T05:21:00Z）
-- [ ] UNIT-07 クエリビルダー — IN PROGRESS（Functional Design・NFR Requirements・NFR Design承認済み、Infrastructure DesignはSKIP、Code Generation着手）
+- [ ] UNIT-07 クエリビルダー — IN PROGRESS（Functional Design・NFR Requirements・NFR Design承認済み、Infrastructure DesignはSKIP、Code Generation Part 1計画承認待ち）
 - [ ] UNIT-08 クエリ履歴
 - [ ] UNIT-09 監査ログ閲覧
 - [ ] UNIT-10 CI/CD

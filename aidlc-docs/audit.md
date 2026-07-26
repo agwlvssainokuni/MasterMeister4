@@ -2178,3 +2178,12 @@
 **Context**: CONSTRUCTION - UNIT-07 NFR Design完了、Infrastructure Design判定へ
 
 ---
+
+## UNIT-07 Code Generation Part 1（計画）作成
+
+**Timestamp**: 2026-07-26T06:42:00Z
+**User Input**: (Code Generation Part 1開始、ユーザ入力なし)
+**AI Response**: "unit-07-code-generation-plan.mdを作成。DTO設計の簡略化（QueryBuilderStateは永続化を持たないためmodel/dto分離をせず、入れ子DTOをRequest/Responseで共用しトップレベルのみ2クラスに分ける）を主要な実装判断として明記。全12セクション（Business Logic Generation/Testing/Summary、API Layer Generation/Testing/Summary、Frontend Components Generation/Testing/Summary、Documentation Generation、Deployment Artifacts、最終ビルド検証）の計画を提示。ラウンドトリップPBTはQueryBuilderAccessResolverをモック化して構文的往復性のみを検証する方針を明記。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation Part 1、承認待ち
+
+---
