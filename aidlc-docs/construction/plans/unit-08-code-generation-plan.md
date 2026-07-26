@@ -90,16 +90,16 @@
 
 ### 11. Database Migration Scripts
 
-- [ ] Step 11.1: `V17__add_index_query_execution_record_connection_executed_at.sql`を作成する（`(connection_id, executed_at)`複合インデックス、logical-components.md §7）
+- [x] Step 11.1: `V17__add_index_query_execution_record_connection_executed_at.sql`を作成する（`(connection_id, executed_at)`複合インデックス、logical-components.md §7）。`@DataJpaTest`経由でマイグレーション適用を確認済み
 
 ### 12. Documentation Generation
 
-- [ ] Step 12.1: `backend/README.md`を更新する（UNIT-08概要: クエリ履歴、`/api/query-history/*`エンドポイント）
-- [ ] Step 12.2: `frontend/README.md`を更新する（UNIT-08の新規画面をpages概要に追記）
+- [x] Step 12.1: `backend/README.md`を更新する（UNIT-08概要: クエリ履歴、`/api/query-history/*`エンドポイント）
+- [x] Step 12.2: `frontend/README.md`を更新する（UNIT-08の新規画面をpages概要に追記）
 
 ### 13. Deployment Artifacts
 
-- [ ] Step 13.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認する
+- [x] Step 13.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認した（MySQL/MariaDB/PostgreSQLが既に定義済み、既存構成のまま変更なし）
 
 ### 14. 最終ビルド検証
 

@@ -53,9 +53,13 @@ src/
 ├── i18n/                 # 多言語対応（react-i18next、common/design-system名前空間。アプリ全体で使う横断的インフラのためdesign-system/の外に配置）
 ├── auth/                # 認証状態管理（AuthContext）、トークン保管（sessionStorage）、JWTデコード
 ├── api/                  # バックエンドAPIクライアント（apiFetch、リフレッシュ自動再試行）
-├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）・UNIT-04（グループ管理、権限設定）・UNIT-05（マスタメンテナンス3画面）・UNIT-06（保存クエリ管理3画面、ad-hocクエリ実行2画面、共有のQueryEditorPanel）・UNIT-07（クエリビルダー2画面＋タブサブコンポーネント7種＋共有のQueryBuilderOperandPicker）で構築した画面
+├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）・UNIT-04（グループ管理、権限設定）・UNIT-05（マスタメンテナンス3画面）・UNIT-06（保存クエリ管理3画面、ad-hocクエリ実行2画面、共有のQueryEditorPanel）・UNIT-07（クエリビルダー2画面＋タブサブコンポーネント7種＋共有のQueryBuilderOperandPicker）・UNIT-08（クエリ履歴2画面）で構築した画面
 ├── mocks/              # devビルド限定のコンポーネントカタログ・代表画面モック
 └── test/                 # テスト共通セットアップ・ヘルパー（renderMock、renderPage）
 ```
 
-詳細は`aidlc-docs/construction/unit-01/code/component-inventory.md`（デザインシステム）・`aidlc-docs/construction/unit-0{2,3,4,5,6,7}/code/frontend-summary.md`（認証基盤・画面）を参照。
+詳細は`aidlc-docs/construction/unit-01/code/component-inventory.md`（デザインシステム）・`aidlc-docs/construction/unit-0{2,3,4,5,6,7,8}/code/frontend-summary.md`（認証基盤・画面）を参照。
+
+## クエリ履歴（UNIT-08）
+
+`/query-history`画面で、実行済みクエリの履歴を閲覧・絞込できる。接続選択→履歴一覧の2画面構成。実行者スコープ（「全ユーザ」／「自分のみ」）の切替は管理者ユーザにのみ表示する。管理者判定は既存の`decodeJwtEmail`（`auth/jwt.ts`）と同じ設計思想の`decodeJwtRole`で行う（`AuthContext`自体はロール情報を持たないため、各ページで`getAccessToken()`と組み合わせて呼び出す）。

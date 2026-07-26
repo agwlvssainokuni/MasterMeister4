@@ -2593,3 +2593,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、フロントエンド完了、DBマイグレーションへ
 
 ---
+
+## UNIT-08 Code Generation Part 2 - マイグレーション・ドキュメント完了（セクション11〜13）
+
+**Timestamp**: 2026-07-26T22:51:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "V17__add_index_query_execution_record_connection_executed_at.sqlを作成し、@DataJpaTest経由でマイグレーション適用を確認。backend/README.md・frontend/README.mdにUNIT-08概要を追記。devenvは既存構成（PostgreSQL/MySQL/MariaDB）で動作確認可能なため変更なしと確認。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、マイグレーション・ドキュメント完了、最終ビルド検証へ
+
+---

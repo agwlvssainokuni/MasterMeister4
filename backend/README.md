@@ -102,6 +102,15 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 - サポート対象外の構文（サブクエリ・UNION・FULL JOIN等）を検出した場合は422、参照するテーブル/カラムへのアクセス権限がない場合は403で、いずれもタブUIへの部分的な反映は行わない（フェイルクローズ、BR-QUERYBUILDER-07）
 - 生成したSQLは、UNIT-06のクエリ実行画面・保存クエリ作成/編集画面へそのまま連携できる（逆方向の「クエリビルダーで編集」による相互遷移にも対応）
 
+## クエリ履歴（UNIT-08）
+
+`/query-history`画面で、UNIT-06が記録する`QueryExecutionRecord`（クエリ実行1回分の記録）の閲覧・絞込・ページングができる。API名前空間は`/api/query-history/**`（3エンドポイント: 接続一覧・スキーマ名一覧・履歴一覧）。新規のデータ記録処理は持たない（成功した実行のみが記録対象、UNIT-06の既存設計を踏襲）。
+
+- 接続一覧・スキーマ名一覧はいずれも「現在アクセス可能なもの」ではなく、履歴に実際に記録された実績ベースで返す（BR-QUERYHISTORY-10・11）。閲覧時点でアクセス権を失った接続・スキーマの履歴も、記録の不変性の原則（UNIT-02監査ログと同じ考え方）に基づき閲覧可能なため
+- 実行者スコープ（「全ユーザ」／「自分のみ」）は管理者のみ「全ユーザ」を選択可能。一般ユーザが指定してもサーバ側で「自分のみ」に強制する（フェイルクローズ、BR-QUERYHISTORY-03）。この判定はController層でのみ行い、Service層にはロールではなく絞込済みの`executedByFilter`（`Long`、nullなら全ユーザ対象）のみを渡す
+- 絞込条件（実行日時範囲・実行者スコープ・対象スキーマ・SQLテキスト）はSpring Data JPAの`Specification`（`QueryHistorySpecifications`）で動的に組み立てる（プロジェクト内初のSpecification API採用）。ページングは同じく標準の`Pageable`/`Page`を使用（UNIT-06のクエリ実行結果ページング（サブクエリラップ方式）とは別の仕組み）
+- `query_execution_record`テーブルに`(connection_id, executed_at)`の複合インデックス（V17）を追加し、本ユニットの主要アクセスパターンに最適化した
+
 ## トレースログ
 
 `TraceAspect`（`cherry.mastermeister.common.aop`、`reference/trace/TraceAspect.java`を移植）が、`cherry.mastermeister`配下（`common.config`を除く）の全メソッドの呼び出し・復帰・例外を`Spring`の`CustomizableTraceInterceptor`経由でログ出力する。実際に出力されるのは`MM_LOGGING_LEVEL_APP=TRACE`のとき（既定値`INFO`では無効）。設定値は`mm.app.trace.*`（`AppProperties.Trace`）で調整可能。
