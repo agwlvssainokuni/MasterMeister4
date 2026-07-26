@@ -67,15 +67,15 @@
 
 ### 7. Frontend Components Generation
 
-- [ ] Step 7.1: APIクライアント`frontend/src/api/queryBuilder.ts`を作成する（テーブル/カラム一覧取得・SQL生成・リバースエンジニアリングの各関数、型定義）
-- [ ] Step 7.2: `QueryBuilderConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面1）
-- [ ] Step 7.3: タブUIの共有サブコンポーネント群（`frontend/src/pages/`または専用ディレクトリ）を作成する: `SelectItemBuilder`, `FromTableBuilder`, `JoinBuilder`, `ConditionListBuilder`（WHERE/HAVING共通）, `ColumnListBuilder`（GROUP BY用）, `OrderByListBuilder`, `LimitOffsetInput`（frontend-components.md 画面2のタブ内訳）
-- [ ] Step 7.4: `QueryBuilderPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面2。design-system既存の`Tabs`コンポーネントで8タブを構成、スキーマセレクタ、SQLプレビュー（デバウンス付き`generate`呼び出し）、「保存へ」「実行へ」ボタン、router state経由の初期SQLリバースエンジニアリング対応）
-- [ ] Step 7.5: `App.tsx`のルーティングに`/query-builder`, `/query-builder/:connectionId`を追加する（`ProtectedRoute`配下）
-- [ ] Step 7.6: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'queryBuilder'`を追加する
-- [ ] Step 7.7: i18nリソース（`common.json`の`ja`/`en`）に`queryBuilder.*`関連キー（タブ名・ボタンラベル・エラーメッセージ等）を追加する（`nav.queryBuilder`はUNIT-01で追加済みのためdesign-system.jsonへの追加は不要）
-- [ ] Step 7.8: UNIT-06の`QueryExecutionPage.tsx`に「クエリビルダーで編集」ボタンを追加する（既存ファイルの修正、frontend-components.md「逆遷移・相互遷移の実装方針」1）
-- [ ] Step 7.9: UNIT-06の`SavedQueryEditorPage.tsx`に「クエリビルダーで編集」ボタンを追加する（既存ファイルの修正、new/editモード双方。同2〜3）
+- [x] Step 7.1: APIクライアント`frontend/src/api/queryBuilder.ts`を作成する（テーブル/カラム一覧取得・SQL生成・リバースエンジニアリングの各関数、型定義）
+- [x] Step 7.2: `QueryBuilderConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面1）
+- [x] Step 7.3: タブUIの共有サブコンポーネント群を作成する: `QueryBuilderSelectTab`, `QueryBuilderFromTab`, `QueryBuilderJoinTab`, `QueryBuilderConditionList`（WHERE/HAVING共通）, `QueryBuilderColumnListTab`（GROUP BY用）, `QueryBuilderOrderByTab`, `QueryBuilderLimitOffsetTab`（frontend-components.md 画面2のタブ内訳）。**実装時の追加**: SELECT/HAVING/ORDER BYで列参照/集計関数の選択が共通のため`QueryBuilderOperandPicker`を共有部品として抽出（3タブでの重複を避けるため）
+- [x] Step 7.4: `QueryBuilderPage`（`frontend/src/pages/`）を作成する（frontend-components.md 画面2。design-system既存の`Tabs`コンポーネントで8タブを構成、スキーマセレクタ、SQLプレビュー（デバウンス付き`generate`呼び出し）、「保存へ」「実行へ」ボタン、router state経由の初期SQLリバースエンジニアリング対応）
+- [x] Step 7.5: `App.tsx`のルーティングに`/query-builder`, `/query-builder/:connectionId`を追加する（`ProtectedRoute`配下）
+- [x] Step 7.6: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'queryBuilder'`を追加する
+- [x] Step 7.7: i18nリソース（`common.json`の`ja`/`en`）に`queryBuilder.*`関連キーを追加する（`nav.queryBuilder`はUNIT-01で追加済み）。**実装時の発見**: `action.remove`キーが存在しなかったため追加
+- [x] Step 7.8: UNIT-06の`QueryExecutionPage.tsx`に「クエリビルダーで編集」ボタンを追加する（既存ファイルの修正、frontend-components.md「逆遷移・相互遷移の実装方針」1）
+- [x] Step 7.9: UNIT-06の`SavedQueryEditorPage.tsx`に「クエリビルダーで編集」ボタンを追加する（既存ファイルの修正、new/editモード双方。同2〜3。**実装時の追加**: `location.key`を監視し、同一パスへの再ナビゲーション（クエリビルダーからの「保存へ」戻り）でもrouter stateの変更を確実に検知するeffectを追加）
 
 ### 8. Frontend Components Unit Testing
 

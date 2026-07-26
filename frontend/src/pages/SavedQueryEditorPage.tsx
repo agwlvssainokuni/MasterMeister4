@@ -100,6 +100,23 @@ export function SavedQueryEditorPage() {
       .catch((error) => setErrorMessage(error instanceof ApiError ? error.message : t('state.error')))
   }, [mode, connectionIdNum, savedQueryIdNum, t])
 
+  // frontend-components.md「逆遷移・相互遷移の実装方針」3。クエリビルダー画面から
+  // 「保存へ」で戻ってきた場合、router state経由のSQLで上書きし編集モードへ入る
+  // （location.keyはナビゲーションごとに変わるため、同一パスへの再遷移でも確実に反応する）。
+  useEffect(() => {
+    if (!prefill?.sql) {
+      return
+    }
+    setSql(prefill.sql)
+    if (prefill.schemaName) {
+      setSchemaName(prefill.schemaName)
+    }
+    if (mode === 'existing') {
+      setEditing(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.key])
+
   const onExecute = useCallback(async () => {
     setExecuting(true)
     setErrorMessage(null)
@@ -174,20 +191,39 @@ export function SavedQueryEditorPage() {
 
   const title = mode === 'new' ? t('savedQuery.newTitle') : (savedQuery?.name ?? '')
 
+  // frontend-components.md「逆遷移・相互遷移の実装方針」2〜3。BR-QUERYBUILDER-12。
+  const onEditInBuilder = () => {
+    navigate(`/query-builder/${connectionIdNum}`, {
+      state:
+        mode === 'existing' && savedQueryIdNum
+          ? { sql, schemaName, editMode: true, savedQueryId: savedQueryIdNum }
+          : { sql, schemaName },
+    })
+  }
+
   return (
     <AuthenticatedLayout activeNavKey="savedQueries">
       <PageHeader
         title={title}
         actions={
           mode === 'new' ? (
-            <Button
-              variant="primary"
-              disabled={!sql.trim()}
-              onClick={() => setSaveDialogOpen(true)}
-              data-testid="saved-query-save-button"
-            >
-              {t('savedQuery.saveButton')}
-            </Button>
+            <>
+              <Button
+                variant="secondary"
+                onClick={onEditInBuilder}
+                data-testid="saved-query-edit-in-builder-button"
+              >
+                {t('queryBuilder.editInBuilderButton')}
+              </Button>
+              <Button
+                variant="primary"
+                disabled={!sql.trim()}
+                onClick={() => setSaveDialogOpen(true)}
+                data-testid="saved-query-save-button"
+              >
+                {t('savedQuery.saveButton')}
+              </Button>
+            </>
           ) : savedQuery?.own ? (
             <>
               {!editing ? (
@@ -195,13 +231,22 @@ export function SavedQueryEditorPage() {
                   {t('savedQuery.editButton')}
                 </Button>
               ) : (
-                <Button
-                  variant="primary"
-                  onClick={() => setSaveDialogOpen(true)}
-                  data-testid="saved-query-update-button"
-                >
-                  {t('savedQuery.updateButton')}
-                </Button>
+                <>
+                  <Button
+                    variant="secondary"
+                    onClick={onEditInBuilder}
+                    data-testid="saved-query-edit-in-builder-button"
+                  >
+                    {t('queryBuilder.editInBuilderButton')}
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => setSaveDialogOpen(true)}
+                    data-testid="saved-query-update-button"
+                  >
+                    {t('savedQuery.updateButton')}
+                  </Button>
+                </>
               )}
               <Button
                 variant="danger"

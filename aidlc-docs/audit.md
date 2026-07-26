@@ -2223,3 +2223,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、API層完了、Frontendへ
 
 ---
+
+## UNIT-07 Code Generation Part 2 - Frontend Components Generation完了（セクション7）
+
+**Timestamp**: 2026-07-26T08:05:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "セクション7（Frontend Components Generation）完了。api/queryBuilder.ts、QueryBuilderConnectionListPage、タブUIサブコンポーネント7種（Select/From/Join/ConditionList/ColumnList/OrderBy/LimitOffsetの各Tab）、共有部品QueryBuilderOperandPicker（実装時に追加、3タブでの重複を避けるため）、QueryBuilderPageを作成。App.tsxルーティング・HomePage.tsx IMPLEMENTED_KEYS・i18nリソース（queryBuilder.*、action.removeキー追加）を更新。UNIT-06のQueryExecutionPage.tsx・SavedQueryEditorPage.tsxに「クエリビルダーで編集」ボタンを追加（SavedQueryEditorPage.tsxはlocation.key監視のeffectを追加し、クエリビルダーからの戻り時にrouter state変更を確実に検知するよう対応）。tsc --noEmit・oxlint・npm run buildいずれも成功。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation Part 2、Frontend Components Generation完了、Testingへ
+
+---

@@ -86,14 +86,24 @@ export function QueryExecutionPage() {
     })
   }
 
+  // frontend-components.md「逆遷移・相互遷移の実装方針」1。BR-QUERYBUILDER-12。
+  const onEditInBuilder = () => {
+    navigate(`/query-builder/${connectionIdNum}`, { state: { sql, schemaName } })
+  }
+
   return (
     <AuthenticatedLayout activeNavKey="queryExecution">
       <PageHeader
         title={t('queryExecution.title')}
         actions={
-          <Button variant="secondary" onClick={onSaveAs} data-testid="query-execution-save-as-button">
-            {t('queryExecution.saveAsButton')}
-          </Button>
+          <>
+            <Button variant="secondary" onClick={onEditInBuilder} data-testid="query-execution-edit-in-builder-button">
+              {t('queryBuilder.editInBuilderButton')}
+            </Button>
+            <Button variant="secondary" onClick={onSaveAs} data-testid="query-execution-save-as-button">
+              {t('queryExecution.saveAsButton')}
+            </Button>
+          </>
         }
       />
       {errorMessage ? <Alert tone="danger">{errorMessage}</Alert> : null}

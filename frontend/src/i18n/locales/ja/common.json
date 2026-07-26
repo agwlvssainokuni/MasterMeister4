@@ -22,7 +22,8 @@
     "login": "ログイン",
     "logout": "ログアウト",
     "expand": "展開",
-    "collapse": "折りたたむ"
+    "collapse": "折りたたむ",
+    "remove": "削除"
   },
   "alert": {
     "info": "情報",
@@ -249,6 +250,70 @@
     "executeButton": "実行",
     "saveAsButton": "名前を付けて保存",
     "resultEmpty": "結果がありません"
+  },
+  "queryBuilder": {
+    "title": "クエリビルダー",
+    "connectionName": "接続の表示名",
+    "connectionListEmpty": "アクセス可能な接続はありません",
+    "selectPlaceholder": "選択してください",
+    "saveButton": "保存へ",
+    "executeButton": "実行へ",
+    "editInBuilderButton": "クエリビルダーで編集",
+    "reverseEngineeringFailed": "このSQLはクエリビルダーに反映できませんでした",
+    "tab": {
+      "select": "SELECT",
+      "from": "FROM",
+      "join": "JOIN",
+      "where": "WHERE",
+      "groupBy": "GROUP BY",
+      "having": "HAVING",
+      "orderBy": "ORDER BY",
+      "limitOffset": "LIMIT OFFSET"
+    },
+    "from": {
+      "table": "テーブル",
+      "alias": "エイリアス"
+    },
+    "join": {
+      "alias": "エイリアス",
+      "add": "JOINを追加",
+      "addCondition": "結合条件を追加"
+    },
+    "select": {
+      "alias": "別名（AS）",
+      "add": "列を追加"
+    },
+    "condition": {
+      "add": "条件を追加"
+    },
+    "groupBy": {
+      "add": "列を追加"
+    },
+    "orderBy": {
+      "asc": "昇順",
+      "desc": "降順",
+      "add": "項目を追加"
+    },
+    "limitOffset": {
+      "limit": "LIMIT",
+      "offset": "OFFSET"
+    },
+    "operand": {
+      "column": "列",
+      "aggregate": "集計関数"
+    },
+    "operator": {
+      "EQ": "＝",
+      "NE": "≠",
+      "LT": "＜",
+      "LE": "≦",
+      "GT": "＞",
+      "GE": "≧",
+      "STARTS_WITH": "前方一致",
+      "CONTAINS": "部分一致",
+      "IS_NULL": "空である",
+      "IS_NOT_NULL": "空でない"
+    }
   },
   "home": {
     "welcome": "ようこそ、MasterMeisterへ",

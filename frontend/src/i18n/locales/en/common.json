@@ -22,7 +22,8 @@
     "login": "Log in",
     "logout": "Log out",
     "expand": "Expand",
-    "collapse": "Collapse"
+    "collapse": "Collapse",
+    "remove": "Remove"
   },
   "alert": {
     "info": "Info",
@@ -249,6 +250,70 @@
     "executeButton": "Execute",
     "saveAsButton": "Save as",
     "resultEmpty": "No results"
+  },
+  "queryBuilder": {
+    "title": "Query Builder",
+    "connectionName": "Connection display name",
+    "connectionListEmpty": "No accessible connections",
+    "selectPlaceholder": "Please select",
+    "saveButton": "Go to save",
+    "executeButton": "Go to execute",
+    "editInBuilderButton": "Edit in query builder",
+    "reverseEngineeringFailed": "This SQL could not be reflected in the query builder",
+    "tab": {
+      "select": "SELECT",
+      "from": "FROM",
+      "join": "JOIN",
+      "where": "WHERE",
+      "groupBy": "GROUP BY",
+      "having": "HAVING",
+      "orderBy": "ORDER BY",
+      "limitOffset": "LIMIT OFFSET"
+    },
+    "from": {
+      "table": "Table",
+      "alias": "Alias"
+    },
+    "join": {
+      "alias": "Alias",
+      "add": "Add join",
+      "addCondition": "Add condition"
+    },
+    "select": {
+      "alias": "Alias (AS)",
+      "add": "Add column"
+    },
+    "condition": {
+      "add": "Add condition"
+    },
+    "groupBy": {
+      "add": "Add column"
+    },
+    "orderBy": {
+      "asc": "Ascending",
+      "desc": "Descending",
+      "add": "Add item"
+    },
+    "limitOffset": {
+      "limit": "LIMIT",
+      "offset": "OFFSET"
+    },
+    "operand": {
+      "column": "Column",
+      "aggregate": "Aggregate"
+    },
+    "operator": {
+      "EQ": "=",
+      "NE": "≠",
+      "LT": "<",
+      "LE": "<=",
+      "GT": ">",
+      "GE": ">=",
+      "STARTS_WITH": "Starts with",
+      "CONTAINS": "Contains",
+      "IS_NULL": "Is empty",
+      "IS_NOT_NULL": "Is not empty"
+    }
   },
   "home": {
     "welcome": "Welcome to MasterMeister",
