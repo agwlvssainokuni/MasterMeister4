@@ -2463,3 +2463,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Requirements完了、NFR Designへ移行
 
 ---
+
+## UNIT-08 NFR Design 計画作成・質問提示
+
+**Timestamp**: 2026-07-26T20:57:00Z
+**User Input**: (NFR Requirements承認後、ワークフローに従いNFR Designへ自動移行)
+**AI Response**: "unit-08-nfr-design-plan.mdを作成。Reliability Patterns（新規マイグレーションV17は既存V16を変更せず追加のみ）、Security Patterns（/api/query-history/**は既存authenticatedルールでカバー、N/A）を確認済み事項として記載。全4問の質問（絞込パラメータ検証エラー表現、QueryHistoryServiceの責務集約、Controller構成、実行者スコープフェイルクローズの実装パターン）を提示。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design、質問への回答待ち
+
+---
