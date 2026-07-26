@@ -2510,3 +2510,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design完了、承認待ち
 
 ---
+
+## UNIT-08 NFR Design 承認前レビュー・矛盾の是正
+
+**Timestamp**: 2026-07-26T21:24:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "logical-components.mdを見直し、nfr-design-patterns.md §1.2の方針（Serviceにはロールではなく絞込済みの実行者IDを渡す）と、実際のQueryHistoryServiceシグネチャ（listConnections(Long userId, boolean isAdmin)・listHistory(..., Long userId, boolean isAdmin, ...)がisAdminというロール由来の値をそのまま渡していた）の矛盾を発見。Controller側でロール判定結果を単一のexecutedByFilter（Long、nullなら全ユーザ対象）に変換してからServiceへ渡す設計に修正し、listConnections(Long executedByFilter)・listHistory(Long connectionId, Long executedByFilter, QueryHistorySearchCriteria criteria, Pageable pageable)にシグネチャを是正。あわせてQueryHistorySearchRequest（Controller層、executedByScopeを含む）とQueryHistorySearchCriteria（Service層、executedByScopeを含まない）の違いをDTO設計節に明記した。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design、修正完了、承認待ち
+
+---

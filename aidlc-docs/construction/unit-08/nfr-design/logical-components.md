@@ -16,17 +16,20 @@ nfr-design-patterns.mdで確定した実装パターンを、具体的な論理�
 
 各エンドポイントで`@AuthenticationPrincipal Jwt principal`から`currentUserId(principal)`（`principal.getSubject()`）・ロール（`principal.getClaimAsString("role")`）を取得する（nfr-design-patterns.md §1.2）。既存の`SecurityConfig`の`.requestMatchers("/api/**").authenticated()`ルールでカバーされるため、新規のSecurityFilterChainルール追加は不要。
 
+Controllerは、ロール判定の結果を「絞込対象を自分のみに限定するユーザID（`Long executedByFilter`、`null`なら全ユーザ対象）」という単一の値に変換してからService層へ渡す。一般ユーザは常に`executedByFilter = currentUserId(principal)`。管理者は`executedByScope=ALL`なら`executedByFilter = null`、`executedByScope=MINE`なら`executedByFilter = currentUserId(principal)`。**Serviceのシグネチャにロール（`isAdmin`等）そのものを渡さない**（nfr-design-patterns.md §1.2の方針どおり、ロール判定ロジックをServiceに持ち込まないため）。
+
 ### QueryHistoryService（COMP-17、Q2=A）
 
 絞込・ページング・名前解決の3責務を1クラスに集約する。
 
-- `listConnections(Long userId, boolean isAdmin): List<QueryHistoryConnectionView>`
-  - `isAdmin`が`false`の場合は`executedBy = userId`、`true`の場合は条件なしで、`QueryExecutionRecordRepository`から`connectionId`のDISTINCT一覧を取得（新規カスタムクエリメソッド、後述）
+- `listConnections(Long executedByFilter): List<QueryHistoryConnectionView>`
+  - `executedByFilter`が非nullの場合は`executedBy = executedByFilter`、nullの場合は条件なしで、`QueryExecutionRecordRepository`から`connectionId`のDISTINCT一覧を取得（新規カスタムクエリメソッド、後述）
   - 取得した`connectionId`群を`RdbmsConnectionRepository.findAllById(...)`（UNIT-03既存）で一括解決し、表示名を付与。見つからない場合は「(削除済み接続)」のプレースホルダー
 - `listSchemas(Long connectionId): List<String>`
   - `QueryExecutionRecordRepository`から対象接続の`schemaName`のDISTINCT一覧を取得（新規カスタムクエリメソッド）
-- `listHistory(Long connectionId, Long userId, boolean isAdmin, QueryHistorySearchCriteria criteria, Pageable pageable): Page<QueryHistoryRecordView>`
-  - `QueryHistorySpecifications`（nfr-design-patterns.md §2.1）で動的に`Specification<QueryExecutionRecord>`を組み立て、`QueryExecutionRecordRepository.findAll(spec, pageable)`（`JpaSpecificationExecutor`）を呼び出す
+- `listHistory(Long connectionId, Long executedByFilter, QueryHistorySearchCriteria criteria, Pageable pageable): Page<QueryHistoryRecordView>`
+  - `QueryHistorySpecifications`（nfr-design-patterns.md §2.1）で動的に`Specification<QueryExecutionRecord>`を組み立てる。`connectionIdEquals(connectionId)`は常に付与し、`executedByFilter`が非nullの場合のみ`executedByEquals(executedByFilter)`を追加する（`executedByFilter`自体は実行者スコープの絞込結果であり、Serviceはこれを他の絞込条件と同列に扱うのみでロール判定には関与しない）
+  - 組み立てた`Specification`で`QueryExecutionRecordRepository.findAll(spec, pageable)`（`JpaSpecificationExecutor`）を呼び出す
   - 取得した`Page<QueryExecutionRecord>`の内容から`savedQueryId`（非null）・`executedBy`をそれぞれユニークに集約し、`SavedQueryRepository.findAllByIdIn(...)`（新規）・`UserRepository.findAllById(...)`（既存標準メソッド）で一括取得
   - 上記を結合して`QueryHistoryRecordView`のページ結果に変換して返す
 
@@ -70,7 +73,8 @@ nfr-design-patterns.mdで確定した実装パターンを、具体的な論理�
 
 - `QueryHistoryConnectionResponse`（`connectionId`, `displayName`） — 接続一覧APIレスポンス1件
 - `QueryHistoryRecordResponse`（`QueryHistoryRecordView`のフィールドに対応: `id`, `executedBy`, `executorDisplayName`, `connectionId`, `schemaName`, `sql`, `savedQueryId`, `savedQueryName`, `queryType`, `rowCount`, `durationMillis`, `executedAt`） — 履歴一覧APIレスポンス1件
-- `QueryHistorySearchRequest`（`executedByScope`, `executedAtFrom`, `executedAtTo`, `schemaName`, `sqlKeyword`, `page`, `pageSize` — クエリパラメータのバインド先。`executedAtFrom`≤`executedAtTo`の相関検証を`@AssertTrue`＋`@JsonIgnore`で実装、nfr-design-patterns.md §1.1）
+- `QueryHistorySearchRequest`（`executedByScope`, `executedAtFrom`, `executedAtTo`, `schemaName`, `sqlKeyword`, `page`, `pageSize` — Controller層でクエリパラメータをバインドするリクエストDTO。`executedAtFrom`≤`executedAtTo`の相関検証を`@AssertTrue`＋`@JsonIgnore`で実装、nfr-design-patterns.md §1.1）
+- `QueryHistorySearchCriteria`（`executedAtFrom`, `executedAtTo`, `schemaName`, `sqlKeyword` — Service層（`QueryHistoryService.listHistory`）に渡すDTO。`QueryHistorySearchRequest`との違いは`executedByScope`を含まない点で、これはControllerが`executedByFilter`（`Long`、上記QueryHistoryController節参照）へ変換済みのため、Service層のDTOには持ち込まない）
 
 ---
 
