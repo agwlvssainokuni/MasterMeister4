@@ -40,7 +40,9 @@ CREATE INDEX idx_query_execution_record_connection_executed_at
 
 ## 4. 実行者スコープの権限判定レイヤー（Q4=A、SECURITY-06）
 
-`QueryHistoryController`で、JWTの`role`クレーム（`SecurityConfig`で確立済みの`Jwt principal`からのロール解決、UNIT-05/06と同じパターン）を判定する。一般ユーザ（`Role.USER`）が`executedByScope=ALL`を指定した場合、Service層の呼び出し前にController側で`MINE`へ強制する。管理者（`Role.ADMIN`）のみ`ALL`を有効な指定として扱う。
+`QueryHistoryController`で判定する。既存の`QueryController`等と同じ`@AuthenticationPrincipal Jwt principal`＋`currentUserId(principal)`（`principal.getSubject()`からのユーザID解決）パターンは踏襲するが、**ロールに基づく分岐処理自体はUNIT-05〜07に前例がなく、本ユニットが初めて導入する**（実装時の事実確認により訂正: 既存コードで`Role`を参照しているのは`AdminUserController`と認証系（`AuthenticationService`・`SecurityConfig`）のみで、`/api/admin/**`へのパスマッチングによるアクセス制御が中心。業務ロジック内でのロール分岐は前例がない）。
+
+JWTには`AuthenticationService`が発行時に`.claim("role", user.getRole().name())`でロール名（`"USER"`/`"ADMIN"`）を格納済みのため、`principal.getClaimAsString("role")`で取得し、`"ADMIN".equals(role)`で判定する。一般ユーザが`executedByScope=ALL`を指定した場合、Service層の呼び出し前にController側で`MINE`へ強制する。管理者のみ`ALL`を有効な指定として扱う。
 
 ## 5. 実行者名・保存クエリ名の解決方式（Q5=A）
 

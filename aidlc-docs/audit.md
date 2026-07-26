@@ -2445,3 +2445,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Requirements完了、承認待ち
 
 ---
+
+## UNIT-08 NFR Requirements 承認前レビュー・事実誤認の訂正
+
+**Timestamp**: 2026-07-26T20:53:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "成果物を見直し、tech-stack-decisions.md §4の記述「UNIT-05/06で確立したロール判定パターンを踏襲する」が事実誤認であることを発見（既存コードをgrepで確認したところ、Roleを参照するのはAdminUserController・認証系のみで、業務ロジック内でのロール分岐に前例はなかった）。マイグレーション番号V17が既存ファイル一覧（V1〜V16）と整合していることも確認。tech-stack-decisions.md §4を訂正: 前例がない旨を明記し、実際の実装方法（AuthenticationServiceがJWTのroleクレームにuser.getRole().name()を格納済みのため、Controllerでprincipal.getClaimAsString(\"role\")により判定する）を具体化。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Requirements、修正完了、承認待ち
+
+---
