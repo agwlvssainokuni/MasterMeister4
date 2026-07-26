@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-06 クエリ保存・実行 - NFR Design承認完了、Infrastructure DesignはSKIP済み
-- **Next Stage**: Code Generation
+- **Current Stage**: UNIT-06 クエリ保存・実行 - Code Generation Part 1（計画）承認完了、Part 2（生成）着手
+- **Next Stage**: Code Generation Part 2完了後、承認を得てUNIT-07へ
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
