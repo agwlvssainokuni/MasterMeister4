@@ -19,6 +19,7 @@ import { Button, TextInput } from '../design-system/components'
 import type { SelectItem } from '../api/queryBuilder'
 import type { AvailableColumn } from './QueryBuilderOperandPicker'
 import { QueryBuilderOperandPicker } from './QueryBuilderOperandPicker'
+import styles from './QueryBuilderItemRow.module.css'
 
 // frontend-components.md 画面2 SELECTタブ。1件以上の選択項目（列参照または集計関数適用、
 // AS別名）を追加・削除する（FR-5.4、BR-QUERYBUILDER-09）。
@@ -53,7 +54,7 @@ export function QueryBuilderSelectTab({
   return (
     <div>
       {value.map((item, index) => (
-        <div key={index} data-testid={`query-builder-select-item-${index}`}>
+        <div key={index} className={styles.row} data-testid={`query-builder-select-item-${index}`}>
           <QueryBuilderOperandPicker
             columns={columns}
             allowAggregate

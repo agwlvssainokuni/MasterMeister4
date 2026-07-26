@@ -19,6 +19,7 @@ import { Button, Select } from '../design-system/components'
 import type { OrderByItem, SortDirection } from '../api/queryBuilder'
 import type { AvailableColumn } from './QueryBuilderOperandPicker'
 import { QueryBuilderOperandPicker } from './QueryBuilderOperandPicker'
+import styles from './QueryBuilderItemRow.module.css'
 
 // frontend-components.md 画面2 ORDER BYタブ。列参照または集計関数適用の結果＋昇順/降順。
 export function QueryBuilderOrderByTab({
@@ -52,7 +53,7 @@ export function QueryBuilderOrderByTab({
   return (
     <div>
       {value.map((item, index) => (
-        <div key={index} data-testid={`query-builder-orderby-${index}`}>
+        <div key={index} className={styles.row} data-testid={`query-builder-orderby-${index}`}>
           <QueryBuilderOperandPicker
             columns={columns}
             allowAggregate

@@ -1,0 +1,36 @@
+/*
+ * Copyright 2026 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* SELECT/WHERE/HAVING/ORDER BYタブ共通。1件の項目（列参照/集計関数/条件/並び順等）を
+   一行に収めるレイアウト。QueryBuilderOperandPickerが返すspanもflexアイテムとして扱う */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--mm-space-2);
+}
+
+.row > span {
+  flex: 2;
+  min-width: 220px;
+}
+
+.row > select,
+.row > input {
+  flex: 1;
+  min-width: 120px;
+}

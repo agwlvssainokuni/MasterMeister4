@@ -17,6 +17,7 @@
 import { useTranslation } from 'react-i18next'
 import { Checkbox, Select } from '../design-system/components'
 import type { AggregateFunction, ColumnRef } from '../api/queryBuilder'
+import styles from './QueryBuilderOperandPicker.module.css'
 
 export interface AvailableColumn {
   tableAlias: string
@@ -75,7 +76,7 @@ export function QueryBuilderOperandPicker({
   }
 
   return (
-    <span>
+    <span className={styles.picker}>
       {allowAggregate ? (
         <Select
           value={mode}

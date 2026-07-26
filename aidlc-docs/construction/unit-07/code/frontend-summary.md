@@ -7,7 +7,7 @@
 - **`QueryBuilderPage`**: クエリビルダー本体画面（画面2）。スキーマセレクタ、design-system既存の`Tabs`コンポーネントで7タブを構成（承認前レビュー対応、下記参照）、デバウンス付きSQLプレビュー（`CodeBlock`）、「保存へ」「実行へ」ボタン、router state経由の逆遷移時リバースエンジニアリング対応
 - **タブサブコンポーネント7種**: `QueryBuilderSelectTab`, `QueryBuilderFromTab`, `QueryBuilderJoinTab`, `QueryBuilderConditionList`（WHERE/HAVING共通）, `QueryBuilderColumnListTab`（GROUP BY）, `QueryBuilderOrderByTab`, `QueryBuilderLimitOffsetTab`（`QueryBuilderFromTab`・`QueryBuilderJoinTab`自体は別コンポーネントのまま維持し、`QueryBuilderPage`側でFROMタブのcontentとして両方を並べてレンダリングする）
 
-## 承認前レビュー対応（タブ構成の見直し）
+## 承認前レビュー対応1（タブ構成の見直し）
 
 Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合、タブ順序をFROM/SELECT/WHERE/GROUP BY/HAVING/ORDER BY/LIMIT OFFSETに」という指摘を受け、以下を修正した:
 
@@ -27,6 +27,15 @@ Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合�
 - いずれもコンポーネント構造（`Select`/`TextInput`が直接`<select>`/`<input>`をレンダリングする実装）は変更せず、ラップするdivにCSS Moduleクラスを付与するのみ
 - 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
 - **`QueryBuilderOperandPicker`**（実装時に追加）: SELECT/HAVING/ORDER BYタブで共通利用する、列参照または集計関数適用のいずれかを選択する共有部品。3タブでの重複実装を避けるため抽出
+
+## 承認前レビュー対応3（SELECT/WHERE/HAVING/ORDER BYタブのレイアウト見直し）
+
+続けて「SELECTタブも1行に1カラムずつ、WHEREタブも1行に1条件ずつ、HAVINGタブも1行に1条件ずつ、ORDER BYタブも1行に1つずつ」という指摘を受けた。この4タブはいずれも共通部品`QueryBuilderOperandPicker`（列参照/集計関数選択）を利用しており、行内の要素構成が同型（オペランド＋α＋削除ボタン）だったため、共通CSS Moduleとして整理した:
+
+- `QueryBuilderOperandPicker.module.css`（新規）: `QueryBuilderOperandPicker`自体が返す`<span>`を`.picker`（`display:inline-flex`）にし、内部のモード切替・集計関数・列選択の各`Select`を横並びに
+- `QueryBuilderItemRow.module.css`（新規）: SELECT/WHERE・HAVING/ORDER BYの4箇所で共通利用する行コンテナ`.row`（`display:flex`）。`QueryBuilderOperandPicker`が返す`span`は`.row > span`として広め（`flex:2`）に、`Select`/`TextInput`は`.row > select`/`.row > input`として`flex:1`に配分
+- `QueryBuilderSelectTab.tsx`・`QueryBuilderConditionList.tsx`（WHERE/HAVING共通）・`QueryBuilderOrderByTab.tsx`の各行divに`styles.row`を付与するのみで、コンポーネント構造自体は変更なし
+- 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル219件）・`npm run build`をすべて実行し成功を確認
 
 ## 逆遷移・相互遷移の実装（BR-QUERYBUILDER-12）
 

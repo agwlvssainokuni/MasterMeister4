@@ -19,6 +19,7 @@ import { Button, Select, TextInput } from '../design-system/components'
 import type { Condition, ColumnDataTypeCategory, ConditionOperator } from '../api/queryBuilder'
 import type { AvailableColumn } from './QueryBuilderOperandPicker'
 import { QueryBuilderOperandPicker } from './QueryBuilderOperandPicker'
+import styles from './QueryBuilderItemRow.module.css'
 
 function resolveCategory(condition: Condition, columns: AvailableColumn[]): ColumnDataTypeCategory {
   if (condition.column) {
@@ -94,7 +95,7 @@ export function QueryBuilderConditionList({
         const category = resolveCategory(condition, columns)
         const valueless = condition.operator === 'IS_NULL' || condition.operator === 'IS_NOT_NULL'
         return (
-          <div key={index} data-testid={`${testIdPrefix}-${index}`}>
+          <div key={index} className={styles.row} data-testid={`${testIdPrefix}-${index}`}>
             <QueryBuilderOperandPicker
               columns={columns}
               allowAggregate={allowAggregate}

@@ -2269,6 +2269,15 @@
 
 ---
 
+## UNIT-07 Code Generation完了報告への指摘4: SELECT/WHERE/HAVING/ORDER BYタブも一行に
+
+**Timestamp**: 2026-07-26T19:10:00Z
+**User Input**: "SELECTタブも1行に1カラムずつ、WHEREタブも1行に1条件ずつ、HAVINGタブも1行に1条件ずつ、ORDER BYタブも1行に1つずつ。"
+**AI Response**: "この4タブが共通利用するQueryBuilderOperandPicker（列参照/集計関数選択の共有部品）にQueryBuilderOperandPicker.module.cssを新規追加し、返り値のspanを.picker（display:inline-flex）にして内部のSelect群を横並びに。さらにQueryBuilderItemRow.module.cssを新規追加し、4箇所（QueryBuilderSelectTab・QueryBuilderConditionList・QueryBuilderOrderByTab）の各行divに共通の.rowクラス（display:flex）を付与、オペランド部分はflex:2、Select/TextInputはflex:1で配分。コンポーネント構造自体は変更なし。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル219件成功）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応3として追記、対応1〜3の順序も整理。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---
+
 ## UNIT-07 Code Generation完了報告への指摘3: FROM/JOINタブのレイアウトを一行に
 
 **Timestamp**: 2026-07-26T19:05:00Z
