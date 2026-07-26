@@ -16,7 +16,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Alert, Button, PageHeader } from '../design-system/components'
 import { AuthenticatedLayout } from './AuthenticatedLayout'
 import { QueryEditorPanel } from './QueryEditorPanel'
@@ -26,18 +26,26 @@ import { ApiError } from '../api/http'
 
 const DEFAULT_PAGE_SIZE = 50
 
+interface QueryExecutionPrefill {
+  sql?: string
+  schemaName?: string
+}
+
 // frontend-components.md Flow B-2。ad-hoc実行画面。「名前を付けて保存」で
 // Flow AのA-3（新規保存クエリ画面）へ、現在の入力状態をrouter state経由で引き継いで遷移する
-// （本画面自体には保存操作を持たない）。
+// （本画面自体には保存操作を持たない）。クエリビルダー画面からの逆遷移時は、
+// 遷移元のSQL・スキーマをrouter state経由で受け取り反映する（BR-QUERYBUILDER-12）。
 export function QueryExecutionPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const location = useLocation()
   const { connectionId } = useParams<{ connectionId: string }>()
   const connectionIdNum = Number(connectionId)
+  const prefill = (location.state as QueryExecutionPrefill | null) ?? null
 
   const [schemas, setSchemas] = useState<string[]>([])
-  const [schemaName, setSchemaName] = useState('')
-  const [sql, setSql] = useState('')
+  const [schemaName, setSchemaName] = useState(prefill?.schemaName ?? '')
+  const [sql, setSql] = useState(prefill?.sql ?? '')
   const [paramValues, setParamValues] = useState<Record<string, string>>({})
   const [pagingEnabled, setPagingEnabled] = useState(false)
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE)
@@ -51,6 +59,19 @@ export function QueryExecutionPage() {
       .then((list) => setSchemas(list.map((s) => s.schemaName)))
       .catch((error) => setErrorMessage(error instanceof ApiError ? error.message : t('state.error')))
   }, [connectionIdNum, t])
+
+  // BR-QUERYBUILDER-12。クエリビルダー画面から戻ってきた場合、router state経由のSQLで
+  // 反映する（location.keyはナビゲーションごとに変わるため、同一パスへの再遷移でも確実に反応する）。
+  useEffect(() => {
+    if (!prefill?.sql) {
+      return
+    }
+    setSql(prefill.sql)
+    if (prefill.schemaName) {
+      setSchemaName(prefill.schemaName)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.key])
 
   const onExecute = useCallback(async () => {
     setExecuting(true)

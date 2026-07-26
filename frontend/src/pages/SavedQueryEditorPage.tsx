@@ -93,11 +93,16 @@ export function SavedQueryEditorPage() {
     getSavedQuery(connectionIdNum, savedQueryIdNum)
       .then((q) => {
         setSavedQuery(q)
-        setSql(q.sql)
+        // クエリビルダー画面からの遷移でprefillのSQLが既に反映されている場合は
+        // 上書きしない（下記location.key監視のeffectとの競合を避ける。実機検証時の発見）
+        if (!prefill?.sql) {
+          setSql(q.sql)
+        }
         setSaveName(q.name)
         setSaveVisibility(q.visibility)
       })
       .catch((error) => setErrorMessage(error instanceof ApiError ? error.message : t('state.error')))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, connectionIdNum, savedQueryIdNum, t])
 
   // frontend-components.md「逆遷移・相互遷移の実装方針」3。クエリビルダー画面から

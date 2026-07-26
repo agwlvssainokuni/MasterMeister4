@@ -45,10 +45,10 @@ function QueryBuilderTarget() {
   )
 }
 
-function renderPage() {
+function renderPage(state?: unknown) {
   return render(
     <ThemeProvider>
-      <MemoryRouter initialEntries={['/query-execution/1']}>
+      <MemoryRouter initialEntries={[{ pathname: '/query-execution/1', state }]}>
         <AuthProvider>
           <Routes>
             <Route path="/query-execution/:connectionId" element={<QueryExecutionPage />} />
@@ -113,6 +113,14 @@ describe('QueryExecutionPage', () => {
     await user.type(screen.getByTestId('query-editor-sql-input'), 'SELECT * FROM t WHERE a = :name')
 
     expect(await screen.findByTestId('query-editor-param-name')).toBeInTheDocument()
+  })
+
+  it('クエリビルダー画面からのrouter stateでSQL・スキーマをプレフィルする', async () => {
+    vi.mocked(queryApi.listQuerySchemas).mockResolvedValueOnce([{ schemaName: 'public' }])
+    renderPage({ sql: 'SELECT t1.id FROM items AS t1', schemaName: 'public' })
+
+    expect(await screen.findByDisplayValue('SELECT t1.id FROM items AS t1')).toBeInTheDocument()
+    expect(await screen.findByText('public')).toBeInTheDocument()
   })
 
   it('「名前を付けて保存」をクリックすると現在の入力をrouter state経由で新規保存クエリ画面へ引き継ぐ', async () => {

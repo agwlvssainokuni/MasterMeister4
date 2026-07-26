@@ -189,6 +189,16 @@ describe('SavedQueryEditorPage - 既存クエリ実行モード', () => {
     expect(await screen.findByText('保存クエリ一覧画面')).toBeInTheDocument()
   })
 
+  it('クエリビルダー画面からrouter state経由で戻った場合、getSavedQueryの結果でSQLが上書きされず編集モードに入る', async () => {
+    vi.mocked(queryApi.listQuerySchemas).mockResolvedValueOnce([{ schemaName: 'public' }])
+    vi.mocked(queryApi.getSavedQuery).mockResolvedValueOnce(EXISTING_QUERY)
+    renderPage('/saved-queries/1/42', { sql: 'SELECT t1.id FROM items AS t1', schemaName: 'public' })
+
+    const sqlInput = await screen.findByDisplayValue('SELECT t1.id FROM items AS t1')
+    expect(sqlInput).not.toHaveAttribute('readonly')
+    expect(screen.getByTestId('saved-query-update-button')).toBeInTheDocument()
+  })
+
   it('編集モードで「クエリビルダーで編集」をクリックすると編集情報を引き継いでクエリビルダー画面へ遷移する', async () => {
     vi.mocked(queryApi.listQuerySchemas).mockResolvedValueOnce([{ schemaName: 'public' }])
     vi.mocked(queryApi.getSavedQuery).mockResolvedValueOnce(EXISTING_QUERY)

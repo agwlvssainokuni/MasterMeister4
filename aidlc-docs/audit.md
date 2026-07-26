@@ -2326,3 +2326,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-07 Code Generation完了報告への指摘8: クエリビルダーからの逆遷移でSQLが引き継がれないバグ
+
+**Timestamp**: 2026-07-26T19:50:00Z
+**User Input**: "クエリビルダーからクエリ実行へSQLが引き継がれない。同じくクエリビルダーから保存クエリの編集へSQLが引き継がれない。"
+**AI Response**: "調査の結果、Code Generation時の実装漏れ・競合状態を2件発見。(1) QueryExecutionPage.tsxがuseLocationを呼んでおらず、router state経由のSQL・schemaNameを受け取る処理が完全に欠落していた（送信側の実装はあったが受信側が未実装）。useLocationを追加し、prefillをuseStateの初期値にするとともにlocation.key監視effectを追加。(2) SavedQueryEditorPage.tsx（mode='existing'）は、location.key監視effectでprefillのSQLを一度セットしても、直後にgetSavedQueryの非同期レスポンスでsetSql(q.sql)により上書きされてしまう競合状態があった。getSavedQueryの.then内でprefill?.sqlがある場合はsetSqlをスキップするよう修正。QueryExecutionPage.test.tsx・SavedQueryEditorPage.test.tsxにそれぞれ新規テストを追加（router state経由のプレフィル確認、getSavedQueryによる上書きが起きないことの確認）。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全55ファイル222件成功、新規2件含む）、npm run build成功を確認。frontend-summary.mdに承認前レビュー対応7として追記。"
+**Context**: CONSTRUCTION - UNIT-07 Code Generation完了報告後の修正対応（バグ修正）、修正完了、改めてContinue to Next Stage承認待ち
+
+---

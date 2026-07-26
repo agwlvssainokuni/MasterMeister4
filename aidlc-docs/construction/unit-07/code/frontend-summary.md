@@ -66,6 +66,17 @@ Code Generation完了報告後、ユーザーから「FROM/JOINタブは統合�
 - `QueryExecutionPage.tsx`・`SavedQueryEditorPage.tsx`（new/editモード双方）に「クエリビルダーで編集」ボタンを追加し、現在のSQL・スキーマをrouter state経由でクエリビルダー画面へ引き継ぐ
 - `SavedQueryEditorPage.tsx`は、クエリビルダー画面から「保存へ」で戻ってきた場合に備え、`location.key`を監視するeffectを追加した。同一パスへの再ナビゲーションでもReact Routerが同一コンポーネントインスタンスを維持するため、`useState`の初期値だけではrouter stateの変更を検知できない（実装時の発見）。`location.key`はナビゲーションのたびに変化するため、これを依存配列にすることで確実に反応する
 
+## 承認前レビュー対応7（クエリビルダーからの逆遷移でSQLが引き継がれないバグの修正）
+
+「クエリビルダーからクエリ実行へSQLが引き継がれない。同じくクエリビルダーから保存クエリの編集へSQLが引き継がれない。」という報告を受けた。調査の結果、Code Generation時の実装漏れ・競合状態を2件発見した:
+
+1. **`QueryExecutionPage.tsx`**: `useLocation`を呼んでおらず、router state経由のSQL・schemaNameを受け取る処理が完全に欠落していた（「クエリビルダーで編集」で送る側の実装はあったが、クエリビルダー側から遷移してきた場合に受け取る側の実装が存在しなかった）。`useLocation`を追加し、`prefill?.sql`/`prefill?.schemaName`を`useState`の初期値にするとともに、`SavedQueryEditorPage.tsx`と同様の`location.key`監視effectを追加して同一パスへの再遷移でも反応するようにした
+2. **`SavedQueryEditorPage.tsx`**（`mode='existing'`、既存クエリ編集への相互遷移）: `location.key`監視のeffectでprefillのSQLを一度セットしても、直後に`getSavedQuery`の非同期レスポンスが返ってきて`setSql(q.sql)`で上書きしてしまう競合状態があった。`getSavedQuery`の`.then`内で`prefill?.sql`がある場合は`setSql`をスキップするよう修正（`savedQuery`本体・`saveName`・`saveVisibility`はprefillの有無に関わらずセットする）
+
+- `QueryExecutionPage.test.tsx`: `renderPage`にstate引数を追加し、新規テスト「クエリビルダー画面からのrouter stateでSQL・スキーマをプレフィルする」を追加
+- `SavedQueryEditorPage.test.tsx`: 新規テスト「クエリビルダー画面からrouter state経由で戻った場合、getSavedQueryの結果でSQLが上書きされず編集モードに入る」を追加
+- 修正後、`npx tsc --noEmit`・`npm run lint`・`npm test -- --run`（全55ファイル222件、新規2件含む）・`npm run build`をすべて実行し成功を確認
+
 ## ルーティング・ナビゲーション
 
 - `App.tsx`に`/query-builder`・`/query-builder/:connectionId`を追加
