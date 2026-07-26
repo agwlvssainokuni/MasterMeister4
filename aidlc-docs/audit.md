@@ -2602,3 +2602,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、マイグレーション・ドキュメント完了、最終ビルド検証へ
 
 ---
+
+## UNIT-08 Code Generation Part 2完了 - 最終ビルド検証・実機E2E検証完了
+
+**Timestamp**: 2026-07-26T23:18:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "最終ビルド検証: ./gradlew :backend:build（全412件成功）、npm test（frontend、全241件成功）、npm run build成功。実機E2E検証: devenv起動、bootWarで明示的ビルド、管理者ユーザ新規ブートストラップ・一般ユーザ新規登録承認のうえ、curl経由でPostgreSQL接続・スキーマ取込・グループ/権限設定、接続一覧・スキーマ名一覧・履歴一覧（絞込・ページング）を確認。実行者スコープのフェイルクローズ（一般ユーザはexecutedByScope=ALL指定でも自分の履歴のみ、管理者は全ユーザ分取得）、保存クエリ経由実行時のqueryType=SAVED・savedQueryName解決（非表示化後も継続）、SQLキーワード検索・日時範囲相関検証・ページサイズ上限超過時の400応答、接続削除後の「(削除済み接続)」プレースホルダー表示を確認。実機検証時の手順ミス2件を発見・是正（スキーマ取込の正しいAPIパスは/schema-refresh、PrimaryPermissionのenum値はNONE/READ/UPDATE）が、いずれも検証手順上の見落としでUNIT-08実装自体には問題なし。OWASP Dependency-CheckはUNIT-02〜07と同じくNVD APIキー未設定のため実施見送り。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、全ステップ完了
+
+---

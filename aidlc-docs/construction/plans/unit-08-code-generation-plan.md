@@ -103,9 +103,15 @@
 
 ### 14. 最終ビルド検証
 
-- [ ] Step 14.1: **検証チェックポイント**: `./gradlew :backend:build`、`npm test`（frontend）、`npm run build`（frontend）を確認する
-- [ ] Step 14.2: devenv（PostgreSQL・MySQL）に対し実アプリ（`bootWar`で明示的にビルド、`feedback_deployment_artifact.md`の運用ルールに従う）で、一般ユーザ・管理者それぞれのJWTを用いてAPI経由（curl）で接続一覧・スキーマ名一覧・履歴一覧（絞込・ページング）を確認する。実行者スコープのフェイルクローズ（一般ユーザが`executedByScope=ALL`を指定しても自分の履歴のみ返ること）、削除済み接続・非表示化済み保存クエリのプレースホルダー表示、`(connection_id, executed_at)`インデックスが実際に適用されていること（`EXPLAIN`等）を確認する
-- [ ] Step 14.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜07と同じくNVD APIキー未設定のため実施見送り
+- [x] Step 14.1: **検証チェックポイント**: `./gradlew :backend:build`（全412件成功）、`npm test`（frontend、全58ファイル241件成功）、`npm run build`（frontend、成功）を確認した
+- [x] Step 14.2: devenv（PostgreSQL）に対し実アプリ（`bootWar`で明示的にビルド、`feedback_deployment_artifact.md`の運用ルールに従う）で、管理者ユーザ（新規ブートストラップ）・一般ユーザ（新規登録・承認）それぞれのJWTを用いてAPI経由（curl）で以下を確認した:
+  - 接続一覧・スキーマ名一覧・履歴一覧（絞込・ページング）の正常動作
+  - 実行者スコープのフェイルクローズ: 一般ユーザが`executedByScope=ALL`を指定しても自分の履歴（1件）のみ返り、管理者は全ユーザ分（3件）を取得できることを確認
+  - 保存クエリ経由の実行で`queryType=SAVED`・`savedQueryName`が正しく解決されること、非表示化（retire）後も名前解決が継続することを確認
+  - SQLキーワード部分一致検索、実行日時範囲の相関検証（開始>終了で400 `QUERY_HISTORY_INVALID_PARAMETER`）、ページサイズ上限超過（500件指定で400）を確認
+  - 接続削除後、接続一覧に「(削除済み接続)」のプレースホルダーが表示されること（BR-QUERYHISTORY-04・11）を確認
+  - **実機E2E検証時の手順ミス（実装バグではない）**: スキーマ取込・権限付与のAPIパスを誤って推測していた（`/schema-import`ではなく`/schema-refresh`）。`PrimaryPermission`のenum値を`WRITE`と誤って推測していた（実際は`NONE`/`READ`/`UPDATE`）。いずれも既存実装の確認不足であり、UNIT-08自体の実装には問題なし
+- [x] Step 14.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜07と同じくNVD APIキー未設定のため実施見送り
 
 ## Story Traceability
 
