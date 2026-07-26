@@ -30,9 +30,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-flyway")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    // OpenTelemetry(トレース・メトリクスのOTLPエクスポート)。observability/docker-compose.yml参照。
+    // OpenTelemetry(トレース・メトリクス・ログのOTLPエクスポート)。observability/docker-compose.yml参照。
     // micrometer-tracing-bridge-otel・opentelemetry-exporter-otlp・micrometer-registry-otlpを含む
     implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
+    // spring-boot-starter-opentelemetryはOTel SDKのSdkLoggerProvider/エクスポータのみを構成し、
+    // Logbackのログイベントをそこへ橋渡しするアペンダは含まれないため別途追加する
+    // (OpenTelemetryLoggingConfig参照)
+    implementation("io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.30.0-alpha")
     // トレースログ(TraceAspect、reference/trace参照)。Spring Boot 4.1でspring-boot-starter-aopは
     // spring-boot-starter-aspectjに改称された
     implementation("org.springframework.boot:spring-boot-starter-aspectj")
@@ -62,6 +66,16 @@ dependencies {
     // (org.h2.tools.Server)、テストコンパイル時にも明示的に依存を追加する
     testImplementation("com.h2database:h2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+configurations.all {
+    resolutionStrategy {
+        // opentelemetry-logback-appender-1.0はopentelemetry-api-incubator:1.64.0-alphaを
+        // 推移的に要求するが、Spring Bootが管理する他のOTel SDKアーティファクト(1.62.0)と
+        // 混在するとExtendedAttributeKey等のクラスが解決できず起動時にNoClassDefFoundErrorとなる
+        // (incubatorはalphaのため互換性保証がない)。SDK本体と同じ1.62.0系に固定する
+        force("io.opentelemetry:opentelemetry-api-incubator:1.62.0-alpha")
+    }
 }
 
 tasks.test {

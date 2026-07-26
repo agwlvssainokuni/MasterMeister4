@@ -2007,3 +2007,12 @@
 **Context**: 横断的技術追加（特定unitに属さない）、実機検証で動作確認済み・調査の過程でテスト手順の見落としを自己発見・修正
 
 ---
+
+## 横断的機能: OpenTelemetryへログ追加（トレース・メトリクスに続く第3の柱、UNIT-06のスコープ外）
+
+**Timestamp**: 2026-07-26T04:45:00Z
+**User Input**: "ログも入れられる？"
+**AI Response**: "observability/docker-compose.ymlにLoki（grafana/loki:3.3.2）を追加し、otel-collector-config.yamlにOTLPログ受信→Lokiへのエクスポータ・パイプラインを、datasources.ymlにLokiデータソースを追加。バックエンド側はapplication.ymlにmanagement.logging.export.otlp.enabled（MM_OTLP_LOGGING_ENABLED）・management.opentelemetry.logging.export.otlp.endpoint（MM_OTLP_LOGGING_ENDPOINT）を追加（JARメタデータ抽出で非推奨プロパティ名を事前確認、トレース設定時と同じ方式）。実機検証で、spring-boot-starter-opentelemetryはOTel SDK側のSdkLoggerProvider/エクスポータのみを構成し、Logbackのログイベントをそこへ橋渡しするアペンダを含まないため、ログが一切Lokiに届かない問題を発見。io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0を追加し、OpenTelemetryLoggingConfig（起動時にOpenTelemetryAppender.installを実行）とlogback-spring.xml（Spring Boot標準base.xmlをinclude、OpenTelemetryアペンダをrootに追加）を新設して解決。さらに同アペンダが推移的に要求するopentelemetry-api-incubator:1.64.0-alphaが、Spring Boot管理下のOTel SDK本体1.62.0系とバージョン不整合を起こしNoClassDefFoundError（ExtendedAttributeKey欠落）で起動失敗する問題を発見し、build.gradle.ktsのresolutionStrategy.forceで1.62.0-alphaに固定して解決。bootJarを明示的に再ビルドし実機で起動確認、Loki API（/loki/api/v1/labels、/loki/api/v1/query_range）でアプリケーションログ（構造化ラベル付き、code_filepath/scope_name/severity_text等）の到達を確認、GrafanaのLokiデータソース認識も確認。backend/README.md・observability/README.mdに追記。バックエンド全337件成功（新規テストなし、設定・依存追加のみ）。"
+**Context**: 横断的技術追加（特定unitに属さない）、実機検証で2件の不具合（アペンダ欠落・依存バージョン不整合）を発見・修正
+
+---

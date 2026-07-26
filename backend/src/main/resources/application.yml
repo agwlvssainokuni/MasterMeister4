@@ -106,9 +106,9 @@ springdoc:
 # それ以外のエンドポイントはADMINロール必須）。詳細情報の露出(env・beans・heapdump等)を
 # 抑えるため、公開するエンドポイントは最小限に絞る。
 #
-# OpenTelemetry(トレース・メトリクスのOTLPエクスポート、observability/docker-compose.yml参照)は
+# OpenTelemetry(トレース・メトリクス・ログのOTLPエクスポート、observability/docker-compose.yml参照)は
 # デフォルトで無効(既存環境・テスト・CIへの影響を避けるため)。有効化する場合はMM_TRACING_ENABLED=true・
-# MM_OTLP_METRICS_ENABLED=trueを設定する(observability/README.md参照)。
+# MM_OTLP_METRICS_ENABLED=true・MM_OTLP_LOGGING_ENABLED=trueを設定する(observability/README.md参照)。
 management:
   endpoints:
     web:
@@ -123,11 +123,19 @@ management:
       enabled: ${MM_TRACING_ENABLED:false}
     sampling:
       probability: ${MM_TRACING_SAMPLING_PROBABILITY:1.0}
+  logging:
+    export:
+      otlp:
+        enabled: ${MM_OTLP_LOGGING_ENABLED:false}
   opentelemetry:
     tracing:
       export:
         otlp:
           endpoint: ${MM_OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}
+    logging:
+      export:
+        otlp:
+          endpoint: ${MM_OTLP_LOGGING_ENDPOINT:http://localhost:4318/v1/logs}
   otlp:
     metrics:
       export:

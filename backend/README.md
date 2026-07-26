@@ -104,7 +104,7 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 
 公開するエンドポイントは`management.endpoints.web.exposure.include`（`application.yml`）で調整する。既定は`health,info,metrics`のみ（`env`・`beans`・`heapdump`等、機微情報や内部構造を露出するエンドポイントは含めていない）。
 
-## OpenTelemetry（トレース・メトリクス）
+## OpenTelemetry（トレース・メトリクス・ログ）
 
 `spring-boot-starter-opentelemetry`（Micrometer Tracing + OTLPエクスポート）を追加済み。デフォルトでは無効（既存の開発・テスト・CI環境への影響を避けるため）で、以下の環境変数を設定すると有効化する。
 
@@ -116,13 +116,18 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 | `MM_OTLP_METRICS_ENABLED` | `false` | メトリクスのOTLPエクスポートを有効化する |
 | `MM_OTLP_METRICS_ENDPOINT` | `http://localhost:4318/v1/metrics` | OTLPメトリクス送信先 |
 | `MM_OTLP_METRICS_STEP` | `15s` | メトリクスのエクスポート間隔 |
+| `MM_OTLP_LOGGING_ENABLED` | `false` | ログのOTLPエクスポートを有効化する |
+| `MM_OTLP_LOGGING_ENDPOINT` | `http://localhost:4318/v1/logs` | OTLPログ送信先 |
 
-受信・可視化環境（Grafana + Tempo + Prometheus + OpenTelemetry Collector、`devenv/`とは独立）は`../observability/`を参照。
+ログのOTLPエクスポートには`OpenTelemetryLoggingConfig`＋`logback-spring.xml`のアペンダ登録が必要（`spring-boot-starter-opentelemetry`はSDK側のロガープロバイダ・エクスポータのみを構成し、Logbackのログイベントをそこへ橋渡しするアペンダ（`io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0`）は含まないため別途追加）。なお同アペンダが推移的に要求する`opentelemetry-api-incubator`はSpring Boot管理下のOTel SDK本体（1.62.0系）よりも新しいalpha版を要求してくるため、`build.gradle.kts`で明示的に1.62.0-alphaへ強制している（バージョン不一致による`NoClassDefFoundError`対策）。
+
+受信・可視化環境（Grafana + Tempo + Prometheus + Loki + OpenTelemetry Collector、`devenv/`とは独立）は`../observability/`を参照。
 
 ```bash
 docker compose -f ../observability/docker-compose.yml up -d
 export MM_TRACING_ENABLED=true
 export MM_OTLP_METRICS_ENABLED=true
+export MM_OTLP_LOGGING_ENABLED=true
 ./gradlew :backend:bootRun
 ```
 

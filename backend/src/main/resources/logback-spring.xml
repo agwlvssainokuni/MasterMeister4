@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    logging.pattern.console・logging.level.*(application.yml)による標準設定は
+    Spring Bootのbase.xml(defaults.xml + CONSOLE/FILEアペンダ)をincludeすることで維持しつつ、
+    OTLPログエクスポート用にOpenTelemetryAppenderをrootへ追加する
+    (OpenTelemetryLoggingConfigが起動時にOpenTelemetryインスタンスをインストールする)。
+-->
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <appender name="OPENTELEMETRY" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+        <captureCodeAttributes>true</captureCodeAttributes>
+        <captureMdcAttributes>*</captureMdcAttributes>
+    </appender>
+
+    <root>
+        <appender-ref ref="OPENTELEMETRY"/>
+    </root>
+</configuration>

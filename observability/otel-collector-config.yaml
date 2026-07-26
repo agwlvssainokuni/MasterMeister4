@@ -18,6 +18,11 @@ exporters:
   # スクレイプする)。アプリからはOTLP pushのみで完結させ、直接Prometheusを意識させない。
   prometheus:
     endpoint: 0.0.0.0:8889
+  # Loki 3.xはOTLPログを/otlp/v1/logsでネイティブ受信できるため、専用エクスポータ変換は不要
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
 
 service:
   pipelines:
@@ -29,3 +34,7 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [prometheus]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp/loki]
