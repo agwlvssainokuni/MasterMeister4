@@ -52,18 +52,18 @@
 
 ### 4. API Layer Generation
 
-- [ ] Step 4.1: `QueryHistoryController`（`cherry.mastermeister.queryhistory.api`）を作成する（3エンドポイント: `GET /api/query-history/connections`, `GET /api/query-history/{connectionId}/schemas`, `GET /api/query-history/{connectionId}`。各エンドポイントで`@AuthenticationPrincipal Jwt principal`からロール判定→`executedByFilter`計算→Service呼び出し、logical-components.md §1）
-- [ ] Step 4.2: `GlobalExceptionHandler`への追加要否を確認する（新規例外なしのため追加不要見込み、UNIT-05〜07と同じ確認手順）
-- [ ] Step 4.3: SecurityFilterChain設定への`/api/query-history/**`ルール追加要否を確認する（既存の`/api/**`→`authenticated()`ルールでカバーされる見込み、UNIT-05〜07と同じ確認手順）
-- [ ] Step 4.4: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ）
+- [x] Step 4.1: `QueryHistoryController`（`cherry.mastermeister.queryhistory.api`）を作成する（3エンドポイント: `GET /api/query-history/connections`, `GET /api/query-history/{connectionId}/schemas`, `GET /api/query-history/{connectionId}`。各エンドポイントで`@AuthenticationPrincipal Jwt principal`からロール判定→`executedByFilter`計算→Service呼び出し、logical-components.md §1）。**実装時の追加**: 新規例外`QueryHistoryInvalidParameterException`（400）を`cherry.mastermeister.common.exception`に追加し、ページサイズ上限（200件）・日時範囲の相関チェック違反時に送出（Step 1.1の実装判断の続き）
+- [x] Step 4.2: `GlobalExceptionHandler`への追加要否を確認する — 新規例外は`ApiException`のサブクラスであり既存の汎用ハンドラで処理されるため追加不要と確認（UNIT-05〜07と同じ結論）
+- [x] Step 4.3: SecurityFilterChain設定への`/api/query-history/**`ルール追加要否を確認する — 既存の`/api/**`→`authenticated()`ルールでカバーされるため追加不要と確認（UNIT-05〜07と同じ結論）
+- [x] Step 4.4: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）
 
 ### 5. API Layer Unit Testing
 
-- [ ] Step 5.1: `@WebMvcTest`で`QueryHistoryControllerTest`を作成する（3エンドポイントの正常系、絞込パラメータのBean Validation違反時400応答、一般ユーザが`executedByScope=ALL`を指定した場合のフェイルクローズ確認）
+- [x] Step 5.1: `@WebMvcTest`で`QueryHistoryControllerTest`を作成する（3エンドポイントの正常系、絞込パラメータ違反時400応答、一般ユーザが`executedByScope=ALL`を指定した場合のフェイルクローズ確認をMockitoの`verify`で実証）— 8件全件成功
 
 ### 6. API Layer Summary
 
-- [ ] Step 6.1: `aidlc-docs/construction/unit-08/code/api-layer-summary.md`を作成する
+- [x] Step 6.1: `aidlc-docs/construction/unit-08/code/api-layer-summary.md`を作成する
 
 ### 7. Repository Layer Generation
 

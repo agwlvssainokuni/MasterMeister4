@@ -2575,3 +2575,12 @@
 **Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、Business Logic層完了、API層へ
 
 ---
+
+## UNIT-08 Code Generation Part 2 - API層完了（セクション4〜6）
+
+**Timestamp**: 2026-07-26T22:20:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "QueryHistoryController（3エンドポイント）を実装。実装時の追加: 新規例外QueryHistoryInvalidParameterException（400）を追加し、ページサイズ上限（200件）・日時範囲の相関チェック違反時に送出。GlobalExceptionHandler・SecurityFilterChainへの追加は不要と確認（UNIT-05〜07と同じ結論）。messages_ja/en.propertiesにエラーメッセージを追加。QueryHistoryControllerTest（@WebMvcTest、実フィルタチェーン有効）を8件作成し、実行者スコープのフェイルクローズをMockitoのverifyで実証。api-layer-summary.mdを作成。全件成功。"
+**Context**: CONSTRUCTION - UNIT-08 Code Generation Part 2、API層完了、フロントエンドへ
+
+---
