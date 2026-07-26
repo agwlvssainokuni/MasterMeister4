@@ -10,8 +10,8 @@ nfr-design-patterns.mdで確定した実装パターンを、具体的な論理�
 
 単一のControllerに3エンドポイントをまとめる。
 
-- `GET /api/query-history/connections` — 履歴実績ベースの接続一覧（`QueryHistoryService`に委譲、BR-QUERYHISTORY-11）
-- `GET /api/query-history/{connectionId}/schemas` — 対象接続の履歴実績ベースのスキーマ名一覧（BR-QUERYHISTORY-10）
+- `GET /api/query-history/connections?executedByScope=ALL|MINE`（省略可、デフォルト`ALL`） — 履歴実績ベースの接続一覧（`QueryHistoryService`に委譲、BR-QUERYHISTORY-11）
+- `GET /api/query-history/{connectionId}/schemas?executedByScope=ALL|MINE`（同上） — 対象接続の履歴実績ベースのスキーマ名一覧（BR-QUERYHISTORY-10、承認前レビューで実行者スコープによるフィルタを追加）
 - `GET /api/query-history/{connectionId}?executedByScope=...&executedAtFrom=...&executedAtTo=...&schemaName=...&sqlKeyword=...&page=...&pageSize=...` — 履歴一覧取得（絞込・ページング）
 
 各エンドポイントで`@AuthenticationPrincipal Jwt principal`から`currentUserId(principal)`（`principal.getSubject()`）・ロール（`principal.getClaimAsString("role")`）を取得する（nfr-design-patterns.md §1.2）。既存の`SecurityConfig`の`.requestMatchers("/api/**").authenticated()`ルールでカバーされるため、新規のSecurityFilterChainルール追加は不要。
@@ -25,8 +25,8 @@ Controllerは、ロール判定の結果を「絞込対象を自分のみに限�
 - `listConnections(Long executedByFilter): List<QueryHistoryConnectionView>`
   - `executedByFilter`が非nullの場合は`executedBy = executedByFilter`、nullの場合は条件なしで、`QueryExecutionRecordRepository`から`connectionId`のDISTINCT一覧を取得（新規カスタムクエリメソッド、後述）
   - 取得した`connectionId`群を`RdbmsConnectionRepository.findAllById(...)`（UNIT-03既存）で一括解決し、表示名を付与。見つからない場合は「(削除済み接続)」のプレースホルダー
-- `listSchemas(Long connectionId): List<String>`
-  - `QueryExecutionRecordRepository`から対象接続の`schemaName`のDISTINCT一覧を取得（新規カスタムクエリメソッド）
+- `listSchemas(Long connectionId, Long executedByFilter): List<String>`
+  - `executedByFilter`が非nullの場合は`executedBy = executedByFilter`、nullの場合は条件なしで、`QueryExecutionRecordRepository`から対象接続の`schemaName`のDISTINCT一覧を取得（新規カスタムクエリメソッド）。`listConnections`と同じ`executedByFilter`の受け渡し方針（承認前レビューでの是正: 当初`connectionId`のみを受け取る設計だったが、実行者スコープでフィルタしないと一般ユーザが他ユーザのスキーマ名を知りうる情報漏洩になるため追加）
 - `listHistory(Long connectionId, Long executedByFilter, QueryHistorySearchCriteria criteria, Pageable pageable): Page<QueryHistoryRecordView>`
   - `QueryHistorySpecifications`（nfr-design-patterns.md §2.1）で動的に`Specification<QueryExecutionRecord>`を組み立てる。`connectionIdEquals(connectionId)`は常に付与し、`executedByFilter`が非nullの場合のみ`executedByEquals(executedByFilter)`を追加する（`executedByFilter`自体は実行者スコープの絞込結果であり、Serviceはこれを他の絞込条件と同列に扱うのみでロール判定には関与しない）
   - 組み立てた`Specification`で`QueryExecutionRecordRepository.findAll(spec, pageable)`（`JpaSpecificationExecutor`）を呼び出す
@@ -51,9 +51,10 @@ Controllerは、ロール判定の結果を「絞込対象を自分のみに限�
 
 - `JpaSpecificationExecutor<QueryExecutionRecord>`を追加実装（Q1=A関連の動的クエリのため）
 - 新規カスタムクエリメソッド:
-  - `List<Long> findDistinctConnectionIdByExecutedBy(Long executedBy)` — 一般ユーザの接続一覧用
-  - `List<Long> findDistinctConnectionId()` — 管理者の接続一覧用（全ユーザ対象）
-  - `List<String> findDistinctSchemaNameByConnectionId(Long connectionId)` — スキーマ名一覧用
+  - `List<Long> findDistinctConnectionIdByExecutedBy(Long executedBy)` — 実行者スコープが「自分のみ」の接続一覧用
+  - `List<Long> findDistinctConnectionId()` — 実行者スコープが「全ユーザ」の接続一覧用
+  - `List<String> findDistinctSchemaNameByConnectionIdAndExecutedBy(Long connectionId, Long executedBy)` — 実行者スコープが「自分のみ」のスキーマ名一覧用
+  - `List<String> findDistinctSchemaNameByConnectionId(Long connectionId)` — 実行者スコープが「全ユーザ」のスキーマ名一覧用
 
 ### SavedQueryRepository（既存、UNIT-06実装済み）
 

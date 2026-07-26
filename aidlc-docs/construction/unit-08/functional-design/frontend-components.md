@@ -10,9 +10,9 @@ UNIT-02〜UNIT-07で確立した規約（`frontend/src/pages/`・`frontend/src/a
 
 **APIパス規約（UNIT-05/06/07の確立済み規約を踏襲）**: 新規のトップレベル名前空間`/api/query-history/*`を新設する（管理者ロールを要求しない。実行者スコープの絞込はエンドポイント内部でロール判定する、BR-QUERYHISTORY-03）。
 
-- `GET /api/query-history/connections` — 履歴に実際に記録されている接続の一覧（DISTINCT取得、実行者スコープの範囲はBR-QUERYHISTORY-03に従う、BR-QUERYHISTORY-11）
+- `GET /api/query-history/connections?executedByScope=ALL|MINE`（`executedByScope`省略可、デフォルト`ALL`。一般ユーザは常に`MINE`へ強制、BR-QUERYHISTORY-03） — 履歴に実際に記録されている接続の一覧（DISTINCT取得、BR-QUERYHISTORY-11）
 - `GET /api/query-history/{connectionId}?executedByScope=ALL|MINE&executedAtFrom=...&executedAtTo=...&schemaName=...&sqlKeyword=...&page=0&pageSize=...` — 履歴一覧取得（絞込・ページング、FR-8.1〜8.3）
-- `GET /api/query-history/{connectionId}/schemas` — 対象接続の履歴に実際に記録されているスキーマ名の一覧（DISTINCT取得、スキーマ絞込セレクタ用、BR-QUERYHISTORY-10）
+- `GET /api/query-history/{connectionId}/schemas?executedByScope=ALL|MINE`（同上、省略可・デフォルト`ALL`・一般ユーザは`MINE`強制） — 対象接続の履歴に実際に記録されているスキーマ名の一覧（DISTINCT取得、スキーマ絞込セレクタ用、BR-QUERYHISTORY-10）。**`executedByScope`でも実行者スコープに応じてフィルタする**（承認前レビューでの追加）: 一般ユーザは自分の実行履歴のスキーマ名のみ、他ユーザの実行履歴に含まれるスキーマ名を絞込セレクタ経由で知ることはできない。フロントエンドは履歴一覧画面の実行者スコープSelectが変更されるたびに、このAPIを現在の`executedByScope`で再取得する
 
 ---
 
@@ -33,7 +33,7 @@ QueryHistoryConnectionListPage (AppShell)
 
 **State**: `connections: QueryHistoryConnectionView[]`, `loading: boolean`, `errorMessage: string | null`
 
-**API連携**: `GET /api/query-history/connections`（新規。履歴実績ベースの接続一覧、BR-QUERYHISTORY-11）
+**API連携**: `GET /api/query-history/connections`（新規。履歴実績ベースの接続一覧、BR-QUERYHISTORY-11。`executedByScope`は指定せずデフォルト`ALL`のまま呼び出す。実際に返る範囲はサーバ側でロールに応じ自動決定される：一般ユーザは自分の履歴、管理者は全ユーザの履歴に含まれる接続）
 
 ---
 
@@ -48,7 +48,8 @@ QueryHistoryPage (AppShell)
   │     ├ 実行日時範囲（開始・終了の日時入力2件、片側指定可）
   │     ├ 対象スキーマセレクタ（選択肢は「現在アクセス可能なスキーマ」ではなく、対象接続の履歴に
   │     │  実際に記録されているスキーマ名の一覧（DISTINCT取得、BR-QUERYHISTORY-10）。BR-04により
-  │     │  現在アクセス権のないスキーマの履歴も閲覧可能なため、絞込の選択肢もそれに合わせる、任意）
+  │     │  現在アクセス権のないスキーマの履歴も閲覧可能なため、絞込の選択肢もそれに合わせる、任意。
+  │     │  実行者スコープSelectの選択に応じて選択肢を再取得する（他ユーザのスキーマ名を漏らさない））
   │     └ 実行者スコープSelect（管理者のみ表示。「全ユーザ」「自分のみ」の2択。
   │        一般ユーザには表示せず常に自分のみで固定、BR-QUERYHISTORY-03）
   ├ DataTable（design-system既存コンポーネント。列: 実行日時、種別（保存/直接入力、FR-8.2）、

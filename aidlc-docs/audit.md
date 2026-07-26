@@ -2519,3 +2519,12 @@
 **Context**: CONSTRUCTION - UNIT-08 NFR Design、修正完了、承認待ち
 
 ---
+
+## UNIT-08 承認前レビュー継続: スキーマ名一覧の情報漏洩リスクを発見・修正
+
+**Timestamp**: 2026-07-26T21:26:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "さらに見直したところ、listSchemas(Long connectionId)がlistConnections(Long executedByFilter)とは異なり実行者スコープの絞込を受け取っていないことを発見。一般ユーザが接続一覧・履歴一覧では自分の履歴のみに制限されているにもかかわらず、スキーマ絞込セレクタの選択肢だけは全ユーザの履歴から集約されてしまうと、一般ユーザが他ユーザの実行履歴に含まれるスキーマ名を知ることができてしまう情報漏洩リスクを特定。Functional Design（business-rules.md BR-QUERYHISTORY-10、business-logic-model.md §3、frontend-components.md）とNFR Design（nfr-design-patterns.md §1.2、logical-components.mdのlistSchemasシグネチャ・Repositoryメソッド）を横断的に修正: GET /api/query-history/{connectionId}/schemasにexecutedByScopeパラメータを追加し、listSchemas(Long connectionId, Long executedByFilter)に変更、Repositoryに実行者スコープ別の2バリエーションのメソッドを追加。あわせてGET /api/query-history/connectionsもexecutedByScopeパラメータを明示（省略可、デフォルトALL、一般ユーザはMINE強制）し、フロントエンドは実行者スコープSelect変更のたびにスキーマ一覧を再取得する旨を明記。"
+**Context**: CONSTRUCTION - UNIT-08 NFR Design、修正完了、承認待ち
+
+---

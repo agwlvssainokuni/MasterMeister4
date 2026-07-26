@@ -19,6 +19,7 @@
 - 一般ユーザ（`role != "ADMIN"`）が`executedByScope=ALL`を指定した場合、Controller側で`MINE`へ強制してからService層を呼び出す
 - Serviceのメソッドシグネチャには「ロール」ではなく「絞込済みの実行者ID（適用する場合のみ、`Optional<Long>`または`null`許容）」を渡す。ロール判定ロジック自体はServiceに一切持ち込まない（関心の分離、テスト容易性のため）
 - 多層防御（Service層での再判定）は行わない。本ユニットの規模・リスクに対して過剰と判断（NFR Design Q4=A）
+- **このフェイルクローズは3エンドポイントすべてに適用する**（承認前レビューでの追加）: 履歴一覧取得だけでなく、接続一覧取得（`GET /api/query-history/connections`）・スキーマ名一覧取得（`GET /api/query-history/{connectionId}/schemas`）にも同じ`executedByScope`判定ロジックを適用する。当初これら2つのAPIには実行者スコープの絞込を設けない設計だったが、フィルタしないと一般ユーザが他ユーザの実行履歴に含まれる接続・スキーマ名を、絞込セレクタの選択肢を通じて知ることができてしまう（情報漏洩、BR-QUERYHISTORY-03の趣旨に反する）
 
 ---
 
