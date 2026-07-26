@@ -2061,3 +2061,12 @@
 **Context**: CONSTRUCTION - UNIT-07 Functional Design、成果物完成・承認待ち
 
 ---
+
+## UNIT-07 Functional Design 承認前レビュー対応: テーブル可視判定ロジックの修正
+
+**Timestamp**: 2026-07-26T05:50:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "business-logic-model.md §1のステップ3を精査し、UNIT-05 MasterDataService.isTableVisible()の実装と照合したところ、テーブル候補の絞り込みロジックに矛盾を発見。当初案は『テーブル単位の実効主権限(resolvePrimary(tableName, null))がNONEなら即座に除外』としていたが、これはテーブル単位・スキーマ単位の設定がNONEでも個別の列単位READ権限が付与されているケース(例: テーブル全体は原則アクセス不可だが特定列のみ閲覧可)を誤って除外するバグとなる。UNIT-05のisTableVisible()と同じOR条件(テーブル単位権限が非NONE、または列単位権限が非NONEの列が1つでも存在する)に修正した。business-rules.mdのBR-QUERYBUILDER-01は元々列単位のみの判定で正しかったため変更なし。"
+**Context**: CONSTRUCTION - UNIT-07 Functional Design、承認前レビュー対応・修正完了
+
+---

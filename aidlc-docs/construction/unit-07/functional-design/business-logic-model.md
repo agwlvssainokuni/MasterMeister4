@@ -13,8 +13,8 @@ FROM/JOINタブでのテーブル選択候補、および他タブ（SELECT/WHER
 
 1. 対象接続・対象スキーマは、UNIT-06の`QueryExecutionService.listAccessibleConnections`/`listAccessibleSchemas`をそのまま呼び出して候補一覧を得る（BR-QUERY-02の「実効主権限READ以上を持つスキーマ」判定を再利用。新規の接続/スキーマ一覧ロジックは実装しない）
 2. 選択されたスキーマについて、`SchemaIntrospectionService.getSchema(connectionId)`で構造メタデータ（`SchemaSnapshot`）を取得し、対象スキーマ名で絞り込んだ`SchemaTable`一覧を得る
-3. 各テーブルについて、`EffectivePermissionResolver.resolvePrimary(userId, connectionId, schemaName, tableName, null)`でテーブル単位の実効主権限を評価する。**NONE**のテーブルは候補一覧から完全に除外する
-4. 除外されなかった各テーブルについて、テーブル内の全カラムを`resolvePrimary(userId, connectionId, schemaName, tableName, columnName)`で列単位に評価する。実効主権限が**NONE**のカラムは、そのテーブルのカラム候補一覧から除外する（テーブル自体は候補に残る限り、READ以上を持つカラムが1つ以上存在する）
+3. 各テーブルの可視判定は、UNIT-05 `MasterDataService.isTableVisible()`と同じOR条件のロジックを踏襲する: `resolvePrimary(userId, connectionId, schemaName, tableName, null)`（テーブル単位の実効主権限）が**NONE**でない、**または**テーブル内のいずれか1列でも`resolvePrimary(userId, connectionId, schemaName, tableName, columnName)`（列単位の実効主権限）が**NONE**でない場合、そのテーブルを候補に含める。テーブル単位・スキーマ単位の設定がNONEでも、個別の列単位設定でREAD以上が付与されているケース（例:「テーブル全体は原則アクセス不可だが特定の列のみ閲覧可」）を正しく拾うため、テーブル単位の判定のみで除外してはならない
+4. 候補に含まれた各テーブルについて、テーブル内の全カラムを`resolvePrimary(userId, connectionId, schemaName, tableName, columnName)`で列単位に評価する。実効主権限が**NONE**のカラムは、そのテーブルのカラム候補一覧から除外する
 5. UNIT-06のBR-QUERY-04（ad-hoc生SQL実行時はスキーマ単位の粒度に留める）とは異なり、本ユニットではUI上で参照テーブル・参照カラムが常に明示的に特定できる（自由記述のSQL解析が不要）ため、列単位の実効権限判定が技術的に無理なく実現できる。両者の粒度の違いはこの技術的制約の有無に起因する（business-rules.md BR-QUERYBUILDER-01）
 6. 列単位フィルタリングはあくまで**ビルダー画面での選択候補の絞り込み**であり、生成されたSQLをUNIT-06経由で実行する際は、BR-QUERY-04のスキーマ単位のアクセス制御が別途・独立して適用される（ビルダーの列単位フィルタと実行時のスキーマ単位ゲートは二重の防御だが、実行時のゲートが最終的な権限保証を担う）
 
