@@ -58,7 +58,8 @@ class RegistrationRateGuardTest {
                 new AppProperties.Mail("no-reply@example.com"),
                 new AppProperties.Rdbms("1:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE="),
                 new AppProperties.Masterdata(1000),
-                new AppProperties.Audit(100));
+                new AppProperties.Audit(100),
+                new AppProperties.Query(30, 10000));
         guard = new RegistrationRateGuard(registrationRateStateRepository, appProperties);
     }
 

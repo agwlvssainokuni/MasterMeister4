@@ -42,7 +42,8 @@ class ConnectionCredentialCipherTest {
                 new AppProperties.Mail("no-reply@example.com"),
                 new AppProperties.Rdbms(encryptionKeys),
                 new AppProperties.Masterdata(1000),
-                new AppProperties.Audit(100));
+                new AppProperties.Audit(100),
+                new AppProperties.Query(30, 10000));
     }
 
     @Test

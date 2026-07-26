@@ -26,6 +26,8 @@ package cherry.mastermeister.audit.entity;
  * （unit-04/functional-design/domain-entities.md §4）。
  * UNIT-05: MASTER_DATA_BULK_ACCESSED/MASTER_DATA_BATCH_APPLIEDを追加
  * （unit-05/functional-design/domain-entities.md §9）。
+ * UNIT-06: QUERY_EXECUTED/QUERY_SAVED/QUERY_UPDATED/QUERY_RETIREDを追加
+ * （unit-06/functional-design/domain-entities.md §6）。
  */
 public enum AuditEventType {
     LOGIN,
@@ -51,5 +53,9 @@ public enum AuditEventType {
     PERMISSION_YAML_EXPORTED,
     PERMISSION_YAML_IMPORTED,
     MASTER_DATA_BULK_ACCESSED,
-    MASTER_DATA_BATCH_APPLIED
+    MASTER_DATA_BATCH_APPLIED,
+    QUERY_EXECUTED,
+    QUERY_SAVED,
+    QUERY_UPDATED,
+    QUERY_RETIRED
 }

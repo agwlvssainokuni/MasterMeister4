@@ -37,7 +37,8 @@ public record AppProperties(
         Mail mail,
         Rdbms rdbms,
         Masterdata masterdata,
-        Audit audit
+        Audit audit,
+        Query query
 ) {
 
     public AppProperties {
@@ -52,6 +53,7 @@ public record AppProperties(
         Objects.requireNonNull(rdbms, "mm.app.rdbms must be configured");
         Objects.requireNonNull(masterdata, "mm.app.masterdata must be configured");
         Objects.requireNonNull(audit, "mm.app.audit must be configured");
+        Objects.requireNonNull(query, "mm.app.query must be configured");
     }
 
     public record Jwt(String secret, Duration accessTokenExpiry, Duration refreshTokenExpiry) {
@@ -225,6 +227,18 @@ public record AppProperties(
         public Audit {
             if (bulkAccessThreshold < 1) {
                 throw new IllegalArgumentException("mm.app.audit.bulk-access-threshold must be positive");
+            }
+        }
+    }
+
+    public record Query(int executionTimeoutSeconds, int maxResultRows) {
+
+        public Query {
+            if (executionTimeoutSeconds < 1) {
+                throw new IllegalArgumentException("mm.app.query.execution-timeout-seconds must be positive");
+            }
+            if (maxResultRows < 1) {
+                throw new IllegalArgumentException("mm.app.query.max-result-rows must be positive");
             }
         }
     }

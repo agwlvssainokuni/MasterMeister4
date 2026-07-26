@@ -75,6 +75,9 @@ mm:
       batch-max-size: ${MM_APP_MASTERDATA_BATCH_MAX_SIZE:1000}
     audit:
       bulk-access-threshold: ${MM_APP_AUDIT_BULK_ACCESS_THRESHOLD:100}
+    query:
+      execution-timeout-seconds: ${MM_APP_QUERY_EXECUTION_TIMEOUT_SECONDS:30}
+      max-result-rows: ${MM_APP_QUERY_MAX_RESULT_ROWS:10000}
 
 springdoc:
   swagger-ui:

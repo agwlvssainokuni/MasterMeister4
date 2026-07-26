@@ -26,22 +26,22 @@
 
 ### 1. Build Configuration
 
-- [ ] Step 1.1: `backend/src/main/resources/application.yml`に`mm.app.query.execution-timeout-seconds`（デフォルト30）・`mm.app.query.max-result-rows`（デフォルト10000）を追加する（logical-components.md §3）
-- [ ] Step 1.2: `AppProperties`に新規レコード`Query(int executionTimeoutSeconds, int maxResultRows)`を追加する（`Masterdata`/`Audit`と同様のバリデーション付きコンパクトコンストラクタ）
+- [x] Step 1.1: `backend/src/main/resources/application.yml`に`mm.app.query.execution-timeout-seconds`（デフォルト30）・`mm.app.query.max-result-rows`（デフォルト10000）を追加する（logical-components.md §3）
+- [x] Step 1.2: `AppProperties`に新規レコード`Query(int executionTimeoutSeconds, int maxResultRows)`を追加する（`Masterdata`/`Audit`と同様のバリデーション付きコンパクトコンストラクタ）— 既存の`new AppProperties(...)`直接構築テスト9件に新規引数を追加、コンパイル確認済み
 
 ### 2. Database Migration Scripts
 
-- [ ] Step 2.1: `V15__create_saved_query_table.sql`を作成する（`saved_query`テーブル: `id`, `connection_id`（FK、ON DELETE CASCADE）, `name`, `sql`（CLOB/TEXT相当）, `visibility`, `created_by`, `retired`, `created_at`, `updated_at`。domain-entities.md §1）
-- [ ] Step 2.2: `V16__create_query_execution_record_table.sql`を作成する（`query_execution_record`テーブル: `id`, `executed_by`, `connection_id`（FK制約なし）, `schema_name`, `sql`（CLOB/TEXT相当）, `params`（CLOB/TEXT相当）, `saved_query_id`（nullable、FK制約なし）, `row_count`, `duration_millis`, `executed_at`。domain-entities.md §2）
-- [ ] Step 2.3: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`QUERY_EXECUTED`, `QUERY_SAVED`, `QUERY_UPDATED`, `QUERY_RETIRED`を追加する（domain-entities.md §6。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
-- [ ] Step 2.4: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する（Step 3.4で実施）
+- [x] Step 2.1: `V15__create_saved_query_table.sql`を作成する（`saved_query`テーブル: `id`, `connection_id`（FK、ON DELETE CASCADE）, `name`, `sql`（CLOB/TEXT相当）, `visibility`, `created_by`, `retired`, `created_at`, `updated_at`。domain-entities.md §1）— 内部DBは常にH2のためCLOB型を直接指定
+- [x] Step 2.2: `V16__create_query_execution_record_table.sql`を作成する（`query_execution_record`テーブル: `id`, `executed_by`, `connection_id`（FK制約なし）, `schema_name`, `sql`（CLOB/TEXT相当）, `params`（CLOB/TEXT相当）, `saved_query_id`（nullable、FK制約なし）, `row_count`, `duration_millis`, `executed_at`。domain-entities.md §2）
+- [x] Step 2.3: 既存の`AuditEventType`（`cherry.mastermeister.audit.entity`）に`QUERY_EXECUTED`, `QUERY_SAVED`, `QUERY_UPDATED`, `QUERY_RETIRED`を追加する（domain-entities.md §6。`audit_log_entry.connection_id`は既存カラムのため追加マイグレーション不要）
+- [x] Step 2.4: **検証チェックポイント**: Flywayマイグレーションが後続のRepository層テスト実行時に正常適用されることを確認する（Step 3.4で実施、6件全件成功）
 
 ### 3. Repository Layer Generation
 
-- [ ] Step 3.1: enumを作成する: `Visibility`（`cherry.mastermeister.query.entity`）
-- [ ] Step 3.2: JPAエンティティ`SavedQuery`・`QueryExecutionRecord`（`cherry.mastermeister.query.entity`）を作成する（domain-entities.md §1〜2の属性。`sql`/`params`フィールドは`@Lob`を付与する）
-- [ ] Step 3.3: Spring Data JPAリポジトリを作成する: `SavedQueryRepository`（`cherry.mastermeister.query.repository`、`findAllByConnectionId`等）, `QueryExecutionRecordRepository`（同、`save`のみが主用途）
-- [ ] Step 3.4: **検証チェックポイント**: リポジトリの基本CRUD操作をH2（テスト用インメモリDB）で確認する
+- [x] Step 3.1: enumを作成する: `Visibility`（`cherry.mastermeister.query.entity`）
+- [x] Step 3.2: JPAエンティティ`SavedQuery`・`QueryExecutionRecord`（`cherry.mastermeister.query.entity`）を作成する（domain-entities.md §1〜2の属性。`sql`/`params`フィールドは`@Lob`を付与する）
+- [x] Step 3.3: Spring Data JPAリポジトリを作成する: `SavedQueryRepository`（`cherry.mastermeister.query.repository`、`findAllByConnectionId`等）, `QueryExecutionRecordRepository`（同、`save`のみが主用途）
+- [x] Step 3.4: **検証チェックポイント**: リポジトリの基本CRUD操作をH2（テスト用インメモリDB）で確認する — `SavedQueryRepositoryTest`（4件、CASCADE削除の実証を含む）・`QueryExecutionRecordRepositoryTest`（2件）作成、全件成功
 
 ### 4. Repository Layer Summary
 
