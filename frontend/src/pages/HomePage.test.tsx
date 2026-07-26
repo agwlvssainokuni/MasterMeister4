@@ -32,6 +32,8 @@ function renderHomePage() {
             <Route path="/users" element={<p>ユーザ管理画面</p>} />
             <Route path="/connections" element={<p>RDBMS接続設定画面</p>} />
             <Route path="/master-data" element={<p>マスタメンテナンス画面</p>} />
+            <Route path="/saved-queries" element={<p>保存クエリ画面</p>} />
+            <Route path="/query-execution" element={<p>クエリ実行画面</p>} />
           </Routes>
         </AuthProvider>
       </MemoryRouter>
@@ -40,7 +42,7 @@ function renderHomePage() {
 }
 
 describe('HomePage', () => {
-  it('SideNavの8項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」「マスタメンテナンス」とする', () => {
+  it('SideNavの9項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」「マスタメンテナンス」「保存クエリ」「クエリ実行」とする', () => {
     renderHomePage()
     // NAV_ROUTESの全項目のタイトルが表示される（SideNav側にも同名の項目があるため、
     // カード側は実装済みカードのdata-testidで、非活性カードはgetAllByTextで確認する）
@@ -51,15 +53,23 @@ describe('HomePage', () => {
     expect(
       within(screen.getByTestId('feature-card-master-data')).getByText('マスタメンテナンス'),
     ).toBeInTheDocument()
+    expect(
+      within(screen.getByTestId('feature-card-saved-queries')).getByText('保存クエリ'),
+    ).toBeInTheDocument()
+    expect(
+      within(screen.getByTestId('feature-card-query-execution')).getByText('クエリ実行'),
+    ).toBeInTheDocument()
     expect(screen.getAllByText('監査ログ').length).toBeGreaterThan(0)
 
-    // 未実装カードは「準備中」バッジを持つ（UNIT-05でmasterDataが実装済みになった分、5→4に変化）
-    expect(screen.getAllByText('準備中')).toHaveLength(4)
+    // 未実装カードは「準備中」バッジを持つ（UNIT-06でsavedQueries/queryExecutionが実装済みになった分、4→3に変化）
+    expect(screen.getAllByText('準備中')).toHaveLength(3)
 
     // 実装済みカードのみクリック可能なボタンとして描画される
     expect(screen.getByTestId('feature-card-users')).toBeInTheDocument()
     expect(screen.getByTestId('feature-card-connections')).toBeInTheDocument()
     expect(screen.getByTestId('feature-card-master-data')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-saved-queries')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-query-execution')).toBeInTheDocument()
   })
 
   it('実装済みカードをクリックすると対応するページへ遷移する', async () => {
@@ -78,5 +88,17 @@ describe('HomePage', () => {
     renderHomePage()
     await userEvent.click(screen.getByTestId('feature-card-master-data'))
     expect(await screen.findByText('マスタメンテナンス画面')).toBeInTheDocument()
+  })
+
+  it('保存クエリカードをクリックすると対応するページへ遷移する', async () => {
+    renderHomePage()
+    await userEvent.click(screen.getByTestId('feature-card-saved-queries'))
+    expect(await screen.findByText('保存クエリ画面')).toBeInTheDocument()
+  })
+
+  it('クエリ実行カードをクリックすると対応するページへ遷移する', async () => {
+    renderHomePage()
+    await userEvent.click(screen.getByTestId('feature-card-query-execution'))
+    expect(await screen.findByText('クエリ実行画面')).toBeInTheDocument()
   })
 })

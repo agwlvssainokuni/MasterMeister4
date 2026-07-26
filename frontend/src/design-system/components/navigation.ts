@@ -26,6 +26,9 @@ export const NAV_ROUTES = [
   { key: 'connections', labelKey: 'nav.connections', path: '/connections' },
   { key: 'groups', labelKey: 'nav.groups', path: '/groups' },
   { key: 'masterData', labelKey: 'nav.masterData', path: '/master-data' },
+  // UNIT-06 Functional Designレビューで新規追加（UNIT-01時点では未予約）。ad-hocクエリ実行
+  // （保存を伴わない）は独立したナビ項目とし、保存クエリ管理（savedQueries）とは別画面フローとする
+  { key: 'queryExecution', labelKey: 'nav.queryExecution', path: '/query-execution' },
   { key: 'savedQueries', labelKey: 'nav.savedQueries', path: '/saved-queries' },
   { key: 'queryBuilder', labelKey: 'nav.queryBuilder', path: '/query-builder' },
   { key: 'queryHistory', labelKey: 'nav.queryHistory', path: '/query-history' },

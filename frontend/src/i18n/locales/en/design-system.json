@@ -7,6 +7,7 @@
     "connections": "RDBMS Connections",
     "groups": "Group Management",
     "masterData": "Master Data",
+    "queryExecution": "Query Execution",
     "savedQueries": "Saved Queries",
     "queryBuilder": "Query Builder",
     "queryHistory": "Query History",

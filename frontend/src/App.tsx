@@ -30,6 +30,11 @@ import { AccessPermissionTreePage } from './pages/AccessPermissionTreePage'
 import { MasterDataConnectionListPage } from './pages/MasterDataConnectionListPage'
 import { MasterDataTableListPage } from './pages/MasterDataTableListPage'
 import { MasterDataRecordListPage } from './pages/MasterDataRecordListPage'
+import { SavedQueryConnectionListPage } from './pages/SavedQueryConnectionListPage'
+import { SavedQueryListPage } from './pages/SavedQueryListPage'
+import { SavedQueryEditorPage } from './pages/SavedQueryEditorPage'
+import { QueryExecutionConnectionListPage } from './pages/QueryExecutionConnectionListPage'
+import { QueryExecutionPage } from './pages/QueryExecutionPage'
 
 // devビルド限定ルート（/mock/*）。lazy()呼び出し自体をimport.meta.env.DEVの
 // 三項演算子内に置くことで、本番ビルド時（DEV=falseへ静的に置換される）に
@@ -115,6 +120,54 @@ function App() {
             element={
               <ProtectedRoute>
                 <MasterDataRecordListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-queries"
+            element={
+              <ProtectedRoute>
+                <SavedQueryConnectionListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-queries/:connectionId"
+            element={
+              <ProtectedRoute>
+                <SavedQueryListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-queries/:connectionId/new"
+            element={
+              <ProtectedRoute>
+                <SavedQueryEditorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-queries/:connectionId/:savedQueryId"
+            element={
+              <ProtectedRoute>
+                <SavedQueryEditorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/query-execution"
+            element={
+              <ProtectedRoute>
+                <QueryExecutionConnectionListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/query-execution/:connectionId"
+            element={
+              <ProtectedRoute>
+                <QueryExecutionPage />
               </ProtectedRoute>
             }
           />

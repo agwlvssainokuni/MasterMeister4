@@ -7,6 +7,7 @@
     "connections": "RDBMS接続設定",
     "groups": "グループ管理",
     "masterData": "マスタメンテナンス",
+    "queryExecution": "クエリ実行",
     "savedQueries": "保存クエリ",
     "queryBuilder": "クエリビルダー",
     "queryHistory": "クエリ実行履歴",

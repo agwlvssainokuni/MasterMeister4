@@ -85,29 +85,29 @@
 
 ### 11. Frontend Components Generation
 
-- [ ] Step 11.1: `frontend/src/design-system/components/navigation.ts`の`NAV_ROUTES`に新規ナビ項目`{ key: 'queryExecution', labelKey: 'nav.queryExecution', path: '/query-execution' }`を`savedQueries`の直前に追加する（frontend-components.md ナビゲーション節）
-- [ ] Step 11.2: APIクライアント`frontend/src/api/query.ts`を作成する（接続一覧・スキーマ一覧・ad-hoc実行・保存クエリCRUD・保存クエリ実行・非表示化の各関数）
-- [ ] Step 11.3: `SavedQueryConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md A-1）
-- [ ] Step 11.4: `SavedQueryListPage`（`frontend/src/pages/`）を作成する（A-2、FilterBar・DataTable・「追加」ボタン）
-- [ ] Step 11.5: `SavedQueryEditorPage`（`frontend/src/pages/`）を作成する（A-3/A-4共用、`mode='new'|'existing'`。スキーマセレクタ・SQL入力欄・パラメータフォーム・ページング設定・実行・保存/更新/非表示化、router stateからのprefill対応）
-- [ ] Step 11.6: `QueryExecutionConnectionListPage`（`frontend/src/pages/`）を作成する（B-1）
-- [ ] Step 11.7: `QueryExecutionPage`（`frontend/src/pages/`）を作成する（B-2、「名前を付けて保存」でA-3へrouter state経由の遷移）
-- [ ] Step 11.8: `App.tsx`のルーティングに`/saved-queries`, `/saved-queries/:connectionId`, `/saved-queries/:connectionId/new`, `/saved-queries/:connectionId/:savedQueryId`, `/query-execution`, `/query-execution/:connectionId`を追加する（`ProtectedRoute`配下）
-- [ ] Step 11.9: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'savedQueries'`, `'queryExecution'`を追加する
-- [ ] Step 11.10: i18nリソース（`common.json`の`ja`/`en`）に`nav.queryExecution`・`savedQuery.*`/`queryExecution.*`関連キーを追加する
+- [x] Step 11.1: `frontend/src/design-system/components/navigation.ts`の`NAV_ROUTES`に新規ナビ項目`{ key: 'queryExecution', labelKey: 'nav.queryExecution', path: '/query-execution' }`を`savedQueries`の直前に追加する（frontend-components.md ナビゲーション節）
+- [x] Step 11.2: APIクライアント`frontend/src/api/query.ts`を作成する（接続一覧・スキーマ一覧・ad-hoc実行・保存クエリCRUD・保存クエリ実行・非表示化の各関数）
+- [x] Step 11.3: `SavedQueryConnectionListPage`（`frontend/src/pages/`）を作成する（frontend-components.md A-1）
+- [x] Step 11.4: `SavedQueryListPage`（`frontend/src/pages/`）を作成する（A-2、FilterBar・DataTable・「追加」ボタン）
+- [x] Step 11.5: `SavedQueryEditorPage`（`frontend/src/pages/`）を作成する（A-3/A-4共用、`mode='new'|'existing'`。スキーマセレクタ・SQL入力欄・パラメータフォーム・ページング設定・実行・保存/更新/非表示化、router stateからのprefill対応）— frontend-components.mdの「A-3/A-4/B-2で共通利用するローカルコンポーネント」方針に沿い、共有部分を`QueryEditorPanel`として抽出
+- [x] Step 11.6: `QueryExecutionConnectionListPage`（`frontend/src/pages/`）を作成する（B-1）
+- [x] Step 11.7: `QueryExecutionPage`（`frontend/src/pages/`）を作成する（B-2、「名前を付けて保存」でA-3へrouter state経由の遷移。`QueryEditorPanel`を共有利用）
+- [x] Step 11.8: `App.tsx`のルーティングに`/saved-queries`, `/saved-queries/:connectionId`, `/saved-queries/:connectionId/new`, `/saved-queries/:connectionId/:savedQueryId`, `/query-execution`, `/query-execution/:connectionId`を追加する（`ProtectedRoute`配下）
+- [x] Step 11.9: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'savedQueries'`, `'queryExecution'`を追加する
+- [x] Step 11.10: i18nリソース（`common.json`の`ja`/`en`）に`nav.queryExecution`（design-system.json）・`savedQuery.*`/`queryExecution.*`/`home.card.queryExecution`関連キーを追加する
 
 ### 12. Frontend Components Unit Testing
 
-- [ ] Step 12.1: `SavedQueryConnectionListPage.test.tsx`・`QueryExecutionConnectionListPage.test.tsx`を作成する（Vitest + RTL、一覧表示・遷移）
-- [ ] Step 12.2: `SavedQueryListPage.test.tsx`を作成する（フィルタ・一覧表示・非表示化アクション）
-- [ ] Step 12.3: `SavedQueryEditorPage.test.tsx`を作成する（new/existingモード、実行・保存・更新・非表示化、router state prefill）
-- [ ] Step 12.4: `QueryExecutionPage.test.tsx`を作成する（実行・「名前を付けて保存」遷移）
-- [ ] Step 12.5: `query.test.ts`（APIクライアント）を作成する
-- [ ] Step 12.6: `HomePage.test.tsx`の実装済みバッジ数の変化を反映する
+- [x] Step 12.1: `SavedQueryConnectionListPage.test.tsx`・`QueryExecutionConnectionListPage.test.tsx`を作成する（Vitest + RTL、一覧表示・遷移）— 各3件
+- [x] Step 12.2: `SavedQueryListPage.test.tsx`を作成する（フィルタ・一覧表示・非表示化アクション）— 6件
+- [x] Step 12.3: `SavedQueryEditorPage.test.tsx`を作成する（new/existingモード、実行・保存・更新・非表示化、router state prefill）— 7件
+- [x] Step 12.4: `QueryExecutionPage.test.tsx`を作成する（実行・「名前を付けて保存」遷移）— 4件
+- [x] Step 12.5: `query.test.ts`（APIクライアント）を作成する — 9件
+- [x] Step 12.6: `HomePage.test.tsx`の実装済みバッジ数の変化を反映する（4→3、savedQueries/queryExecutionカードの表示・遷移テストを追加）
 
 ### 13. Frontend Components Summary
 
-- [ ] Step 13.1: `aidlc-docs/construction/unit-06/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
+- [x] Step 13.1: `aidlc-docs/construction/unit-06/code/frontend-summary.md`を作成する（作成した画面・コンポーネント一覧、テスト結果）
 
 ### 14. Documentation Generation
 
