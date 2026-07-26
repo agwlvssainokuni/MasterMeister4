@@ -50,8 +50,8 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-06 クエリ保存・実行 - Code Generation Part 1（計画）承認完了、Part 2（生成）着手
-- **Next Stage**: Code Generation Part 2完了後、承認を得てUNIT-07へ
+- **Current Stage**: UNIT-06 クエリ保存・実行 - Code Generation Part 2（生成）完了、承認待ち
+- **Next Stage**: 承認後、UNIT-07（クエリビルダー）のFunctional Designへ
 - **Status**: 実施中
 
 ## Backlog（今後の検討課題）
@@ -97,7 +97,7 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-25T00:30:00Z。全6問AI推奨（全問A）で確定。nfr-requirements.md（Security Baseline全15ルール評価、Scalability/Performance/Availability/監査ログ/Reliability方針）、tech-stack-decisions.md（SingleConnectionDataSourceによるスキーマ切替＋クエリ実行の接続管理、サブクエリラップ方式のLIMIT/OFFSETページング、JDBC標準setQueryTimeoutによるタイムアウト制御、結果件数上限10,000件、EffectivePermissionResolver.resolvePrimaryループ呼び出しによるスキーマ許可リスト判定）を作成。新規外部ライブラリ依存なし）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-25T00:50:00Z。全7問AI推奨（Q1〜6=A、Q7=B）で確定。nfr-design-patterns.md（スキーマ非許可403/SQL非読み取り専用400/保存クエリアクセス不可404/タイムアウト408/結果件数上限超過400の各専用例外、同一物理接続でのスキーマ切替＋COUNT・結果取得の2回実行、QuerySqlAnalyzerによる1回解析の再利用）、logical-components.md（QueryController/SavedQueryControllerの2分割、QueryExecutionService/SavedQueryService/QuerySqlAnalyzerの新設、5種の新規例外クラス、AppProperties.Query新設）を作成）
 - [x] Infrastructure Design — SKIP（承認 2026-07-24T13:45:00Z。新規インフラ不要）
-- [ ] Code Generation — 未着手
+- [ ] Code Generation — 全16セクション完了、承認待ち（Part 1計画承認 2026-07-25T01:10:00Z。マイグレーション（V15 saved_query, V16 query_execution_record）、QuerySqlAnalyzer/QueryExecutionService/SavedQueryService、5種新規例外、QueryController/SavedQueryController、フロントエンドFlow A/B全5画面＋共有QueryEditorPanel、新規ナビ項目queryExecution追加。バックエンド334件・フロントエンド203件全件成功。実機E2E検証（PostgreSQL/MySQL）でSavedQueryService.updateQuery/retireQueryの永続化バグを発見・修正）
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）

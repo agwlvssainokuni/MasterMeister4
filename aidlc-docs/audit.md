@@ -1971,3 +1971,12 @@
 **Context**: CONSTRUCTION - UNIT-06 Code Generation Part 1、承認完了、Part 2へ移行
 
 ---
+
+## UNIT-06 Code Generation Part 2 - 全16セクション完了
+
+**Timestamp**: 2026-07-25T02:55:00Z
+**User Input**: (Code Generation Part 2実施、ユーザ入力なし)
+**AI Response**: "unit-06-code-generation-plan.mdの全16セクションを完了。Build設定（AppProperties.Query, application.yml）、マイグレーション（V15 saved_query, V16 query_execution_record、SQL/params列は@Lob）、Repository層（Visibility, SavedQuery, QueryExecutionRecord, リポジトリ2種）、ビジネスロジック層（QuerySqlAnalyzer、5種新規例外、QueryExecutionService, SavedQueryService）、API層（DTO7種、QueryController, SavedQueryController）、フロントエンド（navigation.tsにqueryExecutionナビ項目追加、api/query.ts、Flow A: SavedQueryConnectionListPage/SavedQueryListPage/SavedQueryEditorPage、Flow B: QueryExecutionConnectionListPage/QueryExecutionPage、共有QueryEditorPanel、i18nリソース、App.tsx/HomePage.tsx更新）を作成。バックエンド334件・フロントエンド203件全件成功。README更新、devenv確認。実機E2E検証（PostgreSQL/MySQL、実際のメール確認登録フロー経由）で、ad-hoc実行（パラメータバインド・ページング・読み取り専用検証拒否・複数ステートメント拒否・スキーマアクセス制御）、保存クエリCRUD・実行・非表示化を確認。この過程で`SavedQueryService.updateQuery`/`retireQuery`が`@Transactional`なしで変更を永続化しない重大バグを発見し、`GroupService`と同じ方式で修正。完了メッセージを提示し承認待ち。"
+**Context**: CONSTRUCTION - UNIT-06 Code Generation Part 2、成果物完成・承認待ち
+
+---
