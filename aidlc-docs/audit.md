@@ -2941,3 +2941,20 @@
 **Context**: CONSTRUCTION - Build and Testステージ、UNIT-10最終確定
 
 ---
+
+## Build and Test Stage
+
+**Timestamp**: 2026-07-28T01:10:00Z
+**Build Status**: Success
+**Test Status**: Pass（backend 427件、cherry-mustache-core 197件、frontend 253件、計877件すべて成功）
+**Files Generated**:
+- build-instructions.md
+- unit-test-instructions.md
+- integration-test-instructions.md（5シナリオ、実機E2E検証の体系化）
+- performance-test-instructions.md（NFR-1.1により本格負荷試験は対象外、軽量確認手順のみ）
+- security-test-instructions.md
+- build-and-test-summary.md
+
+**AI Response補足**: requirements.mdでPBT対象が「はい」と明記されているのはSTORY-2.4・2.5（UNIT-04）・STORY-5.2（UNIT-07）であり、以前の要約に含まれていた「UNIT-05」という記述が誤りだったため、unit-test-instructions.md作成時に是正した。aidlc-state.mdを更新: Build and TestをCOMPLETEDに、Current StageをBuild and Test - COMPLETEDに、Next StageをOperations（プレースホルダー）に更新。
+
+---
