@@ -2845,3 +2845,12 @@
 **Context**: CONSTRUCTION - UNIT-10 Code Generation Part 1、承認待ち
 
 ---
+
+## UNIT-10 Code Generation Part 1 計画への指摘: バージョン整合性チェック・初期バージョン
+
+**Timestamp**: 2026-07-27T02:05:00Z
+**User Input**: "タグのバージョンとbuild.gradleのversionが異なっていたらリリース中断して欲しい。あと、最初のバージョンは0.0,0"
+**AI Response**: "unit-10-code-generation-plan.mdを修正。(1)Release Workflowにバージョン整合性チェックを追加: タグ名（vプレフィックス除去）とbackend/build.gradle.ktsのversionプロパティを比較し、不一致ならジョブをexit 1で失敗させリリースを中断する検証ステップをビルド実行前に設ける、(2)backend/build.gradle.ktsのversionを現状の0.0.1-SNAPSHOTから0.0.0に変更するステップを追加（frontend/package.jsonのversionは既に0.0.0のため変更不要と確認）。Step 2.1を2ステップ（バージョン変更、リリースワークフロー作成）に分割。"
+**Context**: CONSTRUCTION - UNIT-10 Code Generation Part 1、修正版で承認待ち
+
+---
