@@ -38,11 +38,11 @@ STORY-9.1にPBT対象外と明記済み（stories.md）。追加のPBT対象識�
 
 ## 計画チェックリスト
 
-- [ ] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
-- [ ] Step D: `tech-stack-decisions.md`（インデックス設計、ページサイズ上限、入力検証方針、名前解決方式、データ量増加への対応方針）を作成する
-- [ ] Step E: 完了メッセージを提示し、承認を得る
+- [x] Step A: 質問への回答を収集する（全5問、推奨どおり全問Aで確定）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
+- [x] Step C: `nfr-requirements.md`（カテゴリ別NFR要件、Security Baseline該当ルール一覧）を作成する
+- [x] Step D: `tech-stack-decisions.md`（インデックス設計、ページサイズ上限、入力検証方針、名前解決方式、データ量増加への対応方針）を作成する
+- [x] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
 
@@ -55,7 +55,7 @@ B) 検証を行わず、クライアント側の入力を信頼する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Security Requirements/Monitoring、SECURITY-14、新規論点）
 監査ログの閲覧自体（特に大量閲覧・網羅的な閲覧）を、新たな監査対象として記録しますか？
@@ -66,7 +66,7 @@ B) 新規イベント種別（例: `AUDIT_LOG_VIEWED`）を追加し、`bulkAcce
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Performance/Scalability）
 `audit_log_entry`テーブルは削除機能を持たず、UNIT-02〜08の全イベントが記録され続けるため、長期運用でのデータ量増加が懸念される。対応方針は？
@@ -77,7 +77,7 @@ B) 本ユニットでアーカイブ機構（古いレコードの別テーブ�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Performance）
 ページサイズの既定値・上限値は？
@@ -88,7 +88,7 @@ B) 異なる値にする
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 5（Tech Stack Selection/Performance）
 対象ユーザ・対象接続の表示名解決方式は？
@@ -99,4 +99,4 @@ B) UNIT-04/05/06/07と同様のCaffeineキャッシュを新規に導入する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
