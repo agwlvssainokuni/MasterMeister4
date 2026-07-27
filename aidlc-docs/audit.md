@@ -2892,3 +2892,23 @@
 **Context**: CONSTRUCTION - UNIT-10 Code Generation、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-10 承認前の質疑: cherry-mustache-coreの個別build指定の必要性
+
+**Timestamp**: 2026-07-28T00:10:00Z
+**User Input**: "cherry-mustache-coreを個別にbuild指定する必要はあるの？"
+**AI Response**: "実際に検証: cherry-mustache-core/build・backend/build/test-resultsを削除後、./gradlew :backend:buildのみを実行したところ、cherry-mustache-coreはclasses/libs（コンパイル成果物）は生成されたがbuild/test-resultsは0件だった。backendがcherry-mustache-coreをimplementation依存として参照しているだけでは、Gradleは依存先のコンパイル済みjarを作るのみでtestタスクは自動トリガーされないことを実証。cherry-mustache-coreは独立したテストコード一式を持つため、CIでスキップされるべきでないと判断し、現状の./gradlew :cherry-mustache-core:build :backend:buildという明示的な2重指定を維持する結論を回答。"
+**User Input**: "artifactを作るためではなくテストを実行するために必要、という理解でOK?"
+**AI Response**: "その理解で正しいと確認。cherry-mustache-coreのjar成果物自体は:backend:buildだけでも（依存解決のため）自動的に作られる（実際にclasses/libsが生成されることを検証済み）。:cherry-mustache-core:buildを明示追加している目的は成果物生成のためではなく、buildタスクがtestタスクを含む（assemble+check）ため、cherry-mustache-core自身の単体テスト一式を実行させるためである旨を回答。"
+**Context**: CONSTRUCTION - UNIT-10 Code Generation、改めてContinue to Next Stage承認待ち
+
+---
+
+## UNIT-10 Code Generation 最終承認
+
+**Timestamp**: 2026-07-28T00:12:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-10 CI/CD Code Generationを承認。完了報告後の承認前レビューでアクションバージョン最新化・setup-gradleの必要性・cherry-mustache-core個別build指定の必要性の3件の指摘・質疑に対応した後の最終承認。UNIT-10は最終ユニット（unit-of-work.mdのとおり）であり、全10ユニットの機能実装が完了した。aidlc-state.mdを更新: UNIT-10のCode GenerationをCOMPLETEDに、Current Unit ProgressのUNIT-10をCOMPLETEDに変更。Current StageをBuild and Testに更新し、Build and Testステージへ移行する。"
+**Context**: CONSTRUCTION - UNIT-10完了、全ユニット完了。Build and Testステージへ移行
+
+---

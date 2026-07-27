@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-10 CI/CD（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - Build and Test（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -38,11 +38,11 @@
 
 ### 🟢 CONSTRUCTION PHASE
 **注記**: 以下4ステージの「EXECUTE（ユニットごと）」はプロジェクト全体の見通しであり確約ではない。各ユニット着手時にそのユニット単独でEXECUTE/SKIPを判定し、他ユニットの判定は引き継がない（詳細は execution-plan.md 参照）。
-- [ ] Functional Design — EXECUTE（ユニットごと、判定は都度独立）
-- [ ] NFR Requirements — EXECUTE（ユニットごと、判定は都度独立）
-- [ ] NFR Design — EXECUTE（ユニットごと、判定は都度独立）
-- [ ] Infrastructure Design — EXECUTE（ユニットごと、判定は都度独立）
-- [ ] Code Generation — EXECUTE
+- [x] Functional Design — EXECUTE（ユニットごと、判定は都度独立）。全ユニット完了（UNIT-06/09はEXECUTE、他は個別判定）
+- [x] NFR Requirements — EXECUTE（ユニットごと、判定は都度独立）。全ユニット完了
+- [x] NFR Design — EXECUTE（ユニットごと、判定は都度独立）。全ユニット完了
+- [x] Infrastructure Design — EXECUTE（ユニットごと、判定は都度独立）。全ユニット完了（多くはSKIP判定）
+- [x] Code Generation — EXECUTE、COMPLETED（全10ユニット完了、最終承認2026-07-28T00:12:00Z）
 - [ ] Build and Test — EXECUTE
 
 ### 🟡 OPERATIONS PHASE
@@ -50,9 +50,9 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-09 監査ログ閲覧 - COMPLETED
-- **Next Stage**: UNIT-10 CI/CD
-- **Status**: UNIT-09完了、UNIT-10着手前。UNIT-10完了後、Build and Testステージへ移行予定
+- **Current Stage**: UNIT-10 CI/CD - COMPLETED
+- **Next Stage**: Build and Test
+- **Status**: 全10ユニット（UNIT-01〜UNIT-10）完了。Build and Testステージ着手前
 
 ## Backlog（今後の検討課題）
 - **E2Eテストフレームワーク（Playwright等）の導入**: 現状、各ユニットのCode Generation最終ステップでコマンドラインによる実機E2E検証（curl等）を実施しているが、UI表示に関する不具合（例: UNIT-05のダークモード文字色バグ）はこの方式では検出できない。Playwright等のフレームワークは既存の実インフラE2E検証（DB方言差異等のバックエンド/インフラ層の不具合検出に有効）を置き換えるものではなく補完するものと位置づけ、プロジェクト全体のテスト戦略として別途検討する（2026-07-24、UNIT-05承認時にユーザ提起）。
@@ -125,6 +125,7 @@
 - [x] NFR Requirements — SKIP（判定 2026-07-27T02:00:00Z。技術選定（GitHub Actions、タグpushトリガーでのGitHub Releases作成）はrequirements.md NFR-10.1〜10.3で既に確定済み）
 - [x] NFR Design — SKIP（判定 2026-07-27T02:00:00Z。NFR Requirementsに連動してSKIP）
 - [x] Infrastructure Design — SKIP（判定 2026-07-27T02:00:00Z。新規クラウドリソース・デプロイアーキテクチャ構築ではなくGitHubリポジトリ内のワークフロー定義のみ）
+- [x] Code Generation — COMPLETED（承認 2026-07-28T00:12:00Z）。Part 1（計画）承認済み（2026-07-27T02:07:00Z、ユーザー指摘によりバージョン整合性チェック・初期バージョン0.0.0の反映を修正）、Part 2全4セクション完了（unit-10-code-generation-plan.md。.github/workflows/ci.yml（push/pull_requestトリガー、backend/frontend並行ジョブ、dependency-checkはNVD_API_KEY設定時のみ）、release.yml（v*タグトリガー、タグ名とbuild.gradle.ktsのversion不一致時にリリース中断する検証ステップ、bootWar、GitHub Releases作成）を作成。backend/build.gradle.ktsのversionを0.0.1-SNAPSHOTから0.0.0に変更、frontend/Footer.tsxの同じハードコードも統一。実装時の発見・修正: (1)ci.ymlのルートgradlew buildがfrontendを巻き込み失敗する問題をサブプロジェクト指定（:cherry-mustache-core:build :backend:build）で解消、(2)Gradleデーモンの起動時PATHキャッシュによるnpm未認識問題をデーモン再起動で解消。**完了報告後、承認前レビューで3件の指摘・質疑に対応**: (1)GitHub Actionsの各アクションを最新メジャーバージョンに更新（checkout@v7、setup-java@v5、setup-node@v7、gradle/actions/setup-gradle@v6、action-gh-release@v3）、(2)setup-gradleの必要性についての質疑（キャッシュ等の付加価値のため維持、コード変更なし）、(3)cherry-mustache-core個別build指定の必要性についての質疑（実際に検証しテスト実行のために必要と確認、コード変更なし）。最終状態: バックエンド全テスト成功、フロントエンド全253件成功、mastermeister-0.0.0.war生成確認
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
@@ -136,4 +137,4 @@
 - [x] UNIT-07 クエリビルダー — COMPLETED（承認 2026-07-26T19:56:00Z）
 - [x] UNIT-08 クエリ履歴 — COMPLETED（承認 2026-07-27T00:17:00Z）
 - [x] UNIT-09 監査ログ閲覧 — COMPLETED（承認 2026-07-27T01:58:00Z）
-- [ ] UNIT-10 CI/CD
+- [x] UNIT-10 CI/CD — COMPLETED（承認 2026-07-28T00:12:00Z）
