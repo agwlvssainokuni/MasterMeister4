@@ -68,8 +68,8 @@ describe('HomePage', () => {
     ).toBeInTheDocument()
     expect(screen.getAllByText('監査ログ').length).toBeGreaterThan(0)
 
-    // 未実装カードは「準備中」バッジを持つ（UNIT-08でqueryHistoryが実装済みになった分、2→1に変化）
-    expect(screen.getAllByText('準備中')).toHaveLength(1)
+    // 未実装カードは「準備中」バッジを持つ（UNIT-09でauditLogが実装済みになり全カードが実装済みに、1→0に変化）
+    expect(screen.queryAllByText('準備中')).toHaveLength(0)
 
     // 実装済みカードのみクリック可能なボタンとして描画される
     expect(screen.getByTestId('feature-card-users')).toBeInTheDocument()

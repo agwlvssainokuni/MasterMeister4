@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.audit.repository;
+/* 絞込条件は縦に並べ、各行はラベルと入力欄を横並びにする
+   （UNIT-08のQueryHistoryPage.module.cssと同じ構成を最初から採用） */
+.filterList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-2);
+}
 
-import cherry.mastermeister.audit.entity.AuditLogEntry;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+}
 
-/**
- * logical-components.md §2。JpaSpecificationExecutorはUNIT-09で追加実装
- * （監査ログ閲覧の動的絞込のため）。
- */
-public interface AuditLogEntryRepository extends JpaRepository<AuditLogEntry, Long>,
-        JpaSpecificationExecutor<AuditLogEntry> {
+.filterLabel {
+  min-width: 140px;
+  font-size: var(--mm-font-size-sm);
+  font-weight: var(--mm-font-weight-medium);
+  color: var(--mm-color-text);
+}
+
+.filterRow > select,
+.filterRow > input {
+  flex: 1;
+  min-width: 160px;
 }

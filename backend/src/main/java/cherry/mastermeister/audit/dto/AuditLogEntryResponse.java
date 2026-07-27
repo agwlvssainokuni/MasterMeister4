@@ -14,16 +14,26 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.audit.repository;
+package cherry.mastermeister.audit.dto;
 
-import cherry.mastermeister.audit.entity.AuditLogEntry;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import cherry.mastermeister.audit.entity.AuditEventType;
+import cherry.mastermeister.audit.entity.ResultStatus;
+
+import java.time.Instant;
 
 /**
- * logical-components.md §2。JpaSpecificationExecutorはUNIT-09で追加実装
- * （監査ログ閲覧の動的絞込のため）。
+ * domain-entities.md §3。監査ログ一覧APIレスポンス1件分。
  */
-public interface AuditLogEntryRepository extends JpaRepository<AuditLogEntry, Long>,
-        JpaSpecificationExecutor<AuditLogEntry> {
+public record AuditLogEntryResponse(
+        Long id,
+        Instant occurredAt,
+        Long userId,
+        String userDisplayName,
+        Long connectionId,
+        String connectionDisplayName,
+        AuditEventType eventType,
+        String targetResource,
+        ResultStatus resultStatus,
+        String detail
+) {
 }

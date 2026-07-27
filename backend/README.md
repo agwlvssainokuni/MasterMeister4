@@ -111,6 +111,15 @@ export MM_APP_RDBMS_ENCRYPTION_KEYS="1:$(openssl rand -base64 32)"
 - 絞込条件（実行日時範囲・実行者スコープ・対象スキーマ・SQLテキスト）はSpring Data JPAの`Specification`（`QueryHistorySpecifications`）で動的に組み立てる（プロジェクト内初のSpecification API採用）。ページングは同じく標準の`Pageable`/`Page`を使用（UNIT-06のクエリ実行結果ページング（サブクエリラップ方式）とは別の仕組み）
 - `query_execution_record`テーブルに`(connection_id, executed_at)`の複合インデックス（V17）を追加し、本ユニットの主要アクセスパターンに最適化した
 
+## 監査ログ閲覧（UNIT-09）
+
+`/audit-log`画面で、UNIT-02〜08が記録する`AuditLogEntry`（監査ログ）の閲覧・絞込・ページングができる。API名前空間は`/api/admin/audit-log`（単一エンドポイント）。管理者専用であり、既存の`SecurityConfig`の`/api/admin/**`ルールでエンドポイント全体を保護する（UNIT-08のようなロールに応じたデータ絞込は不要、アクセスできた時点で全件が閲覧対象）。
+
+- 絞込条件（発生日時範囲・イベント種別・対象ユーザ・対象接続・結果ステータス）はSpring Data JPAの`Specification`（`AuditLogSpecifications`）で動的に組み立てる（UNIT-08で確立した`Specification` API採用パターンを踏襲）。ページングは同じく標準の`Pageable`/`Page`を使用
+- `audit_log_entry`テーブルに`(connection_id, occurred_at)`の複合インデックス（V18）を追加した（既存は`occurred_at`・`event_type`・`user_id`の単独インデックスのみで、`connection_id`にインデックスがなかったため）
+- 対象ユーザ・対象接続の表示名は`findAllById`による一括解決（キャッシュなし、UNIT-08と同じ方式）。削除済みユーザ・接続は「(不明なユーザ)」「(削除済み接続)」のプレースホルダー表示とする
+- 監査ログの閲覧自体（大量閲覧含む）は新たな監査記録対象としない。UNIT-05の`MASTER_DATA_BULK_ACCESSED`（一般ユーザ向け機能の大量アクセス検知）とは異なり、本ユニットは管理者専用機能であり全件閲覧が通常の業務行為であるため
+
 ## トレースログ
 
 `TraceAspect`（`cherry.mastermeister.common.aop`、`reference/trace/TraceAspect.java`を移植）が、`cherry.mastermeister`配下（`common.config`を除く）の全メソッドの呼び出し・復帰・例外を`Spring`の`CustomizableTraceInterceptor`経由でログ出力する。実際に出力されるのは`MM_LOGGING_LEVEL_APP=TRACE`のとき（既定値`INFO`では無効）。設定値は`mm.app.trace.*`（`AppProperties.Trace`）で調整可能。

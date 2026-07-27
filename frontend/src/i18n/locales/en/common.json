@@ -348,6 +348,61 @@
       "MINE": "Mine only"
     }
   },
+  "auditLog": {
+    "title": "Audit Log",
+    "selectPlaceholder": "Please select",
+    "column": {
+      "occurredAt": "Occurred at",
+      "eventType": "Event type",
+      "user": "User",
+      "connection": "Connection",
+      "targetResource": "Target resource",
+      "resultStatus": "Result",
+      "detail": "Detail"
+    },
+    "filter": {
+      "occurredAtFrom": "Occurred at (from)",
+      "occurredAtTo": "Occurred at (to)",
+      "eventType": "Event type",
+      "user": "User",
+      "connection": "Connection",
+      "resultStatus": "Result"
+    },
+    "resultStatus": {
+      "SUCCESS": "Success",
+      "FAILURE": "Failure"
+    },
+    "eventType": {
+      "LOGIN": "Login",
+      "LOGOUT": "Logout",
+      "LOGIN_FAILURE": "Login failure",
+      "REGISTRATION_REQUESTED": "Registration requested",
+      "REGISTRATION_COMPLETED": "Registration completed",
+      "USER_APPROVED": "User approved",
+      "USER_REJECTED": "User rejected",
+      "USER_DISABLED": "User disabled",
+      "USER_ENABLED": "User enabled",
+      "TOKEN_REUSE_DETECTED": "Token reuse detected",
+      "CONNECTION_REGISTERED": "Connection registered",
+      "CONNECTION_UPDATED": "Connection updated",
+      "CONNECTION_DELETED": "Connection deleted",
+      "SCHEMA_IMPORTED": "Schema imported",
+      "PERMISSION_CHANGED": "Permission changed",
+      "GROUP_CREATED": "Group created",
+      "GROUP_RENAMED": "Group renamed",
+      "GROUP_DELETED": "Group deleted",
+      "GROUP_MEMBER_ADDED": "Group member added",
+      "GROUP_MEMBER_REMOVED": "Group member removed",
+      "PERMISSION_YAML_EXPORTED": "Permission YAML exported",
+      "PERMISSION_YAML_IMPORTED": "Permission YAML imported",
+      "MASTER_DATA_BULK_ACCESSED": "Master data bulk accessed",
+      "MASTER_DATA_BATCH_APPLIED": "Master data batch applied",
+      "QUERY_EXECUTED": "Query executed",
+      "QUERY_SAVED": "Query saved",
+      "QUERY_UPDATED": "Query updated",
+      "QUERY_RETIRED": "Query retired"
+    }
+  },
   "home": {
     "welcome": "Welcome to MasterMeister",
     "comingSoon": "Coming soon",

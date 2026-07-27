@@ -348,6 +348,61 @@
       "MINE": "自分のみ"
     }
   },
+  "auditLog": {
+    "title": "監査ログ",
+    "selectPlaceholder": "選択してください",
+    "column": {
+      "occurredAt": "発生日時",
+      "eventType": "イベント種別",
+      "user": "対象ユーザ",
+      "connection": "対象接続",
+      "targetResource": "対象リソース",
+      "resultStatus": "結果",
+      "detail": "詳細"
+    },
+    "filter": {
+      "occurredAtFrom": "発生日時（開始）",
+      "occurredAtTo": "発生日時（終了）",
+      "eventType": "イベント種別",
+      "user": "対象ユーザ",
+      "connection": "対象接続",
+      "resultStatus": "結果"
+    },
+    "resultStatus": {
+      "SUCCESS": "成功",
+      "FAILURE": "失敗"
+    },
+    "eventType": {
+      "LOGIN": "ログイン",
+      "LOGOUT": "ログアウト",
+      "LOGIN_FAILURE": "ログイン失敗",
+      "REGISTRATION_REQUESTED": "ユーザ登録申請",
+      "REGISTRATION_COMPLETED": "ユーザ登録完了",
+      "USER_APPROVED": "ユーザ承認",
+      "USER_REJECTED": "ユーザ却下",
+      "USER_DISABLED": "ユーザ無効化",
+      "USER_ENABLED": "ユーザ再有効化",
+      "TOKEN_REUSE_DETECTED": "トークン再利用検知",
+      "CONNECTION_REGISTERED": "接続登録",
+      "CONNECTION_UPDATED": "接続更新",
+      "CONNECTION_DELETED": "接続削除",
+      "SCHEMA_IMPORTED": "スキーマ取込",
+      "PERMISSION_CHANGED": "権限変更",
+      "GROUP_CREATED": "グループ作成",
+      "GROUP_RENAMED": "グループ名変更",
+      "GROUP_DELETED": "グループ削除",
+      "GROUP_MEMBER_ADDED": "グループメンバー追加",
+      "GROUP_MEMBER_REMOVED": "グループメンバー削除",
+      "PERMISSION_YAML_EXPORTED": "権限YAMLエクスポート",
+      "PERMISSION_YAML_IMPORTED": "権限YAMLインポート",
+      "MASTER_DATA_BULK_ACCESSED": "マスタデータ大量アクセス",
+      "MASTER_DATA_BATCH_APPLIED": "マスタデータ一括更新",
+      "QUERY_EXECUTED": "クエリ実行",
+      "QUERY_SAVED": "クエリ保存",
+      "QUERY_UPDATED": "クエリ更新",
+      "QUERY_RETIRED": "クエリ非表示化"
+    }
+  },
   "home": {
     "welcome": "ようこそ、MasterMeisterへ",
     "comingSoon": "準備中",

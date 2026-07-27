@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.mastermeister.audit.repository;
+package cherry.mastermeister.common.exception;
 
-import cherry.mastermeister.audit.entity.AuditLogEntry;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.http.HttpStatus;
 
 /**
- * logical-components.md §2。JpaSpecificationExecutorはUNIT-09で追加実装
- * （監査ログ閲覧の動的絞込のため）。
+ * nfr-design-patterns.md §1.1。絞込パラメータ（ページサイズ超過、発生日時範囲の開始&gt;終了）の
+ * 検証に失敗した場合。UNIT-08のQueryHistoryInvalidParameterExceptionと同じパターン。
  */
-public interface AuditLogEntryRepository extends JpaRepository<AuditLogEntry, Long>,
-        JpaSpecificationExecutor<AuditLogEntry> {
+public class AuditLogInvalidParameterException extends ApiException {
+
+    public AuditLogInvalidParameterException() {
+        super("AUDIT_LOG_INVALID_PARAMETER", HttpStatus.BAD_REQUEST);
+    }
 }

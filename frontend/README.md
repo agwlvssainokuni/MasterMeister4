@@ -53,7 +53,7 @@ src/
 ├── i18n/                 # 多言語対応（react-i18next、common/design-system名前空間。アプリ全体で使う横断的インフラのためdesign-system/の外に配置）
 ├── auth/                # 認証状態管理（AuthContext）、トークン保管（sessionStorage）、JWTデコード
 ├── api/                  # バックエンドAPIクライアント（apiFetch、リフレッシュ自動再試行）
-├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）・UNIT-04（グループ管理、権限設定）・UNIT-05（マスタメンテナンス3画面）・UNIT-06（保存クエリ管理3画面、ad-hocクエリ実行2画面、共有のQueryEditorPanel）・UNIT-07（クエリビルダー2画面＋タブサブコンポーネント7種＋共有のQueryBuilderOperandPicker）・UNIT-08（クエリ履歴2画面）で構築した画面
+├── pages/               # UNIT-02（ログイン、ユーザ登録、ユーザ管理、トップ）・UNIT-03（RDBMS接続設定、スキーマ詳細）・UNIT-04（グループ管理、権限設定）・UNIT-05（マスタメンテナンス3画面）・UNIT-06（保存クエリ管理3画面、ad-hocクエリ実行2画面、共有のQueryEditorPanel）・UNIT-07（クエリビルダー2画面＋タブサブコンポーネント7種＋共有のQueryBuilderOperandPicker）・UNIT-08（クエリ履歴2画面）・UNIT-09（監査ログ閲覧1画面）で構築した画面
 ├── mocks/              # devビルド限定のコンポーネントカタログ・代表画面モック
 └── test/                 # テスト共通セットアップ・ヘルパー（renderMock、renderPage）
 ```
@@ -63,3 +63,7 @@ src/
 ## クエリ履歴（UNIT-08）
 
 `/query-history`画面で、実行済みクエリの履歴を閲覧・絞込できる。接続選択→履歴一覧の2画面構成。実行者スコープ（「全ユーザ」／「自分のみ」）の切替は管理者ユーザにのみ表示する。管理者判定は既存の`decodeJwtEmail`（`auth/jwt.ts`）と同じ設計思想の`decodeJwtRole`で行う（`AuthContext`自体はロール情報を持たないため、各ページで`getAccessToken()`と組み合わせて呼び出す）。
+
+## 監査ログ閲覧（UNIT-09）
+
+`/audit-log`画面で、監査ログを閲覧・絞込できる。UNIT-05〜08と異なり単一画面構成（接続選択画面なし）で、対象接続も他の絞込条件と並列の1つとして扱う（`connectionId`を持たないログインイベント等も同一画面で扱うため）。対象ユーザ・対象接続セレクタの選択肢は新規APIクライアントを追加せず、既存の`listUsers()`（`api/adminUsers.ts`）・`listConnections()`（`api/rdbmsConnections.ts`）をそのまま再利用する。管理者専用画面だが、フロントエンド側に独自のロール判定・ガードは設けない（`GroupManagementPage`等の既存の管理者専用画面と同じ方針で、アクセス制御はバックエンドの403応答に委ねる）。画面遷移導線・詳細モーダルは設けない。

@@ -29,36 +29,36 @@
 
 ### 1. Business Logic Generation
 
-- [ ] Step 1.1: DTOクラス群を作成する（`cherry.mastermeister.audit.dto`）: `AuditLogEntryResponse`（`id`, `occurredAt`, `userId`, `userDisplayName`, `connectionId`, `connectionDisplayName`, `eventType`, `targetResource`, `resultStatus`, `detail`）, `AuditLogSearchCriteria`（`occurredAtFrom`, `occurredAtTo`, `eventType`, `userId`, `connectionId`, `resultStatus`。Service層内部用）, `AuditLogPageResponse`（`Page<AuditLogEntryResponse>`をUNIT-08の`QueryHistoryPageResponse`と同様の独自の軽量ラッパーへ変換）
-- [ ] Step 1.2: `AuditLogSpecifications`（`cherry.mastermeister.audit`）を作成する（`Specification<AuditLogEntry>`の静的ファクトリメソッド: `occurredAtFrom`, `occurredAtTo`, `eventTypeEquals`, `userIdEquals`, `connectionIdEquals`, `resultStatusEquals`。nfr-design-patterns.md §2.1）
-- [ ] Step 1.3: `AuditLogEntryRepository`（UNIT-02既存、`cherry.mastermeister.audit.repository`）を修正する: `JpaSpecificationExecutor<AuditLogEntry>`を追加実装（logical-components.md §2）
-- [ ] Step 1.4: `AuditLogQueryService`（`cherry.mastermeister.audit`）を作成する
+- [x] Step 1.1: DTOクラス群を作成する（`cherry.mastermeister.audit.dto`）: `AuditLogEntryResponse`（`id`, `occurredAt`, `userId`, `userDisplayName`, `connectionId`, `connectionDisplayName`, `eventType`, `targetResource`, `resultStatus`, `detail`）, `AuditLogSearchCriteria`（`occurredAtFrom`, `occurredAtTo`, `eventType`, `userId`, `connectionId`, `resultStatus`。Service層内部用）, `AuditLogPageResponse`（`Page<AuditLogEntryResponse>`をUNIT-08の`QueryHistoryPageResponse`と同様の独自の軽量ラッパーへ変換）
+- [x] Step 1.2: `AuditLogSpecifications`（`cherry.mastermeister.audit`）を作成する（`Specification<AuditLogEntry>`の静的ファクトリメソッド: `occurredAtFrom`, `occurredAtTo`, `eventTypeEquals`, `userIdEquals`, `connectionIdEquals`, `resultStatusEquals`。nfr-design-patterns.md §2.1）
+- [x] Step 1.3: `AuditLogEntryRepository`（UNIT-02既存、`cherry.mastermeister.audit.repository`）を修正する: `JpaSpecificationExecutor<AuditLogEntry>`を追加実装（logical-components.md §2）
+- [x] Step 1.4: `AuditLogQueryService`（`cherry.mastermeister.audit`）を作成する
   - `listAuditLog(AuditLogSearchCriteria criteria, Pageable pageable): Page<AuditLogEntryResponse>` — `AuditLogSpecifications`で動的組立→`findAll(spec, pageable)`→`userId`/`connectionId`の一括解決（`UserRepository.findAllById`, `RdbmsConnectionRepository.findAllById`）→`AuditLogEntryResponse`へ変換（business-logic-model.md §2・§6）
 
 ### 2. Business Logic Unit Testing
 
-- [ ] Step 2.1: `AuditLogQueryServiceTest`を作成する（Mockito。各絞込条件の組み合わせ、対象ユーザ名解決（正常・不明ユーザ）、対象接続名解決（正常・削除済み接続））
-- [ ] Step 2.2: `AuditLogSpecificationsTest`を作成する（`@DataJpaTest`。各ファクトリメソッド単体、および複数条件の組み合わせでの絞込結果確認）
+- [x] Step 2.1: `AuditLogQueryServiceTest`を作成する（Mockito。各絞込条件の組み合わせ、対象ユーザ名解決（正常・不明ユーザ）、対象接続名解決（正常・削除済み接続））— 4件
+- [x] Step 2.2: `AuditLogSpecificationsTest`を作成する（`@DataJpaTest`。各ファクトリメソッド単体、および複数条件の組み合わせでの絞込結果確認）— 6件
 
 ### 3. Business Logic Summary
 
-- [ ] Step 3.1: `aidlc-docs/construction/unit-09/code/business-logic-summary.md`を作成する
+- [x] Step 3.1: `aidlc-docs/construction/unit-09/code/business-logic-summary.md`を作成する
 
 ### 4. API Layer Generation
 
-- [ ] Step 4.1: `AuditLogController`（`cherry.mastermeister.audit.api`）を作成する（単一エンドポイント: `GET /api/admin/audit-log`。既存の`RdbmsConnectionController`と同様、クラスJavadocに「既存のSecurityFilterChain設定により管理者ロール必須」である旨のコメントを付与、logical-components.md §1）
-- [ ] Step 4.2: 新規例外`AuditLogInvalidParameterException`（400）を`cherry.mastermeister.common.exception`に追加し、ページサイズ上限超過・日時範囲の相関チェック違反時に送出する
-- [ ] Step 4.3: `GlobalExceptionHandler`への追加要否を確認する — 新規例外は`ApiException`のサブクラスであり既存の汎用ハンドラで処理されるため追加不要と確認（UNIT-05〜08と同じ結論）
-- [ ] Step 4.4: SecurityFilterChain設定への`/api/admin/audit-log/**`ルール追加要否を確認する — 既存の`/api/admin/**`→`hasRole("ADMIN")`ルールでカバーされるため追加不要と確認
-- [ ] Step 4.5: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）
+- [x] Step 4.1: `AuditLogController`（`cherry.mastermeister.audit.api`）を作成する（単一エンドポイント: `GET /api/admin/audit-log`。既存の`RdbmsConnectionController`と同様、クラスJavadocに「既存のSecurityFilterChain設定により管理者ロール必須」である旨のコメントを付与、logical-components.md §1）
+- [x] Step 4.2: 新規例外`AuditLogInvalidParameterException`（400）を`cherry.mastermeister.common.exception`に追加し、ページサイズ上限超過・日時範囲の相関チェック違反時に送出する。`messages_ja.properties`/`messages_en.properties`に`error.AUDIT_LOG_INVALID_PARAMETER`を追加
+- [x] Step 4.3: `GlobalExceptionHandler`への追加要否を確認する — 新規例外は`ApiException`のサブクラスであり既存の汎用ハンドラで処理されるため追加不要と確認（UNIT-05〜08と同じ結論）
+- [x] Step 4.4: SecurityFilterChain設定への`/api/admin/audit-log/**`ルール追加要否を確認する — 既存の`/api/admin/**`→`hasRole("ADMIN")`ルールでカバーされるため追加不要と確認
+- [x] Step 4.5: OpenAPI/Swagger UIへの反映を確認する（既存の自動生成のみ、追加実装不要）
 
 ### 5. API Layer Unit Testing
 
-- [ ] Step 5.1: `@WebMvcTest`で`AuditLogControllerTest`を作成する（正常系、絞込パラメータ違反時400応答、一般ユーザ（`ADMIN`ロールなし）のリクエストが403で拒否されることの確認）
+- [x] Step 5.1: `@WebMvcTest`で`AuditLogControllerTest`を作成する（正常系、絞込パラメータ違反時400応答、一般ユーザ（`ADMIN`ロールなし）のリクエストが403で拒否されること、未認証リクエストが401で拒否されることの確認）— 5件全件成功
 
 ### 6. API Layer Summary
 
-- [ ] Step 6.1: `aidlc-docs/construction/unit-09/code/api-layer-summary.md`を作成する
+- [x] Step 6.1: `aidlc-docs/construction/unit-09/code/api-layer-summary.md`を作成する
 
 ### 7. Repository Layer Generation
 
@@ -66,43 +66,44 @@
 
 ### 8. Frontend Components Generation
 
-- [ ] Step 8.1: APIクライアント`frontend/src/api/auditLog.ts`を作成する（監査ログ一覧取得の関数、型定義。対象ユーザ・対象接続の一覧取得は既存の`listUsers()`・`listConnections()`を再利用するため新規関数は追加しない）
-- [ ] Step 8.2: `AuditLogPage`（`frontend/src/pages/`）を作成する（frontend-components.md。単一画面、`DataTable`＋`Pagination`＋絞込条件（縦並びレイアウト、UNIT-08の承認前レビュー対応後の構成を最初から採用）、`Pagination`↔`Pageable`のページ番号変換）。画面遷移導線・詳細モーダルは設けない
-- [ ] Step 8.3: `App.tsx`のルーティングに`/audit-log`を追加する（`ProtectedRoute`配下）
-- [ ] Step 8.4: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'auditLog'`を追加する
-- [ ] Step 8.5: i18nリソース（`common.json`の`ja`/`en`）に`auditLog.*`関連キーを追加する（`nav.auditLog`はUNIT-01で追加済み。イベント種別28値の表示名`auditLog.eventType.*`を含む）
+- [x] Step 8.1: APIクライアント`frontend/src/api/auditLog.ts`を作成する（監査ログ一覧取得の関数、型定義。対象ユーザ・対象接続の一覧取得は既存の`listUsers()`・`listConnections()`を再利用するため新規関数は追加しない）
+- [x] Step 8.2: `AuditLogPage`（`frontend/src/pages/`）を作成する（frontend-components.md。単一画面、`DataTable`＋`Pagination`＋絞込条件（縦並びレイアウト、UNIT-08の承認前レビュー対応後の構成を最初から採用）、`Pagination`↔`Pageable`のページ番号変換）。画面遷移導線・詳細モーダルは設けない
+- [x] Step 8.3: `App.tsx`のルーティングに`/audit-log`を追加する（`ProtectedRoute`配下）
+- [x] Step 8.4: `HomePage.tsx`の`IMPLEMENTED_KEYS`に`'auditLog'`を追加する
+- [x] Step 8.5: i18nリソース（`common.json`の`ja`/`en`）に`auditLog.*`関連キーを追加する（`nav.auditLog`はUNIT-01で追加済み。イベント種別28値の表示名`auditLog.eventType.*`を含む）
 
 ### 9. Frontend Components Unit Testing
 
-- [ ] Step 9.1: `auditLog.test.ts`（APIクライアント）を作成する
-- [ ] Step 9.2: `AuditLogPage.test.tsx`を作成する（一覧表示、絞込条件変更時の再取得、ページング）
+- [x] Step 9.1: `auditLog.test.ts`（APIクライアント）を作成する — 2件
+- [x] Step 9.2: `AuditLogPage.test.tsx`を作成する（一覧表示、絞込条件変更時の再取得、対象ユーザ・対象接続セレクタの選択肢取得元確認）— 3件。`HomePage.test.tsx`の「準備中」バッジ数（1→0、全カード実装済みに）を反映
 
 ### 10. Frontend Components Summary
 
-- [ ] Step 10.1: `aidlc-docs/construction/unit-09/code/frontend-summary.md`を作成する
+- [x] Step 10.1: `aidlc-docs/construction/unit-09/code/frontend-summary.md`を作成する
 
 ### 11. Database Migration Scripts
 
-- [ ] Step 11.1: `V18__add_index_audit_log_entry_connection_occurred_at.sql`を作成する（`(connection_id, occurred_at)`複合インデックス、logical-components.md §7）。`@DataJpaTest`経由でマイグレーション適用を確認する
+- [x] Step 11.1: `V18__add_index_audit_log_entry_connection_occurred_at.sql`を作成する（`(connection_id, occurred_at)`複合インデックス、logical-components.md §7）。`AuditLogSpecificationsTest`（`@DataJpaTest`）経由でマイグレーション適用を確認済み
 
 ### 12. Documentation Generation
 
-- [ ] Step 12.1: `backend/README.md`を更新する（UNIT-09概要: 監査ログ閲覧、`/api/admin/audit-log`エンドポイント）
-- [ ] Step 12.2: `frontend/README.md`を更新する（UNIT-09の新規画面をpages概要に追記）
+- [x] Step 12.1: `backend/README.md`を更新する（UNIT-09概要: 監査ログ閲覧、`/api/admin/audit-log`エンドポイント）
+- [x] Step 12.2: `frontend/README.md`を更新する（UNIT-09の新規画面をpages概要に追記）
 
 ### 13. Deployment Artifacts
 
-- [ ] Step 13.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認する（既存構成のまま変更なし）
+- [x] Step 13.1: `devenv/docker-compose.yml`を確認し、本ユニットの動作確認に追加のインフラが不要であることを確認した（既存構成のまま変更なし）
 
 ### 14. 最終ビルド検証
 
-- [ ] Step 14.1: **検証チェックポイント**: `./gradlew :backend:build`、`npm test`（frontend）、`npm run build`（frontend）を確認する
-- [ ] Step 14.2: devenv（PostgreSQL）に対し実アプリ（`bootWar`で明示的にビルド、`feedback_deployment_artifact.md`の運用ルールに従う）で、管理者ユーザのJWTを用いてAPI経由（curl）で以下を確認する:
-  - 監査ログ一覧の絞込・ページングの正常動作（発生日時範囲・イベント種別・対象ユーザ・対象接続・結果ステータス）
-  - 一般ユーザのJWTでのアクセスが403で拒否されること（BR-AUDITVIEW-03）
-  - 日時範囲の相関検証（開始>終了で400）、ページサイズ上限超過時の400応答
-  - 対象ユーザ・対象接続が削除されている場合のプレースホルダー表示（「(不明なユーザ)」「(削除済み接続)」）
-- [ ] Step 14.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜08と同じくNVD APIキー未設定のため実施見送り
+- [x] Step 14.1: **検証チェックポイント**: `./gradlew :backend:build`（全427件成功）、`npm test`（frontend、全60ファイル246件成功）、`npm run build`（frontend、成功）を確認した
+- [x] Step 14.2: devenv（H2内部DB＋PostgreSQL接続、`bootWar`で明示的にビルド、`feedback_deployment_artifact.md`の運用ルールに従う）で、管理者ユーザ（新規ブートストラップ）・一般ユーザ（新規登録・承認）それぞれのJWTを用いてAPI経由（curl）で以下を確認した:
+  - 監査ログ一覧の絞込・ページングの正常動作（イベント種別・対象ユーザ・対象接続の各絞込）
+  - 一般ユーザのJWTでのアクセスが403で拒否されること（BR-AUDITVIEW-03）を確認
+  - 日時範囲の相関検証（開始>終了で400 `AUDIT_LOG_INVALID_PARAMETER`）、ページサイズ上限超過（500件指定）時の400応答を確認
+  - 接続削除後、「(削除済み接続)」のプレースホルダーが表示されること（BR-AUDITVIEW-07）を確認
+  - **実機検証時の手順ミス（実装バグではない）**: (1) 内部DB（メタデータDB）はH2であり、devenvのPostgreSQL等は対象RDBMS接続専用という区別を誤り、当初PostgreSQLへの接続切替を試みた、(2) `${MM_APP_XXX:default}`プレースホルダの上書きにはコマンドライン引数`--MM_APP_XXX=value`（環境変数名そのまま）が必要で、`--mm.app.xxx=value`形式では反映されず意図せず既存DBファイルを再利用してしまった、(3) ユーザ登録APIのパス・リクエスト構造を誤り、(4) パスワード漏洩チェックで単純なパスワードが拒否された。いずれも検証手順上の見落としでUNIT-09実装自体には問題なし。`feedback_deployment_artifact.md`に教訓を追記
+- [x] Step 14.3: OWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）はUNIT-02〜08と同じくNVD APIキー未設定のため実施見送り
 
 ## Story Traceability
 

@@ -39,6 +39,7 @@ import { QueryBuilderConnectionListPage } from './pages/QueryBuilderConnectionLi
 import { QueryBuilderPage } from './pages/QueryBuilderPage'
 import { QueryHistoryConnectionListPage } from './pages/QueryHistoryConnectionListPage'
 import { QueryHistoryPage } from './pages/QueryHistoryPage'
+import { AuditLogPage } from './pages/AuditLogPage'
 
 // devビルド限定ルート（/mock/*）。lazy()呼び出し自体をimport.meta.env.DEVの
 // 三項演算子内に置くことで、本番ビルド時（DEV=falseへ静的に置換される）に
@@ -204,6 +205,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <QueryHistoryPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/audit-log"
+            element={
+              <ProtectedRoute>
+                <AuditLogPage />
               </ProtectedRoute>
             }
           />

@@ -31,6 +31,7 @@ const IMPLEMENTED_KEYS = new Set([
   'queryExecution',
   'queryBuilder',
   'queryHistory',
+  'auditLog',
 ])
 
 export function HomePage() {

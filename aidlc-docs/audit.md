@@ -2773,3 +2773,21 @@
 **Context**: CONSTRUCTION - UNIT-09 Code Generation Part 1、承認待ち
 
 ---
+
+## UNIT-09 Code Generation Part 1 承認、Part 2着手
+
+**Timestamp**: 2026-07-27T01:12:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-09 監査ログ閲覧 Code Generation Part 1（計画）を承認。Part 2（実装）に着手する。"
+**Context**: CONSTRUCTION - UNIT-09 Code Generation Part 2、実装開始
+
+---
+
+## UNIT-09 Code Generation Part 2 全ステップ完了
+
+**Timestamp**: 2026-07-27T01:40:00Z
+**User Input**: (Part 2の全14セクション実装を継続実施)
+**AI Response**: "Business Logic層（AuditLogEntryResponse/AuditLogSearchCriteria/AuditLogPageResponse、AuditLogSpecifications、AuditLogEntryRepositoryへのJpaSpecificationExecutor追加、AuditLogQueryService）、API層（AuditLogController、AuditLogInvalidParameterException、messages_ja/en.properties追加）、Frontend（auditLog.ts、AuditLogPage、App.tsx/HomePage.tsxルーティング、i18n auditLog.*名前空間28種別分）、DBマイグレーション（V18複合インデックス）、README更新を作成。実装時の発見・修正: (1)Specification.where(null)がコンパイル時のあいまい参照エラーおよび実行時IllegalArgumentExceptionの両方を引き起こすことを発見し、(root,query,cb)->cb.conjunction()という自明なSpecificationから開始する形に修正、(2)vi.mockによるモジュール自動モックが同モジュールの定数（AUDIT_EVENT_TYPES）もundefinedにしてしまう問題を発見しimportOriginalパターンで解消、(3)findByTextが同一テキストの複数マッチで失敗する問題をfindByRole('cell',...)への変更で解消。最終ビルド検証: ./gradlew :backend:build（全427件成功）、npm test（frontend、全60ファイル246件成功）、npm run build成功。実機E2E検証: bootWarで明示的ビルド、H2内部DB（デフォルト設定）に対し管理者ユーザ新規ブートストラップ・一般ユーザ新規登録承認のうえAPI経由で監査ログ絞込（イベント種別・対象ユーザ・対象接続）、一般ユーザの403拒否、日時範囲相関違反・ページサイズ上限超過の400応答、削除済み接続のプレースホルダー表示を確認。実機検証時の手順ミス4件を発見・是正（内部DBはH2でありPostgreSQL等は対象RDBMS接続専用という混同、環境変数プレースホルダの正しい上書き形式、ユーザ登録APIの2段階構造、パスワード漏洩チェック）が、いずれも検証手順上の見落としでUNIT-09実装自体には問題なし。feedback_deployment_artifact.mdに教訓を追記。OWASP Dependency-CheckはUNIT-02〜08と同じくNVD APIキー未設定のため実施見送り。"
+**Context**: CONSTRUCTION - UNIT-09 Code Generation Part 2、全ステップ完了
+
+---
