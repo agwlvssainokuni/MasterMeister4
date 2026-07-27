@@ -19,10 +19,12 @@ import { useNavigate } from 'react-router-dom'
 import { AppShell, useDefaultNavItems } from '../design-system/components'
 import { useAuth } from '../auth/AuthContext'
 import { getAccessToken } from '../auth/tokenStorage'
-import { decodeJwtEmail } from '../auth/jwt'
+import { decodeJwtEmail, decodeJwtRole } from '../auth/jwt'
 
 // frontend-components.md §6。UNIT-01では「プレースホルダー」だったAppShell Headerの
-// ログアウト導線を実装する。
+// ログアウト導線を実装する。管理者専用機能（users/connections/groups/auditLog）の
+// ナビ項目は一般ユーザには表示しない（design-system層に認証ロジックを持ち込まないため、
+// ロール判定はこのアプリ層で行いisAdminという単純な値のみをuseDefaultNavItemsへ渡す）。
 export function AuthenticatedLayout({
   activeNavKey,
   children,
@@ -32,8 +34,9 @@ export function AuthenticatedLayout({
 }) {
   const { logout } = useAuth()
   const navigate = useNavigate()
-  const navItems = useDefaultNavItems(activeNavKey)
   const accessToken = getAccessToken()
+  const isAdmin = accessToken ? decodeJwtRole(accessToken) === 'ADMIN' : false
+  const navItems = useDefaultNavItems(activeNavKey, { isAdmin })
   const userLabel = accessToken ? (decodeJwtEmail(accessToken) ?? undefined) : undefined
 
   const onLogout = async () => {

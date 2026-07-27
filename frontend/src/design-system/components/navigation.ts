@@ -22,9 +22,9 @@ import type { NavItem } from './AppShell'
 // 「ダッシュボード」を「ユーザ管理」に統合。レビュー指摘の反映）。
 // リンク先は各ユニット未着手の間はプレースホルダー（実装済みユニットのみ実際に遷移可能）。
 export const NAV_ROUTES = [
-  { key: 'users', labelKey: 'nav.users', path: '/users' },
-  { key: 'connections', labelKey: 'nav.connections', path: '/connections' },
-  { key: 'groups', labelKey: 'nav.groups', path: '/groups' },
+  { key: 'users', labelKey: 'nav.users', path: '/users', adminOnly: true },
+  { key: 'connections', labelKey: 'nav.connections', path: '/connections', adminOnly: true },
+  { key: 'groups', labelKey: 'nav.groups', path: '/groups', adminOnly: true },
   { key: 'masterData', labelKey: 'nav.masterData', path: '/master-data' },
   // UNIT-06 Functional Designレビューで新規追加（UNIT-01時点では未予約）。ad-hocクエリ実行
   // （保存を伴わない）は独立したナビ項目とし、保存クエリ管理（savedQueries）とは別画面フローとする
@@ -32,17 +32,26 @@ export const NAV_ROUTES = [
   { key: 'savedQueries', labelKey: 'nav.savedQueries', path: '/saved-queries' },
   { key: 'queryBuilder', labelKey: 'nav.queryBuilder', path: '/query-builder' },
   { key: 'queryHistory', labelKey: 'nav.queryHistory', path: '/query-history' },
-  { key: 'auditLog', labelKey: 'nav.auditLog', path: '/audit-log' },
+  // 管理者専用（BR-AUDITVIEW-03）。users/connections/groupsと同じくadminOnly
+  { key: 'auditLog', labelKey: 'nav.auditLog', path: '/audit-log', adminOnly: true },
 ] as const
 
-export function useDefaultNavItems(activeKey?: string): NavItem[] {
+/**
+ * adminOnly項目のロール判定自体はアプリ層（AuthenticatedLayout）が担い、design-systemは
+ * isAdminという単純なブール値を受け取るのみとする（design-system層が認証ロジックに
+ * 依存しないようにするため）。isAdmin省略時は全項目を表示する（既存のmocks/カタログ画面の
+ * 呼び出し元への影響を避けるための後方互換）。
+ */
+export function useDefaultNavItems(activeKey?: string, options?: { isAdmin?: boolean }): NavItem[] {
   const { t } = useTranslation('design-system')
   const navigate = useNavigate()
 
-  return NAV_ROUTES.map((route) => ({
-    key: route.key,
-    label: t(route.labelKey),
-    active: route.key === activeKey,
-    onSelect: () => navigate(route.path),
-  }))
+  return NAV_ROUTES.filter((route) => !('adminOnly' in route && route.adminOnly) || options?.isAdmin).map(
+    (route) => ({
+      key: route.key,
+      label: t(route.labelKey),
+      active: route.key === activeKey,
+      onSelect: () => navigate(route.path),
+    }),
+  )
 }

@@ -2791,3 +2791,12 @@
 **Context**: CONSTRUCTION - UNIT-09 Code Generation Part 2、全ステップ完了
 
 ---
+
+## UNIT-09 Code Generation完了報告への指摘: 管理者専用メニューの非表示化
+
+**Timestamp**: 2026-07-27T01:50:00Z
+**User Input**: "一般ユーザの使えないメニューは表示されないようにして。"
+**AI Response**: "対応範囲をAskUserQuestionで確認（監査ログのみ／管理者専用機能全体）し「管理者専用機能全体（推奨）」の回答を得た。navigation.ts（design-system配下）のNAV_ROUTESにadminOnly?: booleanフラグを追加（users/connections/groups/auditLogの4項目）。useDefaultNavItemsはoptions.isAdminという単純なブール値のみを受け取りadminOnly項目をフィルタする設計とし、design-system層は認証ロジックに依存しない（isAdmin省略時は全項目表示、mocks配下の既存呼び出し元への後方互換）。ロール判定はAuthenticatedLayout.tsx（アプリ層）でdecodeJwtRoleを用いて行いisAdminのみを渡す形に変更。AuthenticatedLayout.test.tsxに2件追加（一般ユーザには4項目非表示、管理者には表示）。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全60ファイル248件成功）、npm run build成功を確認。frontend-summary.mdに指摘対応として追記。"
+**Context**: CONSTRUCTION - UNIT-09 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---

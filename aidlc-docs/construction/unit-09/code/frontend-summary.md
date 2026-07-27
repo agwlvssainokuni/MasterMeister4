@@ -28,3 +28,14 @@
 - `HomePage.test.tsx`: 「準備中」バッジ数の変化（1→0）を反映
 
 全件成功（`npm test -- --run`、既存ユニット分含め全60ファイル246件成功）。`npx tsc --noEmit`・`npm run lint`（既存警告3件のみ）・`npm run build`もすべて成功を確認した。
+
+## 完了報告後の指摘対応（管理者専用メニューの非表示化）
+
+「一般ユーザの使えないメニューは表示されないようにして」との指摘を受け、対応範囲をAskUserQuestionで確認したところ「管理者専用機能全体（推奨）」との回答を得た。
+
+- **対象範囲**: 監査ログ（本ユニット）に加え、既存の管理者専用機能（ユーザ管理=`users`、RDBMS接続設定=`connections`、グループ管理=`groups`）のナビ項目も一般ユーザに非表示にする横断的対応
+- **design-system層の独立性を維持する設計**: `navigation.ts`（design-system配下）の`NAV_ROUTES`に`adminOnly?: boolean`フラグを追加（`users`/`connections`/`groups`/`auditLog`の4項目）。`useDefaultNavItems`は`options.isAdmin`という単純なブール値のみを受け取り`adminOnly`項目をフィルタする形とし、design-system自体は認証ロジック（JWTデコード等）に一切依存しない。ロール判定は呼び出し元の`AuthenticatedLayout.tsx`（アプリ層）が`decodeJwtRole`（UNIT-08で追加済み）を用いて行い、`isAdmin`のみを渡す
+- **後方互換**: `useDefaultNavItems`の`options`引数は省略可能で、省略時は全項目を表示する（`mocks/`配下の開発用カタログ画面等、既存呼び出し元への影響を避けるため）
+- テスト: `AuthenticatedLayout.test.tsx`に2件追加（一般ユーザには4項目が非表示・管理者には表示されることを確認）
+
+修正後、`npx tsc --noEmit`・`npm run lint`（既存警告3件のみ）・`npm test -- --run`（全60ファイル248件成功）・`npm run build`をすべて実行し成功を確認した。

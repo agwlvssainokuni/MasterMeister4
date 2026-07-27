@@ -26,9 +26,9 @@ import * as authApi from '../api/auth'
 
 vi.mock('../api/auth')
 
-function makeAccessToken(email: string): string {
+function makeAccessToken(email: string, role?: string): string {
   const header = window.btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
-  const body = window.btoa(JSON.stringify({ sub: '1', email }))
+  const body = window.btoa(JSON.stringify({ sub: '1', email, role }))
   return `${header}.${body}.signature`
 }
 
@@ -73,5 +73,25 @@ describe('AuthenticatedLayout', () => {
     renderLayout()
     await userEvent.click(screen.getByTestId('app-shell-logout-button'))
     await waitFor(() => expect(screen.getByText('ログイン画面')).toBeInTheDocument())
+  })
+
+  it('一般ユーザには管理者専用メニュー（ユーザ管理・RDBMS接続設定・グループ管理・監査ログ）を表示しない', () => {
+    setTokens(makeAccessToken('user@example.com', 'USER'), 'refresh-1')
+    renderLayout()
+    expect(screen.queryByText('ユーザ管理')).not.toBeInTheDocument()
+    expect(screen.queryByText('RDBMS接続設定')).not.toBeInTheDocument()
+    expect(screen.queryByText('グループ管理')).not.toBeInTheDocument()
+    expect(screen.queryByText('監査ログ')).not.toBeInTheDocument()
+    // 一般ユーザも使える項目は引き続き表示する
+    expect(screen.getByText('マスタメンテナンス')).toBeInTheDocument()
+  })
+
+  it('管理者には管理者専用メニューを表示する', () => {
+    setTokens(makeAccessToken('admin@example.com', 'ADMIN'), 'refresh-1')
+    renderLayout()
+    expect(screen.getByText('ユーザ管理')).toBeInTheDocument()
+    expect(screen.getByText('RDBMS接続設定')).toBeInTheDocument()
+    expect(screen.getByText('グループ管理')).toBeInTheDocument()
+    expect(screen.getByText('監査ログ')).toBeInTheDocument()
   })
 })
