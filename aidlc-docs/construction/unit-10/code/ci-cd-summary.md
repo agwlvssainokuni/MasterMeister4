@@ -2,7 +2,7 @@
 
 ## 作成したファイル
 
-- **`.github/workflows/ci.yml`**（新規）: `push`（`main`）・`pull_request`をトリガーに、`backend`（`./gradlew build`、`cherry-mustache-core`含む）・`frontend`（`npm ci`→`lint`→`test`→`build`）を並行ジョブで実行。`dependency-check`ジョブはOWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）を、リポジトリシークレット`NVD_API_KEY`が設定されている場合のみ実行し（`if: ${{ secrets.NVD_API_KEY != '' }}`）、未設定時はジョブごとスキップする。実行しても`continue-on-error: true`のためワークフロー全体は失敗させない
+- **`.github/workflows/ci.yml`**（新規）: `push`（`main`）・`pull_request`をトリガーに、`backend`（`./gradlew build`、`cherry-mustache-core`含む）・`frontend`（`npm ci`→`lint`→`test`→`build`）を並行ジョブで実行。`dependency-check`ジョブはOWASP Dependency-Check（`:backend:dependencyCheckAnalyze`）を、リポジトリシークレット`NVD_API_KEY`が設定されている場合のみ実行し、未設定時は当該ステップのみスキップする（後述「実機検証で発見したエラー」参照）。実行しても`continue-on-error: true`のためワークフロー全体は失敗させない
 - **`.github/workflows/release.yml`**（新規）: `v*`形式のタグpushをトリガーに、`bootWar`でビルドしたWARをGitHub Releasesに添付する。ビルド実行前にタグ名（`v`除去）と`backend/build.gradle.kts`の`version`の一致を検証し、不一致の場合は`exit 1`でジョブを失敗させリリースを中断する（ユーザー指示によるバージョン整合性チェック）
 
 ## 実装時の変更・発見
@@ -37,3 +37,11 @@
 | `softprops/action-gh-release` | v2 | v3 |
 
 修正後、両ワークフローYAMLの構文妥当性をPythonの`yaml`モジュールで再確認した（構文エラーなし）。
+
+## 承認後に発見されたエラーの修正（IDE上でのGitHub Actions構文検証）
+
+ユーザーがIDE上でci.ymlを開いた際、`(Line: 58, Col: 9): Unrecognized named-value: 'secrets'`というエラーが表示された。
+
+**原因**: GitHub Actionsでは、ジョブレベルの`if`条件式では`secrets`コンテキストを参照できない（既知の制約。`with:`ブロックや`if:`の評価はジョブ実行前の限定的なコンテキストで行われるため）。`secrets`コンテキストが利用できるのはステップレベルの式のみ。
+
+**修正**: `dependency-check`ジョブの`if: ${{ secrets.NVD_API_KEY != '' }}`（ジョブレベル）を削除し、実際にスキャンを実行する`OWASP Dependency-Check`ステップの`if:`に移した。これによりジョブ自体（`checkout`・`setup-java`・`setup-gradle`）は常に起動するが、NVD APIキー未設定時は実際のスキャン実行ステップのみがスキップされる。当初意図していた「ジョブ全体のスキップ」ではなく「ステップ単位のスキップ」になるが、`continue-on-error: true`と合わせて実質的な挙動（失敗せず実行もしない）は変わらない。

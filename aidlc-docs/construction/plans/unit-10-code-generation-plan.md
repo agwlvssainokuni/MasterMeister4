@@ -25,7 +25,7 @@
 ### 1. CI Workflow（ビルド・テスト自動化）
 
 - [x] Step 1.1: `.github/workflows/ci.yml`を作成する（`push`: `main`ブランチ、`pull_request`をトリガー。`backend`ジョブ: `actions/setup-java`（Java 25）→`./gradlew build`（`cherry-mustache-core`・`backend`の全テスト含む）。`frontend`ジョブ: `actions/setup-node`（Node.js 26）→`npm ci`→`npm run lint`→`npm test -- --run`→`npm run build`。2ジョブは並行実行）
-- [x] Step 1.2: OWASP Dependency-Checkジョブを追加する（NVD APIキーがリポジトリシークレット`NVD_API_KEY`に設定されている場合のみ実行する条件分岐`if: ${{ secrets.NVD_API_KEY != '' }}`、`continue-on-error: true`で失敗時もワークフロー全体を止めない）
+- [x] Step 1.2: OWASP Dependency-Checkジョブを追加する（NVD APIキーがリポジトリシークレット`NVD_API_KEY`に設定されている場合のみ実行する条件分岐、`continue-on-error: true`で失敗時もワークフロー全体を止めない）。**承認後の追加是正**: ジョブレベルの`if: ${{ secrets.NVD_API_KEY != '' }}`はGitHub Actionsの仕様上`secrets`コンテキストを参照できず`Unrecognized named-value: 'secrets'`エラーになることが判明（IDEの構文検証で発見）。ステップレベルの`if`に移すことで解消（ci-cd-summary.md参照）
 
 ### 2. Release Workflow（タグpushトリガーのGitHub Releases作成）
 

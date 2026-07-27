@@ -2912,3 +2912,12 @@
 **Context**: CONSTRUCTION - UNIT-10完了、全ユニット完了。Build and Testステージへ移行
 
 ---
+
+## UNIT-10 承認後の追加是正: ci.ymlのsecretsコンテキストエラー
+
+**Timestamp**: 2026-07-28T00:20:00Z
+**User Input**: "(Line: 58, Col: 9): Unrecognized named-value: 'secrets'. Located at position 1 within expression: secrets.NVD_API_KEY != ''のエラーが ci.yml で発生。"
+**AI Response**: "WebSearchで調査した結果、GitHub Actionsの既知の制約でジョブレベルのif条件式ではsecretsコンテキストを参照できないことが判明（ステップレベルの式でのみ利用可能）。dependency-checkジョブのジョブレベルif: ${{ secrets.NVD_API_KEY != '' }}を削除し、実際にスキャンを実行するOWASP Dependency-Checkステップのifに移した。ジョブ自体（checkout・setup-java・setup-gradle）は常に起動するが、NVD APIキー未設定時は実行ステップのみスキップされる（continue-on-error: trueと合わせて実質的な挙動は変わらない）。YAML構文の再確認、ci-cd-summary.md・unit-10-code-generation-plan.mdへの追記を実施。"
+**Context**: CONSTRUCTION - Build and Testステージ、UNIT-10成果物の追加是正完了
+
+---
