@@ -2701,3 +2701,12 @@
 **Context**: CONSTRUCTION - UNIT-09 NFR Requirements、成果物作成完了、Continue to Next Stage承認待ち
 
 ---
+
+## UNIT-09 NFR Requirements 完了報告後の自己レビュー
+
+**Timestamp**: 2026-07-27T00:45:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "1件の事実誤認を発見・是正。nfr-requirements.mdおよびtech-stack-decisions.mdのSECURITY-14評価で「UNIT-05〜08の閲覧系機能はいずれも監査対象としていない」と記述したが、実装（MasterDataService.java:170-174）を確認した結果、UNIT-05はbulkAccessThreshold超過時にMASTER_DATA_BULK_ACCESSEDイベントとして大量閲覧を実際に監査記録しており、事実誤認だった。Q2=A（監査ログ閲覧自体を記録しない）という判断自体は維持したが、根拠を訂正: UNIT-05のマスタデータ参照は一般ユーザ向け機能でありデータ抽出・情報漏洩の兆候検知が目的であるのに対し、本ユニットは管理者専用機能（BR-AUDITVIEW-03）であり管理者による全件閲覧は通常の業務行為であるため大量アクセス検知の必要性が低いという理由に是正した。ページサイズの既定値・上限値（50/200）はQueryHistoryController.javaの実装と照合し正確であることを確認した。"
+**Context**: CONSTRUCTION - UNIT-09 NFR Requirements、自己レビュー完了、改めてContinue to Next Stage承認待ち
+
+---
