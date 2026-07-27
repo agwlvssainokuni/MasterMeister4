@@ -54,6 +54,8 @@ jobs:
   dependency-check:
     runs-on: ubuntu-latest
     continue-on-error: true
+    env:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     steps:
       - uses: actions/checkout@v7
 
@@ -68,9 +70,8 @@ jobs:
 
       # NVD APIキー未設定時は各ユニットのCode Generation時と同じくスキップする
       # （feedback_deployment_artifact.md等の既存運用を踏襲、NFR-4.4）。
-      # secretsコンテキストはジョブレベルのifでは参照できないため、ステップレベルで判定する。
+      # if条件でsecretsコンテキストを直接参照するとUnrecognized named-valueエラーになるため、
+      # ジョブレベルのenvへ一旦マッピングし、envコンテキスト経由で判定する。
       - name: OWASP Dependency-Check
-        if: ${{ secrets.NVD_API_KEY != '' }}
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        if: ${{ env.NVD_API_KEY != '' }}
         run: ./gradlew :backend:dependencyCheckAnalyze

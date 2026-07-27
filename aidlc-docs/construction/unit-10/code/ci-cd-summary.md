@@ -44,4 +44,6 @@
 
 **原因**: GitHub Actionsでは、ジョブレベルの`if`条件式では`secrets`コンテキストを参照できない（既知の制約。`with:`ブロックや`if:`の評価はジョブ実行前の限定的なコンテキストで行われるため）。`secrets`コンテキストが利用できるのはステップレベルの式のみ。
 
-**修正**: `dependency-check`ジョブの`if: ${{ secrets.NVD_API_KEY != '' }}`（ジョブレベル）を削除し、実際にスキャンを実行する`OWASP Dependency-Check`ステップの`if:`に移した。これによりジョブ自体（`checkout`・`setup-java`・`setup-gradle`）は常に起動するが、NVD APIキー未設定時は実際のスキャン実行ステップのみがスキップされる。当初意図していた「ジョブ全体のスキップ」ではなく「ステップ単位のスキップ」になるが、`continue-on-error: true`と合わせて実質的な挙動（失敗せず実行もしない）は変わらない。
+**修正（1回目）**: `dependency-check`ジョブの`if: ${{ secrets.NVD_API_KEY != '' }}`（ジョブレベル）を削除し、実際にスキャンを実行する`OWASP Dependency-Check`ステップの`if:`に移した。これによりジョブ自体（`checkout`・`setup-java`・`setup-gradle`）は常に起動するが、NVD APIキー未設定時は実際のスキャン実行ステップのみがスキップされる。当初意図していた「ジョブ全体のスキップ」ではなく「ステップ単位のスキップ」になるが、`continue-on-error: true`と合わせて実質的な挙動（失敗せず実行もしない）は変わらない。
+
+**修正（2回目）**: ステップレベルの`if:`に移した後も同じ`Unrecognized named-value: 'secrets'`エラーが再発した。調査の結果、`secrets`コンテキストは`if`条件式内で直接参照すると（ステップレベルであっても）未定義扱いになりうる既知の問題があり、確実な回避策は「`env:`へ一旦マッピングしてから`env`コンテキスト経由で判定する」方法であることが判明した。ジョブレベルに`env: { NVD_API_KEY: ${{ secrets.NVD_API_KEY }} }`を設定し、`OWASP Dependency-Check`ステップの`if:`を`${{ env.NVD_API_KEY != '' }}`に変更して解消した。

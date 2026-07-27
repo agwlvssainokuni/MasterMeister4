@@ -2921,3 +2921,12 @@
 **Context**: CONSTRUCTION - Build and Testステージ、UNIT-10成果物の追加是正完了
 
 ---
+
+## UNIT-10 追加是正: ci.ymlのsecretsコンテキストエラー再発
+
+**Timestamp**: 2026-07-28T00:23:00Z
+**User Input**: "まだエラー。(Line: 73, Col: 13): Unrecognized named-value: 'secrets'. Located at position 1 within expression: secrets.NVD_API_KEY != ''"
+**AI Response**: "ステップレベルのif条件に移した後も同じエラーが再発したため再調査。secretsコンテキストはif条件式内で直接参照すると（ステップレベルであっても）未定義扱いになりうる既知の問題があり、確実な回避策は「envへ一旦マッピングしてからenvコンテキスト経由で判定する」方法と判明。dependency-checkジョブにenv: { NVD_API_KEY: ${{ secrets.NVD_API_KEY }} }をジョブレベルで設定し、OWASP Dependency-Checkステップのifを${{ env.NVD_API_KEY != '' }}に変更。YAML構文再確認、ci-cd-summary.mdに2回目の修正として追記。"
+**Context**: CONSTRUCTION - Build and Testステージ、UNIT-10成果物の追加是正完了
+
+---
