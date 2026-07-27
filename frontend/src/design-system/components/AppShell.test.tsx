@@ -53,4 +53,28 @@ describe('AppShell', () => {
     await userEvent.click(screen.getByTestId('app-shell-logout-button'))
     expect(onLogout).toHaveBeenCalledTimes(1)
   })
+
+  it('onHomeClickを渡すとアプリ名がクリック可能になり、クリックでonHomeClickが呼ばれる', async () => {
+    const onHomeClick = vi.fn()
+    render(
+      <ThemeProvider>
+        <AppShell navItems={[]} onHomeClick={onHomeClick}>
+          <p>コンテンツ</p>
+        </AppShell>
+      </ThemeProvider>,
+    )
+    await userEvent.click(screen.getByTestId('app-shell-home-button'))
+    expect(onHomeClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('onHomeClickを渡さない場合、アプリ名はクリック不可のまま表示される', () => {
+    render(
+      <ThemeProvider>
+        <AppShell navItems={[]}>
+          <p>コンテンツ</p>
+        </AppShell>
+      </ThemeProvider>,
+    )
+    expect(screen.queryByTestId('app-shell-home-button')).not.toBeInTheDocument()
+  })
 })

@@ -45,7 +45,12 @@ export function AuthenticatedLayout({
   }
 
   return (
-    <AppShell navItems={navItems} userLabel={userLabel} onLogout={onLogout}>
+    <AppShell
+      navItems={navItems}
+      userLabel={userLabel}
+      onLogout={onLogout}
+      onHomeClick={() => navigate('/')}
+    >
       {children}
     </AppShell>
   )

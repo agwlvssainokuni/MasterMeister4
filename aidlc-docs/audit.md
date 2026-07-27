@@ -2809,3 +2809,12 @@
 **Context**: CONSTRUCTION - UNIT-09 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-09 承認前レビュー継続: トップ画面へのナビゲーション導線相談・追加
+
+**Timestamp**: 2026-07-27T01:56:00Z
+**User Input**: "トップ画面へのナビゲーションを置くとしたらどこ？"
+**AI Response**: "AppShell.tsxのヘッダー左側のアプリ名（従来クリック不可のテキスト）をクリック可能にしてトップ画面（/）へ遷移させる案を提案し承認を得た。AppShellにonHomeClick?: () => voidを追加し指定時のみアプリ名をbutton化（未指定時は従来どおり、後方互換）、AuthenticatedLayout.tsxからnavigate('/')を渡す形で実装。AppShell.test.tsxに2件、AuthenticatedLayout.test.tsxに1件（別画面からのクリックでの実際の遷移確認）を追加。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全60ファイル253件成功）、npm run build成功を確認。frontend-summary.mdに追記。"
+**Context**: CONSTRUCTION - UNIT-09 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---

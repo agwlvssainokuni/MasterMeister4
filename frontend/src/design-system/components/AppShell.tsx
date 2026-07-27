@@ -38,11 +38,13 @@ export interface AppShellProps {
   /** ログイン中ユーザ表示（プレースホルダー。実装はUNIT-02） */
   userLabel?: ReactNode
   onLogout?: () => void
+  /** ヘッダーのアプリ名クリック時の遷移先（未指定時はクリック不可のまま） */
+  onHomeClick?: () => void
   headerExtra?: ReactNode
   children: ReactNode
 }
 
-export function AppShell({ navItems, userLabel, onLogout, headerExtra, children }: AppShellProps) {
+export function AppShell({ navItems, userLabel, onLogout, onHomeClick, headerExtra, children }: AppShellProps) {
   const { t } = useTranslation(['design-system', 'common'])
   const [collapsed, setCollapsed] = useState(false)
 
@@ -58,7 +60,18 @@ export function AppShell({ navItems, userLabel, onLogout, headerExtra, children 
           >
             <Icon name="menu" />
           </IconButton>
-          <span className={styles.appTitle}>{t('app.name')}</span>
+          {onHomeClick ? (
+            <button
+              type="button"
+              className={styles.appTitleButton}
+              onClick={onHomeClick}
+              data-testid="app-shell-home-button"
+            >
+              {t('app.name')}
+            </button>
+          ) : (
+            <span className={styles.appTitle}>{t('app.name')}</span>
+          )}
         </div>
         <div className={styles.headerRight}>
           <LanguageSwitcher />

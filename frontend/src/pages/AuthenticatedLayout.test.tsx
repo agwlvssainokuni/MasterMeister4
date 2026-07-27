@@ -32,10 +32,10 @@ function makeAccessToken(email: string, role?: string): string {
   return `${header}.${body}.signature`
 }
 
-function renderLayout() {
+function renderLayout(initialPath = '/') {
   return render(
     <ThemeProvider>
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={[initialPath]}>
         <AuthProvider>
           <Routes>
             <Route
@@ -43,6 +43,14 @@ function renderLayout() {
               element={
                 <AuthenticatedLayout>
                   <p>コンテンツ</p>
+                </AuthenticatedLayout>
+              }
+            />
+            <Route
+              path="/other"
+              element={
+                <AuthenticatedLayout>
+                  <p>他の画面</p>
                 </AuthenticatedLayout>
               }
             />
@@ -93,5 +101,13 @@ describe('AuthenticatedLayout', () => {
     expect(screen.getByText('RDBMS接続設定')).toBeInTheDocument()
     expect(screen.getByText('グループ管理')).toBeInTheDocument()
     expect(screen.getByText('監査ログ')).toBeInTheDocument()
+  })
+
+  it('ヘッダーのアプリ名クリックでトップ画面（/）へ遷移する', async () => {
+    setTokens(makeAccessToken('user@example.com'), 'refresh-1')
+    renderLayout('/other')
+    expect(screen.getByText('他の画面')).toBeInTheDocument()
+    await userEvent.click(screen.getByTestId('app-shell-home-button'))
+    expect(await screen.findByText('コンテンツ')).toBeInTheDocument()
   })
 })
