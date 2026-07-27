@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-09 Code Generation（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - UNIT-10 CI/CD（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -50,9 +50,9 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-09 監査ログ閲覧 - Infrastructure Design - SKIP
-- **Next Stage**: UNIT-09 監査ログ閲覧 - Code Generation
-- **Status**: UNIT-09 NFR Design承認済み、Infrastructure Design SKIP判定済み、Code Generation着手前
+- **Current Stage**: UNIT-09 監査ログ閲覧 - COMPLETED
+- **Next Stage**: UNIT-10 CI/CD
+- **Status**: UNIT-09完了、UNIT-10着手前。UNIT-10完了後、Build and Testステージへ移行予定
 
 ## Backlog（今後の検討課題）
 - **E2Eテストフレームワーク（Playwright等）の導入**: 現状、各ユニットのCode Generation最終ステップでコマンドラインによる実機E2E検証（curl等）を実施しているが、UI表示に関する不具合（例: UNIT-05のダークモード文字色バグ）はこの方式では検出できない。Playwright等のフレームワークは既存の実インフラE2E検証（DB方言差異等のバックエンド/インフラ層の不具合検出に有効）を置き換えるものではなく補完するものと位置づけ、プロジェクト全体のテスト戦略として別途検討する（2026-07-24、UNIT-05承認時にユーザ提起）。
@@ -118,6 +118,7 @@
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-27T00:50:00Z。unit-09-nfr-requirements-plan.mdの全5問に推奨どおり全問Aで回答: UNIT-08と同じ絞込パラメータ検証方針、監査ログ閲覧自体は新たな監査記録対象としない、アーカイブ機構は導入しない、ページサイズはUNIT-08と同じ値、findAllByIdによる名前一括解決（キャッシュなし）。nfr-requirements.md（Security Baseline全15ルール評価）、tech-stack-decisions.mdを作成。完了報告後の自己レビューでSECURITY-14評価の事実誤認を発見・是正（「UNIT-05〜08の閲覧系機能は監査対象外」は誤りで、実際はUNIT-05がbulkAccessThreshold超過時にMASTER_DATA_BULK_ACCESSEDを記録していたため、管理者専用機能ゆえの妥当性という正しい理由に訂正）。**完了報告後の追加指摘**: ページサイズの実装上の設定項目（定数）をUNIT-08（QueryHistoryController）と共有せず、AuditLogController自身の独立した定数として分離する方針に修正（値自体はひとまずUNIT-08と同じ50/200を採用）
 - [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-27T01:05:00Z。unit-09-nfr-design-plan.mdの全4問に推奨どおり全問Aで回答: Bean Validation＋標準400エラー応答、AuditLogQueryServiceへの3責務集約、単一AuditLogControllerで1エンドポイントのみ、AuditLogSpecificationsクラス新設。nfr-design-patterns.md、logical-components.mdを作成。完了報告後の自己レビューでDTO設計の見落としを発見・是正（Service層のAuditLogSearchCriteriaのみを定義しController層のAuditLogSearchRequestへの言及が欠けていたため追加）
 - [x] Infrastructure Design — SKIP（判定 2026-07-27T01:05:00Z。新規DB永続化なし（既存AuditLogEntryの閲覧のみ）、新規外部サービス依存なし、既存インフラ（UNIT-02/03）の再利用のみのため新規インフラ設計不要）
+- [x] Code Generation — COMPLETED（承認 2026-07-27T01:58:00Z）。Part 1（計画）承認済み（2026-07-27T01:12:00Z）、Part 2全14セクション完了（unit-09-code-generation-plan.md。Business Logic層（DTO/enum、AuditLogSpecifications、既存AuditLogEntryRepositoryへのJpaSpecificationExecutor追加、AuditLogQueryService）、API層（AuditLogController、AuditLogInvalidParameterException）、Frontend（AuditLogPage単一画面、既存listUsers/listConnectionsの再利用）、DBマイグレーション（V18複合インデックス）を作成。実装時の発見・修正: (1)Specification.where(null)の実行時IllegalArgumentExceptionを自明なSpecificationに置き換え、(2)vi.mockによる定数の意図しないundefined化をimportOriginalパターンで解消。実機E2E検証（H2内部DB、bootWar）で絞込・ページング・403拒否・削除済み接続プレースホルダーを確認。実機検証時の手順ミス4件を発見・是正（内部DBはH2でありPostgreSQL等は対象RDBMS接続専用という混同、環境変数プレースホルダの正しい上書き形式等）が、いずれも検証手順上の見落としでUNIT-09実装自体には問題なし。**完了報告後、承認前レビューで3件の指摘・相談に対応**: (1)管理者専用機能（users/connections/groups/auditLog）のナビ項目を一般ユーザに非表示化（navigation.tsにadminOnlyフラグ追加、design-system層は認証ロジックに依存しない設計）、(2)ホーム画面の機能カードにも同じフィルタを適用、(3)ヘッダーのアプリ名をクリック可能にしトップ画面への導線を追加（AppShellにonHomeClick追加）。最終状態: バックエンド全427件・フロントエンド全253件成功
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
@@ -128,5 +129,5 @@
 - [x] UNIT-06 クエリ保存・実行 — COMPLETED（承認 2026-07-26T05:21:00Z）
 - [x] UNIT-07 クエリビルダー — COMPLETED（承認 2026-07-26T19:56:00Z）
 - [x] UNIT-08 クエリ履歴 — COMPLETED（承認 2026-07-27T00:17:00Z）
-- [ ] UNIT-09 監査ログ閲覧
+- [x] UNIT-09 監査ログ閲覧 — COMPLETED（承認 2026-07-27T01:58:00Z）
 - [ ] UNIT-10 CI/CD
