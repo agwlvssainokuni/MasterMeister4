@@ -120,6 +120,12 @@
 - [x] Infrastructure Design — SKIP（判定 2026-07-27T01:05:00Z。新規DB永続化なし（既存AuditLogEntryの閲覧のみ）、新規外部サービス依存なし、既存インフラ（UNIT-02/03）の再利用のみのため新規インフラ設計不要）
 - [x] Code Generation — COMPLETED（承認 2026-07-27T01:58:00Z）。Part 1（計画）承認済み（2026-07-27T01:12:00Z）、Part 2全14セクション完了（unit-09-code-generation-plan.md。Business Logic層（DTO/enum、AuditLogSpecifications、既存AuditLogEntryRepositoryへのJpaSpecificationExecutor追加、AuditLogQueryService）、API層（AuditLogController、AuditLogInvalidParameterException）、Frontend（AuditLogPage単一画面、既存listUsers/listConnectionsの再利用）、DBマイグレーション（V18複合インデックス）を作成。実装時の発見・修正: (1)Specification.where(null)の実行時IllegalArgumentExceptionを自明なSpecificationに置き換え、(2)vi.mockによる定数の意図しないundefined化をimportOriginalパターンで解消。実機E2E検証（H2内部DB、bootWar）で絞込・ページング・403拒否・削除済み接続プレースホルダーを確認。実機検証時の手順ミス4件を発見・是正（内部DBはH2でありPostgreSQL等は対象RDBMS接続専用という混同、環境変数プレースホルダの正しい上書き形式等）が、いずれも検証手順上の見落としでUNIT-09実装自体には問題なし。**完了報告後、承認前レビューで3件の指摘・相談に対応**: (1)管理者専用機能（users/connections/groups/auditLog）のナビ項目を一般ユーザに非表示化（navigation.tsにadminOnlyフラグ追加、design-system層は認証ロジックに依存しない設計）、(2)ホーム画面の機能カードにも同じフィルタを適用、(3)ヘッダーのアプリ名をクリック可能にしトップ画面への導線を追加（AppShellにonHomeClick追加）。最終状態: バックエンド全427件・フロントエンド全253件成功
 
+## Current Unit - Stage Progress (UNIT-10)
+- [x] Functional Design — SKIP（判定 2026-07-27T02:00:00Z。対応エピック・コンポーネントなし＝インフラ/開発プロセスタスクであり新規データモデル・業務ロジックを持たない）
+- [x] NFR Requirements — SKIP（判定 2026-07-27T02:00:00Z。技術選定（GitHub Actions、タグpushトリガーでのGitHub Releases作成）はrequirements.md NFR-10.1〜10.3で既に確定済み）
+- [x] NFR Design — SKIP（判定 2026-07-27T02:00:00Z。NFR Requirementsに連動してSKIP）
+- [x] Infrastructure Design — SKIP（判定 2026-07-27T02:00:00Z。新規クラウドリソース・デプロイアーキテクチャ構築ではなくGitHubリポジトリ内のワークフロー定義のみ）
+
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
 - [x] UNIT-02 ユーザ登録・認証 — COMPLETED（承認 2026-07-21T00:15:00Z）

@@ -2827,3 +2827,21 @@
 **Context**: CONSTRUCTION - UNIT-09完了、UNIT-10 CI/CDへ移行
 
 ---
+
+## UNIT-10 CI/CD ステージ判定
+
+**Timestamp**: 2026-07-27T02:00:00Z
+**User Input**: (UNIT-09承認後、ワークフローに従いUNIT-10へ自動移行)
+**AI Response**: "unit-of-work.mdのUNIT-10定義（優先度:最終、対応エピック:なし、対応コンポーネント:なし＝インフラ/開発プロセス）とrequirements.md NFR-10.1〜10.3（CI/CDはGitHub Actions、タグpushトリガーでGitHub Releases作成）を確認。Functional Design（新規データモデル・複雑な業務ロジックなし）・NFR Requirements（技術選定はNFR-10.1〜10.3で既に確定済み）・NFR Design（NFR Requirementsに連動）・Infrastructure Design（新規クラウドリソースやデプロイアーキテクチャ構築ではなくGitHubリポジトリ内のワークフロー定義のみ）のいずれもSKIPと判定し、Code Generationへ直接移行する。"
+**Context**: CONSTRUCTION - UNIT-10 CI/CD、Code Generation Part 1（計画作成）へ
+
+---
+
+## UNIT-10 Code Generation Part 1（計画）作成
+
+**Timestamp**: 2026-07-27T02:03:00Z
+**User Input**: (UNIT-10 Functional Design〜Infrastructure Design SKIP判定後、Code Generationへ自動移行)
+**AI Response**: "既存プロジェクト構成（settings.gradle.kts: backend/frontend/cherry-mustache-coreのGradleマルチモジュール、Java 25 toolchain、Gradle 9.6.1、Node.js 26.5.0）を確認。unit-10-code-generation-plan.mdを作成: CI Workflow（.github/workflows/ci.yml、push/pull_requestトリガー、backend/frontend並行ジョブ、OWASP Dependency-Checkはシークレット未設定時スキップ）、Release Workflow（.github/workflows/release.yml、v*タグトリガー、bootWarでビルドしGitHub Releases作成）、ドキュメント更新、最終検証の全4セクションの計画を提示。devenvを使った実機E2E検証はNFR-10.1のスコープ（ローカル手順整備まで）に従いCIには組み込まない方針を明記。"
+**Context**: CONSTRUCTION - UNIT-10 Code Generation Part 1、承認待ち
+
+---
