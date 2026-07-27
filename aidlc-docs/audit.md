@@ -2764,3 +2764,12 @@
 **Context**: CONSTRUCTION - UNIT-09 NFR Design完了、Infrastructure Design SKIP判定、Code Generationへ移行
 
 ---
+
+## UNIT-09 Code Generation Part 1（計画）作成
+
+**Timestamp**: 2026-07-27T01:10:00Z
+**User Input**: "OK"
+**AI Response**: "code-generation.mdをロードし、UNIT-08のcode-generation-plan.mdを参考にunit-09-code-generation-plan.mdを作成。既存マイグレーション最大番号（V17）を確認し次番号をV18に確定。フロントエンドの対象ユーザ・対象接続セレクタ用に既存APIクライアント関数listUsers()（adminUsers.ts）・listConnections()（rdbmsConnections.ts）が再利用可能であることを確認し、新規APIクライアント関数を追加しない方針を明記。Business Logic Generation（AuditLogEntryResponse/AuditLogSearchCriteria/AuditLogPageResponse、AuditLogSpecifications、AuditLogEntryRepositoryへのJpaSpecificationExecutor追加、AuditLogQueryService）からFrontend、DBマイグレーション（V18）、最終ビルド検証まで全14セクションの計画を提示。"
+**Context**: CONSTRUCTION - UNIT-09 Code Generation Part 1、承認待ち
+
+---
