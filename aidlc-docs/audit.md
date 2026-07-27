@@ -2930,3 +2930,14 @@
 **Context**: CONSTRUCTION - Build and Testステージ、UNIT-10成果物の追加是正完了
 
 ---
+
+## UNIT-10 承認前の質疑: GitHub側の追加設定要否
+
+**Timestamp**: 2026-07-28T00:26:00Z
+**User Input**: "GitHubに何か設定しておく必要があるとか？"
+**AI Response**: "必要な設定を回答: (1)NVD_API_KEY（リポジトリシークレット、任意。未設定でも該当ステップがスキップされるのみでCI失敗しない）、(2)GitHub Actions自体は新規リポジトリでデフォルト有効、release.ymlのGITHUB_TOKEN権限はワークフロー内permissions: contents: writeで完結し追加設定基本不要、(3)運用手順としてリリース時はbuild.gradle.ktsのversion更新＋v*形式タグのpushが必要、(4)任意でブランチ保護ルール（Require status checks to pass before merging）の追加を提案。"
+**User Input**: "現状でOK"
+**AI Response**: "ブランチ保護ルール等の追加構築は行わず、現状のワークフローファイルのみで対応完了とすることで合意。コード変更なし。"
+**Context**: CONSTRUCTION - Build and Testステージ、UNIT-10最終確定
+
+---
