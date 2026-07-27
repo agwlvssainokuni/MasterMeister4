@@ -2647,3 +2647,30 @@
 **Context**: CONSTRUCTION - UNIT-09 Functional Design、質問への回答待ち
 
 ---
+
+## UNIT-09 Functional Design 質問への回答
+
+**Timestamp**: 2026-07-27T00:25:00Z
+**User Input**: "推奨どおり。"
+**AI Response**: "unit-09-functional-design-plan.mdの全8問について推奨案（A）で回答を確定。Q1=A（単一の監査ログ一覧画面、接続選択を前提とせず対象接続は絞込条件の1つ）、Q2=A（既存の/api/admin/**パスパターンでエンドポイント全体を遮断）、Q3=A（UNIT-08で確立したPageable/Page/Specificationパターンを踏襲）、Q4=A（日時範囲・イベント種別・対象ユーザ・対象接続・結果ステータスの5種、targetResourceのテキスト検索は含めない）、Q5=A（UNIT-08と同じ一括解決方式、削除済みはプレースホルダー表示）、Q6=A（27種別をフラットなSelect選択肢、カテゴリ分けしない）、Q7=A（connection_idを含む複合インデックスを新規マイグレーションで追加）、Q8=A（他画面への遷移導線は設けない）。曖昧性なしと判断し、business-logic-model.md・business-rules.md・domain-entities.md・frontend-components.mdの作成へ進む。"
+**Context**: CONSTRUCTION - UNIT-09 Functional Design、Step 3(曖昧性チェック)完了、Step 4以降の成果物作成へ
+
+---
+
+## UNIT-09 Functional Design 成果物作成・完了報告
+
+**Timestamp**: 2026-07-27T00:30:00Z
+**User Input**: (Step 4〜7の成果物作成を実施)
+**AI Response**: "AuditLogEntry・AuditEventType（実装確認の結果28値、UNIT-02〜08の追加分含む）・ResultStatus・AuditLogEntryRepository（既存、空）・SecurityConfigの/api/admin/**ルール・UserRepository/RdbmsConnectionRepositoryのfindAllById・GroupManagementPage/ProtectedRouteのフロントエンド管理者アクセス制御パターン（バックエンド403に委ねる既存方式）を確認したうえで、business-logic-model.md（一覧取得フロー、絞込ロジック、AuditLogQueryService新設方針、リクエストバリデーション、ページング、表示用データ結合、参照整合性の扱い、画面遷移なし）、business-rules.md（BR-AUDITVIEW-01〜11、UNIT-08との違い＝ロールベース絞込ではなくエンドポイント全体遮断を明記）、domain-entities.md（既存AuditLogEntry参照、AuditLogSearchCriteria・AuditLogEntryView新規DTO定義）、frontend-components.md（単一画面構成、/api/admin/audit-logエンドポイント、絞込UI縦並びレイアウトのUNIT-08踏襲、管理者アクセス制御は既存パターンをそのまま踏襲しフロント側に独自ガードを追加しない方針）を作成。unit-09-functional-design-plan.mdのStep4〜8をすべて[x]完了に更新。"
+**Context**: CONSTRUCTION - UNIT-09 Functional Design、成果物作成完了、Continue to Next Stage承認待ち
+
+---
+
+## UNIT-09 Functional Design 完了報告後の自己レビュー
+
+**Timestamp**: 2026-07-27T00:32:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "2件の軽微な発見・是正を実施。(1) unit-09-functional-design-plan.mdの既存資産確認結果に「AuditEventTypeは27値」という誤記があった（実装（AuditEventType.java）を再確認した結果、実際は28値）ため訂正。(2) frontend-components.mdの対象接続セレクタAPIの記載が「既存の接続一覧取得API」とのみで具体性を欠いていたため、実装（RdbmsConnectionController.java）を確認した上でパス（GET /api/admin/rdbms-connections）を明記し、当該APIが既にadmin専用パス配下で全接続を権限フィルタなしに返す実装であることを確認・追記した。これによりUNIT-08で発見したような一般ユーザ向け権限フィルタAPI再利用時の情報漏洩リスクが本ユニットには存在しないことを実装ベースで裏付けた。他3ファイル（business-logic-model.md、business-rules.md、domain-entities.md）には27という誤記は含まれておらず修正不要だった。"
+**Context**: CONSTRUCTION - UNIT-09 Functional Design、自己レビュー完了、改めてContinue to Next Stage承認待ち
+
+---

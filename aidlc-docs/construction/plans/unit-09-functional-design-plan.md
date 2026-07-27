@@ -13,7 +13,7 @@
 
 - `AuditLogEntry`（UNIT-02実装済み、`audit_log_entry`テーブル）: `id`, `occurredAt`, `userId`（nullable）, `connectionId`（nullable）, `eventType`（`AuditEventType`enum）, `targetResource`（nullable）, `resultStatus`（`ResultStatus`enum: SUCCESS/FAILURE）, `detail`（nullable、最大2000文字）。イミュータブル（setterなし）。外部キー制約は意図的になし（対象リソースのライフサイクル変更が監査履歴に影響しないため）
 - 既存インデックス: `occurred_at`, `event_type`, `user_id`の3本。**`connection_id`にはインデックスがない**（UNIT-08で発見した`query_execution_record`と同種の課題）
-- `AuditEventType`は既に27値（UNIT-02〜06で追加、UNIT-07/08は新規追加なし、既存の`QUERY_EXECUTED`等を流用）
+- `AuditEventType`は既に28値（UNIT-02〜06で追加、UNIT-07/08は新規追加なし、既存の`QUERY_EXECUTED`等を流用。実装確認の結果27値ではなく28値と判明、本ファイル作成時の誤記を訂正）
 - `AuditLogService`が`@TransactionalEventListener(phase = AFTER_COMMIT)`＋`REQUIRES_NEW`で同期的に`AuditLogEntry`を永続化する（記録処理自体は本ユニットのスコープ外、変更しない）
 - `AuditLogEntryRepository`は空の`JpaRepository`のまま。絞込・ページング用のクエリメソッドは本ユニットで新規に追加する
 - Controller・フロントエンド画面は未実装。ナビ項目`{ key: 'auditLog', labelKey: 'nav.auditLog', path: '/audit-log' }`はUNIT-01で仮予約済み
@@ -23,13 +23,13 @@
 ## 実行計画
 
 - [x] Step 1: ユニット定義・関連ストーリー・既存コンポーネント（UNIT-02 AuditLogEntry等）の再確認（完了、本ファイル冒頭に反映）
-- [ ] Step 2: 本計画ファイルの作成・質問の提示
-- [ ] Step 3: ユーザからの回答収集・曖昧性チェック
-- [ ] Step 4: `business-logic-model.md` 作成（一覧取得・絞込ロジック、ページング方式）
-- [ ] Step 5: `business-rules.md` 作成（BR-AUDITVIEW-01〜、アクセス制御・絞込条件等のルール化）
-- [ ] Step 6: `domain-entities.md` 作成（既存AuditLogEntryの参照、表示用DTO定義）
-- [ ] Step 7: `frontend-components.md` 作成（画面構成、一覧・絞込UIコンポーネント階層、状態管理、API連携ポイント）
-- [ ] Step 8: 完了メッセージ提示・承認待ち
+- [x] Step 2: 本計画ファイルの作成・質問の提示
+- [x] Step 3: ユーザからの回答収集・曖昧性チェック（全問A、曖昧性なし）
+- [x] Step 4: `business-logic-model.md` 作成（一覧取得・絞込ロジック、ページング方式）
+- [x] Step 5: `business-rules.md` 作成（BR-AUDITVIEW-01〜、アクセス制御・絞込条件等のルール化）
+- [x] Step 6: `domain-entities.md` 作成（既存AuditLogEntryの参照、表示用DTO定義）
+- [x] Step 7: `frontend-components.md` 作成（画面構成、一覧・絞込UIコンポーネント階層、状態管理、API連携ポイント）
+- [x] Step 8: 完了メッセージ提示・承認待ち
 
 ---
 
@@ -46,7 +46,7 @@ B) UNIT-05〜08と同じ「接続選択画面→履歴一覧画面」の2画面�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 2
 管理者専用のアクセス制御方式は？
@@ -57,7 +57,7 @@ B) 新規パス（`/api/audit-log/**`等）に配置し、`@PreAuthorize("hasRol
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 3
 ページングの実装方式は？
@@ -68,7 +68,7 @@ B) 異なる方式にする
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 4
 提供する絞込条件の範囲は？
@@ -79,7 +79,7 @@ B) 上記に加え、対象リソース（`targetResource`）のテキスト部�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 5
 ユーザID・接続IDの表示名解決は？
@@ -90,7 +90,7 @@ B) IDのみ表示し、名前解決は行わない
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 6
 27種類ある`AuditEventType`の絞込UI表現は？
@@ -101,7 +101,7 @@ B) 認証イベント／管理操作／データアクセスイベントの3カ�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 7
 `audit_log_entry`テーブルへの新規インデックス追加要否は？（既存は`occurred_at`・`event_type`・`user_id`のみ、`connection_id`にインデックスなし）
@@ -112,7 +112,7 @@ B) 既存インデックスのみで運用する（想定データ量・利用�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 8
 監査ログ一覧から他画面への遷移導線は？
@@ -123,4 +123,4 @@ B) 対象リソース（接続・ユーザ等）への遷移導線を設ける
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
