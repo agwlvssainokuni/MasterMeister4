@@ -60,8 +60,9 @@ nfr-design-patterns.mdで確定した実装パターンを、具体的な論理�
 ## 3. DTO設計
 
 - `AuditLogEntryResponse`（`AuditLogEntryView`のフィールドに対応: `id`, `occurredAt`, `userId`, `userDisplayName`, `connectionId`, `connectionDisplayName`, `eventType`, `targetResource`, `resultStatus`, `detail`） — 監査ログ一覧APIレスポンス1件
-- `AuditLogSearchCriteria`（`occurredAtFrom`, `occurredAtTo`, `eventType`, `userId`, `connectionId`, `resultStatus` — Service層（`AuditLogQueryService.listAuditLog`）に渡すDTO。UNIT-08の`executedByScope`→`executedByFilter`のような変換は本ユニットには存在しないため、Controllerが受け取ったクエリパラメータをほぼそのまま本DTOに詰め替える）
-- リクエスト側のバインド方式（個々の`@RequestParam` vs `@ModelAttribute`によるDTOバインド）はCode Generation計画時に、既存GETエンドポイントとの一貫性を踏まえて確定する（nfr-design-patterns.md §1.1参照）
+- `AuditLogSearchRequest`（`occurredAtFrom`, `occurredAtTo`, `eventType`, `userId`, `connectionId`, `resultStatus`, `page`, `pageSize` — Controller層でクエリパラメータをバインドするリクエストDTO。`occurredAtFrom`≤`occurredAtTo`の相関検証を`@AssertTrue`＋`@JsonIgnore`で実装、nfr-design-patterns.md §1.1。UNIT-08の`QueryHistorySearchRequest`と対をなす設計）
+- `AuditLogSearchCriteria`（`occurredAtFrom`, `occurredAtTo`, `eventType`, `userId`, `connectionId`, `resultStatus` — Service層（`AuditLogQueryService.listAuditLog`）に渡すDTO。`AuditLogSearchRequest`との違いは`page`/`pageSize`を含まない点で、これはControllerが`page`/`pageSize`から`Pageable`を組み立てて別引数として渡すため、Service層のDTOには持ち込まない。UNIT-08の`QueryHistorySearchRequest`→`QueryHistorySearchCriteria`の関係と同じ設計で、`executedByScope`→`executedByFilter`のようなロール絞込変換は本ユニットには存在しない点のみが異なる）
+- リクエスト側のバインド方式（個々の`@RequestParam` vs `@ModelAttribute`によるDTOバインド）はCode Generation計画時に、既存GETエンドポイントとの一貫性を踏まえて確定する（nfr-design-patterns.md §1.1参照。UNIT-08は最終的に個々の`@RequestParam`に変更したため、本ユニットも同様になる可能性が高い）
 
 ---
 

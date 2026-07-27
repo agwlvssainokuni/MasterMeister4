@@ -2746,3 +2746,12 @@
 **Context**: CONSTRUCTION - UNIT-09 NFR Design、成果物作成完了、Continue to Next Stage承認待ち
 
 ---
+
+## UNIT-09 NFR Design完了報告後の自己レビュー
+
+**Timestamp**: 2026-07-27T01:03:00Z
+**User Input**: "確認すべき事項はありますか？"
+**AI Response**: "1件の見落としを発見・修正。UNIT-08のnfr-design/logical-components.mdと比較した結果、UNIT-08はController層のQueryHistorySearchRequest（page/pageSize含む、Bean Validation相関検証あり）とService層のQueryHistorySearchCriteria（絞込条件のみ）を明確に区別していたが、UNIT-09のlogical-components.mdはService層のAuditLogSearchCriteriaのみを定義しController層のリクエストDTOへの言及が欠けていた（nfr-design-patterns.md §1.1では既にリクエストDTOでの@AssertTrue検証を前提として書いており不整合だった）。logical-components.md §3にAuditLogSearchRequest（Controller層、page/pageSize含む、相関検証あり）を追加し、AuditLogSearchCriteriaとの違いを明記した。"
+**Context**: CONSTRUCTION - UNIT-09 NFR Design、自己レビュー完了、改めてContinue to Next Stage承認待ち
+
+---
