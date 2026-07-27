@@ -24,24 +24,24 @@
 
 ### 1. CI Workflow（ビルド・テスト自動化）
 
-- [ ] Step 1.1: `.github/workflows/ci.yml`を作成する（`push`: `main`ブランチ、`pull_request`をトリガー。`backend`ジョブ: `actions/setup-java`（Java 25）→`./gradlew build`（`cherry-mustache-core`・`backend`の全テスト含む）。`frontend`ジョブ: `actions/setup-node`（Node.js 26）→`npm ci`→`npm run lint`→`npm test -- --run`→`npm run build`。2ジョブは並行実行）
-- [ ] Step 1.2: OWASP Dependency-Checkジョブを追加する（NVD APIキーがリポジトリシークレット`NVD_API_KEY`に設定されている場合のみ実行する条件分岐、`continue-on-error: true`で失敗時もワークフロー全体を止めない）
+- [x] Step 1.1: `.github/workflows/ci.yml`を作成する（`push`: `main`ブランチ、`pull_request`をトリガー。`backend`ジョブ: `actions/setup-java`（Java 25）→`./gradlew build`（`cherry-mustache-core`・`backend`の全テスト含む）。`frontend`ジョブ: `actions/setup-node`（Node.js 26）→`npm ci`→`npm run lint`→`npm test -- --run`→`npm run build`。2ジョブは並行実行）
+- [x] Step 1.2: OWASP Dependency-Checkジョブを追加する（NVD APIキーがリポジトリシークレット`NVD_API_KEY`に設定されている場合のみ実行する条件分岐`if: ${{ secrets.NVD_API_KEY != '' }}`、`continue-on-error: true`で失敗時もワークフロー全体を止めない）
 
 ### 2. Release Workflow（タグpushトリガーのGitHub Releases作成）
 
-- [ ] Step 2.1: `backend/build.gradle.kts`の`version`を`"0.0.1-SNAPSHOT"`から`"0.0.0"`に変更する（初期バージョン、ユーザー指示）
-- [ ] Step 2.2: `.github/workflows/release.yml`を作成する（`push`: `v*`形式のタグをトリガー。(1) タグ名から`v`を除去した値を取得、(2) `actions/setup-java`（Java 25）後に`./gradlew properties -q`等で`backend/build.gradle.kts`の`version`を取得、(3) 両者が不一致の場合は`exit 1`でジョブを失敗させリリースを中断（ユーザー指示）、(4) 一致した場合のみ`actions/setup-node`（Node.js 26）→`./gradlew bootWar`→生成された`mastermeister-*.war`を成果物としてGitHub Releasesに添付、リリースノートは自動生成（`generate_release_notes: true`）)
+- [x] Step 2.1: `backend/build.gradle.kts`の`version`を`"0.0.1-SNAPSHOT"`から`"0.0.0"`に変更する（初期バージョン、ユーザー指示）。**実装時の追加発見**: `frontend/src/design-system/components/Footer.tsx`のフッター表示にも`'0.0.1-SNAPSHOT'`がハードコードされていたため、`'0.0.0'`に統一。`cherry-mustache-core`は独立したサブプロジェクトで別バージョニング（現状`0.1.0`）のため対象外
+- [x] Step 2.2: `.github/workflows/release.yml`を作成する（`push`: `v*`形式のタグをトリガー。(1) タグ名から`v`を除去した値を取得、(2) `actions/setup-java`（Java 25）後に`./gradlew :backend:properties -q`で`backend/build.gradle.kts`の`version`を取得、(3) 両者が不一致の場合は`exit 1`でジョブを失敗させリリースを中断（ユーザー指示、実際に`0.0.0`で動作確認済み）、(4) 一致した場合のみ`actions/setup-node`（Node.js 26）→`./gradlew bootWar`→生成された`mastermeister-*.war`を`softprops/action-gh-release`でGitHub Releasesに添付、リリースノートは自動生成（`generate_release_notes: true`）)
 
 ### 3. ドキュメント更新
 
-- [ ] Step 3.1: リポジトリルートの`README.md`（存在すれば）またはプロジェクト全体のREADMEに、CI/CDワークフローの概要（トリガー条件、リリース手順）を追記する
-- [ ] Step 3.2: `aidlc-docs/construction/unit-10/code/ci-cd-summary.md`を作成する
+- [x] Step 3.1: リポジトリルートの`README.md`（存在すれば）またはプロジェクト全体のREADMEに、CI/CDワークフローの概要（トリガー条件、リリース手順）を追記する。**実装時の判断**: リポジトリルートに`README.md`が存在しなかったため、既存パターン（各ユニットのCode Generationで`backend/README.md`・`frontend/README.md`に追記）を踏襲し、両ファイルにCI/CDセクションを追加した
+- [x] Step 3.2: `aidlc-docs/construction/unit-10/code/ci-cd-summary.md`を作成する
 
 ### 4. 最終検証
 
-- [ ] Step 4.1: 作成したワークフローYAMLの構文妥当性を確認する（YAMLパーサでの構文チェック）
-- [ ] Step 4.2: ローカルで`./gradlew build`（バックエンド全件）・`npm ci && npm run lint && npm test -- --run && npm run build`（フロントエンド）を実行し、CIワークフローが実行するコマンドと同一の手順でエラーなく成功することを確認する（GitHub Actions環境そのものでの実行確認はスコープ外、ローカルでのコマンド等価性確認に留める）
-- [ ] Step 4.3: `./gradlew bootWar`を実行し、リリースワークフローが生成する成果物（WARファイル）が問題なく生成されることを確認する
+- [x] Step 4.1: 作成したワークフローYAMLの構文妥当性を確認する（YAMLパーサでの構文チェック）。ci.yml・release.ymlともに構文エラーなしを確認
+- [x] Step 4.2: ローカルで`./gradlew :cherry-mustache-core:build :backend:build`を実行し、CIワークフローのbackendジョブと同一の手順でエラーなく成功することを確認した。**実装時の是正**: 当初ci.ymlに`./gradlew build`（ルートタスク）と記載していたが、ルートの`build`は`frontend`サブプロジェクトの`assemble`（`npmBuild`依存）も含めて実行しようとし、ローカル検証時に`npm`コマンド起動エラーで失敗した。既存の`tasks.named("assemble") { setDependsOn(emptyList()) }`設定は`backend`単体の`assemble`にのみ適用され、ルートの`build`タスクには影響しないことを確認したため、ci.ymlを`./gradlew :cherry-mustache-core:build :backend:build`（サブプロジェクトを明示指定）に修正した。フロントエンド単体のlint/test/build確認は、ユーザー指摘のとおりStep 4.3の`bootWar`（内部でnpmInstall→npmBuildを実行）で代替する
+- [x] Step 4.3: `./gradlew :backend:bootWar`を実行し、リリースワークフローが生成する成果物（WARファイル）が問題なく生成されることを確認した。**実装時の発見**: 初回実行時、Gradleデーモンが起動時のPATH環境変数をキャッシュしておりnpm（Volta経由でインストール）を認識できず失敗した。`./gradlew --stop`でデーモンを再起動後に成功し、`mastermeister-0.0.0.war`（バージョン変更が正しく反映されたファイル名）が生成されることを確認した（GitHub Actions環境そのものでの実行確認はスコープ外、ローカルでのコマンド等価性確認に留める）
 
 ## Story Traceability
 

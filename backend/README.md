@@ -179,3 +179,10 @@ export MM_OTLP_LOGGING_ENABLED=true
 - `cherry-mustache-core`: メールテンプレートレンダリングに使用する自作Mustacheエンジン（独立したGradleサブプロジェクト。パッケージ名は`cherry.mustache`のまま維持）
 
 詳細は`aidlc-docs/construction/unit-0{2,3,4,5}/code/{repository-layer-summary,data-access-layer-summary,business-logic-summary,api-layer-summary}.md`を参照。
+
+## CI/CD（UNIT-10）
+
+GitHub Actionsで構成する（NFR-10.1〜10.3）。
+
+- **CI**（`.github/workflows/ci.yml`）: `main`ブランチへのpush・プルリクエストをトリガーに、`backend`（`./gradlew build`、`cherry-mustache-core`含む）・`frontend`（lint/test/build）を並行実行する。OWASP Dependency-Checkは`NVD_API_KEY`シークレットが設定されている場合のみ実行し、未設定時はスキップする（NFR-4.4、`continue-on-error: true`）
+- **Release**（`.github/workflows/release.yml`）: `v*`形式のタグpushをトリガーに、`./gradlew bootWar`でビルドしGitHub Releasesを作成する（NFR-10.3）。**タグ名（`v`を除いた値）と`build.gradle.kts`の`version`が一致しない場合はビルド前にリリースを中断する**（バージョン整合性チェック）。リリース前には`build.gradle.kts`の`version`をリリース対象のバージョンに更新し、対応するタグ（例: `v0.0.0`）をpushすること

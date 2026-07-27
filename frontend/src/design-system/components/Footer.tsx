@@ -21,7 +21,7 @@ export function Footer() {
   const { t } = useTranslation('design-system')
   return (
     <footer className={styles.footer} data-testid="app-footer">
-      {t('footer.version', { version: '0.0.1-SNAPSHOT' })}
+      {t('footer.version', { version: '0.0.0' })}
     </footer>
   )
 }

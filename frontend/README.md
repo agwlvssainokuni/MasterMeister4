@@ -67,3 +67,7 @@ src/
 ## 監査ログ閲覧（UNIT-09）
 
 `/audit-log`画面で、監査ログを閲覧・絞込できる。UNIT-05〜08と異なり単一画面構成（接続選択画面なし）で、対象接続も他の絞込条件と並列の1つとして扱う（`connectionId`を持たないログインイベント等も同一画面で扱うため）。対象ユーザ・対象接続セレクタの選択肢は新規APIクライアントを追加せず、既存の`listUsers()`（`api/adminUsers.ts`）・`listConnections()`（`api/rdbmsConnections.ts`）をそのまま再利用する。管理者専用画面だが、フロントエンド側に独自のロール判定・ガードは設けない（`GroupManagementPage`等の既存の管理者専用画面と同じ方針で、アクセス制御はバックエンドの403応答に委ねる）。画面遷移導線・詳細モーダルは設けない。
+
+## CI/CD（UNIT-10）
+
+GitHub Actionsの`.github/workflows/ci.yml`で、`main`ブランチへのpush・プルリクエストをトリガーに`npm ci`→`npm run lint`→`npm test -- --run`→`npm run build`を実行する（backendと並行ジョブ）。リリース（`v*`タグpush）時は`.github/workflows/release.yml`が`bootWar`経由でフロントエンドのビルド成果物を単一WARに内包する。詳細は`backend/README.md`のCI/CDセクションを参照。
