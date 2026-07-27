@@ -88,7 +88,7 @@ B) 異なる値にする
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: A
+[Answer]: A（ただし完了報告後の指摘により補足: 値はUNIT-08と同じにするが、実装上の設定項目（定数）はAuditLogController自身の独立したものとし、QueryHistoryControllerの定数を共有・参照しない。詳細はnfr-requirements.md/tech-stack-decisions.md参照）
 
 ### Question 5（Tech Stack Selection/Performance）
 対象ユーザ・対象接続の表示名解決方式は？

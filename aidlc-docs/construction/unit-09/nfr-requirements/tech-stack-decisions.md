@@ -40,7 +40,7 @@ CREATE INDEX idx_audit_log_entry_connection_occurred_at
 
 ## 4. 絞込パラメータの入力検証（Q1=A、SECURITY-05）
 
-- ページサイズ: UNIT-08と同じ既定値・上限値を踏襲する（Q4=A、具体的な数値はUNIT-08の`DEFAULT_PAGE_SIZE=50`/`MAX_PAGE_SIZE=200`をそのまま踏襲、Code Generation時に確定）。上限超過時は400エラー
+- ページサイズ: `AuditLogController`自身が持つ独立した定数（`DEFAULT_PAGE_SIZE`/`MAX_PAGE_SIZE`）として定義する（Q4=A、ユーザー指摘により追記: `QueryHistoryController`の定数値を共有・参照するのではなく、あくまで別クラスの独立した定数とする。実装確認の結果、UNIT-08のページサイズも`AppProperties`ではなく`QueryHistoryController`内の`private static final int`として実装されており、そもそもユニットごとに独立している設計だった）。値はひとまずUNIT-08と同じ`DEFAULT_PAGE_SIZE=50`/`MAX_PAGE_SIZE=200`を採用するが、監査ログは`audit_log_entry`がUNIT-02〜08の全イベントを記録し続けデータ量・利用パターンが`query_execution_record`と異なりうるため、Code Generation以降の運用状況次第で本ユニット単独で値を調整できる（UNIT-08の値変更を要しない）。上限超過時は400エラー
 - 発生日時範囲: `occurredAtFrom`が`occurredAtTo`より後の場合は400エラー
 - `eventType`/`resultStatus`: 許容値以外は400エラー（enumバインドの標準的な失敗応答）
 - `userId`/`connectionId`: JPA Criteria APIのパラメータバインドで扱われるため追加のサニタイズ処理は不要

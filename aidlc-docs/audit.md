@@ -2710,3 +2710,21 @@
 **Context**: CONSTRUCTION - UNIT-09 NFR Requirements、自己レビュー完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-09 NFR Requirements完了報告後の指摘: ページサイズ設定項目の分離
+
+**Timestamp**: 2026-07-27T00:48:00Z
+**User Input**: "ページサイズは別々に設定した方が良いかも。"
+**AI Response**: "意図確認のためAskUserQuestionを提示（実装上の設定項目分離／数値自体の見直し／両方）し、「実装上の設定項目を分離（推奨）」の回答を得た。UNIT-08のQueryHistoryControllerを確認した結果、ページサイズはAppPropertiesではなくController内のprivate static final int定数として実装されており、そもそもユニットごとに独立可能な設計だったことを確認。tech-stack-decisions.md §4・nfr-requirements.md §1・unit-09-nfr-requirements-plan.md Q4回答を修正: AuditLogController自身の独立したDEFAULT_PAGE_SIZE/MAX_PAGE_SIZE定数として定義し、値はひとまずUNIT-08と同じ50/200を採用するが、QueryHistoryControllerの定数は共有・参照しないため監査ログ固有の事情に応じて本ユニット単独で将来調整可能である旨を明記。"
+**Context**: CONSTRUCTION - UNIT-09 NFR Requirements、指摘対応完了、改めてContinue to Next Stage承認待ち
+
+---
+
+## UNIT-09 NFR Requirements 最終承認
+
+**Timestamp**: 2026-07-27T00:50:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-09 監査ログ閲覧 NFR Requirementsを承認。ページサイズ設定項目の分離指摘に対応した後の最終承認。aidlc-state.mdを更新: Current Unit - Stage Progress (UNIT-09)にNFR RequirementsをCOMPLETEDとして追記、Current StageをUNIT-09 NFR Designに、Next StageをUNIT-09 NFR Designに更新。NFR Designステージへ移行。"
+**Context**: CONSTRUCTION - UNIT-09 NFR Requirements完了、NFR Designへ移行
+
+---
