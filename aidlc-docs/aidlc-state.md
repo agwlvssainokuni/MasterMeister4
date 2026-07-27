@@ -3,7 +3,7 @@
 ## Project Information
 - **Project Type**: Greenfield
 - **Start Date**: 2026-07-20T09:54:00Z
-- **Current Stage**: CONSTRUCTION - UNIT-09 NFR Design（詳細は`## Current Status`参照）
+- **Current Stage**: CONSTRUCTION - UNIT-09 Code Generation（詳細は`## Current Status`参照）
 
 ## Workspace State
 - **Existing Code**: No
@@ -50,9 +50,9 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: UNIT-09 監査ログ閲覧 - NFR Requirements - COMPLETED
-- **Next Stage**: UNIT-09 監査ログ閲覧 - NFR Design
-- **Status**: UNIT-09 NFR Requirements承認済み、NFR Design着手前
+- **Current Stage**: UNIT-09 監査ログ閲覧 - Infrastructure Design - SKIP
+- **Next Stage**: UNIT-09 監査ログ閲覧 - Code Generation
+- **Status**: UNIT-09 NFR Design承認済み、Infrastructure Design SKIP判定済み、Code Generation着手前
 
 ## Backlog（今後の検討課題）
 - **E2Eテストフレームワーク（Playwright等）の導入**: 現状、各ユニットのCode Generation最終ステップでコマンドラインによる実機E2E検証（curl等）を実施しているが、UI表示に関する不具合（例: UNIT-05のダークモード文字色バグ）はこの方式では検出できない。Playwright等のフレームワークは既存の実インフラE2E検証（DB方言差異等のバックエンド/インフラ層の不具合検出に有効）を置き換えるものではなく補完するものと位置づけ、プロジェクト全体のテスト戦略として別途検討する（2026-07-24、UNIT-05承認時にユーザ提起）。
@@ -116,6 +116,8 @@
 ## Current Unit - Stage Progress (UNIT-09)
 - [x] Functional Design — EXECUTE、COMPLETED（承認 2026-07-27T00:35:00Z。unit-09-functional-design-plan.mdの全8問に推奨どおり全問Aで回答: 単一の監査ログ一覧画面（接続選択画面は設けない）、既存の/api/admin/**パスパターンでエンドポイント全体を遮断、UNIT-08で確立したPageable/Page/Specificationパターンを踏襲、絞込条件5種（対象リソースのテキスト検索は含めない）、UNIT-08と同じ名前一括解決方式、イベント種別はフラットなSelect、connection_idを含む複合インデックスを新規追加、他画面への遷移導線は設けない。business-logic-model.md, business-rules.md（BR-AUDITVIEW-01〜11）, domain-entities.md, frontend-components.mdを作成。完了報告後の自己レビューで2件の軽微な発見・是正: (1)AuditEventTypeの値数誤記（27→28、実装再確認で訂正）、(2)対象接続セレクタAPI（GET /api/admin/rdbms-connections）が実装確認の結果、既にadmin専用パス配下で権限フィルタなしに全接続を返すことを確認・明記（UNIT-08のような情報漏洩リスクが本ユニットには存在しないことを裏付け））
 - [x] NFR Requirements — EXECUTE、COMPLETED（承認 2026-07-27T00:50:00Z。unit-09-nfr-requirements-plan.mdの全5問に推奨どおり全問Aで回答: UNIT-08と同じ絞込パラメータ検証方針、監査ログ閲覧自体は新たな監査記録対象としない、アーカイブ機構は導入しない、ページサイズはUNIT-08と同じ値、findAllByIdによる名前一括解決（キャッシュなし）。nfr-requirements.md（Security Baseline全15ルール評価）、tech-stack-decisions.mdを作成。完了報告後の自己レビューでSECURITY-14評価の事実誤認を発見・是正（「UNIT-05〜08の閲覧系機能は監査対象外」は誤りで、実際はUNIT-05がbulkAccessThreshold超過時にMASTER_DATA_BULK_ACCESSEDを記録していたため、管理者専用機能ゆえの妥当性という正しい理由に訂正）。**完了報告後の追加指摘**: ページサイズの実装上の設定項目（定数）をUNIT-08（QueryHistoryController）と共有せず、AuditLogController自身の独立した定数として分離する方針に修正（値自体はひとまずUNIT-08と同じ50/200を採用）
+- [x] NFR Design — EXECUTE、COMPLETED（承認 2026-07-27T01:05:00Z。unit-09-nfr-design-plan.mdの全4問に推奨どおり全問Aで回答: Bean Validation＋標準400エラー応答、AuditLogQueryServiceへの3責務集約、単一AuditLogControllerで1エンドポイントのみ、AuditLogSpecificationsクラス新設。nfr-design-patterns.md、logical-components.mdを作成。完了報告後の自己レビューでDTO設計の見落としを発見・是正（Service層のAuditLogSearchCriteriaのみを定義しController層のAuditLogSearchRequestへの言及が欠けていたため追加）
+- [x] Infrastructure Design — SKIP（判定 2026-07-27T01:05:00Z。新規DB永続化なし（既存AuditLogEntryの閲覧のみ）、新規外部サービス依存なし、既存インフラ（UNIT-02/03）の再利用のみのため新規インフラ設計不要）
 
 ## Current Unit Progress
 - [x] UNIT-01 デザインシステム基盤 — COMPLETED（承認 2026-07-20T19:26:00Z）
