@@ -16,11 +16,11 @@ requirements.mdの前提（同時利用者約10名規模）により、新規の
 
 ## 計画チェックリスト
 
-- [ ] Step A: 質問への回答を収集する
-- [ ] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）
-- [ ] Step C: `nfr-design-patterns.md`（エラー表現・例外設計、絞込パターン）を作成する
-- [ ] Step D: `logical-components.md`（新設する論理コンポーネント、Controller構成）を作成する
-- [ ] Step E: 完了メッセージを提示し、承認を得る
+- [x] Step A: 質問への回答を収集する（全4問、推奨どおり全問Aで確定）
+- [x] Step B: 回答内容の曖昧性を確認する（必要なら追加質問）— 曖昧な回答なし
+- [x] Step C: `nfr-design-patterns.md`（エラー表現・例外設計、絞込パターン）を作成する
+- [x] Step D: `logical-components.md`（新設する論理コンポーネント、Controller構成）を作成する
+- [x] Step E: 完了メッセージを提示し、承認を得る
 
 ## 質問
 
@@ -33,7 +33,7 @@ B) 専用の`ApiException`サブクラス（`AuditLogInvalidParameterException`�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2（Logical Components、重要）
 監査ログ一覧の絞込・ページング・名前解決（対象ユーザ名・対象接続名の一括解決）ロジックの配置は？
@@ -44,7 +44,7 @@ B) 絞込・ページングと名前解決を別クラスに分離する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3（Logical Components）
 Controller構成は？
@@ -55,7 +55,7 @@ B) 複数のエンドポイント・Controllerに分割する
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4（Logical Components）
 動的絞込クエリの`Specification`実装の構成は？
@@ -66,4 +66,4 @@ B) `AuditLogQueryService`内にインラインで実装する（専用クラス�
 
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
