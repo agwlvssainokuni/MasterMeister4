@@ -2674,3 +2674,21 @@
 **Context**: CONSTRUCTION - UNIT-09 Functional Design、自己レビュー完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-09 Functional Design 最終承認
+
+**Timestamp**: 2026-07-27T00:35:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: "UNIT-09 監査ログ閲覧 Functional Designを承認。aidlc-state.mdを更新: Current Unit - Stage Progress (UNIT-09)セクションを新設しFunctional DesignをCOMPLETEDに記録、Current StageをUNIT-09 NFR Requirementsに、Next StageをUNIT-09 NFR Requirementsに更新。NFR Requirementsステージへ移行。"
+**Context**: CONSTRUCTION - UNIT-09 Functional Design完了、NFR Requirementsへ移行
+
+---
+
+## UNIT-09 NFR Requirements 計画作成・質問提示
+
+**Timestamp**: 2026-07-27T00:38:00Z
+**User Input**: (UNIT-09 Functional Design承認後、ワークフローに従いNFR Requirementsへ自動移行)
+**AI Response**: "AppProperties.Audit.bulkAccessThresholdの実際の使用箇所（MasterDataServiceのみ、監査ログ自体の大量閲覧検知には未使用）を確認。unit-09-nfr-requirements-plan.mdを作成し、Security Baseline全15ルールの該当性評価、全5問の質問（絞込パラメータ検証方針、監査ログ閲覧自体の監査記録要否という新規論点、長期データ量増加への対応、ページサイズ既定値・上限値、名前解決方式）を提示。"
+**Context**: CONSTRUCTION - UNIT-09 NFR Requirements、質問への回答待ち
+
+---
