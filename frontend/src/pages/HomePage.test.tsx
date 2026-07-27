@@ -17,10 +17,17 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 import { ThemeProvider } from '../design-system/theme/ThemeProvider'
 import { AuthProvider } from '../auth/AuthContext'
+import { clearTokens, setTokens } from '../auth/tokenStorage'
 import { HomePage } from './HomePage'
+
+function makeAccessToken(role: string): string {
+  const header = window.btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+  const body = window.btoa(JSON.stringify({ sub: '1', email: 'user@example.com', role }))
+  return `${header}.${body}.signature`
+}
 
 function renderHomePage() {
   return render(
@@ -43,7 +50,12 @@ function renderHomePage() {
 }
 
 describe('HomePage', () => {
+  afterEach(() => {
+    clearTokens()
+  })
+
   it('SideNavの9項目に対応するカードを表示し、実装済みは「ユーザ管理」「RDBMS接続設定」「グループ管理」「マスタメンテナンス」「保存クエリ」「クエリ実行」「クエリビルダー」「クエリ履歴」とする', () => {
+    setTokens(makeAccessToken('ADMIN'), 'refresh-1')
     renderHomePage()
     // NAV_ROUTESの全項目のタイトルが表示される（SideNav側にも同名の項目があるため、
     // カード側は実装済みカードのdata-testidで、非活性カードはgetAllByTextで確認する）
@@ -82,12 +94,14 @@ describe('HomePage', () => {
   })
 
   it('実装済みカードをクリックすると対応するページへ遷移する', async () => {
+    setTokens(makeAccessToken('ADMIN'), 'refresh-1')
     renderHomePage()
     await userEvent.click(screen.getByTestId('feature-card-users'))
     expect(await screen.findByText('ユーザ管理画面')).toBeInTheDocument()
   })
 
   it('RDBMS接続設定カードをクリックすると対応するページへ遷移する', async () => {
+    setTokens(makeAccessToken('ADMIN'), 'refresh-1')
     renderHomePage()
     await userEvent.click(screen.getByTestId('feature-card-connections'))
     expect(await screen.findByText('RDBMS接続設定画面')).toBeInTheDocument()
@@ -115,5 +129,25 @@ describe('HomePage', () => {
     renderHomePage()
     await userEvent.click(screen.getByTestId('feature-card-query-builder'))
     expect(await screen.findByText('クエリビルダー画面')).toBeInTheDocument()
+  })
+
+  it('一般ユーザには管理者専用カード（ユーザ管理・RDBMS接続設定・グループ管理・監査ログ）を表示しない', () => {
+    setTokens(makeAccessToken('USER'), 'refresh-1')
+    renderHomePage()
+    expect(screen.queryByTestId('feature-card-users')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('feature-card-connections')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('feature-card-groups')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('feature-card-audit-log')).not.toBeInTheDocument()
+    // 一般ユーザも使える機能のカードは引き続き表示する
+    expect(screen.getByTestId('feature-card-master-data')).toBeInTheDocument()
+  })
+
+  it('管理者には管理者専用カードを表示する', () => {
+    setTokens(makeAccessToken('ADMIN'), 'refresh-1')
+    renderHomePage()
+    expect(screen.getByTestId('feature-card-users')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-connections')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-groups')).toBeInTheDocument()
+    expect(screen.getByTestId('feature-card-audit-log')).toBeInTheDocument()
   })
 })

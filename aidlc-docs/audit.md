@@ -2800,3 +2800,12 @@
 **Context**: CONSTRUCTION - UNIT-09 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-09 承認前レビュー継続: ホーム画面の機能カードも同様に非表示化
+
+**Timestamp**: 2026-07-27T01:53:00Z
+**User Input**: "カードも。"
+**AI Response**: "HomePage.tsxの機能カード一覧（NAV_ROUTES全項目をそのままカード化していた）にも同じadminOnlyフィルタを適用。AuthenticatedLayout.tsxと同じ方式（getAccessToken()+decodeJwtRole()でアプリ層にてisAdminを判定しNAV_ROUTESをフィルタしてからFeatureCardをレンダリング）を踏襲。HomePage.test.tsxは元々暗黙に管理者視点を前提としていたため既存の全テストに管理者JWTを明示的にセットするよう修正し、新規に一般ユーザ/管理者それぞれの表示確認2件を追加。npx tsc --noEmit、npm run lint（既存警告3件のみ）、npm test -- --run（全60ファイル250件成功）、npm run build成功を確認。frontend-summary.mdに追記。"
+**Context**: CONSTRUCTION - UNIT-09 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
+
+---

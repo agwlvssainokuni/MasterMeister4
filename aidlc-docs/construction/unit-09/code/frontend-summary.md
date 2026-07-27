@@ -39,3 +39,9 @@
 - テスト: `AuthenticatedLayout.test.tsx`に2件追加（一般ユーザには4項目が非表示・管理者には表示されることを確認）
 
 修正後、`npx tsc --noEmit`・`npm run lint`（既存警告3件のみ）・`npm test -- --run`（全60ファイル248件成功）・`npm run build`をすべて実行し成功を確認した。
+
+## 承認前レビュー継続: ホーム画面の機能カードも同様に非表示化
+
+**Timestamp**: 2026-07-27T01:52:00Z。「カードも。」との指摘を受け、`HomePage.tsx`の機能カード一覧（`NAV_ROUTES`全項目をそのままカード化していた）にも同じ`adminOnly`フィルタを適用した。`AuthenticatedLayout.tsx`と同じ方式（`getAccessToken()` + `decodeJwtRole()`でアプリ層にて`isAdmin`を判定し、`NAV_ROUTES`をフィルタしてから`FeatureCard`をレンダリング）を踏襲。`HomePage.test.tsx`は元々暗黙に管理者視点を前提としていたため、既存の全テストに管理者JWTを明示的にセットするよう修正し、新規に「一般ユーザには管理者専用カードを表示しない」「管理者には表示する」の2件を追加した。
+
+修正後、`npx tsc --noEmit`・`npm run lint`（既存警告3件のみ）・`npm test -- --run`（全60ファイル250件成功）・`npm run build`をすべて実行し成功を確認した。

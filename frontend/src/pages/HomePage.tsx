@@ -18,6 +18,8 @@ import { useTranslation } from 'react-i18next'
 import { NAV_ROUTES, PageHeader } from '../design-system/components'
 import { AuthenticatedLayout } from './AuthenticatedLayout'
 import { FeatureCard } from './FeatureCard'
+import { getAccessToken } from '../auth/tokenStorage'
+import { decodeJwtRole } from '../auth/jwt'
 import styles from './HomePage.module.css'
 
 // frontend-components.md §5。SideNavの8項目に対応するカードグリッド。UNIT-02/03で
@@ -36,12 +38,18 @@ const IMPLEMENTED_KEYS = new Set([
 
 export function HomePage() {
   const { t } = useTranslation(['common', 'design-system'])
+  const accessToken = getAccessToken()
+  const isAdmin = accessToken ? decodeJwtRole(accessToken) === 'ADMIN' : false
+
+  // 管理者専用機能（users/connections/groups/auditLog）のカードは一般ユーザには表示しない
+  // （AuthenticatedLayoutのナビ項目非表示化と同じ方針）
+  const visibleRoutes = NAV_ROUTES.filter((route) => !('adminOnly' in route && route.adminOnly) || isAdmin)
 
   return (
     <AuthenticatedLayout>
       <PageHeader title={t('home.welcome')} />
       <div className={styles.grid}>
-        {NAV_ROUTES.map((route) => (
+        {visibleRoutes.map((route) => (
           <FeatureCard
             key={route.key}
             title={t(route.labelKey, { ns: 'design-system' })}
