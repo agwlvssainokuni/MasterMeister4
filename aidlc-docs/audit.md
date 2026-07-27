@@ -2881,3 +2881,14 @@
 **Context**: CONSTRUCTION - UNIT-10 Code Generation完了報告後の修正対応（Request Changes相当）、修正完了、改めてContinue to Next Stage承認待ち
 
 ---
+
+## UNIT-10 承認前の質疑: setup-gradleの必要性
+
+**Timestamp**: 2026-07-28T00:08:00Z
+**User Input**: "gradle wrapperを使う場合でもsetup-gradleは必要？"
+**AI Response**: "./gradlewはGradle本体を自動ダウンロードするため実行だけなら不要だが、gradle/actions/setup-gradleはGradleキャッシュ（~/.gradle/caches等）のGitHub Actionsキャッシュへの自動保存、ジョブサマリーへのビルド結果表示、Dependency Verification等の付加価値があり、CI実行時間短縮に寄与するため維持を推奨する旨を回答。"
+**User Input**: "OK"
+**AI Response**: "setup-gradleを現状のまま維持する方針で合意。コード変更なし。"
+**Context**: CONSTRUCTION - UNIT-10 Code Generation、改めてContinue to Next Stage承認待ち
+
+---
