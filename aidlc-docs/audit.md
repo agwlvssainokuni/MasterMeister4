@@ -2958,3 +2958,12 @@
 **AI Response補足**: requirements.mdでPBT対象が「はい」と明記されているのはSTORY-2.4・2.5（UNIT-04）・STORY-5.2（UNIT-07）であり、以前の要約に含まれていた「UNIT-05」という記述が誤りだったため、unit-test-instructions.md作成時に是正した。aidlc-state.mdを更新: Build and TestをCOMPLETEDに、Current StageをBuild and Test - COMPLETEDに、Next StageをOperations（プレースホルダー）に更新。
 
 ---
+
+## UNIT-10 CI/CDワークフローの実機動作確認（v0.0.0リリース）
+
+**Timestamp**: 2026-07-28T01:20:00Z
+**User Input**: "タグをつけてpush" → "yes"（GitHub Actions実行状況確認の依頼）
+**AI Response**: "git tag v0.0.0 → git push origin v0.0.0を実行。GitHub Actions APIでCI・Releaseワークフローの起動を確認、Monitorツールでポーリングし両ワークフローの完了（ともにsuccess）を確認。GitHub Releases（https://github.com/agwlvssainokuni/MasterMeister4/releases/tag/v0.0.0）にmastermeister-0.0.0.war（約110.7MB）が正しく添付されていることを確認し、バージョン整合性チェック（タグv0.0.0とbuild.gradle.ktsのversion=0.0.0の一致）も実運用で機能することを実証した。ポーリング中に重複したMonitorタスクを複数起動してしまうミスがあったが、TaskStopで整理し1つに統合した。"
+**Context**: CONSTRUCTION - Build and Testステージ完了、UNIT-10 CI/CDワークフローの実機動作確認済み
+
+---
