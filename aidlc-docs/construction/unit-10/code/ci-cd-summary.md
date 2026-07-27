@@ -23,3 +23,17 @@
 
 1. **ci.ymlの`./gradlew build`（ルートタスク）はfrontendのビルドまで巻き込み失敗する**: 当初backendジョブで`./gradlew build`と記載していたが、ルートの`build`タスクは全サブプロジェクト（`backend`・`frontend`・`cherry-mustache-core`）を対象にする。既存の`tasks.named("assemble") { setDependsOn(emptyList()) }`（`backend/build.gradle.kts`）は`backend`単体の`assemble`にのみ影響し、ルートタスクには効かない。`./gradlew :cherry-mustache-core:build :backend:build`とサブプロジェクトを明示指定する形に修正した
 2. **Gradleデーモンが起動時のPATHをキャッシュし`npm`コマンドを認識できないことがある**: Volta経由でインストールされた`npm`が、既に起動済みのGradleデーモンからは見えず`bootWar`が失敗した。`./gradlew --stop`でデーモンを再起動すると解消した。CI環境（`actions/setup-node`で毎回新規セットアップ）では発生しない、ローカル検証固有の事象
+
+## 完了報告後の指摘対応（アクションバージョンの最新化）
+
+「アクションのバージョンを最新化しておいて」との指摘を受け、各アクションの最新メジャーバージョンをWeb検索で確認し更新した。
+
+| アクション | 変更前 | 変更後 |
+|---|---|---|
+| `actions/checkout` | v4 | v7 |
+| `actions/setup-java` | v4 | v5 |
+| `actions/setup-node` | v4 | v7 |
+| `gradle/actions/setup-gradle` | v4 | v6 |
+| `softprops/action-gh-release` | v2 | v3 |
+
+修正後、両ワークフローYAMLの構文妥当性をPythonの`yaml`モジュールで再確認した（構文エラーなし）。
