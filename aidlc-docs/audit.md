@@ -2995,3 +2995,12 @@
 **Context**: CONSTRUCTION完了後の追加改善、E2Eテストで発見したアプリケーションバグの修正完了
 
 ---
+
+## e2e/への@types/node追加
+
+**Timestamp**: 2026-07-28T01:42:00Z
+**User Input**: "e2e で npm i --save-dev @types/nod して。"
+**AI Response**: "e2eディレクトリでnpm install --save-dev @types/nodeを実行（playwright.config.tsがnode:pathをimportしているため型定義が必要）。tsconfig.jsonのtypes配列に'node'を追加。npx playwright test --listで設定・テスト一覧の読み込みが正常に行えることを確認。"
+**Context**: E2Eテスト基盤の設定調整
+
+---
