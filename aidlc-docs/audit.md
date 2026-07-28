@@ -3013,3 +3013,12 @@
 **Context**: E2Eテスト拡充、Scenario 2完了
 
 ---
+
+## E2Eテスト Scenario 3追加: クエリビルダー〜クエリ履歴
+
+**Timestamp**: 2026-07-28T02:00:00Z
+**User Input**: "yes"（Scenario 3実装への合意）
+**AI Response**: "integration-test-instructions.mdのScenario 3（クエリビルダー→クエリ実行→クエリ履歴）に対応するe2e/tests/query-builder-execution-history.spec.tsを作成。QueryBuilderPage/QueryBuilderFromTab/QueryBuilderSelectTab/QueryEditorPanel/SavedQueryEditorPageの実装を確認し、接続登録・スキーマ取込・権限設定→クエリビルダーでのFROM/SELECT設定→SQL生成→クエリ実行画面での実行→保存クエリとしての保存→クエリ履歴画面での記録確認、の3テストを実装。実装時の発見: (1)Tabsコンポーネントはrole='tab'/role='tablist'を使用、(2)保存ダイアログの「保存」ボタンがナビゲーション項目等と重複しstrict modeエラーになったためgetByRole('dialog')でスコープを絞って解消、(3)保存クエリのURLパスが/saved-queries/{connectionId}/{savedQueryId}という2階層であることを誤認しておりtoHaveURL正規表現を修正。認証フロー・Scenario2と合わせて全11件のE2Eテストが成功することを確認。"
+**Context**: E2Eテスト拡充、Scenario 3完了
+
+---
