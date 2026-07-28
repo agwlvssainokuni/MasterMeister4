@@ -2976,3 +2976,13 @@
 **Context**: CONSTRUCTION完了後の追加ドキュメント整備
 
 ---
+
+## E2Eテスト基盤の導入（Playwright、Backlog対応）
+
+**Timestamp**: 2026-07-28T01:30:00Z
+**User Input**: "このタイミングでE2Eテストを実装してはいかが？" → "ローカルで動かすのを優先です。"
+**AI Response**: "Backlog記載の課題（2026-07-24、UNIT-05承認時にユーザ提起）への対応として、Playwrightを導入した。ユーザー指摘により、当初frontend/package.jsonへ追加しようとしたのを差し戻し、ルートに独立した`e2e/`ディレクトリ（独自package.json・tsconfig.json・playwright.config.ts）を新規作成し、frontendのビルド・単体テストプロセスとは依存関係を分離した。playwright.config.tsのwebServer機能でbackend（bootRun）・frontend（devサーバー）を自動起動する構成とし、Mailpit連携ヘルパー（tests/helpers/mailpit.ts）で確認メールのトークン取得を自動化。最初のシナリオとして認証フロー（ユーザ登録申請→登録完了→管理者承認→新規ユーザログイン）のE2Eテスト4件を実装し、全件成功を確認した。"
+**AI Response補足（実装時に発見・解決した問題）**: (1)Playwrightのデフォルトlocale（en-US）だとfrontendのi18n（navigator.language依存）が英語UIになりテスト失敗、locale: 'ja-JP'指定で解決。(2)Gradleの:backend:bootRunはbackendサブプロジェクトのディレクトリを実行時カレントディレクトリにするため、相対パスで指定した内部DBパスがbackend/e2e/.tmp/...という誤った場所に作成される事象を発見、絶対パス（path.resolve(import.meta.dirname, ...)）に変更して解決。(3)UserManagementPage.tsxのonConfirm内のloadUsers()が、承認ボタンクリック時点のstatusFilter（PENDING）をクロージャに保持したまま非同期実行されるため、承認処理中にフィルタを変更すると承認完了後に古いフィルタでの再取得が実行されフィルタ変更が上書きされるレースコンディションを発見（実アプリケーションのバグ、テスト側の操作順序変更で回避）。このレースコンディション自体の修正要否はユーザーに確認中。
+**Context**: CONSTRUCTION完了後の追加改善、E2Eテスト基盤導入
+
+---
