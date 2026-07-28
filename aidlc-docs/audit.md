@@ -3031,3 +3031,12 @@
 **Context**: E2Eテスト拡充、Scenario 4完了
 
 ---
+
+## E2Eテスト Scenario 5追加: 接続削除後のプレースホルダー表示（全5シナリオ完了）
+
+**Timestamp**: 2026-07-28T02:20:00Z
+**User Input**: "yes"（Scenario 5実装への合意）
+**AI Response**: "integration-test-instructions.mdのScenario 5（接続削除後のプレースホルダー表示）に対応するe2e/tests/connection-deletion-placeholder.spec.tsを作成。QueryHistoryConnectionListPage.tsxの実装を確認し、接続登録・スキーマ取込・権限設定・クエリ実行→接続削除→クエリ履歴/監査ログでの「(削除済み接続)」プレースホルダー表示確認、の4テストを実装。実装時の発見・修正: (1)queryExecution.schemaLabelの実際のラベルが「対象スキーマ」ではなく「スキーマ」だったため修正、(2)全specファイル一括実行時、直前の単体実行で作成した削除済み接続データがwebServerのDBファイル永続化により引き継がれ「(削除済み接続)」が複数件存在しテストが不安定になることを発見。playwright.config.tsのbackend起動コマンドに`rm -rf`を追加し、webServer起動（テスト実行全体で1回のみ）のたびにDBをクリーンな状態にリセットする根本対応を実施。修正後、全19件のE2Eテストを2回連続実行しいずれも成功（冪等性を確認）。これによりIntegration Test Instructions記載の全5シナリオのE2Eテスト実装が完了した。"
+**Context**: E2Eテスト拡充、全5シナリオ完了（累計19件）
+
+---

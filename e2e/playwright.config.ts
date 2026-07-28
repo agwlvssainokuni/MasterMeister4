@@ -35,7 +35,12 @@ export default defineConfig({
   ],
   webServer: [
     {
+      // reuseExistingServerがtrueの場合、webServerはテスト実行全体で1回だけ起動される。
+      // 起動前にDBファイルを削除することで、複数回のテスト実行をまたいだデータ蓄積を防ぎ
+      // 各実行が同じクリーンな状態から始まるようにする（実機検証で発見: 削除済み接続の
+      // プレースホルダーが複数回の実行分累積し、テストが不安定になった）。
       command:
+        `rm -rf ${path.dirname(e2eDataPath)} && ` +
         'MM_APP_JWT_SECRET=e2e-test-secret-key-at-least-32-bytes-long ' +
         'MM_APP_RDBMS_ENCRYPTION_KEYS=1:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE= ' +
         'MM_APP_ADMIN_BOOTSTRAP_EMAIL=e2e-admin@example.com ' +
