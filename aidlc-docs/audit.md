@@ -3004,3 +3004,12 @@
 **Context**: E2Eテスト基盤の設定調整
 
 ---
+
+## E2Eテスト Scenario 2追加: 接続登録〜マスタデータ表示
+
+**Timestamp**: 2026-07-28T01:50:00Z
+**User Input**: "この順に進めましょう。"（Scenario 2→3→4→5の順で進める合意）
+**AI Response**: "integration-test-instructions.mdのScenario 2（接続登録→スキーマ取込→権限設定→マスタデータ表示）に対応するe2e/tests/connection-permission-masterdata.spec.tsを作成。RdbmsConnectionListPage・AccessPermissionTreePage・MasterDataConnectionListPage/MasterDataTableListPageの実装を確認し、管理者がdevenvのPostgreSQLへの接続登録→スキーマ取込→自身へのpublicスキーマREAD権限付与→マスタメンテナンス画面でのテーブル一覧表示、の4テストを実装。実装時の発見: (1)AdminBootstrapServiceがfullNameにemailをそのまま使うことを確認しSelect要素のlabelを組み立て、(2)DataTableはonRowClickが指定されるとtr要素がrole='row'ではなくrole='button'になる設計（design-system/components/DataTable.tsx）と判明しテストのロケーターを修正、(3)getByText('public')が複数要素にマッチするstrict modeエラーを.first()で解消。認証フロー4件と合わせて全8件のE2Eテストが成功することを確認。"
+**Context**: E2Eテスト拡充、Scenario 2完了
+
+---
