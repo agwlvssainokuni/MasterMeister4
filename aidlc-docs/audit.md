@@ -2967,3 +2967,12 @@
 **Context**: CONSTRUCTION - Build and Testステージ完了、UNIT-10 CI/CDワークフローの実機動作確認済み
 
 ---
+
+## リポジトリルートREADME.md作成
+
+**Timestamp**: 2026-07-28T01:25:00Z
+**User Input**: "リポジトリルートにREADME.mdを作成してください。"
+**AI Response**: "backend/README.md・frontend/README.md・requirements.md §1（プロジェクト概要）を参照し、ルートREADME.mdを新規作成。プロジェクト概要、主な機能一覧（UNIT-02〜09）、ディレクトリ構成、クイックスタート手順、ビルド・テストコマンド、CI/CD概要（UNIT-10で構築したci.yml/release.yml）、aidlc-docs/へのドキュメント案内、ライセンス（Apache License 2.0、既存LICENSEファイル参照）を記載。UNIT-10 Code Generation時点では『ルートにREADME.mdが存在しない』ためbackend/frontend双方への追記で代替していたが、今回新規に作成したことで本来の構成に近づいた。"
+**Context**: CONSTRUCTION完了後の追加ドキュメント整備
+
+---
