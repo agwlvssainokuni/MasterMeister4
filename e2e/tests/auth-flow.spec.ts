@@ -42,17 +42,17 @@ test.describe.serial('認証フロー', () => {
     await expect(page).toHaveURL('/')
 
     await page.goto('/users')
-    // 承認後にフィルタを変更すると、UserManagementPageのonConfirm内のloadUsers()が
-    // クリック時点のstatusFilter（PENDING）をクロージャに保持したまま非同期実行されるため、
-    // 承認完了後に古いフィルタでの再取得が走りフィルタ変更が上書きされるレースコンディションが
-    // 発生する（実機検証で発見）。そのため先に「すべて」へ切り替えてから承認する
-    await page.getByTestId('users-status-filter').selectOption('ALL')
     const row = page.getByRole('row', { name: new RegExp(newUserEmail) })
     await expect(row).toBeVisible()
     await row.getByRole('button', { name: '承認' }).click()
 
     const dialog = page.getByRole('dialog')
     await dialog.getByRole('button', { name: '承認' }).click()
+
+    // 承認によりステータスが変わり、既定の「承認待ち」フィルタから外れて一覧から消えるため、
+    // 「すべて」に切り替えてから確認する。承認処理と競合してもレースコンディションが起きないことを
+    // 確認する（UserManagementPage.tsxのloadUsersRef対応、実機検証で発見・修正済み）
+    await page.getByTestId('users-status-filter').selectOption('ALL')
 
     await expect(row.getByText('承認済み')).toBeVisible()
   })

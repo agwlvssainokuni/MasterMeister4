@@ -2986,3 +2986,12 @@
 **Context**: CONSTRUCTION完了後の追加改善、E2Eテスト基盤導入
 
 ---
+
+## UserManagementPageのレースコンディション修正
+
+**Timestamp**: 2026-07-28T01:40:00Z
+**User Input**: "修正方法はわかっていますか？" → "OK"
+**AI Response**: "UserManagementPage.tsxにloadUsersRef（useRef）を追加し、onConfirm内のawait loadUsers()をawait loadUsersRef.current()に変更。loadUsersRefは既存のuseEffectでloadUsers変更のたびに最新値へ更新する。これによりonConfirmが承認ボタンクリック時点のクロージャを保持していても、非同期処理完了時点の最新statusFilterで再取得するようになる。npx tsc --noEmit・npm run lint（既存警告3件のみ）・npm test -- --run（全60ファイル253件成功、UserManagementPage.test.tsx6件含む）で確認。さらにe2e/tests/auth-flow.spec.tsを元の操作順序（先に承認→後でフィルタ変更）に戻し、修正が実際に機能することを実機E2Eテストで再確認（4件全件成功）。"
+**Context**: CONSTRUCTION完了後の追加改善、E2Eテストで発見したアプリケーションバグの修正完了
+
+---

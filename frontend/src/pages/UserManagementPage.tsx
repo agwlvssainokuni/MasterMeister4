@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Alert,
@@ -93,6 +93,15 @@ export function UserManagementPage() {
     void loadUsers()
   }, [loadUsers])
 
+  // onConfirm内で呼ぶloadUsersは常に最新版を参照する（E2Eテストで発見したレースコンディション対応）。
+  // onConfirmはボタンクリック時点のloadUsers（その時点のstatusFilter）のクロージャを捕まえるため、
+  // 承認等の非同期処理中にstatusFilterが変更されると、処理完了後に古いフィルタで再取得してしまい
+  // フィルタ変更が意図せず上書きされる不具合があった。
+  const loadUsersRef = useRef(loadUsers)
+  useEffect(() => {
+    loadUsersRef.current = loadUsers
+  }, [loadUsers])
+
   const rows = useMemo(
     () =>
       users.filter(
@@ -110,7 +119,7 @@ export function UserManagementPage() {
     }
     try {
       await actionByName[confirmTarget.action](confirmTarget.id)
-      await loadUsers()
+      await loadUsersRef.current()
     } catch (error) {
       setErrorMessage(error instanceof ApiError ? error.message : t('state.error'))
     } finally {
