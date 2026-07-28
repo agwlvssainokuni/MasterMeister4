@@ -3022,3 +3022,12 @@
 **Context**: E2Eテスト拡充、Scenario 3完了
 
 ---
+
+## E2Eテスト Scenario 4追加: 各種操作〜監査ログ閲覧
+
+**Timestamp**: 2026-07-28T02:10:00Z
+**User Input**: "yes"（Scenario 4実装への合意）
+**AI Response**: "integration-test-instructions.mdのScenario 4（各種操作→監査ログ閲覧）に対応するe2e/tests/audit-log.spec.tsを作成。AuditLogPage.tsxの実装を確認し、(1)接続登録イベントが監査ログに記録されイベント種別で絞り込めること、(2)対象接続・結果ステータスで絞り込めること、(3)一般ユーザのAPIアクセスが403で拒否されること、(4)一般ユーザには監査ログのナビ項目・ホームカードが表示されないこと、の4テストを実装。一般ユーザの準備にはUI操作を介さずAPI直接呼び出し（e2e/tests/helpers/registration.ts新規作成、Mailpit連携ヘルパーを再利用）で高速化した。実装時の発見: DataTableの1行内でtargetResource列と対象接続列の両方に同じ接続表示名が表示されるためgetByRole('cell')が複数マッチし.first()で解消。認証フロー・Scenario2・3と合わせて全15件のE2Eテストが成功することを確認。"
+**Context**: E2Eテスト拡充、Scenario 4完了
+
+---
