@@ -23,6 +23,7 @@ RDBMSに格納されたマスタデータをメンテナンスするためのWeb
 ├── frontend/              # React 19 + TypeScript + Vite
 ├── cherry-mustache-core/  # メールテンプレート用の自作Mustacheエンジン（独立サブプロジェクト）
 ├── devenv/                # 開発用Docker Compose（MailPit, MySQL, MariaDB, PostgreSQL）
+├── e2e/                   # E2Eテスト（Playwright、独立したnpmプロジェクト）
 ├── .github/workflows/     # CI/CD（GitHub Actions）
 └── aidlc-docs/            # 要件定義・設計・構築記録一式（AI-DLCワークフロー成果物）
 ```
@@ -63,6 +64,19 @@ cd frontend && npm ci && npm run lint && npm test -- --run && npm run build
 # リリース用単一WAR（フロントエンド内包、SpringBootServletInitializer継承で自己完結実行可能）
 ./gradlew :backend:bootWar
 ```
+
+## E2Eテスト
+
+`e2e/`配下にPlaywrightによるE2Eテストがある（`frontend`とは独立したnpmプロジェクト、依存関係を分離）。開発用インフラ（`docker compose -f devenv/docker-compose.yml up -d`）を起動した状態で実行する。
+
+```bash
+cd e2e
+npm install
+npx playwright install chromium --with-deps  # 初回のみ
+npm test
+```
+
+`playwright.config.ts`の`webServer`設定により、backend（内部DBはH2、環境変数はテスト専用値）・frontendの開発サーバが自動起動する。認証フロー、接続登録〜マスタデータ表示、クエリビルダー〜クエリ履歴、監査ログ閲覧、接続削除後のプレースホルダー表示、の5シナリオを収録する（詳細は`aidlc-docs/construction/build-and-test/integration-test-instructions.md`参照）。CI（GitHub Actions）への統合は現時点では行っていない。
 
 ## CI/CD
 

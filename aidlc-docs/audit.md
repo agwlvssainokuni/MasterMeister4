@@ -3049,3 +3049,12 @@
 **Context**: E2Eテスト基盤の整備（ライセンス表記統一）
 
 ---
+
+## README.mdへのE2Eテスト情報反映
+
+**Timestamp**: 2026-07-29T00:05:00Z
+**User Input**: "README.mdに反映。"
+**AI Response**: "ルートREADME.mdのディレクトリ構成にe2e/を追加し、新規セクション「E2Eテスト」を追加。npm install・playwright install・npm testの実行手順、webServerによるbackend/frontend自動起動の仕組み、収録している5シナリオの概要、CI未統合である旨を記載。"
+**Context**: E2Eテスト基盤の整備（ドキュメント反映）
+
+---
