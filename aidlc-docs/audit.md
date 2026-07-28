@@ -3040,3 +3040,12 @@
 **Context**: E2Eテスト拡充、全5シナリオ完了（累計19件）
 
 ---
+
+## e2e/へのライセンス表記コメント追加
+
+**Timestamp**: 2026-07-28T02:25:00Z
+**User Input**: "e2eテストにもライセンス表記のコメントを入れてね。"
+**AI Response**: "backend/frontend各ファイルと同じApache License 2.0のヘッダーコメントを、e2e配下の全TypeScriptファイル8件（playwright.config.ts、tests/*.spec.ts 5件、tests/helpers/*.ts 2件）の先頭に追加。npx playwright test --listで全19件のテストが正しく認識されること、npx playwright testで全件成功することを確認。"
+**Context**: E2Eテスト基盤の整備（ライセンス表記統一）
+
+---
