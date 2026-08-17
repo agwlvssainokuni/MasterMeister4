@@ -48,5 +48,8 @@ AI-DLCのRequirements Analysis開始時に必ず聞かれる拡張機能のopt-i
 - **UIコンポーネントライブラリ**: 独自CSS/コンポーネントによるゼロからの構築 → 自前の
   デザインシステムライブラリ`make-you-chic-ui`の組み込みに変更（詳細は
   `01-tech-and-architecture.md`「UIコンポーネントライブラリ」）
+- **メールテンプレートエンジン**: 内蔵の自作Mustacheエンジン（`cherry-mustache-core`
+  サブプロジェクト）→ 外部公開ライブラリ`java-mustache-processor`の利用に変更（詳細は
+  `01-tech-and-architecture.md`「メールテンプレートエンジン」）
 - 上記以外は、技術スタック・アクセス制御モデル・マスタメンテナンス・クエリ関連機能・
   監査ログ・非機能要件を含め、MasterMeister4を踏襲する

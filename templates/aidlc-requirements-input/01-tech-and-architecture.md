@@ -33,11 +33,27 @@
     保存する個人設定とする（サーバ側には永続化しない。デバイス・ブラウザごとに独立）
   - ブランドカラー・フォント: 管理者が設定可能。アプリ全体に適用される設定として内部DBに
     永続化する（全利用者共通。個々の利用者が上書きすることはできない）
-- **組み込み方式**: [継承] git submoduleで組み込む
+- **組み込み方式**: [継承] git submoduleとして`libs/make-you-chic-ui/`に組み込む
+  （配置方針の詳細は本ファイル「5. プロジェクト構成」参照）
 - **アクセシビリティ**: [継承] 特別な準拠基準は定めない（`03-nfr.md`の記載を維持する）
 - 上記の採用に伴い、他機能に先立つ「デザインシステム基盤」先行ユニットの主眼は、部品を
   ゼロから作ることではなく、ライブラリの組み込み・テーマ確定・共通レイアウト（AppShell等）の
   構成確定に変わる（優先順位自体は`00-project-overview.md`の通り維持）
+
+### メールテンプレートエンジン
+[変更] MasterMeister4はメール文面テンプレート処理に自作Mustacheエンジン
+（`cherry-mustache-core`、リポジトリ内に独立サブプロジェクトとして同梱）を使っていたが、
+本プロジェクトでは外部公開ライブラリ
+[java-mustache-processor](https://github.com/agwlvssainokuni/java-mustache-processor)
+（パッケージ`cherry.mustache`。公式Mustache仕様にフル準拠、パーシャル対応、
+JSON/YAMLデータサポート）を使用する。
+
+- 用途: 招待メール等、ユーザに送信するメール本文のテンプレート処理
+  （詳細は`02-functional-requirements.md`「1. ユーザ登録・認証」）
+- 配布形態: [継承] Maven Central等への公開はされていないため、`make-you-chic-ui`と同様に
+  git submoduleとして組み込む（coreモジュールをGradleマルチモジュール構成に取り込む）
+- MasterMeister4にあった`cherry-mustache-core/`のような自作エンジンを内蔵するサブプロジェクトは
+  不要になる（外部ライブラリを利用するため。詳細は本ファイル「5. プロジェクト構成」参照）
 
 ### テストフレームワーク
 [継承]
@@ -76,16 +92,26 @@ GitHub Releasesを作成する仕組みを含む）。
 
 ## 5. プロジェクト構成
 
-[継承] Gradleマルチモジュール構成。`frontend`を`backend`のサブプロジェクトとして取り込み、
+[変更] Gradleマルチモジュール構成。`frontend`を`backend`のサブプロジェクトとして取り込み、
 リリースビルド時のみフロントエンドのビルド成果物を`backend`の静的リソースへコピーして
 単一WARを生成する（日常のバックエンド開発・フロントエンド単体開発はそれぞれ独立して行える）。
+MasterMeister4にあった`cherry-mustache-core/`（自作Mustacheエンジンの独立サブプロジェクト）は、
+外部ライブラリ`java-mustache-processor`を利用するため持たない（上記「メールテンプレート
+エンジン」参照）。UIライブラリ`make-you-chic-ui`・メールテンプレートエンジン
+`java-mustache-processor`はgit submoduleとして`libs/`配下にまとめて配置する
+（`backend`/`frontend`＝自プロジェクトの実装、`libs/`＝外部から取り込む依存ライブラリ、と
+役割で分ける。将来submoduleが増えても`libs/`直下に並べるだけで済む）。
 
 ```
 <project-root>/
-├── settings.gradle.kts   # backend, frontend をサブプロジェクトとして定義
-├── backend/               # Spring Boot アプリケーション（フロントエンドのビルド成果物を内包）
-├── frontend/              # React アプリケーション (Vite)
-└── devenv/                # 開発環境 (Docker Compose)
+├── settings.gradle.kts    # backend, frontend, libs/java-mustache-processor/core を
+│                          # サブプロジェクトとして定義
+├── backend/                # Spring Boot アプリケーション（フロントエンドのビルド成果物を内包）
+├── frontend/                # React アプリケーション (Vite)
+├── devenv/                  # 開発環境 (Docker Compose)
+└── libs/                    # git submodule配置先
+    ├── make-you-chic-ui/         # UIコンポーネントライブラリ（frontendから参照）
+    └── java-mustache-processor/  # メールテンプレートエンジン（backendから参照）
 ```
 
 ### 開発環境
