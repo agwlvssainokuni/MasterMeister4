@@ -51,5 +51,9 @@ AI-DLCのRequirements Analysis開始時に必ず聞かれる拡張機能のopt-i
 - **メールテンプレートエンジン**: 内蔵の自作Mustacheエンジン（`cherry-mustache-core`
   サブプロジェクト）→ 外部公開ライブラリ`java-mustache-processor`の利用に変更（詳細は
   `01-tech-and-architecture.md`「メールテンプレートエンジン」）
-- 上記以外は、技術スタック・アクセス制御モデル・マスタメンテナンス・クエリ関連機能・
-  監査ログ・非機能要件を含め、MasterMeister4を踏襲する
+- **マスタメンテナンス機能のカスタマイズ**: [追加] MasterMeister4にはなかった、対象RDBMS
+  接続ごとのYAML定義ファイルによる表示・入力カスタマイズ（表示ラベル・列順・初期ソート、
+  入力ウィジェット種別、列の非表示・読取専用化、簡易バリデーション）に対応する（詳細は
+  `02-functional-requirements.md`「3. マスタメンテナンス機能」）
+- 上記以外は、技術スタック・アクセス制御モデル・クエリ関連機能・監査ログ・非機能要件を
+  含め、MasterMeister4を踏襲する
